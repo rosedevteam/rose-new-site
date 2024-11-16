@@ -38,6 +38,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::middleware('web')
             ->namespace($this->moduleNamespace)
+            ->controller(\Modules\User\Http\Controllers\UserController::class)
             ->group(module_path('User', 'Routes/web.php'));
     }
 
@@ -52,6 +53,7 @@ class RouteServiceProvider extends ServiceProvider
             ->namespace($this->moduleNamespace . '\admin')
             ->prefix(config('services.admin.prefix'))
             ->name('admin.')
+            ->controller(\Modules\User\Http\Controllers\admin\UserController::class)
             ->group(module_path('User', 'Routes/admin.php'));
     }
 }
