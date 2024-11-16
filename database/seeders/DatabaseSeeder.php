@@ -22,20 +22,19 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'delete-users']);
         //
         Permission::create(['name' => 'edit-dailyReports']);
-        Permission::create(['name' => 'create-dailyReports']);
-        Permission::create(['name' => 'delete-dailyReports']);
         //
         Permission::create(['name' => 'edit-posts']);
         Permission::create(['name' => 'create-posts']);
         Permission::create(['name' => 'delete-posts']);
         //
         Permission::create(['name' => 'edit-comments']);
-        Permission::create(['name' => 'create-comments']);
         Permission::create(['name' => 'delete-comments']);
         //
         Permission::create(['name' => 'edit-products']);
         Permission::create(['name' => 'create-products']);
         Permission::create(['name' => 'delete-products']);
+        //
+        Permission::create(['name' => 'edit-billing']);
 
         $superAdmin = Role::create(['name' => 'super-admin']);
         $writer = Role::create(['name' => 'writer']);
@@ -43,13 +42,9 @@ class DatabaseSeeder extends Seeder
 
         $writer->givePermissionTo([
             'edit-dailyReports',
-            'delete-dailyReports',
             'edit-posts',
             'create-posts',
             'delete-posts',
-            'edit-comments',
-            'create-comments',
-            'delete-comments',
             'edit-products',
             'create-products',
             'delete-products',
