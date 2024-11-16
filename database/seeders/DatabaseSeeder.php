@@ -37,11 +37,9 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'create-products']);
         Permission::create(['name' => 'delete-products']);
 
-        $customer = Role::create(['name' => 'customer']);
-        $admin = Role::create(['name' => 'admin']);
+        $superAdmin = Role::create(['name' => 'super-admin']);
         $writer = Role::create(['name' => 'writer']);
-
-        $admin->givePermissionTo(Permission::all());
+        $customer = Role::create(['name' => 'customer']);
 
         $writer->givePermissionTo([
             'edit-dailyReports',
@@ -57,16 +55,16 @@ class DatabaseSeeder extends Seeder
             'delete-products',
         ]);
 
-        $user = User::factory()->create([
+        User::factory()->create([
             'first_name' => 'admin',
-            'password' => 'admin',
+            'password' => bcrypt('admin'),
             'phone' => '0123456789',
             'last_name' => 'admin',
-            'email' => 'admin@admin.com',
-            'birthday' => '1990-01-01',
-            'avatar' => 'avatar.png',
+            'email' => null,
+            'birthday' => null,
+            'avatar' => null,
         ]);
 
-        $user->assignRole($admin);
+        User::all()->first()->assignRole($superAdmin);
     }
 }

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->enum('status', ['public', 'draft', 'hidden'])->default('draft');
             $table->boolean('comment_status')->default(true);
             $table->string('image');
+            $table->string('url');
             $table->timestamps();
         });
     }
