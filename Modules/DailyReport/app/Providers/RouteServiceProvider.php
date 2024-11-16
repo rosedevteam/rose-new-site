@@ -8,6 +8,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 class RouteServiceProvider extends ServiceProvider
 {
     protected string $name = 'DailyReport';
+    protected string $moduleNamespace = 'Modules\DailyReport\Http\Controllers';
 
     /**
      * Called before routes are registered.
@@ -24,7 +25,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map(): void
     {
-        $this->mapApiRoutes();
+        $this->mapAdminRoutes();
         $this->mapWebRoutes();
     }
 
@@ -35,7 +36,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes(): void
     {
-        Route::middleware('web')->group(module_path($this->name, '/routes/web.php'));
+        Route::middleware('web')
+            ->namespace($this->moduleNamespace)
+            ->group(module_path('DailyReport', 'Routes/web.php'));
     }
 
     /**
@@ -43,8 +46,12 @@ class RouteServiceProvider extends ServiceProvider
      *
      * These routes are typically stateless.
      */
-    protected function mapApiRoutes(): void
+    protected function mapAdminRoutes(): void
     {
-        Route::middleware('api')->prefix('api')->name('api.')->group(module_path($this->name, '/routes/api.php'));
+        Route::middleware('admin')
+            ->namespace($this->moduleNamespace . '\admin')
+            ->prefix(config('services.admin.prefix'))
+            ->name('admin.')
+            ->group(module_path('DailyReport', 'Routes/admin.php'));
     }
 }
