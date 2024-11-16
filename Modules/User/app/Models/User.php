@@ -12,6 +12,7 @@ use Modules\Comment\Models\Comment;
 use Modules\DailyReport\Models\DailyReport;
 use Modules\Post\Models\Post;
 use Modules\Product\Models\Product;
+use Modules\User\Database\Factories\UserFactory;
 use Spatie\Permission\Traits\HasRoles;
 
 
@@ -44,5 +45,10 @@ class User extends Model
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);
+    }
+
+    protected static function newFactory(): UserFactory
+    {
+        return UserFactory::new();
     }
 }
