@@ -3,20 +3,15 @@
 namespace Modules\Billing\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-// use Modules\Billing\Database\Factories\BillingFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Modules\User\Models\User;
 
 class Billing extends Model
 {
-    use HasFactory;
+    protected $guarded = [];
 
-    /**
-     * The attributes that are mass assignable.
-     */
-    protected $fillable = [];
-
-    // protected static function newFactory(): BillingFactory
-    // {
-    //     // return BillingFactory::new();
-    // }
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('daily_reports', function (Blueprint $table) {
             $table->id();
-            
+            $table->foreignId('user_id')->constrained('users');
+            $table->string('title');
+            $table->string('file');
             $table->timestamps();
         });
     }

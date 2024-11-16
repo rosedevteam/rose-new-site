@@ -3,20 +3,22 @@
 namespace Modules\Post\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-// use Modules\Post\Database\Factories\PostFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Modules\Comment\Models\Comment;
+use Modules\User\Models\User;
 
 class Post extends Model
 {
-    use HasFactory;
+    protected $guarded = [];
 
-    /**
-     * The attributes that are mass assignable.
-     */
-    protected $fillable = [];
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
-    // protected static function newFactory(): PostFactory
-    // {
-    //     // return PostFactory::new();
-    // }
+    public function comments(): MorphMany
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
 }
