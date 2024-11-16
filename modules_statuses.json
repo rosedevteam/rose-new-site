@@ -1,0 +1,9 @@
+{
+    "User": true,
+    "Auth": true,
+    "Post": true,
+    "Product": true,
+    "Comment": true,
+    "DailyReport": true,
+    "Billing": true
+}
