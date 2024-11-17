@@ -1,0 +1,11 @@
+{
+    "name": "Metadata",
+    "alias": "metadata",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Metadata\\Providers\\MetadataServiceProvider"
+    ],
+    "files": []
+}

@@ -1,20 +1,18 @@
 <?php
 
-namespace Modules\Auth\Providers;
+namespace Modules\Metadata\Providers;
 
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Nwidart\Modules\Traits\PathNamespace;
-use Spatie\Permission\Models\Role;
 
-class AuthServiceProvider extends ServiceProvider
+class MetadataServiceProvider extends ServiceProvider
 {
     use PathNamespace;
 
-    protected string $name = 'Auth';
+    protected string $name = 'Metadata';
 
-    protected string $nameLower = 'auth';
+    protected string $nameLower = 'metadata';
 
     /**
      * Boot the application events.
@@ -27,16 +25,6 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
-        Gate::define('isAdmin', fn($user) => $user->hasAnyRole(Role::all()));
-    }
-
-    /**
-     * Register the service provider.
-     */
-    public function register(): void
-    {
-        $this->app->register(EventServiceProvider::class);
-        $this->app->register(RouteServiceProvider::class);
     }
 
     /**
@@ -99,14 +87,6 @@ class AuthServiceProvider extends ServiceProvider
         Blade::componentNamespace($componentNamespace, $this->nameLower);
     }
 
-    /**
-     * Get the services provided by the provider.
-     */
-    public function provides(): array
-    {
-        return [];
-    }
-
     private function getPublishableViewPaths(): array
     {
         $paths = [];
@@ -117,5 +97,22 @@ class AuthServiceProvider extends ServiceProvider
         }
 
         return $paths;
+    }
+
+    /**
+     * Register the service provider.
+     */
+    public function register(): void
+    {
+        $this->app->register(EventServiceProvider::class);
+        $this->app->register(RouteServiceProvider::class);
+    }
+
+    /**
+     * Get the services provided by the provider.
+     */
+    public function provides(): array
+    {
+        return [];
     }
 }

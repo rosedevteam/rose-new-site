@@ -20,6 +20,6 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->report(function (AuthorizationException $e) {
-            return response()->view(view: 'front::403', status: 403);
+            return response()->view(view: 'front::error.403', status: 403);
         })->stop();
     })->create();
