@@ -3,7 +3,10 @@
 namespace Modules\Product\Providers;
 
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Modules\Product\Models\Product;
+use Modules\Product\Policies\ProductPolicy;
 use Nwidart\Modules\Traits\PathNamespace;
 
 class ProductServiceProvider extends ServiceProvider
@@ -25,6 +28,7 @@ class ProductServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
+        Gate::policy(Product::class, ProductPolicy::class);
     }
 
     /**

@@ -2,8 +2,8 @@
 
 namespace Modules\Auth\Providers;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -36,7 +36,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes(): void
     {
-        Route::middleware('web')
+        Route::middleware(['auth:guest', 'web'])
             ->namespace($this->moduleNamespace)
             ->controller(\Modules\Auth\Http\Controllers\AuthController::class)
             ->group(module_path('Auth', 'Routes/web.php'));

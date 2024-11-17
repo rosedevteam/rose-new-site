@@ -3,7 +3,10 @@
 namespace Modules\DailyReport\Providers;
 
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Modules\DailyReport\Models\DailyReport;
+use Modules\DailyReport\Policies\DailyReportPolicy;
 use Nwidart\Modules\Traits\PathNamespace;
 
 class DailyReportServiceProvider extends ServiceProvider
@@ -25,6 +28,7 @@ class DailyReportServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
+        Gate::policy(DailyReport::class, DailyReportPolicy::class);
     }
 
     /**

@@ -3,7 +3,10 @@
 namespace Modules\Billing\Providers;
 
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Modules\Billing\Models\Billing;
+use Modules\Billing\Policies\BillingPolicy;
 use Nwidart\Modules\Traits\PathNamespace;
 
 class BillingServiceProvider extends ServiceProvider
@@ -25,6 +28,7 @@ class BillingServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
+        Gate::policy(Billing::class, BillingPolicy::class);
     }
 
     /**

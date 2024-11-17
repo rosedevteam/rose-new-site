@@ -3,7 +3,10 @@
 namespace Modules\Post\Providers;
 
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Modules\Post\Models\Post;
+use Modules\Post\Policies\PostPolicy;
 use Nwidart\Modules\Traits\PathNamespace;
 
 class PostServiceProvider extends ServiceProvider
@@ -25,6 +28,7 @@ class PostServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
+        Gate::policy(Post::class, PostPolicy::class);
     }
 
     /**
