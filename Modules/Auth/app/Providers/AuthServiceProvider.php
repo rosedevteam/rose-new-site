@@ -3,6 +3,7 @@
 namespace Modules\Auth\Providers;
 
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Nwidart\Modules\Traits\PathNamespace;
 
@@ -25,6 +26,9 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
+        Gate::define('isAdmin', function ($user) {
+            $user->hasAnyRole('isAdmin');
+        });
     }
 
     /**

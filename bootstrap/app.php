@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\Admin;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -14,8 +16,10 @@ return Application::configure(basePath: dirname(__DIR__))
         }
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->group('admin', [\App\Http\Middleware\Admin::class]);
+        $middleware->group('admin', [Admin::class]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->report(function (AuthorizationException $e) {
+            return response()->view(view: 'front::403', status: 403);
+        })->stop();
     })->create();

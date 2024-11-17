@@ -15,7 +15,6 @@ use Modules\Product\Models\Product;
 use Modules\User\Database\Factories\UserFactory;
 use Spatie\Permission\Traits\HasRoles;
 
-
 class User extends Model
 {
     use HasFactory, Authenticatable, HasRoles;

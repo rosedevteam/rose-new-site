@@ -49,20 +49,16 @@
                             </a>
                         </div>
                         <!-- /Logo -->
-                        <h4 class="mb-3 secondary-font">به فرست خوش آمدید!</h4>
-                        <p class="mb-4">لطفا وارد حساب خود شده و ماجراجویی را شروع کنید</p>
+                        <p class="mb-4">لطفا وارد حساب خود شوید</p>
 
-                        <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
+                        <form id="formAuthentication" class="mb-3" action="{{ route('admin.login') }}" method="POST">
                             <div class="mb-3">
-                                <label for="email" class="form-label">ایمیل یا نام کاربری</label>
+                                <label for="email" class="form-label">شماره موبایل</label>
                                 <input type="text" class="form-control text-start" id="email" name="email-username" placeholder="ایمیل یا نام کاربری خود را وارد کنید" autofocus dir="ltr">
                             </div>
                             <div class="mb-3 form-password-toggle">
                                 <div class="d-flex justify-content-between">
                                     <label class="form-label" for="password">رمز عبور</label>
-                                    <a href="{{ route('admin.reset-password') }}">
-                                        <small>رمز عبور را فراموش کردید؟</small>
-                                    </a>
                                 </div>
                                 <div class="input-group input-group-merge">
                                     <input type="password" id="password" class="form-control text-start" name="password" placeholder="············" aria-describedby="password" dir="ltr">
