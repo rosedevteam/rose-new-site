@@ -2,9 +2,8 @@
 
 namespace Modules\Billing\Providers;
 
-use Illuminate\Auth\Middleware\Authenticate;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -37,8 +36,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes(): void
     {
-        Route::middleware('web')
-            ->namespace($this->moduleNamespace)
+        Route::namespace($this->moduleNamespace)
             ->controller(\Modules\Billing\Http\Controllers\BillingController::class)
             ->group(module_path('Billing', 'Routes/web.php'));
     }
@@ -50,7 +48,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapAdminRoutes(): void
     {
-        Route::middleware(['auth', 'admin', 'web'])
+        Route::middleware(['auth', 'admin'])
             ->namespace($this->moduleNamespace . '\admin')
             ->prefix(config('services.admin.prefix'))
             ->name('admin.')

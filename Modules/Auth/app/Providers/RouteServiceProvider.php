@@ -36,7 +36,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes(): void
     {
-        Route::middleware(['auth:guest', 'web'])
+        Route::middleware('guest')
             ->namespace($this->moduleNamespace)
             ->controller(\Modules\Auth\Http\Controllers\AuthController::class)
             ->group(module_path('Auth', 'Routes/web.php'));
@@ -49,8 +49,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapAdminRoutes(): void
     {
-        Route::middleware('web')
-            ->namespace($this->moduleNamespace . '\admin')
+        Route::namespace($this->moduleNamespace . '\admin')
             ->prefix(config('services.admin.prefix'))
             ->name('admin.')
             ->controller(\Modules\Auth\Http\Controllers\admin\AuthController::class)

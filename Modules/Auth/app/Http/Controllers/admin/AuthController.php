@@ -18,6 +18,6 @@ class AuthController extends Controller
             'password' => 'required|string|min:8',
         ]);
         Auth::attempt($validatedData);
-        return redirect('/');
+        return redirect('index');
     }
 }

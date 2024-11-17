@@ -47,6 +47,8 @@ class DatabaseSeeder extends Seeder
         $superAdmin = Role::create(['name' => 'super-admin']);
         $writer = Role::create(['name' => 'writer']);
 
+        $superAdmin->givePermissionTo(Permission::all());
+
         $writer->givePermissionTo([
             'view-dailyReports',
             'create-dailyReports',
