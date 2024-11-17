@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'auth::admin.index')->name('index')->middleware('admin');
+Route::view('/', 'adminfront::index')->name('index')->middleware('admin');
 
 Route::middleware(['guest'])->prefix('/login')->group(function () {
     Route::view('/', 'auth::admin.login')->name('login');

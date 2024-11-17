@@ -1,0 +1,11 @@
+{
+    "name": "AdminFront",
+    "alias": "adminfront",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\AdminFront\\Providers\\AdminFrontServiceProvider"
+    ],
+    "files": []
+}

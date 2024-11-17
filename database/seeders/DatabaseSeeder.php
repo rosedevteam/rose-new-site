@@ -64,7 +64,7 @@ class DatabaseSeeder extends Seeder
             'delete-products',
         ]);
 
-        User::factory()->create([
+        $user1 = User::factory()->create([
             'first_name' => 'admin',
             'password' => bcrypt('admin'),
             'phone' => '0123456789',
@@ -74,6 +74,28 @@ class DatabaseSeeder extends Seeder
             'avatar' => null,
         ]);
 
-        User::all()->first()->assignRole($superAdmin);
+        $user1->assignRole($superAdmin);
+
+        $user2 = User::factory()->create([
+            'first_name' => 'writer',
+            'password' => bcrypt('writer'),
+            'phone' => '111111111',
+            'last_name' => 'writer',
+            'email' => null,
+            'birthday' => null,
+            'avatar' => null,
+        ]);
+
+        $user2->assignRole($writer);
+
+        $user3 = User::factory()->create([
+            'first_name' => 'customer',
+            'password' => bcrypt('customer'),
+            'phone' => '222222222',
+            'last_name' => 'customer',
+            'email' => null,
+            'birthday' => null,
+            'avatar' => null,
+        ]);
     }
 }

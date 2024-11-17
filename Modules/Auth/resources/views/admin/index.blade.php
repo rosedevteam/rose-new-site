@@ -1,12 +1,7 @@
-@extends('front::layouts.master')
-
-@section('title')
-    {{ "پنل مدیریت" }}
-@endsection
+@extends('adminfront::layouts.master')
 
 @section('content')
     <h1>Hello World</h1>
 
-    <p>Module: {!! config('auth.name') !!}</p>
-    {{ "dashboard" }}
+    <p>Module: {!! config('adminfront::name') !!}</p>
 @endsection

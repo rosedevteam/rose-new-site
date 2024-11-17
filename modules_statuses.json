@@ -8,5 +8,6 @@
     "Billing": true,
     "Front": true,
     "Category": true,
-    "Metadata": true
+    "Metadata": true,
+    "AdminFront": true
 }
