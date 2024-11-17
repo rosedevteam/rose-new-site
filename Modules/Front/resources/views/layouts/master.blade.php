@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Auth Module - {{ config('app.name', 'Laravel') }}</title>
+    <title>@yield("title")</title>
 
     <meta name="description" content="{{ $description ?? '' }}">
     <meta name="keywords" content="{{ $keywords ?? '' }}">
@@ -22,8 +22,8 @@
 </head>
 
 <body>
-    @yield('content')
+@yield('content')
 
-    {{-- Vite JS --}}
-    {{-- {{ module_vite('build-auth', 'resources/assets/js/app.js') }} --}}
+{{-- Vite JS --}}
+{{-- {{ module_vite('build-auth', 'resources/assets/js/app.js') }} --}}
 </body>

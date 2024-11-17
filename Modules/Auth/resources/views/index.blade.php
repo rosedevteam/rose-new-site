@@ -1,4 +1,8 @@
-@extends('auth::layouts.master')
+@extends('front::layouts.master')
+
+@section('title')
+    {{ "پنل مدیریت" }}
+@endsection
 
 @section('content')
     <h1>Hello World</h1>

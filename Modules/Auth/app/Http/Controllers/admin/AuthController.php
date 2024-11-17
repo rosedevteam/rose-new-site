@@ -18,6 +18,11 @@ class AuthController extends Controller
             'password' => 'required|string|min:8',
         ]);
         Auth::attempt($validatedData);
-        return redirect('index');
+        return redirect(route('admin.index'));
+    }
+
+    public function resetPassword(Request $request)
+    {
+        //
     }
 }
