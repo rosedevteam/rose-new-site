@@ -2,8 +2,8 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "yarn build",
-        "dev": "yarn"
+        "build": "vite build",
+        "dev": "vite"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.20",

@@ -4,41 +4,41 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
-    <title>ورود پایه - صفحات | فرست - قالب مدیریت بوت‌استرپ</title>
+    <title>بازنشانی رمز عبور پایه - صفحات | فرست - قالب مدیریت بوت‌استرپ</title>
 
     <meta name="description" content="">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/assets/admin/img/favicon/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon/favicon.ico">
 
     <!-- Icons -->
-    <link rel="stylesheet" href="/assets/admin/vendor/fonts/boxicons.css">
-    <link rel="stylesheet" href="/assets/admin/vendor/fonts/fontawesome.css">
-    <link rel="stylesheet" href="/assets/admin/vendor/fonts/flag-icons.css">
+    <link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css">
+    <link rel="stylesheet" href="../../assets/vendor/fonts/fontawesome.css">
+    <link rel="stylesheet" href="../../assets/vendor/fonts/flag-icons.css">
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="/assets/admin/vendor/css/rtl/core.css" class="template-customizer-core-css">
-    <link rel="stylesheet" href="/assets/admin/vendor/css/rtl/theme-default.css" class="template-customizer-theme-css">
-    <link rel="stylesheet" href="/assets/admin/css/demo.css">
-    <link rel="stylesheet" href="/assets/admin/vendor/css/rtl/rtl.css">
+    <link rel="stylesheet" href="../../assets/vendor/css/rtl/core.css" class="template-customizer-core-css">
+    <link rel="stylesheet" href="../../assets/vendor/css/rtl/theme-default.css" class="template-customizer-theme-css">
+    <link rel="stylesheet" href="../../assets/css/demo.css">
+    <link rel="stylesheet" href="../../assets/vendor/css/rtl/rtl.css">
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="/assets/admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css">
-    <link rel="stylesheet" href="/assets/admin/vendor/libs/typeahead-js/typeahead.css">
+    <link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="../../assets/vendor/libs/typeahead-js/typeahead.css">
     <!-- Vendor -->
-    <link rel="stylesheet" href="/assets/admin/vendor/libs/formvalidation/dist/css/formValidation.min.css">
+    <link rel="stylesheet" href="../../assets/vendor/libs/formvalidation/dist/css/formValidation.min.css">
 
     <!-- Page CSS -->
     <!-- Page -->
-    <link rel="stylesheet" href="/assets/admin/vendor/css/pages/page-auth.css">
+    <link rel="stylesheet" href="../../assets/vendor/css/pages/page-auth.css">
     <!-- Helpers -->
-    <script src="/assets/admin/vendor/js/helpers.js"></script>
+    <script src="../../assets/vendor/js/helpers.js"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
-    <script src="/assets/admin/vendor/js/template-customizer.js"></script>
+    <script src="../../assets/vendor/js/template-customizer.js"></script>
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="/assets/admin/js/config.js"></script>
+    <script src="../../assets/js/config.js"></script>
   </head>
 
   <body>
@@ -47,7 +47,7 @@
     <div class="container-xxl">
       <div class="authentication-wrapper authentication-basic container-p-y">
         <div class="authentication-inner py-4">
-          <!-- Register -->
+          <!-- Reset Password -->
           <div class="card">
             <div class="card-body">
               <!-- Logo -->
@@ -85,64 +85,34 @@
                 </a>
               </div>
               <!-- /Logo -->
-              <h4 class="mb-3 secondary-font">به فرست خوش آمدید!</h4>
-              <p class="mb-4">لطفا وارد حساب خود شده و ماجراجویی را شروع کنید</p>
-
-              <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
-                <div class="mb-3">
-                  <label for="email" class="form-label">ایمیل یا نام کاربری</label>
-                  <input type="text" class="form-control text-start" id="email" name="email-username" placeholder="ایمیل یا نام کاربری خود را وارد کنید" autofocus dir="ltr">
-                </div>
+              <h4 class="mb-3 secondary-font">بازنشانی رمز عبور</h4>
+              <p class="mb-4">برای <span class="fw-bold">john.doe@email.com</span></p>
+              <form id="formAuthentication" class="mb-3" action="auth-login-basic.html" method="POST">
                 <div class="mb-3 form-password-toggle">
-                  <div class="d-flex justify-content-between">
-                    <label class="form-label" for="password">رمز عبور</label>
-                    <a href="auth-forgot-password-basic.html">
-                      <small>رمز عبور را فراموش کردید؟</small>
-                    </a>
-                  </div>
+                  <label class="form-label" for="password">رمز عبور جدید</label>
                   <div class="input-group input-group-merge">
                     <input type="password" id="password" class="form-control text-start" name="password" placeholder="············" aria-describedby="password" dir="ltr">
                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                   </div>
                 </div>
-                <div class="mb-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="remember-me">
-                    <label class="form-check-label" for="remember-me"> به خاطر سپاری </label>
+                <div class="mb-3 form-password-toggle">
+                  <label class="form-label" for="confirm-password">تایید رمز عبور</label>
+                  <div class="input-group input-group-merge">
+                    <input type="password" id="confirm-password" class="form-control" name="confirm-password" placeholder="············" aria-describedby="password">
+                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                   </div>
                 </div>
-                <div class="mb-3">
-                  <button class="btn btn-primary d-grid w-100" type="submit">ورود</button>
+                <button class="btn btn-primary d-grid w-100 mb-3">تنظیم رمز عبور جدید</button>
+                <div class="text-center">
+                  <a href="auth-login-basic.html">
+                    <i class="bx bx-chevron-left scaleX-n1-rtl"></i>
+                    بازگشت به ورود
+                  </a>
                 </div>
               </form>
-
-              <p class="text-center">
-                <span>کاربر جدید هستید؟</span>
-                <a href="auth-register-basic.html">
-                  <span>یک حساب بسازید</span>
-                </a>
-              </p>
-
-              <div class="divider my-4">
-                <div class="divider-text">یا</div>
-              </div>
-
-              <div class="d-flex justify-content-center">
-                <a href="javascript:;" class="btn btn-icon btn-label-facebook me-3">
-                  <i class="tf-icons bx bxl-facebook"></i>
-                </a>
-
-                <a href="javascript:;" class="btn btn-icon btn-label-google-plus me-3">
-                  <i class="tf-icons bx bxl-google-plus"></i>
-                </a>
-
-                <a href="javascript:;" class="btn btn-icon btn-label-twitter">
-                  <i class="tf-icons bx bxl-twitter"></i>
-                </a>
-              </div>
             </div>
           </div>
-          <!-- /Register -->
+          <!-- /Reset Password -->
         </div>
       </div>
     </div>
@@ -151,28 +121,28 @@
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="/assets/admin/vendor/libs/jquery/jquery.js"></script>
-    <script src="/assets/admin/vendor/libs/popper/popper.js"></script>
-    <script src="/assets/admin/vendor/js/bootstrap.js"></script>
-    <script src="/assets/admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="../../assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="../../assets/vendor/libs/popper/popper.js"></script>
+    <script src="../../assets/vendor/js/bootstrap.js"></script>
+    <script src="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-    <script src="/assets/admin/vendor/libs/hammer/hammer.js"></script>
+    <script src="../../assets/vendor/libs/hammer/hammer.js"></script>
 
-    <script src="/assets/admin/vendor/libs/i18n/i18n.js"></script>
-    <script src="/assets/admin/vendor/libs/typeahead-js/typeahead.js"></script>
+    <script src="../../assets/vendor/libs/i18n/i18n.js"></script>
+    <script src="../../assets/vendor/libs/typeahead-js/typeahead.js"></script>
 
-    <script src="/assets/admin/vendor/js/menu.js"></script>
+    <script src="../../assets/vendor/js/menu.js"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
-    <script src="/assets/admin/vendor/libs/formvalidation/dist/js/FormValidation.min.js"></script>
-    <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js"></script>
-    <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
+    <script src="../../assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js"></script>
+    <script src="../../assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js"></script>
+    <script src="../../assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
 
     <!-- Main JS -->
-    <script src="/assets/admin/js/main.js"></script>
+    <script src="../../assets/js/main.js"></script>
 
     <!-- Page JS -->
-    <script src="/assets/admin/js/pages-auth.js"></script>
+    <script src="../../assets/js/pages-auth.js"></script>
   </body>
 </html>
