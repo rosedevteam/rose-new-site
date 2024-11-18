@@ -70,12 +70,12 @@ $(function () {
   var $toastlast;
   var getMessage = function () {
     var msgs = [
-      "Don't be pushed around by the fears in your mind. Be led by the dreams in your heart.",
-      '<div class="mb-3"><input class="input-small form-control mb-1" value="Textbox"/>&nbsp;<a href="http://johnpapa.net" target="_blank">This is a hyperlink</a></div><div class="d-flex"><button type="button" id="okBtn" class="btn btn-danger btn-sm me-2">Close me</button><button type="button" id="surpriseBtn" class="btn btn-sm btn-success">Surprise me</button></div>',
-      'Live the Life of Your Dreams',
-      'Believe in Your Self!',
-      'Be mindful. Be grateful. Be positive.',
-      'Accept yourself, love yourself!'
+      "با ترس های ذهنی خود زندگی نکنید. با رویاهای قلب خود هدایت شوید.",
+      '<div class="mb-3"><input class="input-small form-control mb-1" value="ورودی متنی"/>&nbsp;<a href="http://johnpapa.net" target="_blank">این یک لینک است</a></div><div class="d-flex"><button type="button" id="okBtn" class="btn btn-danger btn-sm me-2">منو ببند</button><button type="button" id="surpriseBtn" class="btn btn-sm btn-success">منو سورپرایز کن</button></div>',
+      'زندگی خودت رو مثل رویاهات بکن',
+      'به خودت باور داشته باش!',
+      'آرام باش. شکرگزار باش. مثبت باش.',
+      'خودت رو قبول کن، عاشق خودت باش!'
     ];
     i++;
     if (i === msgs.length) {
@@ -84,8 +84,8 @@ $(function () {
     return msgs[i];
   };
   var getMessageWithClearButton = function (msg) {
-    msg = msg ? msg : 'Clear itself?';
-    msg += '<br /><br /><button type="button" class="btn btn-sm btn-success clear">Yes</button>';
+    msg = msg ? msg : 'خودش رو پاک کنه؟';
+    msg += '<br /><br /><button type="button" class="btn btn-sm btn-success clear">بله</button>';
     return msg;
   };
   $('#closeButton').on('click', function () {
@@ -137,12 +137,12 @@ $(function () {
 
     if ($('#addBehaviorOnToastClick').prop('checked')) {
       toastr.options.onclick = function () {
-        alert('You can perform some custom action after a toast goes away');
+        alert('شما می توانید عمل های سفارشی را پس از محو شدن توست اجرا کنید');
       };
     }
     if ($('#addBehaviorOnToastCloseClick').prop('checked')) {
       toastr.options.onCloseClick = function () {
-        alert('You can perform some custom action when the close button is clicked');
+        alert('شما می توانید عمل های سفارشی را در هنگام کلیک دکمه بستن اجرا کنید');
       };
     }
     if ($showDuration.val().length) {
@@ -183,13 +183,13 @@ $(function () {
     }
     if ($toast.find('#okBtn').length) {
       $toast.delegate('#okBtn', 'click', function () {
-        alert('you clicked me. i was toast #' + toastIndex + '. goodbye!');
+        alert('شما منو کلیک کردید. من توست #' + toastIndex + ' بودم. خدانگهدار!');
         $toast.remove();
       });
     }
     if ($toast.find('#surpriseBtn').length) {
       $toast.delegate('#surpriseBtn', 'click', function () {
-        alert('Surprise! you clicked me. i was toast #' + toastIndex + '. You could perform an action here.');
+        alert('سورپراز! شما منو کلیک کردید. من توست #' + toastIndex + ' بودم. شما می‌تونید یک عمل اینجا اجرا کنید.');
       });
     }
     if ($toast.find('.clear').length) {

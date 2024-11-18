@@ -35,11 +35,11 @@ $(function () {
           render: function (data, type, full, meta) {
             var $status_number = full['status'];
             var $status = {
-              1: { title: 'Current', class: 'bg-label-primary' },
-              2: { title: 'Professional', class: ' bg-label-success' },
-              3: { title: 'Rejected', class: ' bg-label-danger' },
-              4: { title: 'Resigned', class: ' bg-label-warning' },
-              5: { title: 'Applied', class: ' bg-label-info' }
+              1: { title: 'کنونی', class: 'bg-label-primary' },
+              2: { title: 'حرفه‌ای', class: ' bg-label-success' },
+              3: { title: 'رد شده', class: ' bg-label-danger' },
+              4: { title: 'استعفا داده', class: ' bg-label-warning' },
+              5: { title: 'درخواست داده', class: ' bg-label-info' }
             };
             if (typeof $status[$status_number] === 'undefined') {
               return data;
@@ -56,7 +56,7 @@ $(function () {
         {
           // Actions
           targets: -1,
-          title: 'Actions',
+          title: 'عمل‌ها',
           searchable: false,
           orderable: false,
           render: function (data, type, full, meta) {
@@ -64,10 +64,10 @@ $(function () {
               '<div class="d-inline-block">' +
               '<a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></a>' +
               '<div class="dropdown-menu dropdown-menu-end m-0">' +
-              '<a href="javascript:;" class="dropdown-item">Details</a>' +
-              '<a href="javascript:;" class="dropdown-item">Archive</a>' +
+              '<a href="javascript:;" class="dropdown-item">جزئیات</a>' +
+              '<a href="javascript:;" class="dropdown-item">بایگانی</a>' +
               '<div class="dropdown-divider"></div>' +
-              '<a href="javascript:;" class="dropdown-item text-danger delete-record">Delete</a>' +
+              '<a href="javascript:;" class="dropdown-item text-danger delete-record">حذف</a>' +
               '</div>' +
               '</div>' +
               '<a href="javascript:;" class="item-edit text-body"><i class="bx bxs-edit"></i></a>'
@@ -114,10 +114,10 @@ $(function () {
           targets: 1,
           orderable: false,
           render: function () {
-            return '<input type="checkbox" class="dt-checkboxes form-check-input">';
+            return '<input type="checkbox" class="dt-checkboxes form-check-input mt-0 align-middle">';
           },
           checkboxes: {
-            selectAllRender: '<input type="checkbox" class="form-check-input">'
+            selectAllRender: '<input type="checkbox" class="form-check-input mt-0 align-middle">'
           },
           responsivePriority: 4
         },
@@ -135,15 +135,14 @@ $(function () {
             if ($user_img) {
               // For Avatar image
               var $output =
-                '<img src="' + assetsPath + 'img/avatars/' + $user_img + '" alt="Avatar" class="rounded-circle">';
+                '<img src="' + assetsPath + 'img/avatars/' + $user_img + '" alt="آواتار" class="rounded-circle">';
             } else {
               // For Avatar badge
               var stateNum = Math.floor(Math.random() * 6);
               var states = ['success', 'danger', 'warning', 'info', 'dark', 'primary', 'secondary'];
               var $state = states[stateNum],
-                $name = full['full_name'];
-              var $initials = $name.match(/\b\w/g) || [];
-              $initials = (($initials.shift() || '') + ($initials.pop() || '')).toUpperCase();
+                $name = full['full_name'],
+                $initials = $name.split(' ').slice(0, 2).map(word => word[0]).join('‌') || '';
               $output = '<span class="avatar-initial rounded-circle bg-label-' + $state + '">' + $initials + '</span>';
             }
             // Creates full output for row
@@ -183,11 +182,11 @@ $(function () {
             // var $rand_num = Math.floor(Math.random() * 5) + 1;
             var $status_number = full['status'];
             var $status = {
-              1: { title: 'Current', class: 'bg-label-primary' },
-              2: { title: 'Professional', class: ' bg-label-success' },
-              3: { title: 'Rejected', class: ' bg-label-danger' },
-              4: { title: 'Resigned', class: ' bg-label-warning' },
-              5: { title: 'Applied', class: ' bg-label-info' }
+              1: { title: 'کنونی', class: 'bg-label-primary' },
+              2: { title: 'حرفه‌ای', class: ' bg-label-success' },
+              3: { title: 'رد شده', class: ' bg-label-danger' },
+              4: { title: 'استعفا داده', class: ' bg-label-warning' },
+              5: { title: 'درخواست داده', class: ' bg-label-info' }
             };
             if (typeof $status[$status_number] === 'undefined') {
               return data;
@@ -204,17 +203,17 @@ $(function () {
         {
           // Actions
           targets: -1,
-          title: 'Actions',
+          title: 'عمل‌ها',
           orderable: false,
           render: function (data, type, full, meta) {
             return (
               '<div class="d-inline-block">' +
               '<a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></a>' +
               '<div class="dropdown-menu dropdown-menu-end m-0">' +
-              '<a href="javascript:;" class="dropdown-item">Details</a>' +
-              '<a href="javascript:;" class="dropdown-item">Archive</a>' +
+              '<a href="javascript:;" class="dropdown-item">جزئیات</a>' +
+              '<a href="javascript:;" class="dropdown-item">بایگانی</a>' +
               '<div class="dropdown-divider"></div>' +
-              '<a href="javascript:;" class="dropdown-item text-danger delete-record">Delete</a>' +
+              '<a href="javascript:;" class="dropdown-item text-danger delete-record">حذف</a>' +
               '</div>' +
               '</div>' +
               '<a href="javascript:;" class="btn btn-sm btn-icon item-edit"><i class="bx bxs-edit"></i></a>'
@@ -231,7 +230,7 @@ $(function () {
           display: $.fn.dataTable.Responsive.display.modal({
             header: function (row) {
               var data = row.data();
-              return 'Details of ' + data['full_name'];
+              return 'جزئیات ' + data['full_name'];
             }
           }),
           type: 'column',
@@ -293,11 +292,11 @@ $(function () {
           render: function (data, type, full, meta) {
             var $status_number = full['status'];
             var $status = {
-              1: { title: 'Current', class: 'bg-label-primary' },
-              2: { title: 'Professional', class: ' bg-label-success' },
-              3: { title: 'Rejected', class: ' bg-label-danger' },
-              4: { title: 'Resigned', class: ' bg-label-warning' },
-              5: { title: 'Applied', class: ' bg-label-info' }
+              1: { title: 'کنونی', class: 'bg-label-primary' },
+              2: { title: 'حرفه‌ای', class: ' bg-label-success' },
+              3: { title: 'رد شده', class: ' bg-label-danger' },
+              4: { title: 'استعفا داده', class: ' bg-label-warning' },
+              5: { title: 'درخواست داده', class: ' bg-label-info' }
             };
             if (typeof $status[$status_number] === 'undefined') {
               return data;
@@ -314,7 +313,7 @@ $(function () {
         {
           // Actions
           targets: -1,
-          title: 'Actions',
+          title: 'عمل‌ها',
           searchable: false,
           orderable: false,
           render: function (data, type, full, meta) {
@@ -322,10 +321,10 @@ $(function () {
               '<div class="d-inline-block">' +
               '<a href="javascript:;" class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></a>' +
               '<div class="dropdown-menu dropdown-menu-end m-0">' +
-              '<a href="javascript:;" class="dropdown-item">Details</a>' +
-              '<a href="javascript:;" class="dropdown-item">Archive</a>' +
+              '<a href="javascript:;" class="dropdown-item">جزئیات</a>' +
+              '<a href="javascript:;" class="dropdown-item">بایگانی</a>' +
               '<div class="dropdown-divider"></div>' +
-              '<a href="javascript:;" class="dropdown-item text-danger delete-record"></i>Delete</a>' +
+              '<a href="javascript:;" class="dropdown-item text-danger delete-record"></i>حذف</a>' +
               '</div>' +
               '</div>' +
               '<a href="javascript:;" class="item-edit text-body"><i class="bx bxs-edit"></i></a>'
@@ -367,11 +366,11 @@ $(function () {
           searchable: false,
           orderable: false,
           render: function () {
-            return '<input type="checkbox" class="dt-checkboxes form-check-input">';
+            return '<input type="checkbox" class="dt-checkboxes form-check-input mt-0 align-middle">';
           },
           checkboxes: {
             selectRow: true,
-            selectAllRender: '<input type="checkbox" class="form-check-input">'
+            selectAllRender: '<input type="checkbox" class="form-check-input mt-0 align-middle">'
           }
         },
         {
@@ -380,11 +379,11 @@ $(function () {
           render: function (data, type, full, meta) {
             var $status_number = full['status'];
             var $status = {
-              1: { title: 'Current', class: 'bg-label-primary' },
-              2: { title: 'Professional', class: ' bg-label-success' },
-              3: { title: 'Rejected', class: ' bg-label-danger' },
-              4: { title: 'Resigned', class: ' bg-label-warning' },
-              5: { title: 'Applied', class: ' bg-label-info' }
+              1: { title: 'کنونی', class: 'bg-label-primary' },
+              2: { title: 'حرفه‌ای', class: ' bg-label-success' },
+              3: { title: 'رد شده', class: ' bg-label-danger' },
+              4: { title: 'استعفا داده', class: ' bg-label-warning' },
+              5: { title: 'درخواست داده', class: ' bg-label-info' }
             };
             if (typeof $status[$status_number] === 'undefined') {
               return data;

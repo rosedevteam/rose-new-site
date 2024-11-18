@@ -55,8 +55,7 @@ $(function () {
               var states = ['success', 'danger', 'warning', 'info', 'dark', 'primary', 'secondary'];
               var $state = states[stateNum],
                 $name = full['full_name'],
-                $initials = $name.match(/\b\w/g) || [];
-              $initials = (($initials.shift() || '') + ($initials.pop() || '')).toUpperCase();
+                $initials = $name.split(' ').slice(0, 2).map(word => word[0]).join('‌') || '';
               $output = '<span class="avatar-initial rounded-circle bg-label-' + $state + '">' + $initials + '</span>';
             }
             // Creates full output for row
@@ -129,8 +128,8 @@ $(function () {
       order: [[1, 'desc']],
       dom:
         '<"d-flex justify-content-between align-items-center flex-column flex-sm-row mx-4 row"' +
-        '<"col-sm-4 col-12 d-flex align-items-center justify-content-sm-start justify-content-center"l>' +
-        '<"col-sm-8 col-12 d-flex align-items-center justify-content-sm-end justify-content-center"f>' +
+        '<"col-sm-4 col-12 pe-0 pe-sm-3 d-flex align-items-center justify-content-sm-start justify-content-center"l>' +
+        '<"col-sm-8 col-12 ps-0 ps-sm-3 d-flex align-items-center justify-content-sm-end justify-content-center"f>' +
         '>t' +
         '<"d-flex justify-content-between mx-4 row"' +
         '<"col-sm-12 col-md-6"i>' +
@@ -139,9 +138,9 @@ $(function () {
       displayLength: 7,
       lengthMenu: [7, 10, 25, 50, 75, 100],
       language: {
-        sLengthMenu: 'Show _MENU_',
+        sLengthMenu: 'نمایش _MENU_',
         // search: '',
-        searchPlaceholder: 'Search Project'
+        searchPlaceholder: 'جستجوی پروژه'
       },
       // For responsive popup
       responsive: {
@@ -149,7 +148,7 @@ $(function () {
           display: $.fn.dataTable.Responsive.display.modal({
             header: function (row) {
               var data = row.data();
-              return 'Details of ' + data['full_name'];
+              return 'جزئیات پروژه';
             }
           }),
           type: 'column',
@@ -209,7 +208,7 @@ $(function () {
           render: function (data, type, full, meta) {
             var $invoice_id = full['invoice_id'];
             // Creates full output for row
-            var $row_output = '<a href="' + baseUrl + 'app/invoice/preview">#' + $invoice_id + '</a>';
+            var $row_output = '<a href="app-invoice-preview.html">#' + $invoice_id + '</a>';
             return $row_output;
           }
         },
@@ -221,23 +220,23 @@ $(function () {
               $due_date = full['due_date'],
               $balance = full['balance'];
             var roleBadgeObj = {
-              Sent: '<span class="badge badge-center rounded-pill bg-label-secondary w-px-30 h-px-30 "><i class="bx bx-mail-send bx-xs"></i></span>',
-              Draft:
+              'ارسال شده': '<span class="badge badge-center rounded-pill bg-label-secondary w-px-30 h-px-30 "><i class="bx bx-mail-send bx-xs"></i></span>',
+              'پیش‌نویس':
                 '<span class="badge badge-center rounded-pill bg-label-primary w-px-30 h-px-30"><i class="bx bxs-save bx-xs"></i></span>',
-              'Past Due':
+              'تاریخ سررسید گذشته':
                 '<span class="badge badge-center rounded-pill bg-label-danger w-px-30 h-px-30"><i class="bx bx-info-circle bx-xs"></i></span>',
-              'Partial Payment':
+              'پرداخت ناقص':
                 '<span class="badge badge-center rounded-pill bg-label-success w-px-30 h-px-30"><i class="bx bx-adjust bx-xs"></i></span>',
-              Paid: '<span class="badge badge-center rounded-pill bg-label-warning w-px-30 h-px-30"><i class="bx bx-pie-chart-alt bx-xs"></i></span>',
-              Downloaded:
+              'پرداخت شده': '<span class="badge badge-center rounded-pill bg-label-warning w-px-30 h-px-30"><i class="bx bx-pie-chart-alt bx-xs"></i></span>',
+              'دریافت شده':
                 '<span class="badge badge-center rounded-pill bg-label-info w-px-30 h-px-30"><i class="bx bx-down-arrow-circle bx-xs"></i></span>'
             };
             return (
               "<span data-bs-toggle='tooltip' data-bs-html='true' title='<span>" +
               $invoice_status +
-              '<br> <strong>Balance:</strong> ' +
+              '<br> <strong>موجودی:</strong> ' +
               $balance +
-              '<br> <strong>Due Date:</strong> ' +
+              '<br> <strong>تاریخ سررسید:</strong> ' +
               $due_date +
               "</span>'>" +
               roleBadgeObj[$invoice_status] +
@@ -250,22 +249,20 @@ $(function () {
           targets: 3,
           render: function (data, type, full, meta) {
             var $total = full['total'];
-            return '$' + $total;
+            return $total + ' تومان';
           }
         },
         {
           // Actions
           targets: -1,
-          title: 'Actions',
+          title: 'عمل‌ها',
           orderable: false,
           render: function (data, type, full, meta) {
             return (
               '<div class="d-flex align-items-center">' +
-              '<a href="javascript:;" class="text-body" data-bs-toggle="tooltip" title="Send Mail"><i class="bx bx-paper-plane mx-1"></i></a>' +
-              '<a href="' +
-              baseUrl +
-              'app/invoice/preview" class="text-body" data-bs-toggle="tooltip" title="Preview"><i class="bx bx-show-alt mx-1"></i></a>' +
-              '<a href="javascript:;" class="text-body" data-bs-toggle="tooltip" title="Download"><i class="bx bx-download mx-1"></i></a>' +
+              '<a href="javascript:;" class="text-body" data-bs-toggle="tooltip" title="ارسال ایمیل"><i class="bx bx-paper-plane mx-1"></i></a>' +
+              '<a href="app-invoice-preview.html" class="text-body" data-bs-toggle="tooltip" title="پیش‌نمایش"><i class="bx bx-show-alt mx-1"></i></a>' +
+              '<a href="javascript:;" class="text-body" data-bs-toggle="tooltip" title="دریافت"><i class="bx bx-download mx-1"></i></a>' +
               '</div>'
             );
           }
@@ -274,8 +271,8 @@ $(function () {
       order: [[1, 'desc']],
       dom:
         '<"row mx-4"' +
-        '<"col-sm-6 col-12 d-flex align-items-center justify-content-center justify-content-sm-start mb-3 mb-md-0"l>' +
-        '<"col-sm-6 col-12 d-flex align-items-center justify-content-center justify-content-sm-end"B>' +
+        '<"col-sm-6 col-12 pe-0 pe-sm-3 d-flex align-items-center justify-content-center justify-content-sm-start mb-3 mb-md-0"l>' +
+        '<"col-sm-6 col-12 ps-0 ps-sm-3 d-flex align-items-center justify-content-center justify-content-sm-end"B>' +
         '>t' +
         '<"row mx-4"' +
         '<"col-md-12 col-lg-6 text-center text-lg-start pb-md-2 pb-lg-0"i>' +
@@ -284,24 +281,24 @@ $(function () {
       language: {
         sLengthMenu: '_MENU_',
         search: '',
-        searchPlaceholder: 'Search Invoice'
+        searchPlaceholder: 'جستجوی صورتحساب'
       },
       // Buttons with Dropdown
       buttons: [
         {
           extend: 'collection',
           className: 'btn btn-label-secondary dropdown-toggle float-sm-end mb-3 mb-sm-0',
-          text: '<i class="bx bx-upload me-2"></i>Export',
+          text: '<i class="bx bx-upload me-2"></i>برون‌بری',
           buttons: [
             {
               extend: 'print',
-              text: '<i class="bx bx-printer me-2" ></i>Print',
+              text: '<i class="bx bx-printer me-2" ></i>چاپ',
               className: 'dropdown-item',
               exportOptions: { columns: [1, 2, 3, 4] }
             },
             {
               extend: 'csv',
-              text: '<i class="bx bx-file me-2" ></i>Csv',
+              text: '<i class="bx bx-file me-2" ></i>CSV',
               className: 'dropdown-item',
               exportOptions: { columns: [1, 2, 3, 4] }
             },
@@ -313,13 +310,13 @@ $(function () {
             },
             {
               extend: 'pdf',
-              text: '<i class="bx bxs-file-pdf me-2"></i>Pdf',
+              text: '<i class="bx bxs-file-pdf me-2"></i>PDF',
               className: 'dropdown-item',
               exportOptions: { columns: [1, 2, 3, 4] }
             },
             {
               extend: 'copy',
-              text: '<i class="bx bx-copy me-2" ></i>Copy',
+              text: '<i class="bx bx-copy me-2" ></i>کپی',
               className: 'dropdown-item',
               exportOptions: { columns: [1, 2, 3, 4] }
             }
@@ -332,7 +329,7 @@ $(function () {
           display: $.fn.dataTable.Responsive.display.modal({
             header: function (row) {
               var data = row.data();
-              return 'Details of ' + data['full_name'];
+              return 'جزئیات صورتحساب';
             }
           }),
           type: 'column',

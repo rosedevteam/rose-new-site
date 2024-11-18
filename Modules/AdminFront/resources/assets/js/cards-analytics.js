@@ -22,6 +22,31 @@
     shadeColor = 'light';
   }
 
+  Apex.chart = {
+		fontFamily: 'inherit',
+		locales: [{
+			"name": "fa",
+			"options": {
+				"months": ["ژانویه", "فوریه", "مارس", "آوریل", "می", "ژوئن", "جولای", "آگوست", "سپتامبر", "اکتبر", "نوامبر", "دسامبر"],
+				"shortMonths": ["ژانویه", "فوریه", "مارس", "آوریل", "می", "ژوئن", "جولای", "آگوست", "سپتامبر", "اکتبر", "نوامبر", "دسامبر"],
+				"days": ["یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه", "جمعه", "شنبه"],
+				"shortDays": ["ی", "د", "س", "چ", "پ", "ج", "ش"],
+				"toolbar": {
+					"exportToSVG": "دریافت SVG",
+					"exportToPNG": "دریافت PNG",
+					"menu": "فهرست",
+					"selection": "انتخاب",
+					"selectionZoom": "بزرگنمایی قسمت انتخاب شده",
+					"zoomIn": "بزرگ نمایی",
+					"zoomOut": "کوچک نمایی",
+					"pan": "جا به جایی",
+					"reset": "بازنشانی بزرگ نمایی"
+				}
+			}
+		}],
+		defaultLocale: "fa"
+	}
+
   // Report Chart
   // --------------------------------------------------------------------
 
@@ -59,7 +84,7 @@
         }
       },
       series: [value],
-      labels: ['Progress']
+      labels: ['پیشرفت']
     };
     return radialBarChartOpt;
   }
@@ -100,11 +125,11 @@
       colors: [config.colors.primary, config.colors_label.primary],
       series: [
         {
-          name: '2020',
+          name: '1400',
           data: [8, 9, 15, 20, 14, 22, 29, 27, 13]
         },
         {
-          name: '2019',
+          name: '1401',
           data: [5, 7, 12, 17, 9, 17, 26, 21, 10]
         }
       ],
@@ -112,7 +137,7 @@
         borderColor: borderColor
       },
       xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+        categories: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر'],
         axisBorder: {
           show: false
         },
@@ -141,7 +166,7 @@
       tooltip: {
         y: {
           formatter: function (val) {
-            return '$ ' + val + ' thousands';
+            return val + ' هزار تومان';
           }
         }
       }
@@ -157,6 +182,7 @@
     referralLineChartConfig = {
       series: [
         {
+          name: 'سری 1',
           data: [0, 150, 25, 100, 15, 149]
         }
       ],
@@ -254,11 +280,11 @@
       colors: [config.colors.primary, config.colors.warning],
       series: [
         {
-          name: 'New Clients',
+          name: 'مشتریان جدید',
           data: [75, 150, 225, 200, 35, 50, 150, 180, 50, 150, 240, 140, 75, 35, 60, 120]
         },
         {
-          name: 'Retained Clients',
+          name: 'مشتریان قدیمی',
           data: [-100, -55, -40, -120, -70, -40, -60, -50, -70, -30, -60, -40, -50, -70, -40, -50]
         }
       ],
@@ -293,14 +319,13 @@
     impressionDonutChartConfig = {
       chart: {
         height: 225,
-        fontFamily: 'IBM Plex Sans',
         type: 'donut'
       },
       dataLabels: {
         enabled: false
       },
       series: [80, 30, 60],
-      labels: ['Social', 'Email', 'Search'],
+      labels: ['اجتماعی', 'ایمیل', 'جستجو'],
       stroke: {
         width: 0,
         lineCap: 'round'
@@ -314,22 +339,21 @@
               show: true,
               name: {
                 fontSize: '0.938rem',
-                offsetY: 20
+                offsetY: 22
               },
               value: {
                 show: true,
                 fontSize: '1.625rem',
-                fontFamily: 'Rubik',
                 fontWeight: '500',
                 color: headingColor,
-                offsetY: -20,
+                offsetY: -22,
                 formatter: function (val) {
                   return val;
                 }
               },
               total: {
                 show: true,
-                label: 'Impression',
+                label: 'بازدید',
                 color: legendColor,
                 formatter: function (w) {
                   return w.globals.seriesTotals.reduce(function (a, b) {
@@ -344,6 +368,7 @@
       legend: {
         show: true,
         position: 'bottom',
+        offsetY: 8,
         horizontalAlign: 'center',
         labels: {
           colors: legendColor,
@@ -368,7 +393,6 @@
     growthRadialChartConfig = {
       chart: {
         height: 220,
-        fontFamily: 'IBM Plex Sans',
         type: 'radialBar',
         sparkline: {
           show: true
@@ -377,7 +401,8 @@
       grid: {
         show: false,
         padding: {
-          top: -25
+          top: -23,
+          bottom: -2
         }
       },
       plotOptions: {
@@ -395,16 +420,15 @@
           },
           dataLabels: {
             value: {
-              offsetY: -15,
+              offsetY: -22,
               color: headingColor,
-              fontFamily: 'Rubik',
               fontWeight: 500,
               fontSize: '26px'
             },
             name: {
               fontSize: '15px',
               color: legendColor,
-              offsetY: 24
+              offsetY: 20
             }
           }
         }
@@ -427,7 +451,7 @@
         dashArray: 3
       },
       series: [78],
-      labels: ['Growth']
+      labels: ['رشد']
     };
 
   if (typeof growthRadialChartEl !== undefined && growthRadialChartEl !== null) {
@@ -447,7 +471,7 @@
       series: [75, 80, 85],
       plotOptions: {
         radialBar: {
-          offsetY: -10,
+          offsetY: -11,
           hollow: {
             size: '45%'
           },
@@ -459,22 +483,19 @@
             name: {
               fontSize: '15px',
               colors: legendColor,
-              fontFamily: 'IBM Plex Sans',
               offsetY: 25
             },
             value: {
               fontSize: '2rem',
-              fontFamily: 'Rubik',
               fontWeight: 500,
               color: headingColor,
-              offsetY: -15
+              offsetY: -20
             },
             total: {
               show: true,
-              label: 'Total Visits',
+              label: 'بازدید کل',
               fontSize: '15px',
               fontWeight: 400,
-              fontFamily: 'IBM Plex Sans',
               color: legendColor
             }
           }
@@ -489,10 +510,11 @@
       stroke: {
         lineCap: 'round'
       },
-      labels: ['Target', 'Mart', 'Ebay'],
+      labels: ['هدف', 'بازار', 'فروشگاه'],
       legend: {
         show: true,
         position: 'bottom',
+        offsetY: 1,
         horizontalAlign: 'center',
         labels: {
           colors: legendColor,
@@ -519,7 +541,7 @@
   const statisticsRadialChartEl = document.querySelector('#statisticsRadialChart'),
     statisticsRadialChartConfig = {
       series: [78],
-      labels: ['Total Visits'],
+      labels: ['بازدید کل'],
       chart: {
         height: 225,
         type: 'radialBar'
@@ -527,7 +549,7 @@
       colors: [config.colors.warning],
       plotOptions: {
         radialBar: {
-          offsetY: 0,
+          offsetY: -6,
           startAngle: -140,
           endAngle: 140,
           hollow: {
@@ -535,7 +557,7 @@
             image: assetsPath + 'img/icons/unicons/rocket.png',
             imageWidth: 24,
             imageHeight: 24,
-            imageOffsetY: -35,
+            imageOffsetY: -40,
             imageClipped: false
           },
           track: {
@@ -544,18 +566,16 @@
           },
           dataLabels: {
             value: {
-              offsetY: 0,
+              offsetY: -5,
               color: headingColor,
               fontSize: '2rem',
-              fontWeight: '500',
-              fontFamily: 'Rubik'
+              fontWeight: '500'
             },
             name: {
               offsetY: 40,
               color: legendColor,
               fontSize: '0.938rem',
-              fontWeight: '400',
-              fontFamily: 'IBM Plex Sans'
+              fontWeight: '400'
             }
           }
         }
@@ -566,7 +586,7 @@
       grid: {
         padding: {
           top: -7,
-          bottom: 8
+          bottom: 0
         }
       },
       states: {
@@ -592,7 +612,7 @@
   const timeSpentGaugeChartEl = document.querySelector('#timeSpentGaugeChart'),
     timeSpentGaugeChartConfig = {
       series: [67],
-      labels: ['Time Spent'],
+      labels: ['مدت زمان'],
       chart: {
         height: 230,
         type: 'radialBar'
@@ -600,7 +620,7 @@
       colors: [config.colors.success],
       plotOptions: {
         radialBar: {
-          offsetY: 0,
+          offsetY: 4,
           startAngle: -140,
           endAngle: 140,
           hollow: {
@@ -612,19 +632,17 @@
           },
           dataLabels: {
             name: {
-              offsetY: 0,
+              offsetY: -10,
               color: headingColor,
-              fontSize: '1.125rem',
-              fontFamily: 'Rubik'
+              fontSize: '1.125rem'
             },
             value: {
-              offsetY: 10,
+              offsetY: 7,
               color: legendColor,
               fontSize: '0.938rem',
               fontWeight: 500,
-              fontFamily: 'IBM Plex Sans',
               formatter: function (val) {
-                return val + 'min';
+                return val + ' دقیقه';
               }
             }
           }
@@ -698,11 +716,11 @@
       colors: [config.colors.info, config.colors_label.secondary],
       series: [
         {
-          name: '2020',
+          name: '1400',
           data: [80, 60, 125, 40, 50, 30, 70, 80, 100, 40, 80, 60, 120, 75, 25, 135, 65]
         },
         {
-          name: '2021',
+          name: '1401',
           data: [50, 65, 40, 100, 30, 30, 80, 20, 50, 45, 30, 90, 70, 40, 50, 40, 60]
         }
       ],
@@ -743,7 +761,6 @@
       chart: {
         height: 130,
         width: 130,
-        fontFamily: 'IBM Plex Sans',
         type: 'donut'
       },
       dataLabels: {
@@ -758,7 +775,7 @@
         }
       },
       series: [60, 45, 60],
-      labels: ['Social', 'Email', 'Search'],
+      labels: ['اجتماعی', 'ایمیل', 'جستجو'],
       stroke: {
         width: 8,
         lineCap: 'round',
@@ -773,22 +790,21 @@
               show: true,
               name: {
                 fontSize: '0.938rem',
-                offsetY: -12
+                offsetY: -14
               },
               value: {
                 show: true,
                 fontSize: '1.625rem',
-                fontFamily: 'Rubik',
                 fontWeight: '500',
                 color: headingColor,
-                offsetY: 0,
+                offsetY: 6,
                 formatter: function (val) {
                   return val + '%';
                 }
               },
               total: {
                 show: true,
-                label: 'Total',
+                label: 'مجموع',
                 color: legendColor,
                 formatter: function (w) {
                   return w.globals.seriesTotals.reduce(function (a, b) {
@@ -822,7 +838,7 @@
   const orderSummaryEl = document.querySelector('#orderSummaryChart'),
     orderSummaryConfig = {
       chart: {
-        height: 250,
+        height: 255,
         type: 'area',
         toolbar: false,
         dropShadow: {
@@ -856,6 +872,7 @@
       },
       series: [
         {
+          name: 'سری 1',
           data: [15, 18, 13, 19, 16, 31, 18, 26, 23, 39]
         }
       ],
@@ -888,7 +905,7 @@
         }
       },
       xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+        categories: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی'],
         labels: {
           offsetX: 0,
           style: {
@@ -910,7 +927,7 @@
         labels: {
           offsetX: 7,
           formatter: function (val) {
-            return '$' + val;
+            return val + ' تومان';
           },
           style: {
             fontSize: '13px',

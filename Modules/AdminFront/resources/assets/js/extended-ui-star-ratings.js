@@ -95,7 +95,7 @@ $(function () {
         rtl: isRtl
       })
       .on('rateyo.set', function (e, data) {
-        alert('The rating is set to ' + data.rating + '!');
+        alert('امتیاز انتخاب شده: ' + data.rating + '!');
       });
   }
 
@@ -131,7 +131,7 @@ $(function () {
         if ($instance.hasClass('jq-ry-container')) {
           $instance.rateYo('destroy');
         } else {
-          window.alert('Please Initialize Ratings First');
+          window.alert('لطفا ابتدا امتیازدهی را راه‌اندازی کنید');
         }
       });
     }
@@ -140,9 +140,9 @@ $(function () {
       getRatings.on('click', function () {
         if ($instance.hasClass('jq-ry-container')) {
           var rating = $instance.rateYo('rating');
-          window.alert('Current Ratings are ' + rating);
+          window.alert('امتیاز کنونی: ' + rating);
         } else {
-          window.alert('Please Initialize Ratings First');
+          window.alert('لطفا ابتدا امتیازدهی را راه‌اندازی کنید');
         }
       });
     }
@@ -152,7 +152,7 @@ $(function () {
         if ($instance.hasClass('jq-ry-container')) {
           $instance.rateYo('rating', 1);
         } else {
-          window.alert('Please Initialize Ratings First');
+          window.alert('لطفا ابتدا امتیازدهی را راه‌اندازی کنید');
         }
       });
     }

@@ -46,7 +46,7 @@ $(function () {
     new Cleave(expiryDateMask, {
       date: true,
       delimiter: '/',
-      datePattern: ['m', 'y']
+      datePattern: ['y', 'm']
     });
   }
 
@@ -54,7 +54,8 @@ $(function () {
   if (cvvMask) {
     new Cleave(cvvMask, {
       numeral: true,
-      numeralPositiveOnly: true
+      numeralPositiveOnly: true,
+      numeralThousandsGroupStyle: 'none'
     });
   }
 
@@ -162,7 +163,7 @@ $(function () {
       // wizardCheckoutForm.submit()
       // or send the form data to server via an Ajax request
       // To make the demo simple, I just placed an alert
-      alert('Submitted..!!');
+      alert('ثبت شد ...!!');
     });
 
     wizardCheckoutNext.forEach(item => {

@@ -107,61 +107,61 @@
   const usersList = [
     {
       value: 1,
-      name: 'Justinian Hattersley',
+      name: 'تونی استارک',
       avatar: 'https://i.pravatar.cc/80?img=1',
       email: 'jhattersley0@ucsd.edu'
     },
     {
       value: 2,
-      name: 'Antons Esson',
+      name: 'بیل گیتس',
       avatar: 'https://i.pravatar.cc/80?img=2',
       email: 'aesson1@ning.com'
     },
     {
       value: 3,
-      name: 'Ardeen Batisse',
+      name: 'استیو راجرز',
       avatar: 'https://i.pravatar.cc/80?img=3',
       email: 'abatisse2@nih.gov'
     },
     {
       value: 4,
-      name: 'Graeme Yellowley',
+      name: 'امیلیا کلارک',
       avatar: 'https://i.pravatar.cc/80?img=4',
       email: 'gyellowley3@behance.net'
     },
     {
       value: 5,
-      name: 'Dido Wilford',
+      name: 'دیوید بکهام',
       avatar: 'https://i.pravatar.cc/80?img=5',
       email: 'dwilford4@jugem.jp'
     },
     {
       value: 6,
-      name: 'Celesta Orwin',
+      name: 'تام کروز',
       avatar: 'https://i.pravatar.cc/80?img=6',
       email: 'corwin5@meetup.com'
     },
     {
       value: 7,
-      name: 'Sally Main',
+      name: 'اولیور کوئین',
       avatar: 'https://i.pravatar.cc/80?img=7',
       email: 'smain6@techcrunch.com'
     },
     {
       value: 8,
-      name: 'Grethel Haysman',
+      name: 'بری الن',
       avatar: 'https://i.pravatar.cc/80?img=8',
       email: 'ghaysman7@mashable.com'
     },
     {
       value: 9,
-      name: 'Marvin Mandrake',
+      name: 'بروس وین',
       avatar: 'https://i.pravatar.cc/80?img=9',
       email: 'mmandrake8@sourceforge.net'
     },
     {
       value: 10,
-      name: 'Corrie Tidey',
+      name: 'ایلان ماسک',
       avatar: 'https://i.pravatar.cc/80?img=10',
       email: 'ctidey9@youtube.com'
     }
@@ -251,11 +251,11 @@
     return TagifyUserList.parseTemplate('dropdownItem', [
       {
         class: 'addAll',
-        name: 'Add all',
+        name: 'افزودن همه',
         email:
           TagifyUserList.settings.whitelist.reduce(function (remainingSuggestions, item) {
             return TagifyUserList.isTagDuplicate(item.value) ? remainingSuggestions : remainingSuggestions + 1;
-          }, 0) + ' Members'
+          }, 0) + ' کاربر'
       }
     ]);
   }

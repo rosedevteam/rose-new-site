@@ -16,12 +16,38 @@
     shadeColor = '';
   }
 
+  Apex.chart = {
+		fontFamily: 'inherit',
+		locales: [{
+			"name": "fa",
+			"options": {
+				"months": ["ژانویه", "فوریه", "مارس", "آوریل", "می", "ژوئن", "جولای", "آگوست", "سپتامبر", "اکتبر", "نوامبر", "دسامبر"],
+				"shortMonths": ["ژانویه", "فوریه", "مارس", "آوریل", "می", "ژوئن", "جولای", "آگوست", "سپتامبر", "اکتبر", "نوامبر", "دسامبر"],
+				"days": ["یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه", "جمعه", "شنبه"],
+				"shortDays": ["ی", "د", "س", "چ", "پ", "ج", "ش"],
+				"toolbar": {
+					"exportToSVG": "دریافت SVG",
+					"exportToPNG": "دریافت PNG",
+					"menu": "فهرست",
+					"selection": "انتخاب",
+					"selectionZoom": "بزرگنمایی قسمت انتخاب شده",
+					"zoomIn": "بزرگ نمایی",
+					"zoomOut": "کوچک نمایی",
+					"pan": "جا به جایی",
+					"reset": "بازنشانی بزرگ نمایی"
+				}
+			}
+		}],
+		defaultLocale: "fa"
+	}
+
   // Conversion - Gradient Line Chart
   // --------------------------------------------------------------------
   const conversationChartEl = document.querySelector('#conversationChart'),
     conversationChartConfig = {
       series: [
         {
+          name: 'سری 1',
           data: [50, 100, 0, 60, 20, 30]
         }
       ],
@@ -97,6 +123,7 @@
     incomeChartConfig = {
       series: [
         {
+          name: 'سری 1',
           data: [40, 70, 38, 90, 40, 65]
         }
       ],
@@ -172,6 +199,7 @@
     profitChartConfig = {
       series: [
         {
+          name: 'سری 1',
           data: [50, 80, 10, 82, 52, 95]
         }
       ],
@@ -247,6 +275,7 @@
     expensesLineChartConfig = {
       series: [
         {
+          name: 'سری 1',
           data: [80, 40, 85, 5, 80, 35]
         }
       ],
@@ -350,7 +379,7 @@
         }
       },
       series: [value],
-      labels: ['Progress']
+      labels: ['پیشرفت']
     };
     return radialBarChartOpt;
   }
@@ -413,6 +442,7 @@
       },
       series: [
         {
+          name: 'سری 1',
           data: [30, 55, 45, 95, 70, 50, 65]
         }
       ],
@@ -420,7 +450,7 @@
         show: false
       },
       xaxis: {
-        categories: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+        categories: ["ی", "د", "س", "چ", "پ", "ج", "ش"],
         axisBorder: {
           show: false
         },
@@ -489,6 +519,7 @@
       },
       series: [
         {
+          name: 'سری 1',
           data: [15, 42, 33, 54, 98, 48, 37]
         }
       ],
@@ -496,7 +527,7 @@
         show: false
       },
       xaxis: {
-        categories: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+        categories: ["ی", "د", "س", "چ", "پ", "ج", "ش"],
         axisBorder: {
           show: false
         },
@@ -524,6 +555,7 @@
     registrationChartConfig = {
       series: [
         {
+          name: 'سری 1',
           data: [57, 25, 94, 32, 98, 81, 125]
         }
       ],
@@ -555,7 +587,7 @@
       colors: [config.colors.success],
       xaxis: {
         show: false,
-        categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        categories: ["یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه", "جمعه", "شنبه"],
         axisBorder: {
           show: true,
           color: borderColor
@@ -568,7 +600,6 @@
           show: true,
           style: {
             fontSize: '0.813rem',
-            fontFamily: 'IBM Plex Sans',
             colors: labelColor
           }
         }
@@ -590,6 +621,7 @@
     expensesChartConfig = {
       series: [
         {
+          name: 'سری 1',
           data: [115, 70, 105, 34, 122, 21, 62]
         }
       ],
@@ -621,7 +653,7 @@
       colors: [config.colors.danger],
       xaxis: {
         show: false,
-        categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        categories: ["یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه", "جمعه", "شنبه"],
         axisBorder: {
           show: true,
           color: borderColor
@@ -634,7 +666,6 @@
           show: true,
           style: {
             fontSize: '0.813rem',
-            fontFamily: 'IBM Plex Sans',
             colors: labelColor
           }
         }
@@ -656,6 +687,7 @@
     usersChartConfig = {
       series: [
         {
+          name: 'سری 1',
           data: [58, 27, 141, 60, 98, 31, 165]
         }
       ],
@@ -687,7 +719,7 @@
       colors: [config.colors.primary],
       xaxis: {
         show: false,
-        categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        categories: ["یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه", "جمعه", "شنبه"],
         axisBorder: {
           show: true,
           color: borderColor
@@ -700,7 +732,6 @@
           show: true,
           style: {
             fontSize: '0.813rem',
-            fontFamily: 'IBM Plex Sans',
             colors: labelColor
           }
         }

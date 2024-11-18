@@ -23,7 +23,7 @@ $(function () {
     select2.each(function () {
       var $this = $(this);
       $this.wrap('<div class="position-relative"></div>').select2({
-        placeholder: 'Select value',
+        placeholder: 'انتخاب',
         dropdownParent: $this.parent()
       });
     });

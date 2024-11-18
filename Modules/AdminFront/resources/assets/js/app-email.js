@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
         modules: {
           toolbar: '.email-editor-toolbar'
         },
-        placeholder: 'Write your message... ',
+        placeholder: 'پیام خود را بنویسید ... ',
         theme: 'snow'
       });
     }
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
         modules: {
           toolbar: '.email-reply-toolbar'
         },
-        placeholder: 'Write your message... ',
+        placeholder: 'پیام خود را بنویسید ... ',
         theme: 'snow'
       });
     }
@@ -320,7 +320,7 @@ document.addEventListener('DOMContentLoaded', function () {
           return $avatar;
         }
         emailContacts.wrap('<div class="position-relative"></div>').select2({
-          placeholder: 'Select value',
+          placeholder: 'انتخاب',
           dropdownParent: emailContacts.parent(),
           closeOnSelect: false,
           templateResult: renderContactsAvatar,

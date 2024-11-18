@@ -8,12 +8,12 @@
 $(function () {
   var dtUserTable = $('.datatables-users'),
     statusObj = {
-      1: { title: 'Pending', class: 'bg-label-warning' },
-      2: { title: 'Active', class: 'bg-label-success' },
-      3: { title: 'Inactive', class: 'bg-label-secondary' }
+      1: { title: 'در انتظار', class: 'bg-label-warning' },
+      2: { title: 'فعال', class: 'bg-label-success' },
+      3: { title: 'غیرفعال', class: 'bg-label-secondary' }
     };
 
-  var userView = baseUrl + 'app/user/view/account';
+  var userView = 'app-user-view-account.html';
 
   // Users List datatable
   if (dtUserTable.length) {
@@ -52,15 +52,14 @@ $(function () {
             if ($image) {
               // For Avatar image
               var $output =
-                '<img src="' + assetsPath + 'img/avatars/' + $image + '" alt="Avatar" class="rounded-circle">';
+                '<img src="' + assetsPath + 'img/avatars/' + $image + '" alt="آواتار" class="rounded-circle">';
             } else {
               // For Avatar badge
               var stateNum = Math.floor(Math.random() * 6) + 1;
               var states = ['success', 'danger', 'warning', 'info', 'dark', 'primary', 'secondary'];
               var $state = states[stateNum],
                 $name = full['full_name'],
-                $initials = $name.match(/\b\w/g) || [];
-              $initials = (($initials.shift() || '') + ($initials.pop() || '')).toUpperCase();
+                $initials = $name.split(' ').slice(0, 2).map(word => word[0]).join('‌') || '';
               $output = '<span class="avatar-initial rounded-circle bg-label-' + $state + '">' + $initials + '</span>';
             }
             // Creates full output for row
@@ -91,15 +90,15 @@ $(function () {
           render: function (data, type, full, meta) {
             var $role = full['role'];
             var roleBadgeObj = {
-              Subscriber:
+              'مشترک':
                 '<span class="badge badge-center rounded-pill bg-label-warning w-px-30 h-px-30 me-2"><i class="bx bx-user bx-xs"></i></span>',
-              Author:
+              'نویسنده':
                 '<span class="badge badge-center rounded-pill bg-label-success w-px-30 h-px-30 me-2"><i class="bx bx-cog bx-xs"></i></span>',
-              Maintainer:
+              'نگهدارنده':
                 '<span class="badge badge-center rounded-pill bg-label-primary w-px-30 h-px-30 me-2"><i class="bx bx-pie-chart-alt bx-xs"></i></span>',
-              Editor:
+              'ویرایشگر':
                 '<span class="badge badge-center rounded-pill bg-label-info w-px-30 h-px-30 me-2"><i class="bx bx-edit bx-xs"></i></span>',
-              Admin:
+              'مدیر':
                 '<span class="badge badge-center rounded-pill bg-label-secondary w-px-30 h-px-30 me-2"><i class="bx bx-mobile-alt bx-xs"></i></span>'
             };
             return "<span class='text-truncate d-flex align-items-center'>" + roleBadgeObj[$role] + $role + '</span>';
@@ -126,7 +125,7 @@ $(function () {
         {
           // Actions
           targets: -1,
-          title: 'View',
+          title: 'نمایش',
           searchable: false,
           orderable: false,
           render: function (data, type, full, meta) {
@@ -134,11 +133,11 @@ $(function () {
           }
         }
       ],
-      order: [[1, 'desc']],
+      order: [[1, 'asc']],
       dom:
         '<"row mx-2"' +
         '<"col-sm-12 col-md-4 col-lg-6" l>' +
-        '<"col-sm-12 col-md-8 col-lg-6"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-md-end justify-content-center align-items-center flex-sm-nowrap flex-wrap me-1"<"me-3"f><"user_role w-px-200 pb-3 pb-sm-0">>>' +
+        '<"col-sm-12 col-md-8 col-lg-6"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-md-end justify-content-center align-items-center flex-sm-nowrap flex-wrap"<"me-4 me-sm-3 ms-4 ms-sm-0"f><"user_role w-px-200 pb-3 pb-sm-0">>>' +
         '>t' +
         '<"row mx-2"' +
         '<"col-sm-12 col-md-6"i>' +
@@ -146,8 +145,8 @@ $(function () {
         '>',
       language: {
         sLengthMenu: '_MENU_',
-        search: 'Search',
-        searchPlaceholder: 'Search..'
+        search: 'جستجو:',
+        searchPlaceholder: 'جستجو ...'
       },
       // For responsive popup
       responsive: {
@@ -155,7 +154,7 @@ $(function () {
           display: $.fn.dataTable.Responsive.display.modal({
             header: function (row) {
               var data = row.data();
-              return 'Details of ' + data['full_name'];
+              return 'جزئیات ' + data['full_name'];
             }
           }),
           type: 'column',
@@ -189,7 +188,7 @@ $(function () {
           .every(function () {
             var column = this;
             var select = $(
-              '<select id="UserRole" class="form-select text-capitalize"><option value=""> Select Role </option></select>'
+              '<select id="UserRole" class="form-select text-capitalize"><option value=""> انتخاب نقش </option></select>'
             )
               .appendTo('.user_role')
               .on('change', function () {
@@ -224,12 +223,12 @@ $(function () {
     roleTitle = document.querySelector('.role-title');
 
   roleAdd.onclick = function () {
-    roleTitle.innerHTML = 'Add New Role'; // reset text
+    roleTitle.innerHTML = 'افزودن نقش جدید'; // reset text
   };
   if (roleEditList) {
     roleEditList.forEach(function (roleEditEl) {
       roleEditEl.onclick = function () {
-        roleTitle.innerHTML = 'Edit Role'; // reset text
+        roleTitle.innerHTML = 'ویرایش نقش'; // reset text
       };
     });
   }

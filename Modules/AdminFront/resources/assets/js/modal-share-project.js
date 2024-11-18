@@ -32,7 +32,7 @@ $(function () {
         dropdownParent: shareProject,
         templateResult: renderAvatar,
         templateSelection: renderAvatar,
-        placeholder: 'Add Project Members',
+        placeholder: 'افزودن اعضای پروژه',
         escapeMarkup: function (es) {
           return es;
         }

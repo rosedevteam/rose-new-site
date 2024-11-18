@@ -41,7 +41,7 @@
     new Cleave(expiryDateMask, {
       date: true,
       delimiter: '/',
-      datePattern: ['m', 'y']
+      datePattern: ['y', 'm']
     });
   }
 
@@ -49,7 +49,8 @@
   if (cvvMask) {
     new Cleave(cvvMask, {
       numeral: true,
-      numeralPositiveOnly: true
+      numeralPositiveOnly: true,
+      numeralThousandsGroupStyle: 'none'
     });
   }
 
@@ -57,7 +58,11 @@
   if (datepickerList) {
     datepickerList.forEach(function (datepicker) {
       datepicker.flatpickr({
-        monthSelectorType: 'static'
+        monthSelectorType: 'static',
+        locale: 'fa',
+        altInput: true,
+        altFormat: 'Y/m/d',
+        disableMobile: true
       });
     });
   }
@@ -107,7 +112,7 @@ $(function () {
     select2.each(function () {
       var $this = $(this);
       $this.wrap('<div class="position-relative"></div>').select2({
-        placeholder: 'Select value',
+        placeholder: 'انتخاب',
         dropdownParent: $this.parent()
       });
     });

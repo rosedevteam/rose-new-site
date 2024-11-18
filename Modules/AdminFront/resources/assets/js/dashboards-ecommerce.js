@@ -21,20 +21,45 @@
     borderColor = config.colors.borderColor;
     shadeColor = 'light';
   }
+  
+  Apex.chart = {
+		fontFamily: 'inherit',
+		locales: [{
+			"name": "fa",
+			"options": {
+				"months": ["ژانویه", "فوریه", "مارس", "آوریل", "می", "ژوئن", "جولای", "آگوست", "سپتامبر", "اکتبر", "نوامبر", "دسامبر"],
+				"shortMonths": ["ژانویه", "فوریه", "مارس", "آوریل", "می", "ژوئن", "جولای", "آگوست", "سپتامبر", "اکتبر", "نوامبر", "دسامبر"],
+				"days": ["یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه", "جمعه", "شنبه"],
+				"shortDays": ["ی", "د", "س", "چ", "پ", "ج", "ش"],
+				"toolbar": {
+					"exportToSVG": "دریافت SVG",
+					"exportToPNG": "دریافت PNG",
+					"menu": "فهرست",
+					"selection": "انتخاب",
+					"selectionZoom": "بزرگنمایی قسمت انتخاب شده",
+					"zoomIn": "بزرگ نمایی",
+					"zoomOut": "کوچک نمایی",
+					"pan": "جا به جایی",
+					"reset": "بازنشانی بزرگ نمایی"
+				}
+			}
+		}],
+		defaultLocale: "fa"
+	}
 
   // Visits - Multi Radial Bar Chart
   // --------------------------------------------------------------------
   const visitsRadialChartEl = document.querySelector('#visitsRadialChart'),
     visitsRadialChartConfig = {
       chart: {
-        height: 270,
+        height: 272,
         type: 'radialBar'
       },
       colors: [config.colors.primary, config.colors.danger, config.colors.warning],
       series: [75, 80, 85],
       plotOptions: {
         radialBar: {
-          offsetY: -10,
+          offsetY: -11,
           hollow: {
             size: '45%'
           },
@@ -46,22 +71,19 @@
             name: {
               fontSize: '15px',
               colors: [legendColor],
-              fontFamily: 'IBM Plex Sans',
               offsetY: 25
             },
             value: {
               fontSize: '2rem',
-              fontFamily: 'Rubik',
               fontWeight: 500,
               color: headingColor,
-              offsetY: -15
+              offsetY: -20
             },
             total: {
               show: true,
-              label: 'Total Visits',
+              label: 'بازدید کل',
               fontSize: '15px',
               fontWeight: 400,
-              fontFamily: 'IBM Plex Sans',
               color: legendColor
             }
           }
@@ -76,10 +98,11 @@
       stroke: {
         lineCap: 'round'
       },
-      labels: ['Target', 'Mart', 'Ebay'],
+      labels: ['هدف', 'بازار', 'فروشگاه'],
       legend: {
         show: true,
         position: 'bottom',
+        offsetY: 1,
         horizontalAlign: 'center',
         labels: {
           colors: legendColor,
@@ -140,11 +163,11 @@
       colors: [config.colors.info, config.colors_label.secondary],
       series: [
         {
-          name: '2020',
+          name: '1400',
           data: [80, 60, 125, 40, 50, 30, 70, 80, 100, 40, 80, 60, 120, 75, 25, 135, 65]
         },
         {
-          name: '2021',
+          name: '1401',
           data: [50, 65, 40, 100, 30, 30, 80, 20, 50, 45, 30, 90, 70, 40, 50, 40, 60]
         }
       ],
@@ -183,7 +206,7 @@
   const orderSummaryEl = document.querySelector('#orderSummaryChart'),
     orderSummaryConfig = {
       chart: {
-        height: 230,
+        height: 265,
         type: 'area',
         toolbar: false,
         dropShadow: {
@@ -217,6 +240,7 @@
       },
       series: [
         {
+          name: 'سری 1',
           data: [15, 18, 13, 19, 16, 31, 18, 26, 23, 39]
         }
       ],
@@ -249,7 +273,7 @@
         }
       },
       xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+        categories: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی'],
         labels: {
           offsetX: 0,
           style: {
@@ -271,7 +295,7 @@
         labels: {
           offsetX: 7,
           formatter: function (val) {
-            return '$' + val;
+            return val + ' تومان';
           },
           style: {
             fontSize: '13px',
@@ -295,7 +319,6 @@
       chart: {
         height: 55,
         width: 55,
-        fontFamily: 'IBM Plex Sans',
         type: 'donut'
       },
       dataLabels: {
@@ -310,6 +333,7 @@
         }
       },
       series: [60, 45, 60],
+      labels: ['سری 1', 'سری 2', 'سری 3'],
       stroke: {
         width: 3,
         lineCap: 'round',
@@ -356,7 +380,6 @@
       chart: {
         height: 55,
         width: 55,
-        fontFamily: 'IBM Plex Sans',
         type: 'donut'
       },
       dataLabels: {
@@ -371,6 +394,7 @@
         }
       },
       series: [60, 30, 30],
+      labels: ['سری 1', 'سری 2', 'سری 3'],
       stroke: {
         width: 3,
         lineCap: 'round',

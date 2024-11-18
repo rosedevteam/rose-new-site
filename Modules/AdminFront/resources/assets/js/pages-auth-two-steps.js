@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
           otp: {
             validators: {
               notEmpty: {
-                message: 'Please enter otp'
+                message: 'لطفا OTP را وارد کنید'
               }
             }
           }

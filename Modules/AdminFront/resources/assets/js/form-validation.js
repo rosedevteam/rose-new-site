@@ -13,7 +13,11 @@
     flatPickrList.forEach(flatPickr => {
       flatPickr.flatpickr({
         allowInput: true,
-        monthSelectorType: 'static'
+        monthSelectorType: 'static',
+        locale: 'fa',
+        altInput: true,
+        altFormat: 'Y/m/d',
+        disableMobile: true
       });
     });
   }
@@ -31,7 +35,7 @@
           event.stopPropagation();
         } else {
           // Submit your form
-          alert('Submitted!!!');
+          alert('ثبت شد!!!');
         }
 
         form.classList.add('was-validated');
@@ -76,132 +80,132 @@ document.addEventListener('DOMContentLoaded', function (e) {
         formValidationName: {
           validators: {
             notEmpty: {
-              message: 'Please enter your name'
+              message: 'لطفا نام خود را وارد کنید'
             },
             stringLength: {
               min: 6,
               max: 30,
-              message: 'The name must be more than 6 and less than 30 characters long'
+              message: 'نام وارد شده باید بیشتر از 6 و کمتر از 30 حرف باشد'
             },
             regexp: {
               regexp: /^[a-zA-Z0-9 ]+$/,
-              message: 'The name can only consist of alphabetical, number and space'
+              message: 'نام فقط می‌تواند شامل حروف الفبا، عدد و فاصله باشد'
             }
           }
         },
         formValidationEmail: {
           validators: {
             notEmpty: {
-              message: 'Please enter your email'
+              message: 'لطفا ایمیل خود را وارد کنید'
             },
             emailAddress: {
-              message: 'The value is not a valid email address'
+              message: 'مقدار وارد شده یک آدرس ایمیل معتبر نیست'
             }
           }
         },
         formValidationPass: {
           validators: {
             notEmpty: {
-              message: 'Please enter your password'
+              message: 'لطفا رمز عبور خود را وارد کنید'
             }
           }
         },
         formValidationConfirmPass: {
           validators: {
             notEmpty: {
-              message: 'Please confirm password'
+              message: 'لطفا رمز عبور خود را تایید کنید'
             },
             identical: {
               compare: function () {
                 return formValidationExamples.querySelector('[name="formValidationPass"]').value;
               },
-              message: 'The password and its confirm are not the same'
+              message: 'رمز عبور و تایید آن یکسان نیستند'
             }
           }
         },
         formValidationFile: {
           validators: {
             notEmpty: {
-              message: 'Please select the file'
+              message: 'لطفا فایل را انتخاب کنید'
             }
           }
         },
         formValidationDob: {
           validators: {
             notEmpty: {
-              message: 'Please select your DOB'
+              message: 'لطفا تاریخ تولد خود را انتخاب کنید'
             },
             date: {
               format: 'YYYY/MM/DD',
-              message: 'The value is not a valid date'
+              message: 'مقدار وارد شده یک تاریخ معتبر نیست'
             }
           }
         },
         formValidationSelect2: {
           validators: {
             notEmpty: {
-              message: 'Please select your country'
+              message: 'لطفا کشور خود را انتخاب کنید'
             }
           }
         },
         formValidationLang: {
           validators: {
             notEmpty: {
-              message: 'Please add your language'
+              message: 'لطفا زبان خود را اضافه کنید'
             }
           }
         },
         formValidationTech: {
           validators: {
             notEmpty: {
-              message: 'Please select technology'
+              message: 'لطفا تکنولوژی را انتخاب کنید'
             }
           }
         },
         formValidationHobbies: {
           validators: {
             notEmpty: {
-              message: 'Please select your hobbies'
+              message: 'لطفا سرگرمی‌های خود را انتخاب کنید'
             }
           }
         },
         formValidationBio: {
           validators: {
             notEmpty: {
-              message: 'Please enter your bio'
+              message: 'لطفا بیوگرافی خود را وارد کنید'
             },
             stringLength: {
               min: 100,
               max: 500,
-              message: 'The bio must be more than 100 and less than 500 characters long'
+              message: 'بیوگرافی باید شامل بیشتر از 100 و کمتر از 500 حرف باشد.'
             }
           }
         },
         formValidationGender: {
           validators: {
             notEmpty: {
-              message: 'Please select your gender'
+              message: 'لطفا جنسیت خود را انتخاب کنید'
             }
           }
         },
         formValidationPlan: {
           validators: {
             notEmpty: {
-              message: 'Please select your preferred plan'
+              message: 'لطفا پلن مورد نظر خود را انتخاب کنید'
             }
           }
         },
         formValidationSwitch: {
           validators: {
             notEmpty: {
-              message: 'Please select your preference'
+              message: 'لطفا اولویت خود را انتخاب کنید'
             }
           }
         },
         formValidationCheckbox: {
           validators: {
             notEmpty: {
-              message: 'Please confirm our T&C'
+              message: 'لطفا قوانین و مقررات ما را تایید کنید'
             }
           }
         }
@@ -267,10 +271,12 @@ document.addEventListener('DOMContentLoaded', function (e) {
       enableTime: false,
       // See https://flatpickr.js.org/formatting/
       dateFormat: 'Y/m/d',
+      locale: 'fa',
       // After selecting a date, we need to revalidate the field
       onChange: function () {
         fv.revalidateField('formValidationDob');
-      }
+      },
+      disableMobile: true
     });
 
     // Select2 (Country)
@@ -278,7 +284,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
       formValidationSelect2Ele.wrap('<div class="position-relative"></div>');
       formValidationSelect2Ele
         .select2({
-          placeholder: 'Select country',
+          placeholder: 'انتخاب کشور',
           dropdownParent: formValidationSelect2Ele.parent()
         })
         .on('change.select2', function () {

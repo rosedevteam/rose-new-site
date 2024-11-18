@@ -208,6 +208,19 @@ $(function () {
         js: {
           icon: 'bx bxl-nodejs text-warning'
         }
+      },
+      contextmenu: {
+        items: function(n) {
+            var items = $.jstree.defaults.contextmenu.items();
+            items.create.label = 'ایجاد';
+            items.rename.label = 'تغییر نام';
+            items.remove.label = 'حذف';
+            items.ccp.label = 'ویرایش';
+            items.ccp.submenu.cut.label = 'برش';
+            items.ccp.submenu.copy.label = 'کپی';
+            items.ccp.submenu.paste.label = 'چسباندن';
+            return items;
+        }
       }
     });
   }

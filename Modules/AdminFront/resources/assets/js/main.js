@@ -98,7 +98,7 @@ if (document.getElementById('layout-menu')) {
       if (styleSwitcherToggleEl) {
         styleSwitcherToggleEl.querySelector('i').classList.add('bx-moon');
         new bootstrap.Tooltip(styleSwitcherToggleEl, {
-          title: 'Dark mode',
+          title: 'حالت تیره',
           fallbackPlacements: ['bottom']
         });
       }
@@ -107,7 +107,7 @@ if (document.getElementById('layout-menu')) {
       if (styleSwitcherToggleEl) {
         styleSwitcherToggleEl.querySelector('i').classList.add('bx-sun');
         new bootstrap.Tooltip(styleSwitcherToggleEl, {
-          title: 'Light mode',
+          title: 'حالت روشن',
           fallbackPlacements: ['bottom']
         });
       }
@@ -115,7 +115,9 @@ if (document.getElementById('layout-menu')) {
     }
   } else {
     // Removed style switcher element if not using template customizer
-    styleSwitcherToggleEl.parentElement.remove();
+    if( styleSwitcherToggleEl !== null ){
+      styleSwitcherToggleEl.parentElement.remove();
+    }
   }
 
   // Update light/dark image based on current style
@@ -141,28 +143,72 @@ if (document.getElementById('layout-menu')) {
   window.onscroll = function () {
     scrollTopFn();
   };
+  // Internationalization (Language Dropdown)
+  // ---------------------------------------
 
-  // change the flag and name of language when you change the language through laravel locale (Language Dropdown).
-  // -------------------------------------------------------------------------------------------------------------
-  let language = document.documentElement.getAttribute('lang');
-  let langDropdown = document.getElementsByClassName('dropdown-language');
-  if (language !== null && langDropdown.length) {
-    // getting selected flag's name and icon class
-    let selectedDropdownItem = document.querySelector('a[data-language=' + language + ']'),
-      selectedFlag = selectedDropdownItem.childNodes[1].className,
-      startsWith = 'fs-',
-      classes = selectedFlag.split(' ').filter(function (v) {
-        return v.lastIndexOf(startsWith, 0) !== 0;
-      });
+  if (typeof i18next !== 'undefined' && typeof i18NextHttpBackend !== 'undefined') {
+    i18next
+    .use(i18NextHttpBackend)
+    .init({
+      lng: 'fa',
+      debug: false,
+      fallbackLng: 'fa',
+      backend: {
+        loadPath: assetsPath + 'json/locales/{{lng}}.json'
+      },
+      returnObjects: true
+    })
+    .then(function (t) {
+      localize();
+    });
+      
+    // Language Dropdown
+    let languageDropdown = document.getElementsByClassName('dropdown-language');
 
-    selectedFlag = classes.join(' ').trim() + ' fs-3';
+    if (languageDropdown.length) {
+      let dropdownItems = languageDropdown[0].querySelectorAll('.dropdown-item');
 
-    // add 'selected' class to current language's dropdown options
-    selectedDropdownItem.classList.add('selected');
+      for (let i = 0; i < dropdownItems.length; i++) {
+        dropdownItems[i].addEventListener('click', function () {
+          let currentLanguage = this.getAttribute('data-language'),
+            selectedLangFlag = this.querySelector('.fi').getAttribute('class'),
+            startsWith = 'fs-',
+            classes = selectedLangFlag.split(' ').filter(function (v) {
+              return v.lastIndexOf(startsWith, 0) !== 0;
+            });
+          selectedLangFlag = classes.join(' ').trim() + ' fs-3';
 
-    // set selected language's flag
-    let setLangFlag = (document.querySelector('.dropdown-language .dropdown-toggle').childNodes[1].className =
-      selectedFlag);
+          for (let sibling of this.parentNode.children) {
+            sibling.classList.remove('selected');
+          }
+          this.classList.add('selected');
+
+          languageDropdown[0].querySelector('.dropdown-toggle .fi').className = selectedLangFlag;
+
+          i18next.changeLanguage(currentLanguage, (err, t) => {
+            if (err) return console.log('ایرادی در بارگذاری پیش آمد', err);
+            localize();
+          });
+        });
+      }
+    }
+    
+    // Localize Function
+    function localize() {
+      let i18nList = document.querySelectorAll('[data-i18n]');
+      // Set the current language in dd
+      let currentLanguageEle = document.querySelector('.dropdown-item[data-language="' + i18next.language + '"]');
+
+      if (currentLanguageEle) {
+        currentLanguageEle.click();
+      }
+
+      if (i18next.resolvedLanguage !== undefined){
+        i18nList.forEach(function (item) {
+          item.innerHTML = i18next.t(item.dataset.i18n);
+        });
+      }
+    }
   }
 
   // Notification
@@ -406,11 +452,10 @@ if (typeof $ !== 'undefined') {
               limit: 5,
               source: filterConfig(searchData.pages),
               templates: {
-                header: '<h6 class="suggestions-header text-primary mb-0 mx-3 mt-3 pb-2">Pages</h6>',
+                header: '<h6 class="suggestions-header text-primary mb-0 mx-3 mt-3 pb-2">صفحات</h6>',
                 suggestion: function ({ url, icon, name }) {
                   return (
                     '<a href="' +
-                    baseUrl +
                     url +
                     '">' +
                     '<div>' +
@@ -426,8 +471,8 @@ if (typeof $ !== 'undefined') {
                 },
                 notFound:
                   '<div class="not-found px-3 py-2">' +
-                  '<h6 class="suggestions-header text-primary mb-2">Pages</h6>' +
-                  '<p class="py-2 mb-0"><i class="bx bx-error-circle bx-xs me-2"></i> No Results Found</p>' +
+                  '<h6 class="suggestions-header text-primary mb-2">صفحات</h6>' +
+                  '<p class="py-2 mb-0"><i class="bx bx-error-circle bx-xs me-2"></i> نتیجه‌ای پیدا نشد</p>' +
                   '</div>'
               }
             },
@@ -438,7 +483,7 @@ if (typeof $ !== 'undefined') {
               limit: 4,
               source: filterConfig(searchData.files),
               templates: {
-                header: '<h6 class="suggestions-header text-primary mb-0 mx-3 mt-3 pb-2">Files</h6>',
+                header: '<h6 class="suggestions-header text-primary mb-0 mx-3 mt-3 pb-2">فایل‌ها</h6>',
                 suggestion: function ({ src, name, subtitle, meta }) {
                   return (
                     '<a href="javascript:;">' +
@@ -466,8 +511,8 @@ if (typeof $ !== 'undefined') {
                 },
                 notFound:
                   '<div class="not-found px-3 py-2">' +
-                  '<h6 class="suggestions-header text-primary mb-2">Files</h6>' +
-                  '<p class="py-2 mb-0"><i class="bx bx-error-circle bx-xs me-2"></i> No Results Found</p>' +
+                  '<h6 class="suggestions-header text-primary mb-2">فایل‌ها</h6>' +
+                  '<p class="py-2 mb-0"><i class="bx bx-error-circle bx-xs me-2"></i> نتیجه‌ای پیدا نشد</p>' +
                   '</div>'
               }
             },
@@ -478,12 +523,10 @@ if (typeof $ !== 'undefined') {
               limit: 4,
               source: filterConfig(searchData.members),
               templates: {
-                header: '<h6 class="suggestions-header text-primary mb-0 mx-3 mt-3 pb-2">Members</h6>',
+                header: '<h6 class="suggestions-header text-primary mb-0 mx-3 mt-3 pb-2">اعضا</h6>',
                 suggestion: function ({ name, src, subtitle }) {
                   return (
-                    '<a href="' +
-                    baseUrl +
-                    'app/user/view/account">' +
+                    '<a href="app-user-view-account.html">' +
                     '<div class="d-flex align-items-center">' +
                     '<img class="rounded-circle me-3" src="' +
                     assetsPath +
@@ -505,8 +548,8 @@ if (typeof $ !== 'undefined') {
                 },
                 notFound:
                   '<div class="not-found px-3 py-2">' +
-                  '<h6 class="suggestions-header text-primary mb-2">Members</h6>' +
-                  '<p class="py-2 mb-0"><i class="bx bx-error-circle bx-xs me-2"></i> No Results Found</p>' +
+                  '<h6 class="suggestions-header text-primary mb-2">اعضا</h6>' +
+                  '<p class="py-2 mb-0"><i class="bx bx-error-circle bx-xs me-2"></i> نتیجه‌ای پیدا نشد</p>' +
                   '</div>'
               }
             }
@@ -519,8 +562,8 @@ if (typeof $ !== 'undefined') {
           // On typeahead select
           .bind('typeahead:select', function (ev, suggestion) {
             // Open selected page
-            if (suggestion.url !== 'javascript:;') {
-              window.location = baseUrl + suggestion.url;
+            if (suggestion.url) {
+              window.location = suggestion.url;
             }
           })
           // On typeahead close

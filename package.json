@@ -2,8 +2,8 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "vite build",
-        "dev": "vite"
+        "build": "yarn build",
+        "dev": "yarn"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.20",
@@ -13,5 +13,8 @@
         "postcss": "^8.4.47",
         "tailwindcss": "^3.4.13",
         "vite": "^5.0"
+    },
+    "dependencies": {
+        "yarn": "^1.22.22"
     }
 }
