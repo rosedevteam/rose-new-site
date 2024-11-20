@@ -53,7 +53,6 @@
           <div class="card-body">
             <!-- Logo -->
             <div class="app-brand justify-content-center">
-              <a href="index.html" class="app-brand-link gap-2">
                 <span class="app-brand-logo demo">
                   <svg width="26px" height="26px" viewbox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg">
                     <title>آیکن</title>
@@ -82,17 +81,17 @@
                     </g>
                   </svg>
                 </span>
-                <span class="app-brand-text demo h3 mb-0 fw-bold">فرست</span>
-              </a>
+                <span class="app-brand-text demo h3 mb-0 fw-bold">رز</span>
             </div>
             <!-- /Logo -->
             <h4 class="mb-3 secondary-font">تایید دو مرحله‌ای</h4>
             <p class="text-start mb-4">
               ما یک کد تایید به موبایل شما ارسال کردیم. کد ارسال شده را در فیلد زیر وارد کنید.
-              <span class="fw-bold d-block mt-2">******1234</span>
+                <span class="fw-bold d-block mt-2">{{ $phone }}</span>
             </p>
             <p class="mb-0 fw-semibold">کد 6 رقمی امنیتی را وارد کنید</p>
-            <form id="twoStepsForm" action="index.html" method="POST">
+              <form id="twoStepsForm" action="{{ route("admin.otp") }}" method="POST">
+                  @csrf
               <div class="mb-3">
                 <div class="auth-input-wrapper d-flex align-items-center justify-content-sm-between numeral-mask-wrapper">
                   <input type="text" class="form-control auth-input h-px-50 text-center numeral-mask text-center h-px-50 mx-1 my-2" maxlength="1" autofocus>
@@ -112,9 +111,11 @@
               </div>
             </form>
           </div>
-        </div>
         <!-- / Two Steps Verification -->
       </div>
+          @if($error)
+              <p style="color:#e14b4b">{{ "شماره وارد شده نامعتبر است." }}</p>
+          @endif
     </div>
 
     <!-- / Content -->

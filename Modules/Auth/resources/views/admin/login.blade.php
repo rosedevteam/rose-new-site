@@ -42,19 +42,16 @@
   </head>
 
   <body>
-    <!-- Content -->
-
     <div class="container-xxl">
       <div class="authentication-wrapper authentication-basic container-p-y">
         <div class="authentication-inner py-4">
-          <!-- Register -->
           <div class="card">
             <div class="card-body">
               <!-- Logo -->
               <div class="app-brand justify-content-center">
-                <a href="index.html" class="app-brand-link gap-2">
                   <span class="app-brand-logo demo">
-                    <svg width="26px" height="26px" viewbox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <svg width="26px" height="26px" viewbox="0 0 26 26" version="1.1"
+                         xmlns="http://www.w3.org/2000/svg">
                       <title>آیکن</title>
                       <defs>
                         <lineargradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
@@ -81,68 +78,32 @@
                       </g>
                     </svg>
                   </span>
-                  <span class="app-brand-text demo h3 mb-0 fw-bold">فرست</span>
-                </a>
+                  <span class="app-brand-text demo h3 mb-0 fw-bold">رز</span>
               </div>
               <!-- /Logo -->
-              <h4 class="mb-3 secondary-font">به فرست خوش آمدید!</h4>
-              <p class="mb-4">لطفا وارد حساب خود شده و ماجراجویی را شروع کنید</p>
-
-              <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
+                <p class="mb-4">لطفا وارد حساب خود شوید.</p>
+                <form id="formAuthentication" class="mb-3" action="{{ route("admin.login") }}" method="POST">
+                    @csrf
                 <div class="mb-3">
-                  <label for="email" class="form-label">ایمیل یا نام کاربری</label>
-                  <input type="text" class="form-control text-start" id="email" name="email-username" placeholder="ایمیل یا نام کاربری خود را وارد کنید" autofocus dir="ltr">
-                </div>
-                <div class="mb-3 form-password-toggle">
-                  <div class="d-flex justify-content-between">
-                    <label class="form-label" for="password">رمز عبور</label>
-                    <a href="auth-forgot-password-basic.html">
-                      <small>رمز عبور را فراموش کردید؟</small>
-                    </a>
-                  </div>
-                  <div class="input-group input-group-merge">
-                    <input type="password" id="password" class="form-control text-start" name="password" placeholder="············" aria-describedby="password" dir="ltr">
-                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                  </div>
+                    <label for="phone" class="form-label">شماره موبایل</label>
+                    <input type="text" class="form-control text-start" id="phone" name="phone"
+                           placeholder="شماره موبایل خود را وارد کنید" autofocus dir="ltr">
                 </div>
                 <div class="mb-3">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="remember-me">
-                    <label class="form-check-label" for="remember-me"> به خاطر سپاری </label>
+                      <input class="form-check-input" type="checkbox" id="remember">
+                      <label class="form-check-label" for="remember"> به خاطر سپاری </label>
                   </div>
                 </div>
                 <div class="mb-3">
                   <button class="btn btn-primary d-grid w-100" type="submit">ورود</button>
                 </div>
               </form>
-
-              <p class="text-center">
-                <span>کاربر جدید هستید؟</span>
-                <a href="auth-register-basic.html">
-                  <span>یک حساب بسازید</span>
-                </a>
-              </p>
-
-              <div class="divider my-4">
-                <div class="divider-text">یا</div>
-              </div>
-
-              <div class="d-flex justify-content-center">
-                <a href="javascript:;" class="btn btn-icon btn-label-facebook me-3">
-                  <i class="tf-icons bx bxl-facebook"></i>
-                </a>
-
-                <a href="javascript:;" class="btn btn-icon btn-label-google-plus me-3">
-                  <i class="tf-icons bx bxl-google-plus"></i>
-                </a>
-
-                <a href="javascript:;" class="btn btn-icon btn-label-twitter">
-                  <i class="tf-icons bx bxl-twitter"></i>
-                </a>
-              </div>
             </div>
           </div>
-          <!-- /Register -->
+            @error('phone')
+            <p style="color:#e14b4b">{{ "شماره وارد شده نامعتبر است." }}</p>
+            @enderror
         </div>
       </div>
     </div>

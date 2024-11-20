@@ -7,5 +7,6 @@
     "DailyReport": true,
     "Billing": true,
     "Category": true,
-    "Metadata": true
+    "Metadata": true,
+    "Admin": true
 }

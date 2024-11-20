@@ -2,9 +2,7 @@
 
 namespace Modules\User\Models;
 
-use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Modules\Billing\Models\Billing;
@@ -15,9 +13,9 @@ use Modules\Product\Models\Product;
 use Modules\User\Database\Factories\UserFactory;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Model
+class User extends \Illuminate\Foundation\Auth\User
 {
-    use HasFactory, Authenticatable, HasRoles;
+    use HasFactory, HasRoles;
 
     protected $guarded = [];
 
