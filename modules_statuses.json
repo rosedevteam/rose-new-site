@@ -6,8 +6,6 @@
     "Comment": true,
     "DailyReport": true,
     "Billing": true,
-    "Front": true,
     "Category": true,
-    "Metadata": true,
-    "AdminFront": true
+    "Metadata": true
 }
