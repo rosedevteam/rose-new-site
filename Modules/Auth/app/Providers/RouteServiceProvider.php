@@ -38,7 +38,6 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::middleware('guest')
             ->namespace($this->moduleNamespace)
-            ->controller(\Modules\Auth\Http\Controllers\AuthController::class)
             ->group(module_path('Auth', 'Routes/web.php'));
     }
 
@@ -52,7 +51,6 @@ class RouteServiceProvider extends ServiceProvider
         Route::namespace($this->moduleNamespace . '\admin')
             ->prefix(config('services.admin.prefix'))
             ->name('admin.')
-            ->controller(\Modules\Auth\Http\Controllers\admin\AuthController::class)
             ->group(module_path('Auth', 'Routes/admin.php'));
     }
 }

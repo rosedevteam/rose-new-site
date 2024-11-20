@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 class RouteServiceProvider extends ServiceProvider
 {
     protected string $name = 'Category';
+    protected string $moduleNamespace = 'Modules\Category\Http\Controllers';
 
     /**
      * Called before routes are registered.
@@ -24,8 +25,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map(): void
     {
-        $this->mapApiRoutes();
         $this->mapWebRoutes();
+        $this->mapAdminRoutes();
     }
 
     /**
@@ -33,9 +34,10 @@ class RouteServiceProvider extends ServiceProvider
      *
      * These routes are typically stateless.
      */
-    protected function mapApiRoutes(): void
+    protected function mapWebRoutes(): void
     {
-        Route::middleware('api')->prefix('api')->name('api.')->group(module_path($this->name, '/routes/api.php'));
+        Route::namespace($this->moduleNamespace)
+            ->group(module_path('Category', 'Routes/web.php'));
     }
 
     /**
@@ -43,8 +45,12 @@ class RouteServiceProvider extends ServiceProvider
      *
      * These routes all receive session state, CSRF protection, etc.
      */
-    protected function mapWebRoutes(): void
+    protected function mapAdminRoutes(): void
     {
-        Route::middleware('web')->group(module_path($this->name, '/routes/web.php'));
+        Route::middleware(['auth', 'admin'])
+            ->namespace($this->moduleNamespace . '\admin')
+            ->prefix(config('services.admin.prefix'))
+            ->name('admin.')
+            ->group(module_path('Category', 'Routes/admin.php'));
     }
 }

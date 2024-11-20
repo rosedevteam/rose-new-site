@@ -37,7 +37,6 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes(): void
     {
         Route::namespace($this->moduleNamespace)
-            ->controller(\Modules\Comment\Http\Controllers\CommentController::class)
             ->group(module_path('Comment', 'Routes/web.php'));
     }
 
@@ -52,7 +51,6 @@ class RouteServiceProvider extends ServiceProvider
             ->namespace($this->moduleNamespace . '\admin')
             ->prefix(config('services.admin.prefix'))
             ->name('admin.')
-            ->controller(\Modules\Comment\Http\Controllers\admin\CommentController::class)
             ->group(module_path('Comment', 'Routes/admin.php'));
     }
 }

@@ -37,7 +37,6 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes(): void
     {
         Route::namespace($this->moduleNamespace)
-            ->controller(\Modules\Post\Http\Controllers\PostController::class)
             ->group(module_path('Post', 'Routes/web.php'));
     }
 
@@ -52,7 +51,6 @@ class RouteServiceProvider extends ServiceProvider
             ->namespace($this->moduleNamespace . '\admin')
             ->prefix(config('services.admin.prefix'))
             ->name('admin.')
-            ->controller(\Modules\Post\Http\Controllers\admin\PostController::class)
             ->group(module_path('Post', 'Routes/admin.php'));
     }
 }
