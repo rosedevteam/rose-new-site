@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
     {
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
+        Permission::create(['name' => 'admin-panel']);
+        //
         Permission::create(['name' => 'view-users']);
         Permission::create(['name' => 'edit-users']);
         Permission::create(['name' => 'create-users']);
@@ -50,6 +52,7 @@ class DatabaseSeeder extends Seeder
         $superAdmin->givePermissionTo(Permission::all());
 
         $writer->givePermissionTo([
+            'admin-panel',
             'view-dailyReports',
             'create-dailyReports',
             'delete-dailyReports',

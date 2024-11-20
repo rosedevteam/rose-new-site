@@ -57,7 +57,6 @@ class AuthController extends Controller
         if ($otp['otp'] == $v) {
             $user = User::where('phone', $phone)->first();
             auth()->loginUsingId($user->id);
-//            dd(Auth::login($user));
             return redirect(route('admin.index'));
         } else {
             return view('auth::admin.otp', [

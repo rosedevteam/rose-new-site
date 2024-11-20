@@ -2,6 +2,7 @@
 
 namespace Modules\Auth\Providers;
 
+use App\Http\Middleware\Guest;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -36,7 +37,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes(): void
     {
-        Route::middleware('guest')
+        Route::middleware(['guest', 'web'])
             ->namespace($this->moduleNamespace)
             ->group(module_path('Auth', 'Routes/web.php'));
     }
@@ -48,7 +49,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapAdminRoutes(): void
     {
-        Route::namespace($this->moduleNamespace . '\admin')
+        Route::middleware(['guest', 'web'])
+            ->namespace($this->moduleNamespace . '\admin')
             ->prefix(config('services.admin.prefix'))
             ->name('admin.')
             ->group(module_path('Auth', 'Routes/admin.php'));

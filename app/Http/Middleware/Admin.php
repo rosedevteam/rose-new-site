@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
 use Symfony\Component\HttpFoundation\Response;
 
 class Admin
@@ -16,7 +15,7 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if($request->user()?->hasAnyRole(Role::all())){
+        if ($request->user()?->hasPermissionTo('admin-panel')) {
             return $next($request);
         }
         return redirect(route('admin.login'));

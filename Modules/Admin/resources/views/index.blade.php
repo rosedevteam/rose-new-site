@@ -49,7 +49,7 @@
 
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
             <div class="app-brand demo">
-                <a href="index.html" class="app-brand-link">
+                <a href="{{ route('admin.index') }}" class="app-brand-link">
               <span class="app-brand-logo demo">
                 <svg width="26px" height="26px" viewbox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg"
                 >
@@ -84,7 +84,7 @@
                   </g>
                 </svg>
               </span>
-                    <span class="app-brand-text demo menu-text fw-bold ms-2">فرست</span>
+                    <span class="app-brand-text demo menu-text fw-bold ms-2">رز</span>
                 </a>
 
                 <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
@@ -106,7 +106,7 @@
                     </a>
                     <ul class="menu-sub">
                         <li class="menu-item active">
-                            <a href="index.html" class="menu-link">
+                            <a href="{{ route('admin.index') }}" class="menu-link">
                                 <div data-i18n="Analytics">تجزیه و تحلیل</div>
                             </a>
                         </li>
@@ -1412,7 +1412,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <span class="fw-semibold d-block">جان اسنو</span>
+                                                    <span
+                                                        class="fw-semibold d-block">{{ $user["first_name"] . " ". $user["last_name"] }}</span>
                                                     <small>مدیر</small>
                                                 </div>
                                             </div>
@@ -1468,10 +1469,13 @@
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="auth-login-cover.html" target="_blank">
+                                        <form id="logout" action="{{ route('admin.logout') }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="dropdown-item">
                                             <i class="bx bx-power-off me-2"></i>
                                             <span class="align-middle">خروج</span>
-                                        </a>
+                                            </button>
+                                        </form>
                                     </li>
                                 </ul>
                             </li>
@@ -2060,28 +2064,6 @@
                     </div>
                 </div>
                 <!-- / Content -->
-
-                <!-- Footer -->
-                <footer class="content-footer footer bg-footer-theme">
-                    <div class="container-fluid d-flex flex-wrap justify-content-between py-3 flex-md-row flex-column">
-                        <div class="mb-2 mb-md-0">
-                            طراحی شده با ❤️ ارائه شده در وب‌سایت
-                            <a href="https://rtl-theme.com" target="_blank" class="footer-link fw-semibold">راست‌چین</a>
-                        </div>
-                        <div>
-                            <a href="https://rtl-theme.com" class="footer-link me-4" target="_blank">لایسنس</a>
-                            <a href="https://rtl-theme.com" target="_blank" class="footer-link me-4">قالب‌های بیشتر</a>
-
-                            <a href="https://v3dboy.ir/previews/html/frest/documentation" target="_blank"
-                               class="footer-link me-4">مستندات</a>
-
-                            <a href="https://rtl-theme.com" target="_blank"
-                               class="footer-link d-none d-sm-inline-block">پشتیبانی</a>
-                        </div>
-                    </div>
-                </footer>
-                <!-- / Footer -->
-
                 <div class="content-backdrop fade"></div>
             </div>
             <!-- Content wrapper -->

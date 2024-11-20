@@ -25,7 +25,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map(): void
     {
-        $this->mapApiRoutes();
+        $this->mapAdminRoutes();
         $this->mapWebRoutes();
     }
 
@@ -36,7 +36,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes(): void
     {
-        Route::namespace($this->moduleNamespace)
+        Route::middleware('web')
+            ->namespace($this->moduleNamespace)
             ->group(module_path('User', 'Routes/web.php'));
     }
 
@@ -45,9 +46,9 @@ class RouteServiceProvider extends ServiceProvider
      *
      * These routes are typically stateless.
      */
-    protected function mapApiRoutes(): void
+    protected function mapAdminRoutes(): void
     {
-        Route::middleware(['auth', 'admin'])
+        Route::middleware(['web', 'admin'])
             ->namespace($this->moduleNamespace . '\admin')
             ->prefix(config('services.admin.prefix'))
             ->name('admin.')
