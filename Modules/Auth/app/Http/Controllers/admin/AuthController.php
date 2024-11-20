@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
+use Modules\Auth\Models\OtpCode;
 use Modules\User\Models\User;
 use Spatie\Permission\Models\Role;
 
@@ -37,7 +38,9 @@ class AuthController extends Controller
     {
         try {
             $phone = $request->session()->get('phone')['phone'];
-            // api call
+            OtpCode::updateOrCreate([
+                'phone' => $phone,
+            ]);
             return view('auth::admin.otp', [
                 'error' => false,
                 'phone' => $phone
@@ -49,12 +52,12 @@ class AuthController extends Controller
 
     public function validateOtp(Request $request): Factory|View|Application|Redirector|RedirectResponse
     {
-        $v = "123456";
         $otp = $request->validate([
             'otp' => 'required|digits:6',
         ]);
         $phone = $request->session()->get('phone')['phone'];
-        if ($otp['otp'] == $v) {
+        $code = OtpCode::where('phone', $phone)->first();
+        if ($otp['otp'] == $code->otp) {
             $user = User::where('phone', $phone)->first();
             auth()->loginUsingId($user->id);
             return redirect(route('admin.index'));
