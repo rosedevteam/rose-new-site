@@ -12,8 +12,8 @@ return new class extends Migration {
     {
         Schema::create('otp_codes', function (Blueprint $table) {
             $table->id();
-            $table->integer('otp');
-            $table->integer('phone');
+            $table->string('otp');
+            $table->foreign('user_id')->onDelete('cascade');
             $table->timestamps();
         });
     }

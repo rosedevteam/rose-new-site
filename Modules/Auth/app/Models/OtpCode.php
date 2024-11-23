@@ -11,10 +11,4 @@ class OtpCode extends Model
 
     protected $guarded = [];
 
-    protected static function booted(): void
-    {
-        static::creating(function ($otpCode) {
-            $otpCode->otp = mt_rand(100000, 999999);
-        });
-    }
 }
