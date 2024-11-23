@@ -13,7 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->group('admin', [Admin::class]);
-        $middleware->group('adminGuest', [AdminGuest::class]);
+        $middleware->group('admin-guest', [AdminGuest::class]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

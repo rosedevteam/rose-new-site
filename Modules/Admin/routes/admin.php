@@ -3,4 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Admin\Http\Controllers\AdminController;
 
-Route::get('/', [AdminController::class, "index"])->name('index');
+Route::controller(AdminController::class)->group(function () {
+    Route::get('/', 'index')->name('index');
+});

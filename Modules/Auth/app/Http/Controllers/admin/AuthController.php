@@ -17,9 +17,6 @@ use Spatie\Permission\Models\Role;
 
 class AuthController extends Controller
 {
-    /**
-     * @throws AuthorizationException
-     */
     public function requestOtp(Request $request): Application|Response|Redirector|RedirectResponse
     {
         $phone = $request->validate([

@@ -16,7 +16,7 @@ class AdminGuest
     public function handle(Request $request, Closure $next): Response
     {
         if (auth()->check()) {
-            return redirect()->route('admin.index');
+            return redirect(route('admin.index'));
         }
         return $next($request);
     }
