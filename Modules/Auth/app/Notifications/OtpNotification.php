@@ -3,45 +3,32 @@
 namespace Modules\Auth\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Modules\Auth\Notifications\channel\SmsPanel;
 
 class OtpNotification extends Notification
 {
     use Queueable;
 
-    /**
-     * Create a new notification instance.
-     */
-    public function __construct()
-    {
-        //
-    }
+    protected $phone;
+    protected $otp;
 
-    /**
-     * Get the notification's delivery channels.
-     */
+    public function __construct($phone, $otp)
+    {
+        $this->phone = $phone;
+        $this->otp = $otp;
+    }
     public function via($notifiable): array
     {
-        return ['mail'];
+        return [SmsPanel::class];
     }
 
-    /**
-     * Get the mail representation of the notification.
-     */
-    public function toMail($notifiable): MailMessage
+    public function toSms($notifiable): array
     {
-        return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', 'https://laravel.com')
-            ->line('Thank you for using our application!');
-    }
-
-    /**
-     * Get the array representation of the notification.
-     */
-    public function toArray($notifiable): array
-    {
-        return [];
+        return [
+            'template_id' => config('services.sms.verify'),
+            'phone' => $notifiable->phone,
+            'otp' => $notifiable->otp,
+        ];
     }
 }

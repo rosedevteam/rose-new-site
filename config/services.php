@@ -37,6 +37,11 @@ return [
 
     'admin' => [
         'prefix' => env('ADMIN_PREFIX', 'admin'),
+    ],
+
+    'sms' => [
+        'verify' => env('TS_VERIFY_LOGIN_SMS'),
+        'subscribe' => env('TS_VERIFY_LOGIN_SMS'),
     ]
 
 ];
