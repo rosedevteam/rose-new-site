@@ -19,13 +19,15 @@ class User extends \Illuminate\Foundation\Auth\User
 {
     use HasFactory, HasRoles, Notifiable;
 
+    protected const OTP_DURATION = 2;
+
     protected $guarded = [];
 
     protected static function booted(): void
     {
         static::created(function ($user) {
             OtpCode::create([
-                'otp' => $this->generateOtp(),
+                'otp' => $user->generateOtp(),
                 'user_id' => $user->id,
             ]);
         });
@@ -34,13 +36,25 @@ class User extends \Illuminate\Foundation\Auth\User
     public function requestOtp(): void
     {
         $currentCode = $this->otp();
-        if ($currentCode->updatedAt() <= now()->subMinutes(2)) {
+        if ($currentCode->updatedAt() >= now()->subMinutes(self::OTP_DURATION)) {
             $currentCode->update([
                 'otp' => $this->generateOtp()
             ]);
         }
     }
 
+    // 0 -> wrongOtp, 1 -> correct, 2 -> expired
+    public function validateOtp(string $otp): int
+    {
+        $currentCode = $this->otp;
+        if ($currentCode->updated_at <= now()->subMinutes(self::OTP_DURATION)) {
+            return 2;
+        } elseif ($currentCode->otp == $otp) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 
     private function generateOtp(): string
     {

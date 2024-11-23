@@ -70,7 +70,7 @@ class DatabaseSeeder extends Seeder
         $user1 = User::factory()->create([
             'first_name' => 'admin',
             'password' => bcrypt('admin'),
-            'phone' => '0123456789',
+            'phone' => '123456789',
             'last_name' => 'admin',
             'email' => null,
             'birthday' => null,

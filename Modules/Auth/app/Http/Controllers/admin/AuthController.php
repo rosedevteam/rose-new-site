@@ -12,7 +12,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
-use Modules\Auth\Models\OtpCode;
 use Modules\User\Models\User;
 use Spatie\Permission\Models\Role;
 
@@ -26,7 +25,7 @@ class AuthController extends Controller
         $phone = $request->validate([
             'phone' => 'bail|required|numeric|exists:users,phone',
         ]);
-        $user = User::where('phone', $phone)->first();
+        $user = User::query()->where('phone', $phone)->first();
         if (!$user->hasAnyRole(Role::all())) {
             throw new AuthorizationException;
         }
@@ -38,12 +37,10 @@ class AuthController extends Controller
     {
         try {
             $phone = $request->session()->get('phone')['phone'];
-            OtpCode::updateOrCreate([
-                'phone' => $phone,
-            ]);
+            $user = User::query()->where('phone', $phone)->first();
+            $user->requestOtp();
             return view('auth::admin.otp', [
                 'error' => false,
-                'phone' => $phone
             ]);
         } catch (Exception $e) {
             return redirect(route('admin.login'));
@@ -53,19 +50,21 @@ class AuthController extends Controller
     public function validateOtp(Request $request): Factory|View|Application|Redirector|RedirectResponse
     {
         $otp = $request->validate([
-            'otp' => 'required|digits:6',
-        ]);
+            'otp' => "bail|required|digits:6",
+        ])['otp'];
         $phone = $request->session()->get('phone')['phone'];
-        $code = OtpCode::where('phone', $phone)->first();
-        if ($otp['otp'] == $code->otp) {
-            $user = User::where('phone', $phone)->first();
-            auth()->loginUsingId($user->id);
-            return redirect(route('admin.index'));
-        } else {
+        $user = User::query()->where('phone', $phone)->first();
+        $result = $user->validateOtp($otp);
+        if ($result == 0) {
             return view('auth::admin.otp', [
                 'error' => true,
-                'phone' => $phone,
             ]);
+        } elseif ($result == 1) {
+            auth()->login($user);
+            return redirect(route('admin.index'));
+        } else {
+            $request->session()->forget('phone');
+            return redirect(route('admin.login'));
         }
     }
 }

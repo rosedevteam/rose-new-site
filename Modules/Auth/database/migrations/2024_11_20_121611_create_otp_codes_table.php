@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('otp_codes', function (Blueprint $table) {
             $table->id();
             $table->string('otp');
-            $table->foreign('user_id')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

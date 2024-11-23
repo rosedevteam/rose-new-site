@@ -86,8 +86,12 @@
                     @csrf
                 <div class="mb-3">
                     <label for="phone" class="form-label">شماره موبایل</label>
-                    <input type="text" class="form-control text-start" id="phone" name="phone"
+                    <input type="text" class="form-control @error('phone') is-invalid @enderror text-start" id="phone"
+                           name="phone"
                            placeholder="شماره موبایل خود را وارد کنید" autofocus dir="ltr">
+                    @error('phone')
+                    <div class="error" data-field="phone" data-validator="notEmpty">شماره وارد شده نامعتبر است.</div>
+                    @enderror
                 </div>
                 <div class="mb-3">
                   <div class="form-check">
@@ -101,9 +105,6 @@
               </form>
             </div>
           </div>
-            @error('phone')
-            <p style="color:#e14b4b">{{ "شماره وارد شده نامعتبر است." }}</p>
-            @enderror
         </div>
       </div>
     </div>

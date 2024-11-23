@@ -87,22 +87,37 @@
             <h4 class="mb-3 secondary-font">تایید دو مرحله‌ای</h4>
             <p class="text-start mb-4">
               ما یک کد تایید به موبایل شما ارسال کردیم. کد ارسال شده را در فیلد زیر وارد کنید.
-                <span class="fw-bold d-block mt-2">{{ $phone }}</span>
+                @session('phone')<span class="fw-bold d-block mt-2">{{ $value['phone'] }}</span>@endSession
             </p>
             <p class="mb-0 fw-semibold">کد 6 رقمی امنیتی را وارد کنید</p>
               <form id="twoStepsForm" action="{{ route("admin.otp") }}" method="POST">
                   @csrf
               <div class="mb-3">
                 <div class="auth-input-wrapper d-flex align-items-center justify-content-sm-between numeral-mask-wrapper">
-                  <input type="text" class="form-control auth-input h-px-50 text-center numeral-mask text-center h-px-50 mx-1 my-2" maxlength="1" autofocus>
-                  <input type="text" class="form-control auth-input h-px-50 text-center numeral-mask text-center h-px-50 mx-1 my-2" maxlength="1">
-                  <input type="text" class="form-control auth-input h-px-50 text-center numeral-mask text-center h-px-50 mx-1 my-2" maxlength="1">
-                  <input type="text" class="form-control auth-input h-px-50 text-center numeral-mask text-center h-px-50 mx-1 my-2" maxlength="1">
-                  <input type="text" class="form-control auth-input h-px-50 text-center numeral-mask text-center h-px-50 mx-1 my-2" maxlength="1">
-                  <input type="text" class="form-control auth-input h-px-50 text-center numeral-mask text-center h-px-50 mx-1 my-2" maxlength="1">
+                    <input type="text"
+                           class="form-control @if($error) is-invalid @endif auth-input h-px-50 text-center numeral-mask text-center h-px-50 mx-1 my-2"
+                           maxlength="1" autofocus>
+                    <input type="text"
+                           class="form-control @if($error) is-invalid @endif auth-input h-px-50 text-center numeral-mask text-center h-px-50 mx-1 my-2"
+                           maxlength="1">
+                    <input type="text"
+                           class="form-control @if($error) is-invalid @endif auth-input h-px-50 text-center numeral-mask text-center h-px-50 mx-1 my-2"
+                           maxlength="1">
+                    <input type="text"
+                           class="form-control @if($error) is-invalid @endif auth-input h-px-50 text-center numeral-mask text-center h-px-50 mx-1 my-2"
+                           maxlength="1">
+                    <input type="text"
+                           class="form-control @if($error) is-invalid @endif auth-input h-px-50 text-center numeral-mask text-center h-px-50 mx-1 my-2"
+                           maxlength="1">
+                    <input type="text"
+                           class="form-control @if($error) is-invalid @endif auth-input h-px-50 text-center numeral-mask text-center h-px-50 mx-1 my-2"
+                           maxlength="1">
                 </div>
                 <!-- Create a hidden field which is combined by 3 fields above -->
                 <input type="hidden" name="otp">
+                  @if($error)
+                      <div class="error" data-validator="notEmpty">رمز وارد شده اشتباه است.</div>
+                  @endif
               </div>
               <button class="btn btn-primary d-grid w-100 mb-3">تایید حساب</button>
               <div class="text-center">
@@ -113,9 +128,6 @@
           </div>
         <!-- / Two Steps Verification -->
       </div>
-          @if($error)
-              <p style="color:#e14b4b">{{ "شماره وارد شده نامعتبر است." }}</p>
-          @endif
     </div>
 
     <!-- / Content -->
