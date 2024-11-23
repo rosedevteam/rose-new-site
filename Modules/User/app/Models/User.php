@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Modules\Auth\Models\OtpCode;
+use Modules\Auth\Notifications\OtpNotification;
 use Modules\Billing\Models\Billing;
 use Modules\Comment\Models\Comment;
 use Modules\DailyReport\Models\DailyReport;
@@ -58,7 +59,9 @@ class User extends \Illuminate\Foundation\Auth\User
 
     private function generateOtp(): string
     {
-        return (string)mt_rand(100000, 999999);
+        $newCode = (string)mt_rand(100000, 999999);
+        $this->notify(new OtpNotification($this->phone, $newCode));
+        return $newCode;
     }
 
     public function otp(): HasOne
