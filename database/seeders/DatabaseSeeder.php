@@ -24,10 +24,10 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'create-users']);
         Permission::create(['name' => 'delete-users']);
         //
-        Permission::create(['name' => 'view-dailyReports']);
-        Permission::create(['name' => 'edit-dailyReports']);
-        Permission::create(['name' => 'create-dailyReports']);
-        Permission::create(['name' => 'delete-dailyReports']);
+        Permission::create(['name' => 'view-daily-reports']);
+        Permission::create(['name' => 'edit-daily-reports']);
+        Permission::create(['name' => 'create-daily-reports']);
+        Permission::create(['name' => 'delete-daily-reports']);
         //
         Permission::create(['name' => 'view-posts']);
         Permission::create(['name' => 'edit-posts']);
@@ -48,15 +48,16 @@ class DatabaseSeeder extends Seeder
 
         $superAdmin = Role::create(['name' => 'super-admin']);
         $writer = Role::create(['name' => 'writer']);
+        $support = Role::create(['name' => 'support']);
 
         $superAdmin->givePermissionTo(Permission::all());
 
         $writer->givePermissionTo([
             'admin-panel',
-            'view-dailyReports',
-            'create-dailyReports',
-            'delete-dailyReports',
-            'edit-dailyReports',
+            'view-daily-reports',
+            'create-daily-reports',
+            'delete-daily-reports',
+            'edit-daily-reports',
             'view-posts',
             'edit-posts',
             'create-posts',
@@ -65,6 +66,17 @@ class DatabaseSeeder extends Seeder
             'edit-products',
             'create-products',
             'delete-products',
+        ]);
+
+        $support->givePermissionTo([
+            'admin-panel',
+            'view-users',
+            'edit-users',
+            'create-users',
+            'delete-users',
+            'view-comments',
+            'edit-comments',
+            'delete-comments',
         ]);
 
         $user1 = User::factory()->create([
@@ -92,6 +104,18 @@ class DatabaseSeeder extends Seeder
         $user2->assignRole($writer);
 
         $user3 = User::factory()->create([
+            'first_name' => 'support',
+            'password' => bcrypt('support'),
+            'phone' => '333333333',
+            'last_name' => 'support',
+            'email' => null,
+            'birthday' => null,
+            'avatar' => null,
+        ]);
+
+        $user3->assignRole($support);
+
+        $user4 = User::factory()->create([
             'first_name' => 'customer',
             'password' => bcrypt('customer'),
             'phone' => '222222222',

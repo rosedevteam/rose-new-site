@@ -9,21 +9,21 @@ class DailyReportPolicy
     // admin-panel
     public function view(User $user): bool
     {
-        return $user->hasPermissionTo('view-dailyReports');
+        return $user->hasPermissionTo('view-daily-reports');
     }
 
     public function edit(User $user): bool
     {
-        return $user->hasPermissionTo('edit-dailyReports');
+        return $user->hasPermissionTo('edit-daily-reports');
     }
 
     public function create(User $user): bool
     {
-        return $user->hasPermissionTo('create-dailyReports');
+        return $user->hasPermissionTo('create-daily-reports');
     }
 
     public function delete(User $user): bool
     {
-        return $user->hasPermissionTo('delete-dailyReports');
+        return $user->hasPermissionTo('delete-daily-reports');
     }
 }

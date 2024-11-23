@@ -17,6 +17,10 @@ class DailyReportServiceProvider extends ServiceProvider
 
     protected string $nameLower = 'dailyreport';
 
+    protected $policies = [
+        DailyReport::class => DailyReportPolicy::class,
+    ];
+
     /**
      * Boot the application events.
      */
@@ -28,7 +32,6 @@ class DailyReportServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
-        Gate::policy(DailyReport::class, DailyReportPolicy::class);
     }
 
     /**
