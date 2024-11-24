@@ -36,6 +36,7 @@
                                     <div class="flex-grow-1">
                                         <span
                                             class="fw-semibold d-block">{{ auth()->user()->last_name . " " . auth()->user()->first_name }}</span>
+                                        <small>{{ auth()->user()->getRoleNames()[0] }}</small>
                                     </div>
                                 </div>
                             </a>
