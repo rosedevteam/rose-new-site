@@ -3,9 +3,7 @@
 namespace Modules\DailyReport\Providers;
 
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
-use Modules\DailyReport\Models\DailyReport;
 use Modules\DailyReport\Policies\DailyReportPolicy;
 use Nwidart\Modules\Traits\PathNamespace;
 
@@ -16,10 +14,6 @@ class DailyReportServiceProvider extends ServiceProvider
     protected string $name = 'DailyReport';
 
     protected string $nameLower = 'dailyreport';
-
-    protected $policies = [
-        DailyReport::class => DailyReportPolicy::class,
-    ];
 
     /**
      * Boot the application events.

@@ -3,9 +3,7 @@
 namespace Modules\User\Providers;
 
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
-use Modules\User\Models\User;
 use Modules\User\Policies\UserPolicy;
 use Nwidart\Modules\Traits\PathNamespace;
 
@@ -28,7 +26,6 @@ class UserServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
-        Gate::policy(User::class, UserPolicy::class);
     }
 
     /**
