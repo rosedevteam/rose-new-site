@@ -12,6 +12,6 @@ class AdminController extends Controller
 {
     public function index(Request $request): Application|Factory|View
     {
-        return view('admin::index', ['user' => $request->user()]);
+        return view('admin::index');
     }
 }

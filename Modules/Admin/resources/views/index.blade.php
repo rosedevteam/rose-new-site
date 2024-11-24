@@ -575,6 +575,10 @@
     </div>
 @endsection
 
+@push('vendor')
+    <script src="/assets/admin/vendor/libs/apex-charts/apexcharts.js"></script>
+@endpush
+
 @push('script')
     <script src="/assets/admin/js/dashboards-analytics.js"></script>
 @endpush

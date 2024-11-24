@@ -35,7 +35,7 @@
                                     </div>
                                     <div class="flex-grow-1">
                                         <span
-                                            class="fw-semibold d-block">{{ $user["last_name"] . " ". $user["first_name"] }}</span>
+                                            class="fw-semibold d-block">{{ auth()->user()->last_name . " " . auth()->user()->first_name }}</span>
                                     </div>
                                 </div>
                             </a>
