@@ -20,29 +20,11 @@
                         <div class="card-body">
                             <div class="user-avatar-section">
                                 <div class="d-flex align-items-center flex-column">
-                                    <img class="img-fluid rounded my-4" src="../../assets/img/avatars/10.png"
+                                    <img class="img-fluid rounded my-4" src="{{ $user->avatar }}"
                                          height="110" width="110" alt="User avatar">
                                     <div class="user-info text-center">
-                                        <h5 class="mb-2">امیلیا کلارک</h5>
-                                        <span class="badge bg-label-secondary">نویسنده</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-around flex-wrap my-4 py-3">
-                                <div class="d-flex align-items-center me-4 mt-3 gap-3">
-                                    <span class="badge bg-label-primary p-2 rounded mt-1"><i
-                                            class="bx bx-check bx-sm"></i></span>
-                                    <div>
-                                        <h5 class="mb-0">1.23k</h5>
-                                        <span>وظیفه انجام شده</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center mt-3 gap-3">
-                                    <span class="badge bg-label-primary p-2 rounded mt-1"><i
-                                            class="bx bx-customize bx-sm"></i></span>
-                                    <div>
-                                        <h5 class="mb-0">568</h5>
-                                        <span>پروژه اجرا شده</span>
+                                        <h5 class="mb-2">{{ $user->last_name . ' ' . $user->first_name }}</h5>
+                                        <span class="badge bg-label-secondary">{{ $user->getRoleNames()[0] }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -50,111 +32,38 @@
                             <div class="info-container">
                                 <ul class="list-unstyled">
                                     <li class="mb-3">
-                                        <span class="fw-bold me-2">نام کاربری:</span>
-                                        <span>violet.dev</span>
-                                    </li>
-                                    <li class="mb-3">
                                         <span class="fw-bold me-2">ایمیل:</span>
-                                        <span>vafgot@vultukir.org</span>
-                                    </li>
-                                    <li class="mb-3">
-                                        <span class="fw-bold me-2">وضعیت:</span>
-                                        <span class="badge bg-label-success">فعال</span>
-                                    </li>
-                                    <li class="mb-3">
-                                        <span class="fw-bold me-2">نقش:</span>
-                                        <span>نویسنده</span>
-                                    </li>
-                                    <li class="mb-3">
-                                        <span class="fw-bold me-2">شناسه مالیاتی:</span>
-                                        <span>Tax-8965</span>
+                                        <span>{{ $user->email }}</span>
                                     </li>
                                     <li class="mb-3">
                                         <span class="fw-bold me-2">تماس:</span>
-                                        <span class="d-inline-block" dir="ltr">(123) 456-7890</span>
+                                        <span class="d-inline-block" dir="ltr">{{ $user->phone }}</span>
                                     </li>
                                     <li class="mb-3">
-                                        <span class="fw-bold me-2">زبان‌ها:</span>
-                                        <span>فرانسوی</span>
+                                        <span class="fw-bold me-2">تاریخ ساخت اکانت:</span>
+                                        <span class="d-inline-block" dir="ltr">{{ $user->created_at }}</span>
                                     </li>
                                     <li class="mb-3">
-                                        <span class="fw-bold me-2">کشور:</span>
-                                        <span>انگلستان</span>
+                                        <span class="fw-bold me-2">تاریخ آخرین آپدیت اکانت:</span>
+                                        <span class="d-inline-block" dir="ltr">{{ $user->updated_at }}</span>
                                     </li>
                                 </ul>
                                 <div class="d-flex justify-content-center pt-3">
                                     <a href="javascript:;" class="btn btn-primary me-3" data-bs-target="#editUser"
                                        data-bs-toggle="modal">ویرایش</a>
-                                    <a href="javascript:;" class="btn btn-label-danger suspend-user">تعلیق</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- /User Card -->
-                    <!-- Plan Card -->
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <span class="badge bg-label-primary">استاندارد</span>
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <sup class="h5 pricing-currency mt-3 mt-sm-4 mb-0 me-1 text-primary">هزار
-                                        تومان</sup>
-                                    <h1 class="display-3 fw-normal mb-0 text-primary">99</h1>
-                                    <sub class="fs-6 pricing-duration mt-auto mb-4">/ ماهانه</sub>
-                                </div>
-                            </div>
-                            <ul class="ps-3 g-2 mb-3 lh-1-85">
-                                <li class="mb-2">10 کاربر</li>
-                                <li class="mb-2">تا 10 گیگابایت فضا</li>
-                                <li>پشتیبانی پایه</li>
-                            </ul>
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <h6 class="mb-0">روز</h6>
-                                <h6 class="mb-0">65% تمام شده</h6>
-                            </div>
-                            <div class="progress mb-3" style="height: 8px">
-                                <div class="progress-bar" role="progressbar" style="width: 65%" aria-valuenow="65"
-                                     aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <span>4 روز باقی مانده</span>
-                            <div class="d-grid w-100 mt-3 pt-2">
-                                <button class="btn btn-primary" data-bs-target="#upgradePlanModal"
-                                        data-bs-toggle="modal">
-                                    ارتقای پلن
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /Plan Card -->
                 </div>
                 <!--/ User Sidebar -->
 
                 <!-- User Content -->
                 <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
-                    <!-- User Pills -->
-                    <ul class="nav nav-pills flex-column flex-md-row mb-3">
-                        <li class="nav-item">
-                            <a class="nav-link active my-1 my-md-0" href="javascript:void(0);"><i
-                                    class="bx bx-user me-1"></i>حساب</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="app-user-view-security.html"><i class="bx bx-lock-alt me-1"></i>امنیت</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="app-user-view-billing.html"><i class="bx bx-detail me-1"></i>صورتحساب
-                                و پلن‌ها</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="app-user-view-notifications.html"><i class="bx bx-bell me-1"></i>اعلان‌ها</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="app-user-view-connections.html"><i
-                                    class="bx bx-link-alt me-1"></i>اتصالات</a>
-                        </li>
-                    </ul>
-                    <!--/ User Pills -->
 
-                    <!-- Project table -->
+
+                <!-- Project table -->
                     <div class="card mb-4">
                         <div class="card-header"><h5 class="mb-0">لیست پروژه‌های کاربر</h5></div>
                         <div class="table-responsive mb-3">
@@ -467,27 +376,6 @@
             <!-- /Modal -->
         </div>
         <!-- / Content -->
-
-        <!-- Footer -->
-        <footer class="content-footer footer bg-footer-theme">
-            <div class="container-fluid d-flex flex-wrap justify-content-between py-3 flex-md-row flex-column">
-                <div class="mb-2 mb-md-0">
-                    طراحی شده با ❤️ ارائه شده در وب‌سایت
-                    <a href="https://rtl-theme.com" target="_blank" class="footer-link fw-semibold">راست‌چین</a>
-                </div>
-                <div>
-                    <a href="https://rtl-theme.com" class="footer-link me-4" target="_blank">لایسنس</a>
-                    <a href="https://rtl-theme.com" target="_blank" class="footer-link me-4">قالب‌های بیشتر</a>
-
-                    <a href="https://v3dboy.ir/previews/html/frest/documentation" target="_blank"
-                       class="footer-link me-4">مستندات</a>
-
-                    <a href="https://rtl-theme.com" target="_blank" class="footer-link d-none d-sm-inline-block">پشتیبانی</a>
-                </div>
-            </div>
-        </footer>
-        <!-- / Footer -->
-
         <div class="content-backdrop fade"></div>
     </div>
 @endsection

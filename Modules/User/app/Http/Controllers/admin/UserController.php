@@ -18,9 +18,11 @@ class UserController extends Controller
     public function index(): Application|Factory|View
     {
         Gate::authorize('view-users');
+        $users = User::paginate(50);
+        $roles = Role::all()->select('name', 'id');
         return view('user::admin.index', [
-            'users' => User::paginate(100),
-            'roles' => Role::all()->select('name', 'id')
+            'users' => $users,
+            'roles' => $roles
         ]);
     }
 

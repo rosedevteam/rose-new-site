@@ -104,6 +104,7 @@
                                                     type="search" class="form-control" placeholder="جستجو ..."
                                                     aria-controls="DataTables_Table_0"></label></div>
                                 </div>
+                                @can('create-users')
                                 <div class="dt-buttons btn-group flex-wrap">
                                     <button class="btn btn-secondary add-new btn-primary ms-2" tabindex="0"
                                             aria-controls="DataTables_Table_0" type="button" data-bs-toggle="offcanvas"
@@ -112,6 +113,7 @@
                                                     class="d-none d-lg-inline-block">افزودن کاربر جدید</span></span>
                                     </button>
                                 </div>
+                                @endcan
                             </div>
                         </div>
                     </div>
@@ -187,51 +189,52 @@
                         @endforeach
                         </tbody>
                     </table>
-                    <div class="row mx-2">
-                        <div class="col-sm-12 col-md-6">
-                            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">
-                                نمایش 1 تا 10 از 50 ردیف
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6">
-                            <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
-                                <ul class="pagination">
-                                    <li class="paginate_button page-item previous disabled"
-                                        id="DataTables_Table_0_previous"><a href="#" aria-controls="DataTables_Table_0"
-                                                                            data-dt-idx="previous" tabindex="0"
-                                                                            class="page-link">قبلی</a></li>
-                                    <li class="paginate_button page-item active"><a href="#"
-                                                                                    aria-controls="DataTables_Table_0"
-                                                                                    data-dt-idx="0" tabindex="0"
-                                                                                    class="page-link">1</a></li>
-                                    <li class="paginate_button page-item "><a href="#"
-                                                                              aria-controls="DataTables_Table_0"
-                                                                              data-dt-idx="1" tabindex="0"
-                                                                              class="page-link">2</a></li>
-                                    <li class="paginate_button page-item "><a href="#"
-                                                                              aria-controls="DataTables_Table_0"
-                                                                              data-dt-idx="2" tabindex="0"
-                                                                              class="page-link">3</a></li>
-                                    <li class="paginate_button page-item "><a href="#"
-                                                                              aria-controls="DataTables_Table_0"
-                                                                              data-dt-idx="3" tabindex="0"
-                                                                              class="page-link">4</a></li>
-                                    <li class="paginate_button page-item "><a href="#"
-                                                                              aria-controls="DataTables_Table_0"
-                                                                              data-dt-idx="4" tabindex="0"
-                                                                              class="page-link">5</a></li>
-                                    <li class="paginate_button page-item next" id="DataTables_Table_0_next"><a href="#"
-                                                                                                               aria-controls="DataTables_Table_0"
-                                                                                                               data-dt-idx="next"
-                                                                                                               tabindex="0"
-                                                                                                               class="page-link">بعدی</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    {{--                    <div class="row mx-2">--}}
+                    {{--                        <div class="col-sm-12 col-md-6">--}}
+                    {{--                            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">--}}
+                    {{--                                نمایش 1 تا 10 از 50 ردیف--}}
+                    {{--                            </div>--}}
+                    {{--                        </div>--}}
+                    {{--                        <div class="col-sm-12 col-md-6">--}}
+                    {{--                            <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">--}}
+                    {{--                                <ul class="pagination">--}}
+                    {{--                                    <li class="paginate_button page-item previous disabled"--}}
+                    {{--                                        id="DataTables_Table_0_previous"><a href="#" aria-controls="DataTables_Table_0"--}}
+                    {{--                                                                            data-dt-idx="previous" tabindex="0"--}}
+                    {{--                                                                            class="page-link">قبلی</a></li>--}}
+                    {{--                                    <li class="paginate_button page-item active"><a href="#"--}}
+                    {{--                                                                                    aria-controls="DataTables_Table_0"--}}
+                    {{--                                                                                    data-dt-idx="0" tabindex="0"--}}
+                    {{--                                                                                    class="page-link">1</a></li>--}}
+                    {{--                                    <li class="paginate_button page-item "><a href="#"--}}
+                    {{--                                                                              aria-controls="DataTables_Table_0"--}}
+                    {{--                                                                              data-dt-idx="1" tabindex="0"--}}
+                    {{--                                                                              class="page-link">2</a></li>--}}
+                    {{--                                    <li class="paginate_button page-item "><a href="#"--}}
+                    {{--                                                                              aria-controls="DataTables_Table_0"--}}
+                    {{--                                                                              data-dt-idx="2" tabindex="0"--}}
+                    {{--                                                                              class="page-link">3</a></li>--}}
+                    {{--                                    <li class="paginate_button page-item "><a href="#"--}}
+                    {{--                                                                              aria-controls="DataTables_Table_0"--}}
+                    {{--                                                                              data-dt-idx="3" tabindex="0"--}}
+                    {{--                                                                              class="page-link">4</a></li>--}}
+                    {{--                                    <li class="paginate_button page-item "><a href="#"--}}
+                    {{--                                                                              aria-controls="DataTables_Table_0"--}}
+                    {{--                                                                              data-dt-idx="4" tabindex="0"--}}
+                    {{--                                                                              class="page-link">5</a></li>--}}
+                    {{--                                    <li class="paginate_button page-item next" id="DataTables_Table_0_next"><a href="#"--}}
+                    {{--                                                                                                               aria-controls="DataTables_Table_0"--}}
+                    {{--                                                                                                               data-dt-idx="next"--}}
+                    {{--                                                                                                               tabindex="0"--}}
+                    {{--                                                                                                               class="page-link">بعدی</a>--}}
+                    {{--                                    </li>--}}
+                    {{--                                </ul>--}}
+                    {{--                            </div>--}}
+                    {{--                        </div>--}}
+                    {{--                    </div>--}}
                 </div>
                 <!-- Offcanvas to add new user -->
+                @can('create-users')
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddUser"
                      aria-labelledby="offcanvasAddUserLabel">
                     <div class="offcanvas-header border-bottom">
@@ -269,10 +272,12 @@
                         </form>
                     </div>
                 </div>
+                @endcan
             </div>
         </div>
         <div class="content-backdrop fade"></div>
     </div>
+    {{ $users->links() }}
 @endsection
 
 @push('vendor')

@@ -19,15 +19,35 @@
 
     <ul class="menu-inner py-1">
         @can('view-users')
-            <li class="menu-item">
+            <li @class(["menu-item", 'active' => url()->current() == route('admin.user.index')])>
                 <a href="{{ route("admin.user.index") }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-user"></i>
                     <div data-i18n="کاربران">کاربران</div>
                 </a>
             </li>
         @endcan
+        @can('roles-and-permissions')
+            <li class="menu-item" style="">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-check-shield"></i>
+                    <div data-i18n="Roles &amp; Permissions">نقش‌ها و مجوزها</div>
+                </a>
+                <ul class="menu-sub">
+                    <li @class(["menu-item", 'active' => false])>
+                        <a href="app-access-roles.html" class="menu-link">
+                            <div data-i18n="Roles">نقش‌ها</div>
+                        </a>
+                    </li>
+                    <li @class(["menu-item", 'active' => false])>
+                        <a href="app-access-permission.html" class="menu-link">
+                            <div data-i18n="Permission">مجوزها</div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        @endcan
         @can('view-products')
-            <li class="menu-item">
+            <li @class(["menu-item", 'active' => url()->current() == route('admin.product.index')])>
                 <a href="{{ route("admin.product.index") }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-layout"></i>
                     <div data-i18n="دوره ها">دوره ها</div>
@@ -35,7 +55,7 @@
             </li>
         @endcan
         @can('view-posts')
-            <li class="menu-item">
+            <li @class(["menu-item", 'active' => url()->current() == route('admin.post.index')])>
                 <a href="{{ route("admin.post.index") }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-detail"></i>
                     <div data-i18n="پست ها">پست ها</div>
@@ -43,7 +63,7 @@
             </li>
         @endcan
         @can('view-comments')
-            <li class="menu-item">
+            <li @class(["menu-item", 'active' => url()->current() == route('admin.comment.index')])>
                 <a href="{{ route("admin.comment.index") }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-chat"></i>
                     <div data-i18n="نظرات">نظرات</div>
@@ -51,12 +71,12 @@
             </li>
         @endcan
         @can('view-daily-reports')
-        <li class="menu-item">
-            <a href="{{ route("admin.daily-report.index") }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-file"></i>
-                <div data-i18n="گزارش روزانه بازار">گزارش روزانه بازار</div>
-            </a>
-        </li>
+            <li @class(["menu-item", 'active' => url()->current() == route('admin.daily-report.index')])>
+                <a href="{{ route("admin.daily-report.index") }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-file"></i>
+                    <div data-i18n="گزارش روزانه بازار">گزارش روزانه بازار</div>
+                </a>
+            </li>
         @endcan
     </ul>
 </aside>
