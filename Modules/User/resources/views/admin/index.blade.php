@@ -119,76 +119,31 @@
                                 aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body mx-0 flex-grow-0">
-                        <form class="add-new-user pt-0" id="addNewUserForm" onsubmit="return false">
+                        <form class="add-new-user pt-0" id="addNewUserForm" action="{{ route('admin.user.store') }}"
+                              method="POST">
+                            @csrf
                             <div class="mb-3">
-                                <label class="form-label" for="add-user-fullname">نام کامل</label>
-                                <input type="text" class="form-control" id="add-user-fullname" placeholder="جان اسنو"
-                                       name="userFullname" aria-label="John Doe">
+                                <label class="form-label" for="first-name">نام</label>
+                                <input type="text" class="form-control" id="first-name" name="first-name">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="add-user-email">ایمیل</label>
-                                <input type="text" id="add-user-email" class="form-control text-start"
-                                       placeholder="john.doe@example.com" aria-label="john.doe@example.com"
-                                       name="userEmail" dir="ltr">
+                                <label class="form-label" for="last-name">نام خانوادگی</label>
+                                <input type="text" class="form-control" id="last-name" name="last-name">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="add-user-contact">تماس</label>
-                                <input type="text" id="add-user-contact" class="form-control phone-mask text-start"
-                                       placeholder="+1 (609) 988-44-11" aria-label="+1 (609) 988-44-11"
-                                       name="userContact" dir="ltr">
+                                <label class="form-label" for="phone">شماره موبایل</label>
+                                <input type="text" class="form-control" id="last-name" name="last-name">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="add-user-company">شرکت</label>
-                                <input type="text" id="add-user-company" class="form-control"
-                                       placeholder="توسعه دهنده وب" aria-label="jdoe1" name="companyName">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="country">کشور</label>
-                                <select id="country" class="select2 form-select">
-                                    <option value="">انتخاب</option>
-                                    <option value="Australia">استرالیا</option>
-                                    <option value="Bangladesh">بنگلادش</option>
-                                    <option value="Belarus">بلاروس</option>
-                                    <option value="Brazil">برزیل</option>
-                                    <option value="Canada">کانادا</option>
-                                    <option value="China">چین</option>
-                                    <option value="France">فرانسه</option>
-                                    <option value="Germany">آلمان</option>
-                                    <option value="India">هندوستان</option>
-                                    <option value="Indonesia">اندونزی</option>
-                                    <option value="Israel">اسرائیل</option>
-                                    <option value="Italy">ایتالیا</option>
-                                    <option value="Japan">ژاپن</option>
-                                    <option value="Korea">کره جنوبی</option>
-                                    <option value="Mexico">مکزیک</option>
-                                    <option value="Philippines">فیلیپین</option>
-                                    <option value="Russia">روسیه</option>
-                                    <option value="South Africa">آفریقای جنوبی</option>
-                                    <option value="Thailand">تایلند</option>
-                                    <option value="Turkey">ترکیه</option>
-                                    <option value="Ukraine">اوکراین</option>
-                                    <option value="United Arab Emirates">امارات</option>
-                                    <option value="United Kingdom">انگلستان</option>
-                                    <option value="United States">ایالات متحده</option>
-                                </select>
+                                <label class="form-label" for="email">ایمیل</label>
+                                <input type="text" id="email" class="form-control text-start" name="email" dir="ltr">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="user-role">نقش کاربر</label>
-                                <select id="user-role" class="form-select">
-                                    <option value="subscriber">مشترک</option>
-                                    <option value="editor">ویرایشگر</option>
-                                    <option value="maintainer">نگهدارنده</option>
-                                    <option value="author">نویسنده</option>
-                                    <option value="admin">مدیر</option>
-                                </select>
-                            </div>
-                            <div class="mb-4">
-                                <label class="form-label" for="user-plan">انتخاب پلن</label>
-                                <select id="user-plan" class="form-select">
-                                    <option value="basic">پایه</option>
-                                    <option value="enterprise">سازمان</option>
-                                    <option value="company">شرکت</option>
-                                    <option value="team">تیم</option>
+                                <select id="role" class="form-select">
+                                    @foreach($roles as $role)
+                                        <option value="{{ $role }}">{{ $role }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">ثبت</button>

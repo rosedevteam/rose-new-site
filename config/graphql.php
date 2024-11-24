@@ -2,10 +2,13 @@
 
 declare(strict_types=1);
 
+use graphql\UserQuery;
+use graphql\UserType;
+
 return [
     'route' => [
         // The prefix for routes; do NOT use a leading slash!
-        'prefix' => 'graphql',
+        'prefix' => 'admin',
 
         // The controller/method to use in GraphQL request.
         // Also supported array syntax: `[\Rebing\GraphQL\GraphQLController::class, 'query']`
@@ -73,27 +76,42 @@ return [
     //  ]
     //
     'schemas' => [
-        'default' => [
+//        'default' => [
+//            'query' => [
+//                // ExampleQuery::class,
+//                UserQuery::class
+//            ],
+//            'mutation' => [
+//                // ExampleMutation::class,
+//            ],
+//            // The types only available in this schema
+//            'types' => [
+//                // ExampleType::class,
+//                UserType::class
+//            ],
+//
+//            // Laravel HTTP middleware
+//            'middleware' => [],
+//
+//            // Which HTTP methods to support; must be given in UPPERCASE!
+//            'method' => ['GET'],
+//
+//            // An array of middlewares, overrides the global ones
+//            'execution_middleware' => null,
+//        ],
+        'user/graphql' => [
             'query' => [
-                // ExampleQuery::class,
+                UserQuery::class
             ],
             'mutation' => [
-                // ExampleMutation::class,
+
             ],
-            // The types only available in this schema
             'types' => [
-                // ExampleType::class,
+                UserType::class
             ],
-
-            // Laravel HTTP middleware
-            'middleware' => null,
-
-            // Which HTTP methods to support; must be given in UPPERCASE!
-            'method' => ['GET', 'POST'],
-
-            // An array of middlewares, overrides the global ones
-            'execution_middleware' => null,
-        ],
+            'middleware' => ['admin'],
+            'method' => ['POST'],
+        ]
     ],
 
     // The global types available to all schemas.
@@ -106,7 +124,7 @@ return [
     // ]
     //
     'types' => [
-        // ExampleType::class,
+//         ExampleType::class,
         // ExampleRelationType::class,
         // \Rebing\GraphQL\Support\UploadType::class,
     ],

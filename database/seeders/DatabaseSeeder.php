@@ -46,6 +46,7 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'view-billings']);
         Permission::create(['name' => 'edit-billings']);
 
+        $customer = Role::create(['name' => 'customer']);
         $superAdmin = Role::create(['name' => 'super-admin']);
         $writer = Role::create(['name' => 'writer']);
         $support = Role::create(['name' => 'support']);
@@ -124,5 +125,7 @@ class DatabaseSeeder extends Seeder
             'birthday' => null,
             'avatar' => null,
         ]);
+
+        $user4->assignRole($customer);
     }
 }
