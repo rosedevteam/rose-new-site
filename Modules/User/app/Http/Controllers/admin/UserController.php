@@ -3,19 +3,17 @@
 namespace Modules\User\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use Gate;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function logout(Request $request): Application|Redirector|RedirectResponse
+    public function index(): Application|Factory|View
     {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect(route('admin.login'));
+        Gate::authorize('view-users');
+        return view('user::admin.index');
     }
+
 }

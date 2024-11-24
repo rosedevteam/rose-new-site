@@ -34,7 +34,8 @@
                                         </div>
                                     </div>
                                     <div class="flex-grow-1">
-                                        <span class="fw-semibold d-block">{{ $user["first_name"] . " ". $user["last_name"] }}</span>
+                                        <span
+                                            class="fw-semibold d-block">{{ $user["last_name"] . " ". $user["first_name"] }}</span>
                                     </div>
                                 </div>
                             </a>

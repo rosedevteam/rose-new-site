@@ -12,7 +12,7 @@ class DailyReportController extends Controller
 {
     public function index(): View|Factory|Application
     {
-        Gate::authorize('view-daily-reports', auth()->user());
+        Gate::authorize('view-daily-reports');
         return view('dailyreport::admin.index');
     }
 }

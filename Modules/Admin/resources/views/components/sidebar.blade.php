@@ -18,10 +18,42 @@
     <div class="menu-inner-shadow"></div>
 
     <ul class="menu-inner py-1">
+        @can('view-users')
+            <li class="menu-item">
+                <a href="{{ route("admin.user.index") }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-user"></i>
+                    <div data-i18n="کاربران">کاربران</div>
+                </a>
+            </li>
+        @endcan
+        @can('view-products')
+            <li class="menu-item">
+                <a href="{{ route("admin.product.index") }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-layout"></i>
+                    <div data-i18n="دوره ها">دوره ها</div>
+                </a>
+            </li>
+        @endcan
+        @can('view-posts')
+            <li class="menu-item">
+                <a href="{{ route("admin.post.index") }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-detail"></i>
+                    <div data-i18n="پست ها">پست ها</div>
+                </a>
+            </li>
+        @endcan
+        @can('view-comments')
+            <li class="menu-item">
+                <a href="{{ route("admin.comment.index") }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-chat"></i>
+                    <div data-i18n="نظرات">نظرات</div>
+                </a>
+            </li>
+        @endcan
         @can('view-daily-reports')
         <li class="menu-item">
             <a href="{{ route("admin.daily-report.index") }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-map-alt"></i>
+                <i class="menu-icon tf-icons bx bx-file"></i>
                 <div data-i18n="گزارش روزانه بازار">گزارش روزانه بازار</div>
             </a>
         </li>

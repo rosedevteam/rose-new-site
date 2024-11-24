@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Auth;
 use Modules\User\Models\User;
 use Spatie\Permission\Models\Role;
 
@@ -63,5 +64,13 @@ class AuthController extends Controller
             $request->session()->forget('phone');
             return redirect(route('admin.login'));
         }
+    }
+
+    public function logout(Request $request): Application|Redirector|RedirectResponse
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect(route('admin.login'));
     }
 }

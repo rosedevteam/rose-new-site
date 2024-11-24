@@ -4,6 +4,6 @@ use Illuminate\Support\Facades\Route;
 use Modules\User\Http\Controllers\admin\UserController;
 
 
-Route::controller(UserController::class)->group(function () {
-    Route::post('/logout', 'logout')->name('logout');
+Route::controller(UserController::class)->prefix('/user')->group(function () {
+    Route::get('/', 'index')->name('index');
 });

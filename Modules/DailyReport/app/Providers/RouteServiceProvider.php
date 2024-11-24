@@ -9,7 +9,6 @@ class RouteServiceProvider extends ServiceProvider
 {
     protected string $name = 'DailyReport';
     protected string $moduleNamespace = 'Modules\DailyReport\Http\Controllers';
-    protected string $routeNamePersian = 'گزارش-روزانه-بازار';
 
     /**
      * Called before routes are registered.
@@ -39,7 +38,6 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::middleware('web')
             ->namespace($this->moduleNamespace)
-            ->prefix('/' . $this->routeNamePersian)
             ->namespace("daily-report")
             ->group(module_path('DailyReport', 'Routes/web.php'));
     }
@@ -53,7 +51,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::middleware(['web', 'admin'])
             ->namespace($this->moduleNamespace . '\admin')
-            ->prefix(config('services.admin.prefix') . "/" . $this->routeNamePersian)
+            ->prefix(config('services.admin.prefix'))
             ->name('admin.daily-report.')
             ->group(module_path('DailyReport', 'Routes/admin.php'));
     }
