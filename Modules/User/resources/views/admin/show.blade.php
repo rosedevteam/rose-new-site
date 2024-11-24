@@ -41,11 +41,11 @@
                                     </li>
                                     <li class="mb-3">
                                         <span class="fw-bold me-2">تاریخ ساخت اکانت:</span>
-                                        <span class="d-inline-block" dir="ltr">{{ $user->created_at }}</span>
+                                        <span class="d-inline-block" dir="ltr">{{ verta($user->created_at) }}</span>
                                     </li>
                                     <li class="mb-3">
                                         <span class="fw-bold me-2">تاریخ آخرین آپدیت اکانت:</span>
-                                        <span class="d-inline-block" dir="ltr">{{ $user->updated_at }}</span>
+                                        <span class="d-inline-block" dir="ltr">{{ verta($user->updated_at) }}</span>
                                     </li>
                                 </ul>
                                 <div class="d-flex justify-content-center pt-3">
