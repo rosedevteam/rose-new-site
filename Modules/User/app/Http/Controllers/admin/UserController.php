@@ -15,26 +15,30 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    public function index(): Application|Factory|View
+    public function index(Request $request): Application|Factory|View
     {
         Gate::authorize('view-users');
-        $users = User::paginate(50);
         $roles = Role::all()->select('name', 'id');
+        $users = User::paginate(50);
         return view('user::admin.index', [
             'users' => $users,
-            'roles' => $roles
+            'roles' => $roles,
         ]);
     }
 
     public function store(Request $request): Application|Redirector|RedirectResponse
     {
         Gate::authorize('create-users');
-        $data = $request->validate([
-            'first_name' => 'bail|string|max:255',
-            'last_name' => 'bail|string|max:255',
-            "phone" => 'bail|required|string|numeric|unique:users,phone",',
-            "role_id" => 'bail|required|string|exists:roles,id'
-        ]);
+        try {
+            $data = $request->validate([
+                'first_name' => 'bail|string|max:255',
+                'last_name' => 'bail|string|max:255',
+                "phone" => 'bail|required|string|digits:11|unique:users,phone",',
+                "role_id" => 'bail|required|string|exists:roles,id'
+            ]);
+        } catch (\Throwable $th) {
+            return redirect(route('admin.user.index'))->withErrors([$th->getMessage()]);
+        }
         $user = User::query()->create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
