@@ -38,7 +38,7 @@ class UserController extends Controller
                 ->orWhere('email', 'like', '%'.$search.'%')
                 ->orWhere('phone', 'like', '%'.$search.'%');
         }
-        $users = $users->paginate(20);
+        $users = $users->paginate(50)->withQueryString();
         return view('user::admin.index', [
             'users' => $users,
             'roles' => $roles,
