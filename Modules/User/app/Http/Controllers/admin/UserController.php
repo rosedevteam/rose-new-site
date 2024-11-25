@@ -29,7 +29,7 @@ class UserController extends Controller
                 return $query->where('role_id', $role_id);
             });
         }
-        if($sort_by){
+        if($sort_by || $sort_direction){
             $users = $users->orderBy($sort_by, $sort_direction);
         }
         if($search){
@@ -38,7 +38,7 @@ class UserController extends Controller
                 ->orWhere('email', 'like', '%'.$search.'%')
                 ->orWhere('phone', 'like', '%'.$search.'%');
         }
-        $users = $users->paginate(10);
+        $users = $users->paginate(20);
         return view('user::admin.index', [
             'users' => $users,
             'roles' => $roles,
