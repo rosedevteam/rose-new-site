@@ -23,6 +23,7 @@ class UserController extends Controller
         $sort_by = request('sort_by');
         $sort_direction = request('sort_direction', 'asc');
         $search = request('search');
+        $count = request('count', 10);
         $users = User::with('roles');
         if($role_id){
             $users = $users->whereHas('roles', function ($query) use ($role_id) {
@@ -38,7 +39,7 @@ class UserController extends Controller
                 ->orWhere('email', 'like', '%'.$search.'%')
                 ->orWhere('phone', 'like', '%'.$search.'%');
         }
-        $users = $users->paginate(50)->withQueryString();
+        $users = $users->paginate($count)->withQueryString();
         return view('user::admin.index', [
             'users' => $users,
             'roles' => $roles,
@@ -46,6 +47,7 @@ class UserController extends Controller
             'sort_direction' => $sort_direction,
             'search' => $search,
             'role_id' => $role_id,
+            'count' => $count,
         ]);
     }
 

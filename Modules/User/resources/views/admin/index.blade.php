@@ -49,12 +49,23 @@
                         <div
                             class="d-flex justify-content-start align-items-center row py-3 gap-3 gap-md-0 primary-font">
                             <div class="col-md-4">
-                                <div id="search" class="search-input"><label>
-                                        <input type="search" name="search" value="{{ $search }}"
-                                               class="form-control" placeholder="جستجو ..."></label></div>
+                                <label for="count" class="form-label">تعداد: </label>
+                                <select id="count" name="count" class="form-select text-capitalize">
+                                    <option value="10" selected>10</option>
+                                    <option value="20" {{ $count == "20" ? 'selected' : '' }}>20</option>
+                                    <option value="50" {{ $count == "50" ? 'selected' : '' }}>50</option>
+                                    <option value="100" {{ $count == "100" ? 'selected' : '' }}>100</option>
+                                </select>
                             </div>
                             <div class="col-md-4">
-                                <button type="submit" class="btn btn-primary data-submit">جستجو</button>
+                                <label for="count" class="form-label">جستجو: </label>
+                                <div id="search" class="search-input">
+                                    <input type="search" name="search" value="{{ $search }}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <button id="submit" type="submit" class="btn btn-primary mt-4 data-submit">جستجو
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -110,11 +121,12 @@
                                             <div class="avatar-wrapper">
                                                 <div class="avatar avatar-sm me-3">
                                                     @if($user->avatar != null)
-                                                    <img src="{{ $user->avatar }}"
-                                                                                        class="rounded-circle"
-                                                                                        alt="avatar">
+                                                        <img src="{{ $user->avatar }}"
+                                                             class="rounded-circle"
+                                                             alt="avatar">
                                                     @else
-                                                        <div class="avatar-initial rounded-circle bg-label-secondary">{{ substr($user->first_name, 0, 2) . ' ' . substr($user->last_name, 0, 2) }}</div>
+                                                        <div
+                                                            class="avatar-initial rounded-circle bg-label-secondary">{{ substr($user->first_name, 0, 2) . ' ' . substr($user->last_name, 0, 2) }}</div>
                                                     @endif
                                                 </div>
                                             </div>
@@ -145,7 +157,7 @@
                             @endforeach
                             </tbody>
                         </table>
-                            {{ $users->links() }}
+                        {{ $users->links() }}
                     </div>
 
                 </div>
