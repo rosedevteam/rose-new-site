@@ -15,14 +15,37 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    public function index(Request $request): Application|Factory|View
+    public function index(): Application|Factory|View
     {
         Gate::authorize('view-users');
         $roles = Role::all()->select('name', 'id');
-        $users = User::paginate(50);
+        $role_id = request('role');
+        $sort_by = request('sort_by');
+        $sort_direction = request('sort_direction', 'asc');
+        $search = request('search');
+        $users = User::with('roles');
+        if($role_id){
+            $users = $users->whereHas('roles', function ($query) use ($role_id) {
+                return $query->where('role_id', $role_id);
+            });
+        }
+        if($sort_by){
+            $users = $users->orderBy($sort_by, $sort_direction);
+        }
+        if($search){
+            $users = $users->where('first_name', 'like', '%'.$search.'%')
+                ->orWhere('last_name', 'like', '%'.$search.'%')
+                ->orWhere('email', 'like', '%'.$search.'%')
+                ->orWhere('phone', 'like', '%'.$search.'%');
+        }
+        $users = $users->paginate(10);
         return view('user::admin.index', [
             'users' => $users,
             'roles' => $roles,
+            'sort_by' => $sort_by,
+            'sort_direction' => $sort_direction,
+            'search' => $search,
+            'role_id' => $role_id,
         ]);
     }
 
