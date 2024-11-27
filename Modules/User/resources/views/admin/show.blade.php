@@ -72,11 +72,11 @@
                 </div>
                 <!--/ User Sidebar -->
 
+                @can('view-orders')
                 <!-- User Content -->
                 <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
                     <!-- Invoice table -->
-                    @can('view-orders')
-                        <div class="card">
+                    <div class="card">
                             <div class="card-header border-bottom">
                                 <h5 class="card-title">سفارش ها</h5>
                             </div>
@@ -134,9 +134,9 @@
                             </div>
                         </div>
                         </div>
-                    @endcan()
                 </div>
                 <!--/ User Content -->
+                @endcan()
             </div>
 
             <!-- Modal -->
@@ -188,6 +188,7 @@
             <!--/ Edit User Modal -->
 
             <!-- delete User modal -->
+            @can('delete-users')
             <div class="modal fade" id="deleteUser" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-simple">
                     <div class="modal-content">
@@ -211,6 +212,7 @@
                     </div>
                 </div>
             </div>
+            @endcan
             <!--/ delete User modal -->
             <!-- /Modal -->
         </div>

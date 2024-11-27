@@ -111,7 +111,7 @@
                                     style="width: 5%;">تاریخ ثبت نام
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">ویرایش
+                                    style="width: 5%;">جزییات
                                 </th>
                             </tr>
                             </thead>
@@ -120,11 +120,8 @@
                                 <tr class="">
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
-                                            <div class="d-flex flex-column"><a
-                                                    href="{{ route('admin.user.show', $user->id) }}"
-                                                    class="text-body text-truncate">
+                                            <div class="d-flex flex-column">
                                                     <span class="fw-semibold">{{ $user->first_name }}</span>
-                                                </a>
                                             </div>
                                         </div>
                                     </td>
@@ -148,7 +145,7 @@
                                         <div class="d-inline-block text-nowrap">
                                             <button class="btn btn-sm btn-icon">
                                                 <a href="{{ route('admin.user.show', $user->id) }}">
-                                                    <i class="bx bx-edit"></i>
+                                                    <i class="bx bx-detail"></i>
                                                 </a>
                                             </button>
                                         </div>
