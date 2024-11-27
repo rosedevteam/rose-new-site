@@ -48,10 +48,10 @@ class DatabaseSeeder extends Seeder
         //
         Permission::create(['name' => 'roles-and-permissions']);
 
-        $customer = Role::create(['name' => 'customer']);
-        $superAdmin = Role::create(['name' => 'super-admin']);
-        $writer = Role::create(['name' => 'writer']);
-        $support = Role::create(['name' => 'support']);
+        $customer = Role::create(['name' => 'مشتری']);
+        $superAdmin = Role::create(['name' => 'ادمین']);
+        $writer = Role::create(['name' => 'نویسنده']);
+        $support = Role::create(['name' => 'پشتیبان']);
 
         $superAdmin->givePermissionTo(Permission::all());
 

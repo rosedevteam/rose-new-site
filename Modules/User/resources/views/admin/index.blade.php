@@ -95,21 +95,24 @@
                             <thead>
                             <tr>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width: 25%" aria-sort="ascending">نام
+                                    colspan="1" style="width: 12%" aria-sort="ascending">نام
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 15%;">نام
+                                    style="width: 12%;">نام
                                     خانوادگی
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 20%;">شماره
+                                    style="width: 10%;">شماره
                                     موبایل
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 20%;">ایمیل
+                                    style="width: 15%;">ایمیل
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 20%;">نقش
+                                    style="width: 10%;">نقش
+                                </th>
+                                <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                    style="width: 5%;">ویرایش
                                 </th>
                             </tr>
                             </thead>
@@ -118,18 +121,6 @@
                                 <tr class="">
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
-                                            <div class="avatar-wrapper">
-                                                <div class="avatar avatar-sm me-3">
-                                                    @if($user->avatar != null)
-                                                        <img src="{{ $user->avatar }}"
-                                                             class="rounded-circle"
-                                                             alt="avatar">
-                                                    @else
-                                                        <div
-                                                            class="avatar-initial rounded-circle bg-label-secondary">{{ substr($user->first_name, 0, 2) . ' ' . substr($user->last_name, 0, 2) }}</div>
-                                                    @endif
-                                                </div>
-                                            </div>
                                             <div class="d-flex flex-column"><a
                                                     href="{{ route('admin.user.show', $user->id) }}"
                                                     class="text-body text-truncate">
@@ -150,8 +141,17 @@
                                     @endphp
                                     <td>
                                         @foreach($user->getRoleNames() as $role)
-                                            <span @class(['badge', 'bg-label-primary' => $role == 'customer', 'bg-label-reddit' => $role == 'super-admin', 'bg-label-info' => $role == 'writer', 'bg-label-github' => $role == 'support'])>{{ $role }}</span>
+                                            <span @class(['badge', 'bg-label-primary' => $role == 'مشتری', 'bg-label-reddit' => $role == 'ادمین', 'bg-label-info' => $role == 'نویسنده', 'bg-label-github' => $role == 'پشتیبان'])>{{ $role }}</span>
                                         @endforeach
+                                    </td>
+                                    <td>
+                                        <div class="d-inline-block text-nowrap">
+                                            <button class="btn btn-sm btn-icon">
+                                                <a href="{{ route('admin.user.show', $user->id) }}">
+                                                    <i class="bx bx-edit"></i>
+                                                </a>
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
@@ -187,8 +187,8 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="phone">شماره موبایل</label>
-                                    <input type="text" class="form-control" id="phone" name="phone"
-                                           pattern="^[0-9]*$" maxlength="11" required>
+                                    <input type="number" class="form-control" id="phone" name="phone" maxlength="11"
+                                           required>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="role_id">نقش کاربر</label>

@@ -81,12 +81,30 @@ class UserController extends Controller
         ]);
     }
 
-    public function edit(User $user): Application|Factory|View
+    public function update(User $user): Application|Redirector|RedirectResponse
     {
         Gate::authorize('edit-users');
-        return view('user::admin.edit', [
-            'user' => $user,
+        $data = request()->validate([
+            'first_name' => 'bail|nullable|string|max:255',
+            'last_name' => 'bail|nullable|string|max:255',
+            'phone' => 'bail|nullable|string|digits:11|unique:users,phone',
+            'email' => 'bail|nullable|string|email|unique:users,email',
         ]);
+        $updateData = array();
+        foreach ($data as $key => $value) {
+            if (!is_null($value)) {
+                $updateData[$key] = $value;
+            }
+        }
+        $user->update($updateData);
+        return redirect(route('admin.user.show', $user));
+    }
+
+    public function destroy(User $user): RedirectResponse
+    {
+        Gate::authorize('delete-users');
+        $user->delete();
+        return redirect(route('admin.user.index'));
     }
 
 }
