@@ -8,7 +8,7 @@
 
     <title>@yield('title')</title>
 
-    <meta name="description" content="">
+    <meta charset="utf-8" name="description" content="">
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/assets/admin/img/favicon/favicon.svg">
