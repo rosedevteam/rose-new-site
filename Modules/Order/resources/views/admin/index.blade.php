@@ -97,13 +97,11 @@
                             <tbody>
                             @foreach($orders as $order)
                                 <tr class="">
-                                    <td class="sorting_1">
+                                    <td>
                                         <div class="d-flex justify-content-start align-items-center user-name">
-                                            <div class="d-flex flex-column"><a
-                                                    href="{{ route('admin.order.show', $order) }}"
-                                                    class="text-body text-truncate">
-                                                    <span class="fw-semibold">{{ verta($order->created_at) }}</span>
-                                                </a>
+                                            <div class="d-flex flex-column">
+                                                <span
+                                                    class="fw-semibold">{{ verta($order->created_at)->formatJalaliDate() }}</span>
                                             </div>
                                         </div>
                                     </td>

@@ -98,7 +98,7 @@
                             <tbody>
                             @foreach($products as $product)
                                 <tr class="">
-                                    <td>{{ verta($product->created_at) }}</td>
+                                    <td>{{ verta($product->created_at)->formatJalaliDate() }}</td>
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column"><a

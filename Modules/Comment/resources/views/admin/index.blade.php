@@ -90,7 +90,7 @@
                             <tbody>
                             @foreach($comments as $comment)
                                 <tr class="">
-                                    <td>{{ verta($comment->created_at) }}</td>
+                                    <td>{{ verta($comment->created_at)->formatJalaliDate() }}</td>
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column"><a

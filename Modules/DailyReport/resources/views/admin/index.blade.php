@@ -79,7 +79,8 @@
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column">
-                                                <span class="fw-semibold">{{ verta($dailyReport->created_at) }}</span>
+                                                <span
+                                                    class="fw-semibold">{{ verta($dailyReport->created_at)->formatJalaliDate() }}</span>
                                             </div>
                                         </div>
                                     </td>
