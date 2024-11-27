@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('author_id')->constrained('users');
             $table->string('title');
+            $table->string('content');
             $table->enum('status', ['public', 'draft', 'hidden'])->default('draft');
             $table->boolean('comment_status')->default(true);
             $table->string('url');

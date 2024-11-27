@@ -1,7 +1,7 @@
 @extends('admin::layouts.main')
 
 @section('title')
-    گزارش ها روزانه بازار
+    سفارش ها
 @endsection
 
 @section('content')
@@ -11,9 +11,40 @@
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
-                    <form action="{{ route('admin.daily-report.index') }}" method="GET">
+                    <form action="{{ route('admin.order.index') }}" method="GET">
                         <div
                             class="d-flex justify-content-start align-items-center row py-3 gap-3 gap-md-0 primary-font">
+                            <div class="col-md-2">
+                                <label for="sort_by" class="form-label">ترتیب بر اساس: </label>
+                                <select id="sort_by" name="sort_by" class="form-select text-capitalize">
+                                    <option value="created_at" selected>تاریخ ساخت</option>
+                                    <option value="price" {{ $sort_by == 'price' ? 'selected' : '' }}>قیمت
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="status" class="form-label">وضعیت: </label>
+                                <select id="status" name="status" class="form-select text-capitalize">
+                                    <option value="all" selected>همه</option>
+                                    <option value="pending"{{ $status == 'pending' ? 'selected' : '' }}>در حال انجام
+                                    </option>
+                                    <option value="completed"{{ $status == 'completed' ? 'selected' : '' }}>کامل شده
+                                    </option>
+                                    <option value="cancelled"{{ $status == 'cancelled' ? 'selected' : '' }}>لغو شده
+                                    </option>
+                                    <option value="returned"{{ $status == 'returned' ? 'selected' : '' }}>پس گرفته
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="status" class="form-label">نوع پرداخت:</label>
+                                <select id="status" name="status" class="form-select text-capitalize">
+                                    <option value="all" selected>همه</option>
+                                    <option value="shaparak"{{ $status == 'shaparak' ? 'selected' : '' }}>درگاه بانکی
+                                    </option>
+                                    <option value="card"{{ $status == 'card' ? 'selected' : '' }}>کارت به کارت</option>
+                                </select>
+                            </div>
                             <div class="col-md-2">
                                 <label for="sort_direction" class="form-label">نوع ترتیب: </label>
                                 <select id="sort_direction" name="sort_direction" class="form-select text-capitalize">
@@ -39,22 +70,6 @@
                 </div>
                 <div class="card-datatable table-responsive">
                     <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                        @can('create-daily-reports')
-                            <div class="row mx-2 my-2">
-                                <div class="col-md-20">
-                                    <div
-                                        class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
-                                        <div class="dt-buttons btn-group flex-wrap">
-                                            <button class="btn btn-secondary add-new btn-primary ms-2" tabindex="0"
-                                                    aria-controls="DataTables_Table_0" type="button"><span><i
-                                                        class="bx bx-plus me-0 me-lg-2"></i><span
-                                                        class="d-none d-lg-inline-block">گزارش جدید</span></span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endcan
                         <table class="datatables-users table border-top dataTable no-footer dtr-column"
                                id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 100%;">
                             <thead>
@@ -63,39 +78,56 @@
                                     colspan="1" style="width: 12%" aria-sort="ascending">تاریخ ثبت
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 12%;">نویسنده
+                                    style="width: 12%;">خریدار
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 10%;">نام
+                                    style="width: 10%;">دوره
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 15%;">فایل
+                                    style="width: 15%;">قیمت فروش
+                                </th>
+                                <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                    style="width: 10%;">وضعیت
+                                </th>
+                                <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                    style="width: 5%;">روش پرداخت
                                 </th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($dailyReports as $dailyReport)
+                            @foreach($orders as $order)
                                 <tr class="">
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
-                                            <div class="d-flex flex-column">
-                                                <span class="fw-semibold">{{ verta($dailyReport->created_at) }}</span>
+                                            <div class="d-flex flex-column"><a
+                                                    href="{{ route('admin.order.show', $order) }}"
+                                                    class="text-body text-truncate">
+                                                    <span class="fw-semibold">{{ verta($order->created_at) }}</span>
+                                                </a>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                 <span class="fw-semibold">
-                                    <a href="{{ route('admin.user.show', $order->author) }}"
+                                    <a href="{{ route('admin.user.show', $order->user) }}"
                                     {{ $order->user->name() }}
                                 </span>
                                     </td>
-                                    <td><span class="fw-semibold">{{ $dailyReport->title }}</span></td>
-                                    <td>{{ $dailyReport->file }}</td>
+                                    <td><span class="fw-semibold">{{ $order->product->title }}</span></td>
+                                    <td>{{ $order->price }}</td>
+                                    <td>
+                                        <span class="fw-semibold">{{ $order->status }}</span>
+                                    </td>
+                                    <td>
+                                        <div class="d-inline-block text-nowrap">
+                                            {{ $order->payment_method }}
+                                        </div>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
-                        {{ $dailyReports->links() }}
+                        {{ $orders->links() }}
                     </div>
 
                 </div>

@@ -26,26 +26,6 @@
                 </a>
             </li>
         @endcan
-        @can('roles-and-permissions')
-            <li class="menu-item" style="">
-                <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <i class="menu-icon tf-icons bx bx-check-shield"></i>
-                    <div data-i18n="Roles &amp; Permissions">نقش‌ها و مجوزها</div>
-                </a>
-                <ul class="menu-sub">
-                    <li @class(["menu-item", 'active' => false])>
-                        <a href="app-access-roles.html" class="menu-link">
-                            <div data-i18n="Roles">نقش‌ها</div>
-                        </a>
-                    </li>
-                    <li @class(["menu-item", 'active' => false])>
-                        <a href="app-access-permission.html" class="menu-link">
-                            <div data-i18n="Permission">مجوزها</div>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        @endcan
         @can('view-products')
             <li @class(["menu-item", 'active' => url()->current() == route('admin.product.index')])>
                 <a href="{{ route("admin.product.index") }}" class="menu-link">
@@ -67,6 +47,14 @@
                 <a href="{{ route("admin.comment.index") }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-chat"></i>
                     <div data-i18n="نظرات">نظرات</div>
+                </a>
+            </li>
+            @endcan
+            @can('view-orders')
+                <li @class(["menu-item", 'active' => url()->current() == route('admin.order.index')])>
+                    <a href="{{ route("admin.order.index") }}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-file"></i>
+                        <div data-i18n="سفارش ها">سفارش ها</div>
                 </a>
             </li>
         @endcan

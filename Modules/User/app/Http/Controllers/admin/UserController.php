@@ -30,14 +30,14 @@ class UserController extends Controller
                 return $query->where('role_id', $role_id);
             });
         }
-        if($sort_by || $sort_direction){
-            $users = $users->orderBy($sort_by, $sort_direction);
-        }
         if($search){
             $users = $users->where('first_name', 'like', '%'.$search.'%')
                 ->orWhere('last_name', 'like', '%'.$search.'%')
                 ->orWhere('email', 'like', '%'.$search.'%')
                 ->orWhere('phone', 'like', '%'.$search.'%');
+        }
+        if ($sort_by || $sort_direction) {
+            $users = $users->orderBy($sort_by, $sort_direction);
         }
         $users = $users->paginate($count)->withQueryString();
         return view('user::admin.index', [
@@ -59,7 +59,6 @@ class UserController extends Controller
                 'first_name' => 'bail|string|max:255',
                 'last_name' => 'bail|string|max:255',
                 "phone" => 'bail|required|string|digits:11|unique:users,phone",',
-                "role_id" => 'bail|required|string|exists:roles,id'
             ]);
         } catch (\Throwable $th) {
             return redirect(route('admin.user.index'))->withErrors([$th->getMessage()]);
@@ -69,7 +68,7 @@ class UserController extends Controller
             'last_name' => $data['last_name'],
             'phone' => $data['phone'],
         ]);
-        $user->assignRole(Role::query()->where('id', $data['role_id'])->first());
+        $user->assignRole('customer');
         return redirect(route('admin.user.index'));
     }
 

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('author_id')->constrained('users');
             $table->text('content');
             $table->morphs('commentable');
-            $table->boolean('approved')->default(false);
+            $table->enum('status', ['approved', 'pending', 'rejected'])->default('pending');
             $table->timestamps();
         });
     }

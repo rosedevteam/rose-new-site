@@ -15,8 +15,6 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('product_id')->constrained('products');
             $table->string('price');
-            $table->float('discount');
-            $table->string('total');
             $table->enum('status', ['pending', 'completed', 'cancelled', 'returned'])->default('pending');
             $table->enum('payment_method', ['shaparak', 'card']);
             $table->timestamps();

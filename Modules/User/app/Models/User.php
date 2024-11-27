@@ -38,7 +38,7 @@ class User extends \Illuminate\Foundation\Auth\User
 
     public function name(): string
     {
-        return $this->first_name . $this->last_name;
+        return $this->first_name . " " . $this->last_name;
     }
 
     public function requestOtp(): void

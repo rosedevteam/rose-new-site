@@ -38,6 +38,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::middleware('web')
             ->namespace($this->moduleNamespace)
+            ->name('user.')
             ->group(module_path('User', 'Routes/web.php'));
     }
 

@@ -35,12 +35,11 @@ class RouteServiceProvider extends ServiceProvider
      * These routes all receive session state, CSRF protection, etc.
      */
 
-    protected function mapAdminRoutes(): void
+    protected function mapWebRoutes(): void
     {
-        Route::middleware(['web', 'admin'])
-            ->namespace($this->moduleNamespace . '\admin')
-            ->prefix(config('services.admin.prefix'))
-            ->name('admin.order.')
+        Route::middleware('web')
+            ->namespace($this->moduleNamespace)
+            ->name('order.')
             ->group(module_path($this->name, 'routes/admin.php'));
     }
 
@@ -49,12 +48,12 @@ class RouteServiceProvider extends ServiceProvider
      *
      * These routes are typically stateless.
      */
-    protected function mapWebRoutes(): void
+    protected function mapAdminRoutes(): void
     {
-        Route::middleware('web')
-            ->namespace($this->moduleNamespace)
+        Route::middleware(['web', 'admin'])
+            ->namespace($this->moduleNamespace . '\admin')
             ->prefix(config('services.admin.prefix'))
-            ->name('order.')
-            ->group(module_path($this->name, 'routes/admin.php'));
+            ->name('admin.order.')
+            ->group(module_path('Order', 'Routes/admin.php'));
     }
 }

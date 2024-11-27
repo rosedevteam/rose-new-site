@@ -103,14 +103,7 @@
                                         </th>
                                         <th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1"
                                             colspan="1" style="width: 15%;"
-                                            aria-label="جمع: فعال سازی نمایش به صورت صعودی">قیمت اصلی
-                                        </th>
-                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1"
-                                            colspan="1" style="width: 15%;"
-                                            aria-label="تاریخ صدور: فعال سازی نمایش به صورت صعودی">تخفیف
-                                        </th>
-                                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 15%;"
-                                            aria-label="عمل‌ها">قیمت تمام شده
+                                            aria-label="جمع: فعال سازی نمایش به صورت صعودی">قیمت
                                         </th>
                                         <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                             style="width: 5%;">مشاهده
@@ -125,8 +118,6 @@
                                             <td>{{ $order->status }}</td>
                                             <td>{{ $order->payment_method }}</td>
                                             <td>{{ $order->price }}</td>
-                                            <td>{{ $order->discount }}</td>
-                                            <td>{{ $order->total }}</td>
                                             <td>
                                                 <div class="d-inline-block text-nowrap">
                                                     <button class="btn btn-sm btn-icon">

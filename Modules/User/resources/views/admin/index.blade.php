@@ -16,8 +16,14 @@
                     <h5 class="card-title">فیلتر جستجو</h5>
                     <form action="{{ route('admin.user.index') }}" method="GET">
                         <div
-                            class="d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0 primary-font">
-                            <div class="col-md-4 user_role">
+                            class="d-flex justify-content-start align-items-center row py-3 gap-1 gap-md-0 primary-font">
+                            <div class="col-md-3">
+                                <label for="count" class="form-label">جستجو: </label>
+                                <div id="search" class="search-input">
+                                    <input type="search" name="search" value="{{ $search }}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
                                 <label for="role" class="form-label">نقش: </label>
                                 <select id="role" name="role" class="form-select text-capitalize">
                                     <option value="" selected>همه نقش ها</option>
@@ -26,7 +32,7 @@
                                             value="{{ $role['id'] }}" {{ $role_id == $role['id'] ? 'selected' : ''}}>{{ $role['name'] }}</option>
                                     @endforeach
                                 </select></div>
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <label for="sort_by" class="form-label">ترتیب بر اساس: </label>
                                 <select id="sort_by" name="sort_by" class="form-select text-capitalize">
                                     <option value="created_at" selected>تاریخ ثبت نام</option>
@@ -37,18 +43,14 @@
                                     </option>
                                 </select>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <label for="sort_direction" class="form-label">نوع ترتیب: </label>
                                 <select id="sort_direction" name="sort_direction" class="form-select text-capitalize">
                                     <option value="asc" selected>صعودی</option>
                                     <option value="desc"{{ $sort_direction == 'desc' ? 'selected' : '' }}>نزولی</option>
                                 </select>
                             </div>
-                        </div>
-
-                        <div
-                            class="d-flex justify-content-start align-items-center row py-3 gap-3 gap-md-0 primary-font">
-                            <div class="col-1">
+                            <div class="col-md-2">
                                 <label for="count" class="form-label">تعداد: </label>
                                 <select id="count" name="count" class="form-select text-capitalize">
                                     <option value="10" selected>10</option>
@@ -57,13 +59,7 @@
                                     <option value="100" {{ $count == "100" ? 'selected' : '' }}>100</option>
                                 </select>
                             </div>
-                            <div class="col-md-4">
-                                <label for="count" class="form-label">جستجو: </label>
-                                <div id="search" class="search-input">
-                                    <input type="search" name="search" value="{{ $search }}" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
+                            <div class="col-md-1">
                                 <button id="submit" type="submit" class="btn btn-primary mt-4 data-submit">جستجو
                                 </button>
                             </div>
@@ -189,14 +185,6 @@
                                     <label class="form-label" for="phone">شماره موبایل</label>
                                     <input type="number" class="form-control" id="phone" name="phone" maxlength="11"
                                            required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label" for="role_id">نقش کاربر</label>
-                                    <select id="role_id" name="role_id" class="form-select">
-                                        @foreach($roles as $role)
-                                            <option value="{{ $role['id'] }}">{{ $role['name'] }}</option>
-                                        @endforeach
-                                    </select>
                                 </div>
                                 <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">ثبت</button>
                                 <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">
