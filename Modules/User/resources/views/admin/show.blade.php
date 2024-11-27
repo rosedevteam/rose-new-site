@@ -27,10 +27,10 @@
                                              height="110" width="110" alt="User avatar">
                                     @else
                                         <span class="avatar-initial rounded-circle bg-label-info align-content-center"
-                                              style="width: 110px; height: 110px;">{{ substr($user->first_name, 0, 2) . ' ' . substr($user->last_name, 0, 2) }}</span>
+                                              style="width: 110px; height: 110px;">{{ substr($user->last_name, 0, 2) . ' ' . substr($user->first_name, 0, 2) }}</span>
                                     @endif
                                     <div class="user-info text-center">
-                                        <h5 class="mb-2">{{ $user->last_name . ' ' . $user->first_name }}</h5>
+                                        <h5 class="mb-2">{{ $user->first_name . ' ' . $user->last_name }}</h5>
                                         @foreach($user->getRoleNames() as $role)
                                             <span @class(['badge', 'bg-label-primary' => $role == 'مشتری', 'bg-label-reddit' => $role == 'ادمین', 'bg-label-info' => $role == 'نویسنده', 'bg-label-github' => $role == 'پشتیبان'])>{{ $role }}</span>
                                         @endforeach
@@ -61,7 +61,8 @@
                                     <a href="javascript:;" class="btn btn-primary me-3" data-bs-target="#editUser"
                                        data-bs-toggle="modal">ویرایش</a>
                                     @can('delete-users')
-                                        <a href="javascript:;" class="btn btn-label-danger suspend-user">حذف کاربر</a>
+                                        <a href="javascript:;" class="btn btn-label-danger suspend-user"
+                                           data-bs-target="#deleteUser" data-bs-toggle="modal">حذف کاربر</a>
                                     @endcan
                                 </div>
                             </div>
@@ -73,45 +74,76 @@
 
                 <!-- User Content -->
                 <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
-
-
-                    <!-- Project table -->
-                    <div class="card mb-4">
-                        <div class="card-header"><h5 class="mb-0">لیست پروژه‌های کاربر</h5></div>
-                        <div class="table-responsive mb-3">
-                            <table class="table datatable-project border-top">
-                                <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>پروژه</th>
-                                    <th class="text-nowrap">مجموع وظیفه</th>
-                                    <th>پیشرفت</th>
-                                    <th>ساعت</th>
-                                </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                    <!-- /Project table -->
-
                     <!-- Invoice table -->
-                    <div class="card">
+                    @can('view-orders')
+                        <div class="card">
+                            <div class="card-header border-bottom">
+                                <h5 class="card-title">سفارش ها</h5>
+                            </div>
                         <div class="table-responsive mb-3">
-                            <table class="table datatable-invoice border-top">
-                                <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>شناسه</th>
-                                    <th><i class="bx bx-trending-up"></i></th>
-                                    <th>جمع</th>
-                                    <th>تاریخ صدور</th>
-                                    <th>عمل‌ها</th>
-                                </tr>
-                                </thead>
-                            </table>
+                            <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                                <table class="table datatable-invoice border-top dataTable no-footer dtr-column"
+                                       id="DataTables_Table_1" aria-describedby="DataTables_Table_1_info"
+                                       style="width: 100%;">
+                                    <thead>
+                                    <tr>
+                                        <th class="control sorting dtr-hidden" tabindex="0"
+                                            aria-controls="DataTables_Table_1" rowspan="1" colspan="1"
+                                            style="width: 15%; display: none;"
+                                            aria-label=": فعال سازی نمایش به صورت صعودی">تاریخ سفارش
+                                        </th>
+                                        <th class="sorting sorting_desc" tabindex="0" aria-controls="DataTables_Table_1"
+                                            rowspan="1" colspan="1" style="width: 15%;"
+                                            aria-label=": فعال سازی نمایش به صورت صعودی" aria-sort="descending">روش
+                                            پرداخت
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1"
+                                            colspan="1" style="width: 15%;"
+                                            aria-label=": فعال سازی نمایش به صورت صعودی">وضعیت
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1"
+                                            colspan="1" style="width: 15%;"
+                                            aria-label="جمع: فعال سازی نمایش به صورت صعودی">قیمت اصلی
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1"
+                                            colspan="1" style="width: 15%;"
+                                            aria-label="تاریخ صدور: فعال سازی نمایش به صورت صعودی">تخفیف
+                                        </th>
+                                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 15%;"
+                                            aria-label="عمل‌ها">قیمت تمام شده
+                                        </th>
+                                        <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                            style="width: 5%;">مشاهده
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($orders as $order)
+                                        -
+                                        <tr class="odd">
+                                            <td>{{ verta($order->created_at) }}</td>
+                                            <td>{{ $order->status }}</td>
+                                            <td>{{ $order->payment_method }}</td>
+                                            <td>{{ $order->price }}</td>
+                                            <td>{{ $order->discount }}</td>
+                                            <td>{{ $order->total }}</td>
+                                            <td>
+                                                <div class="d-inline-block text-nowrap">
+                                                    <button class="btn btn-sm btn-icon">
+                                                        <a href="">
+                                                            <i class="bx bx-edit"></i>
+                                                        </a>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                    <!-- /Invoice table -->
+                        </div>
+                    @endcan()
                 </div>
                 <!--/ User Content -->
             </div>
@@ -164,6 +196,31 @@
             </div>
             <!--/ Edit User Modal -->
 
+            <!-- delete User modal -->
+            <div class="modal fade" id="deleteUser" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-simple">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="text-center mb-4 mt-0 mt-md-n2">
+                                <h3 class="secondary-font">آیا اطمینان دارید؟</h3>
+                            </div>
+                            <form id="deleteUserForm" action="{{ route('admin.user.destroy', $user) }}"
+                                  method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <div class="col-12 text-center mt-4">
+                                    <button type="submit" class="btn btn-danger me-sm-3 me-1">بله، حذف کن!</button>
+                                    <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
+                                            aria-label="Close">
+                                        انصراف
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/ delete User modal -->
             <!-- /Modal -->
         </div>
         <!-- / Content -->
@@ -183,10 +240,4 @@
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/FormValidation.min.js"></script>
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js"></script>
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
-@endpush
-
-@push('script')
-    {{--    <script src="/assets/admin/js/modal-edit-user.js"></script>--}}
-    <script src="/assets/admin/js/app-user-view.js"></script>
-    <script src="/assets/admin/js/app-user-view-account.js"></script>
 @endpush

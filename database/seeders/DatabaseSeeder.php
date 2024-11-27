@@ -43,6 +43,12 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'create-products']);
         Permission::create(['name' => 'delete-products']);
         //
+
+        Permission::create(['name' => 'view-orders']);
+        Permission::create(['name' => 'edit-orders']);
+        Permission::create(['name' => 'create-orders']);
+        Permission::create(['name' => 'delete-orders']);
+        //
         Permission::create(['name' => 'view-billings']);
         Permission::create(['name' => 'edit-billings']);
         //
@@ -80,6 +86,10 @@ class DatabaseSeeder extends Seeder
             'view-comments',
             'edit-comments',
             'delete-comments',
+            'view-orders',
+            'edit-orders',
+            'create-orders',
+            'delete-orders',
         ]);
 
         $user1 = User::factory()->create([

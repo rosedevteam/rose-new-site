@@ -12,6 +12,7 @@ use Modules\Auth\Notifications\OtpNotification;
 use Modules\Billing\Models\Billing;
 use Modules\Comment\Models\Comment;
 use Modules\DailyReport\Models\DailyReport;
+use Modules\Order\Models\Order;
 use Modules\Post\Models\Post;
 use Modules\Product\Models\Product;
 use Modules\User\Database\Factories\UserFactory;
@@ -33,6 +34,11 @@ class User extends \Illuminate\Foundation\Auth\User
                 'user_id' => $user->id,
             ]);
         });
+    }
+
+    public function name(): string
+    {
+        return $this->first_name . $this->last_name;
     }
 
     public function requestOtp(): void
@@ -94,6 +100,11 @@ class User extends \Illuminate\Foundation\Auth\User
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
     }
 
     protected static function newFactory(): UserFactory

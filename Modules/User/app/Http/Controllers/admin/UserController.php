@@ -76,8 +76,13 @@ class UserController extends Controller
     public function show(User $user): Application|Factory|View
     {
         Gate::authorize('view-users');
+        $orders = collect([]);
+        if (Gate::allows('view-orders')) {
+            $orders = $user->orders()->orderByDesc('created_at')->get();
+        }
         return view('user::admin.show', [
             'user' => $user,
+            'orders' => $orders,
         ]);
     }
 

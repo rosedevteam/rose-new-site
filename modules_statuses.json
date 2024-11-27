@@ -8,5 +8,6 @@
     "Billing": true,
     "Category": true,
     "Metadata": true,
-    "Admin": true
+    "Admin": true,
+    "Order": true
 }

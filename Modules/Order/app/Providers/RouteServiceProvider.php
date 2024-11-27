@@ -1,14 +1,14 @@
 <?php
 
-namespace Modules\Post\Providers;
+namespace Modules\Order\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
-    protected string $name = 'Post';
-    protected string $moduleNamespace = 'Modules\Post\Http\Controllers';
+    protected string $name = 'Order';
+    protected string $moduleNamespace = 'Modules\Order\Http\Controllers';
 
     /**
      * Called before routes are registered.
@@ -34,12 +34,14 @@ class RouteServiceProvider extends ServiceProvider
      *
      * These routes all receive session state, CSRF protection, etc.
      */
-    protected function mapWebRoutes(): void
+
+    protected function mapAdminRoutes(): void
     {
-        Route::middleware('web')
-            ->namespace($this->moduleNamespace)
-            ->name('order.')
-            ->group(module_path('Post', 'Routes/web.php'));
+        Route::middleware(['web', 'admin'])
+            ->namespace($this->moduleNamespace . '\admin')
+            ->prefix(config('services.admin.prefix'))
+            ->name('admin.order.')
+            ->group(module_path($this->name, 'routes/admin.php'));
     }
 
     /**
@@ -47,12 +49,12 @@ class RouteServiceProvider extends ServiceProvider
      *
      * These routes are typically stateless.
      */
-    protected function mapAdminRoutes(): void
+    protected function mapWebRoutes(): void
     {
-        Route::middleware(['web', 'admin'])
-            ->namespace($this->moduleNamespace . '\admin')
+        Route::middleware('web')
+            ->namespace($this->moduleNamespace)
             ->prefix(config('services.admin.prefix'))
-            ->name('admin.post.')
-            ->group(module_path('Post', 'Routes/admin.php'));
+            ->name('order.')
+            ->group(module_path($this->name, 'routes/admin.php'));
     }
 }

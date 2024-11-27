@@ -48,7 +48,7 @@
 
                         <div
                             class="d-flex justify-content-start align-items-center row py-3 gap-3 gap-md-0 primary-font">
-                            <div class="col-md-4">
+                            <div class="col-1">
                                 <label for="count" class="form-label">تعداد: </label>
                                 <select id="count" name="count" class="form-select text-capitalize">
                                     <option value="10" selected>10</option>
