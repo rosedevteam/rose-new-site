@@ -98,7 +98,7 @@
                             <tbody>
                             @foreach($products as $product)
                                 <tr class="">
-                                    <td>{{ verta($post->created_at) }}</td>
+                                    <td>{{ verta($product->created_at) }}</td>
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column"><a
@@ -111,18 +111,18 @@
                                     </td>
                                     <td>
                                 <span class="fw-semibold">
-                                    {{ $user->short_description }}
+                                    {{ $product->short_description }}
                                 </span>
                                     </td>
-                                    <td><span class="fw-semibold">{{ $user->price }}</span></td>
-                                    <td>{{ $user->sale_price }}</td>
+                                    <td><span class="fw-semibold">{{ $product->price }}</span></td>
+                                    <td>{{ $product->sale_price }}</td>
                                     <td>
                                         <span class="fw-semibold">{{ $product->status }}</span>
                                     </td>
                                     <td>
                                         <div class="d-inline-block text-nowrap">
-                                            <a href="{{ route('admin.user.show', $product->author) }}">
-                                                {{ $order->author->name() }}
+                                            <a href="{{ route('admin.user.show', $product->author()) }}">
+                                                {{ $product->author()->name() }}
                                             </a>
                                         </div>
                                     </td>

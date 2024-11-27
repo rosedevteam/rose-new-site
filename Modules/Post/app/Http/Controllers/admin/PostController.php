@@ -42,4 +42,9 @@ class PostController extends Controller
             'count' => $count,
         ]);
     }
+
+    public function show(Post $post)
+    {
+        Gate::authorize('view-posts');
+    }
 }

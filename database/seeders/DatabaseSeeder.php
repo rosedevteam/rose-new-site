@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\Post\Models\Post;
+use Modules\Product\Models\Product;
 use Modules\User\Models\User;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -16,7 +18,13 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
+        $this->seedUsersAndPermissions();
+        $this->seedProducts();
+        $this->seedPosts();
+    }
 
+    private function seedUsersAndPermissions(): void
+    {
         Permission::create(['name' => 'admin-panel']);
         //
         Permission::create(['name' => 'view-users']);
@@ -139,5 +147,93 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $user4->assignRole($customer);
+    }
+
+    private function seedProducts(): void
+    {
+        $product1 = Product::factory()->create([
+            'title' => "هخشصذدلهخصشلد",
+            'author_id' => 1,
+            'price' => 2000000,
+            'short_description' => "هشذلحهشذسلشخسلدشسجخیلدشسجخلدشخسهیلجخیشسدخجهدذشسجخدذجشخسیدهذشسدذخهجش",
+            'sale_price' => 1500000,
+            'content' => "asdfn;onasgA",
+            'status' => 'public',
+            'comment_status' => 1,
+            'image' => "asdijbnag",
+            'url' => "asdbniadsg"
+        ]);
+        $product2 = Product::factory()->create([
+            'title' => "هخشصذدلهخصشلد",
+            'author_id' => 1,
+            'price' => 2000000,
+            'short_description' => "هشذلحهشذسلشخسلدشسجخیلدشسجخلدشخسهیلجخیشسدخجهدذشسجخدذجشخسیدهذشسدذخهجش",
+            'sale_price' => 1900000,
+            'content' => "asdfn;onasgA",
+            'status' => 'draft',
+            'comment_status' => 0,
+            'image' => "asdijbnag",
+            'url' => "asdbniadsg"
+        ]);
+        $product3 = Product::factory()->create([
+            'title' => "شسیمتهلدشل",
+            'author_id' => 3,
+            'price' => 3000000,
+            'short_description' => "شسذهل",
+            'sale_price' => 1500000,
+            'content' => "asdfn;onasgA",
+            'status' => 'hidden',
+            'comment_status' => 1,
+            'image' => "asdijbnag",
+            'url' => "asdbniadsg"
+        ]);
+        $product4 = Product::factory()->create([
+            'title' => "هخشصذدلهخصشلد",
+            'author_id' => 2,
+            'price' => 2000000,
+            'short_description' => "هشذلحهشذسلشخسلدشسجخیلدشسجخلدشخسهیلجخیشسدخجهدذشسجخدذجشخسیدهذشسدذخهجش",
+            'sale_price' => 1500000,
+            'content' => "asdfn;onasgA",
+            'status' => 'public',
+            'comment_status' => 0,
+            'image' => "asdijbnag",
+            'url' => "asdbniadsg"
+        ]);
+    }
+
+    private function seedPosts(): void
+    {
+        $post1 = Post::factory()->create([
+            'author_id' => 1,
+            'title' => "شهسیذل",
+            'content' => "asdkjasdg",
+            'status' => 'public',
+            'comment_status' => 0,
+            'url' => "asdbniadssdfg"
+        ]);
+        $post2 = Post::factory()->create([
+            'author_id' => 2,
+            'title' => "شسهختیذدلهخ",
+            'content' => "asdkjasdg",
+            'status' => 'public',
+            'comment_status' => 1,
+            'url' => "sdgg"
+        ]);
+        $post3 = Post::factory()->create([
+            'author_id' => 3,
+            'title' => "شهسیذل",
+            'content' => "asdkjasdg",
+            'status' => 'public',
+            'comment_status' => 0,
+            'url' => "234sfeg"
+        ]);
+        $post4 = Post::factory()->create([
+            'author_id' => 1,
+            'title' => "شهسیذل",
+            'content' => "asdkjasdg",
+            'status' => 'public',
+            'comment_status' => 0,
+            'url' => "asdf"
+        ]);
     }
 }

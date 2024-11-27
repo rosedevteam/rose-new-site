@@ -109,11 +109,12 @@
                                     </td>
                                     <td>
                                 <span class="fw-semibold">
-                                    {{ $post->author->name() }}
+                                    <a href="{{ route('admin.user.show', $post->author()) }}">
+                                    {{ $post->author()->name() }}</a>
                                 </span>
                                     </td>
-                                    <td><span class="fw-semibold">{{ $user->status }}</span></td>
-                                    <td>{{ $user->comment_status }}</td>
+                                    <td><span class="fw-semibold">{{ $post->status }}</span></td>
+                                    <td>{{ $post->cohment_status }}</td>
                                     <td>
                                         <div class="d-inline-block text-nowrap">
                                             <button class="btn btn-sm btn-icon">
