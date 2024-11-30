@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Modules\User\Models\User;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -41,15 +42,15 @@ class UserController extends Controller
                 $users = $users->orderBy($sort_by, $sort_direction);
             }
             $users = $users->paginate($count)->withQueryString();
-            return view('user::admin.index', [
-                'users' => $users,
-                'roles' => $roles,
-                'sort_by' => $sort_by,
-                'sort_direction' => $sort_direction,
-                'search' => $search,
-                'role_id' => $role_id,
-                'count' => $count,
-            ]);
+            return view('user::admin.index', compact(
+                'users',
+                'roles',
+                'sort_by',
+                'sort_direction',
+                'search',
+                'role_id',
+                'count'
+            ));
         } catch (\Throwable $th) {
             abort(500);
         }
@@ -61,15 +62,20 @@ class UserController extends Controller
         $data = $request->validate([
             'first_name' => 'bail|string|max:255',
             'last_name' => 'bail|string|max:255',
-            "phone" => 'bail|required|string|digits:11|unique:users,phone",',
+            "phone" => 'bail|required|string|digits:11|unique:users,phone',
+            'role_id' => 'bail|integer|exists:roles,id',
         ]);
         try {
+            $data['role_id'] = Role::where('id', $data['role_id'])->first()->name;
             $user = User::query()->create([
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
                 'phone' => $data['phone'],
             ]);
-            $user->assignRole('customer');
+            if (!auth()->user()->hasPermissionTo('promote-users')) {
+                $data['role_id'] = 'مشتری';
+            }
+            $user->assignRole($data['role_id']);
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($user)
@@ -84,14 +90,16 @@ class UserController extends Controller
     {
         Gate::authorize('view-users');
         try {
-            $orders = collect([]);
+            $orders = null;
+            $logs = null;
             if (Gate::allows('view-orders')) {
                 $orders = $user->orders()->orderByDesc('created_at')->get();
             }
-            return view('user::admin.show', [
-                'user' => $user,
-                'orders' => $orders,
-            ]);
+            if (Gate::allows('view-logs')) {
+                $logs = Activity::causedBy($user)->orderByDesc('created_at')->get();
+            }
+//            dd($logs->first()->subject);
+            return view('user::admin.show', compact('user', 'orders', 'logs'));
         } catch (\Throwable $th) {
             abort(500);
         }

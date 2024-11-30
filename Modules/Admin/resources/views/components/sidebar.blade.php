@@ -56,8 +56,8 @@
             </li>
         @endcan
         @can('view-daily-reports')
-            <li @class(["menu-item", 'active' => url()->current() == route('admin.daily-report.index')])>
-                <a href="{{ route("admin.daily-report.index") }}" class="menu-link">
+                <li @class(["menu-item", 'active' => url()->current() == route('admin.dailyreport.index')])>
+                    <a href="{{ route("admin.dailyreport.index") }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-chart"></i>
                     <div data-i18n="گزارش روزانه بازار">گزارش روزانه بازار</div>
                 </a>

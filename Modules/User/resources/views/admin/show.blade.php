@@ -11,9 +11,6 @@
             <div class="alert alert-danger" style="padding-right: 80px">{{ $errors->first() }}</div>
         @endif
         <div class="container-xxl flex-grow-1 container-p-y">
-            <h4 class="py-3 breadcrumb-wrapper mb-4">
-                <span class="text-muted fw-light">کاربر / نمایش /</span> حساب
-            </h4>
             <div class="row gy-4">
                 <!-- User Sidebar -->
                 <div class="col-xl-4 col-lg-5 col-md-5 order-1 order-md-0">
@@ -95,11 +92,9 @@
                 </div>
                 <!--/ User Sidebar -->
 
-                @can('view-orders')
-                    <!-- User Content -->
-                    <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
-                        <!-- Invoice table -->
-                        <div class="card">
+                <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
+                    @if(!is_null($orders))
+                        <div class="card mb-4">
                             <div class="card-header border-bottom">
                                 <h5 class="card-title">سفارش ها</h5>
                             </div>
@@ -172,9 +167,53 @@
                                 </div>
                             </div>
                         </div>
-                        <!--/ User Content -->
-                    </div>
-                @endcan
+                    @endif
+                    @if(!is_null($logs))
+                        <div class="card mb-4">
+                            <div class="card-header border-bottom">
+                                <h5 class="card-title">لاگ</h5>
+                            </div>
+                            <div class="table-responsive mb-3">
+
+                                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                                    <table class="datatables-users table border-top dataTable no-footer dtr-column"
+                                           id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info"
+                                           style="width: 100%;">
+                                        <thead>
+                                        <tr>
+                                            <th aria-controls="DataTables_Table_0" rowspan="1"
+                                                colspan="1" style="width: 12%" aria-sort="ascending">توضیحات
+                                            </th>
+                                            <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                                style="width: 10%;">روی
+                                            </th>
+                                            <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                                style="width: 5%;">تاریخ
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($logs as $log)
+                                            <tr>
+                                                <td>
+                                                    <div
+                                                        class="d-flex justify-content-start align-items-center user-name">
+                                                        <div class="d-flex flex-column">
+                                                            <span class="fw-semibold">{{ $log->description }}</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <x-admin::logsubject :log="$log"/>
+                                                <td>{{ verta($log->created_at)->formatJalaliDateTime() }}</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                @endif
             </div>
 
             <!-- Modal -->

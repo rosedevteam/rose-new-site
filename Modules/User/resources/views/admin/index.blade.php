@@ -132,9 +132,6 @@
                                     </td>
                                     <td><span class="fw-semibold">{{ $user->phone }}</span></td>
                                     <td>{{ $user->email }}</td>
-                                    @php
-                                        $role = $user->getRoleNames()[0]
-                                    @endphp
                                     <td>
                                         @foreach($user->getRoleNames() as $role)
                                             <span @class(['badge', 'bg-label-primary' => $role == 'مشتری', 'bg-label-reddit' => $role == 'ادمین', 'bg-label-info' => $role == 'نویسنده', 'bg-label-github' => $role == 'پشتیبان'])>{{ $role }}</span>
@@ -187,6 +184,22 @@
                                     <input type="number" class="form-control" id="phone" name="phone" maxlength="11"
                                            required>
                                 </div>
+                                @can('promote-users')
+                                    <div class="mb-3">
+                                        <label class="form-label" for="role_id">نقش</label>
+                                        <select id="role_id" class="form-select" name="role_id">
+                                            @foreach($roles as $role)
+                                                <option value="{{ $role['id'] }}">{{ $role['name'] }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                @else
+                                    <div class="mb-3">
+                                        <select id="role_id" class="form-select" name="role_id" hidden>
+                                            <option value="1"></option>
+                                        </select>
+                                    </div>
+                                @endcan
                                 <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">ثبت</button>
                                 <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">
                                     انصراف

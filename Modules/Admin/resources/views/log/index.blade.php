@@ -17,12 +17,6 @@
                     <form action="{{ route('admin.log.index') }}" method="GET">
                         <div
                             class="d-flex justify-content-start align-items-center row py-3 gap-1 gap-md-0 primary-font">
-                            <div class="col-md-3">
-                                <label for="count" class="form-label">جستجو: </label>
-                                <div id="search" class="search-input">
-                                    <input type="search" name="search" value="{{ $search }}" class="form-control">
-                                </div>
-                            </div>
                             <div class="col-md-2">
                                 <label for="sort_direction" class="form-label">نوع ترتیب: </label>
                                 <select id="sort_direction" name="sort_direction" class="form-select text-capitalize">
@@ -81,21 +75,7 @@
                                     {{ $log->causer->name() }}</a>
                                 </span>
                                     </td>
-                                    @php
-                                        switch (substr(strrchr(get_class($log->subject), '\\'), 1)) {
-                                            case 'User': $type = 'کاربر'; break;
-                                            case 'Product': $type = 'دوره'; break;
-                                            case 'Post': $type = 'پست'; break;
-                                            case 'Order': $type = 'سفارش'; break;
-                                            case 'DailyReport': $type = 'گزارش روزانه'; break;
-                                            case 'Metadata': $type = 'متادیتا'; break;
-                                            case 'Comment': $type = 'نظر'; break;
-                                            case 'Category': $type = 'طبقه بندی'; break;
-                                        }
-                                    @endphp
-                                    <td>
-                                        <span class="fw-semibold">{{ $type }}</span>
-                                    </td>
+                                    <x-admin::logsubject :log="$log"/>
                                     <td>{{ verta($log->created_at)->formatJalaliDateTime() }}</td>
                                 </tr>
                             @endforeach
