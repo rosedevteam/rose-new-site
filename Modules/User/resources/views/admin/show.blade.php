@@ -112,7 +112,7 @@
                                         <tr>
                                             <th tabindex="0"
                                                 aria-controls="DataTables_Table_1" rowspan="1" colspan="1"
-                                                style="width: 15%;">دوره
+                                                style="width: 15%;">دوره ها
                                             </th>
                                             <th class="sorting" tabindex="0" aria-controls="DataTables_Table_1"
                                                 rowspan="1"
@@ -146,7 +146,9 @@
                                         @foreach($orders as $order)
                                             <tr>
                                                 <td>
-                                                    <a href="{{ route('admin.product.show', $order->product()) }}">{{ $order->product()->title }}</a>
+                                                    @foreach($order->products()->get() as $product)
+                                                        <a href="{{ route('admin.product.show', $product) }}">{{ $product->title }}</a>
+                                                    @endforeach
                                                 </td>
                                                 <td>
                                                     @switch($order->status)

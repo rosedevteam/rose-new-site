@@ -5,6 +5,7 @@ namespace Modules\Product\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Modules\Comment\Models\Comment;
 use Modules\Order\Models\Order;
@@ -21,9 +22,9 @@ class Product extends Model
         return $this->belongsTo(User::class)->first();
     }
 
-    public function orders(): Collection
+    public function orders(): BelongsToMany
     {
-        return $this->hasMany(Order::class)->get();
+        return $this->belongsToMany(Order::class);
     }
 
     public function comments(): MorphMany

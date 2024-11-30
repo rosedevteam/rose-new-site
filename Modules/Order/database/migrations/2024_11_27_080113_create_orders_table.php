@@ -13,11 +13,16 @@ return new class extends Migration {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('product_id')->constrained('products');
             $table->string('price');
             $table->enum('status', ['pending', 'completed', 'cancelled', 'returned'])->default('pending');
-            $table->enum('payment_method', ['shaparak', 'card']);
+            $table->enum('payment_method', ['shaparak', 'card'])->default('shaparak');
             $table->timestamps();
+        });
+
+        Schema::create('order_product', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('order_id')->constrained('orders')->cascadeOnDelete();
+            $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
         });
     }
 

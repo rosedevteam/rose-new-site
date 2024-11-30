@@ -13,9 +13,6 @@ use Spatie\Permission\PermissionRegistrar;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
@@ -245,35 +242,35 @@ class DatabaseSeeder extends Seeder
     {
         $order1 = Order::factory()->create([
             'user_id' => 1,
-            'product_id' => 1,
             'price' => 2000000,
             'status' => "completed",
             'payment_method' => 'shaparak'
         ]);
+        $order1->products()->attach([1, 2, 3]);
 
         $order2 = Order::factory()->create([
             'user_id' => 1,
-            'product_id' => 2,
             'price' => 1000000,
             'status' => "cancelled",
             'payment_method' => 'shaparak'
         ]);
+        $order2->products()->attach([2]);
 
         $order3 = Order::factory()->create([
             'user_id' => 1,
-            'product_id' => 3,
             'price' => 2000000,
             'status' => "pending",
             'payment_method' => 'card'
         ]);
+        $order3->products()->attach([3]);
 
         $order4 = Order::factory()->create([
             'user_id' => 1,
-            'product_id' => 3,
             'price' => 2000000,
             'status' => "returned",
             'payment_method' => 'shaparak'
         ]);
+        $order4->products()->attach([1]);
 
     }
 }
