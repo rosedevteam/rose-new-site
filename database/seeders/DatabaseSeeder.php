@@ -110,7 +110,7 @@ class DatabaseSeeder extends Seeder
             'avatar' => null,
         ]);
 
-        $user1->assignRole($superAdmin);
+        $user1->assignRole($admin);
 
         $user2 = User::factory()->create([
             'first_name' => 'writer',

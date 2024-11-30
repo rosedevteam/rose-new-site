@@ -39,6 +39,7 @@ class ProductController extends Controller
     public function show(Product $product): Application|Factory|View
     {
         Gate::authorize('view-products');
+        dd($product);
         return view('product::admin.show', $product);
     }
 }

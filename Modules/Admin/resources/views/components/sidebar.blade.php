@@ -62,12 +62,12 @@
                     <div data-i18n="گزارش روزانه بازار">گزارش روزانه بازار</div>
                 </a>
             </li>
-            @endcan
-            @can('view-logs')
-                <li @class(["menu-item", 'active' => url()->current() == route('admin.log.index')])>
-                    <a href="{{ route("admin.log.index") }}" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-file"></i>
-                        <div data-i18n="لاگ">لاگ</div>
+        @endcan
+        @can('view-logs')
+            <li @class(["menu-item", 'active' => url()->current() == route('admin.log.index')])>
+                <a href="{{ route("admin.log.index") }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-file"></i>
+                    <div data-i18n="لاگ">لاگ</div>
                 </a>
             </li>
         @endcan
