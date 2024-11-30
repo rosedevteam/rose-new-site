@@ -54,11 +54,7 @@
             <!-- Logo -->
               <div class="d-flex flex-column justify-content-center">
                   <div class="app-brand justify-content-center flex-column">
-                      <a href="#" class="app-brand-link gap-2">
-                          <img src="/assets/admin/img/branding/logo.svg" width="100%">
-                      </a>
-                      <h6 class="mt-3">مجموعه آموزشی رز</h6>
-                  </div>
+                      <img src="/assets/admin/img/branding/logo.svg" alt="logo">
             </div>
             <!-- /Logo -->
             <h4 class="mb-3 secondary-font">تایید دو مرحله‌ای</h4>

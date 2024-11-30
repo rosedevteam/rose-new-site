@@ -79,9 +79,6 @@
                                     colspan="1" style="width: 12%" aria-sort="ascending">نام
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 12%;">توضیحات
-                                </th>
-                                <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 10%;">قیمت اصلی
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
@@ -108,11 +105,6 @@
                                                 </a>
                                             </div>
                                         </div>
-                                    </td>
-                                    <td>
-                                <span class="fw-semibold">
-                                    {{ $product->short_description }}
-                                </span>
                                     </td>
                                     <td><span class="fw-semibold">{{ $product->price }}</span></td>
                                     <td>{{ $product->sale_price }}</td>

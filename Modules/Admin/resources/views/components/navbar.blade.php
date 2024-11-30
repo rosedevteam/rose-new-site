@@ -20,11 +20,11 @@
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                     <a class="nav-link dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                        <div class="avatar">
+                        <div class="avatar avatar-md me-2">
                             @if(!is_null(auth()->user()->avatar))
                                 <img src="{{ auth()->user()->avatar }}" alt class="rounded-circle">
                             @else
-                                <span class="avatar-initial rounded-circle bg-label-info align-content-center"
+                                <span class="avatar-initial rounded-circle bg-label-info fs-5"
                                 >{{ substr(auth()->user()->last_name, 0, 2) . ' ' . substr(auth()->user()->first_name, 0, 2) }}</span>
                             @endif
                         </div>
@@ -34,12 +34,12 @@
                             <a class="dropdown-item" href="">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-shrink-0 me-3">
-                                        <div class="avatar">
+                                        <div class="avatar avatar-md me-2">
                                             @if(!is_null(auth()->user()->avatar))
                                                 <img src="{{ auth()->user()->avatar }}" alt class="rounded-circle">
                                             @else
                                                 <span
-                                                    class="avatar-initial rounded-circle bg-label-info align-content-center"
+                                                    class="avatar-initial rounded-circle bg-label-info align-content-center fs-5"
                                                 >{{ substr(auth()->user()->last_name, 0, 2) . ' ' . substr(auth()->user()->first_name, 0, 2) }}</span>
                                             @endif
                                         </div>

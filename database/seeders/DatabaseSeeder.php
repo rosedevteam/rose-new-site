@@ -57,10 +57,6 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'create-orders']);
         Permission::create(['name' => 'delete-orders']);
         //
-        Permission::create(['name' => 'view-billings']);
-        Permission::create(['name' => 'edit-billings']);
-        //
-        Permission::create(['name' => 'roles-and-permissions']);
 
         $customer = Role::create(['name' => 'مشتری']);
         $superAdmin = Role::create(['name' => 'ادمین']);

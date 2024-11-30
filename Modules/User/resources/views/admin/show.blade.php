@@ -26,8 +26,10 @@
                                         <img class="img-fluid rounded my-4" src="{{ $user->avatar }}"
                                              height="110" width="110" alt="User avatar">
                                     @else
-                                        <span class="avatar-initial rounded-circle bg-label-info align-content-center"
-                                              style="width: 110px; height: 110px;">{{ substr($user->last_name, 0, 2) . ' ' . substr($user->first_name, 0, 2) }}</span>
+                                        <div class="avatar avatar-xl">
+                                        <span class="avatar-initial rounded-circle bg-label-info fs-5">
+                                            {{ substr($user->last_name, 0, 2) . ' ' . substr($user->first_name, 0, 2) }}</span>
+                                        </div>
                                     @endif
                                     <div class="user-info text-center">
                                         <h5 class="mb-2">{{ $user->first_name . ' ' . $user->last_name }}</h5>
@@ -37,24 +39,43 @@
                                     </div>
                                 </div>
                             </div>
+                            @php
+                                $billing = $user->billing()
+                            @endphp
                             <h5 class="pb-2 border-bottom mb-4 secondary-font">جزئیات</h5>
                             <div class="info-container">
                                 <ul class="list-unstyled">
+                                    <li class="mb-3">
+                                        <span class="fw-bold me-2">تماس:</span>
+                                        <span class="d-inline-block">{{ $user->phone }}</span>
+                                    </li>
                                     <li class="mb-3">
                                         <span class="fw-bold me-2">ایمیل:</span>
                                         <span>{{ $user->email }}</span>
                                     </li>
                                     <li class="mb-3">
-                                        <span class="fw-bold me-2">تماس:</span>
-                                        <span class="d-inline-block" dir="ltr">{{ $user->phone }}</span>
+                                        <span class="fw-bold me-2">آدرس:</span>
+                                        <span class="d-inline-block">{{ $billing->address }}</span>
+                                    </li>
+                                    <li class="mb-3">
+                                        <span class="fw-bold me-2">شهر:</span>
+                                        <span class="d-inline-block">{{ $billing-> city }}</span>
+                                    </li>
+                                    <li class="mb-3">
+                                        <span class="fw-bold me-2">استان:</span>
+                                        <span class="d-inline-block">{{ $billing->province }}</span>
+                                    </li>
+                                    <li class="mb-3">
+                                        <span class="fw-bold me-2">کد پستی:</span>
+                                        <span class="d-inline-block">{{ $billing->postal_code }}</span>
                                     </li>
                                     <li class="mb-3">
                                         <span class="fw-bold me-2">تاریخ ساخت اکانت:</span>
-                                        <span class="d-inline-block" dir="ltr">{{ verta($user->created_at) }}</span>
+                                        <span class="d-inline-block">{{ verta($user->created_at) }}</span>
                                     </li>
                                     <li class="mb-3">
                                         <span class="fw-bold me-2">تاریخ آخرین آپدیت اکانت:</span>
-                                        <span class="d-inline-block" dir="ltr">{{ verta($user->updated_at) }}</span>
+                                        <span class="d-inline-block">{{ verta($user->updated_at) }}</span>
                                     </li>
                                 </ul>
                                 <div class="d-flex justify-content-center pt-3">
@@ -172,6 +193,26 @@
                                     <label class="form-label" for="email">ایمیل</label>
                                     <input type="text" id="email" name="email"
                                            class="form-control text-start" placeholder="{{ $user->email }}" dir="ltr">
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label" for="address">آدرس</label>
+                                    <input type="text" id="address" name="address"
+                                           class="form-control text-start" placeholder="{{ $billing->address }}">
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label" for="city">شهر</label>
+                                    <input type="text" id="city" name="city"
+                                           class="form-control text-start" placeholder="{{ $billing->city }}">
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label" for="province">استان</label>
+                                    <input type="text" id="province" name="province"
+                                           class="form-control text-start" placeholder="{{ $billing->province }}">
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label" for="postal_code">کد پستی</label>
+                                    <input type="text" id="postal_code" name="postal_code"
+                                           class="form-control text-start" placeholder="{{ $billing->postal_code }}">
                                 </div>
                                 <div class="col-12 text-center mt-4">
                                     <button type="submit" class="btn btn-primary me-sm-3 me-1">ثبت</button>

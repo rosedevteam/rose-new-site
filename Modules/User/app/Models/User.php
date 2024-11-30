@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Modules\Auth\Models\OtpCode;
 use Modules\Auth\Notifications\OtpNotification;
-use Modules\Billing\Models\Billing;
 use Modules\Comment\Models\Comment;
 use Modules\DailyReport\Models\DailyReport;
 use Modules\Order\Models\Order;
@@ -31,6 +30,9 @@ class User extends \Illuminate\Foundation\Auth\User
         static::created(function ($user) {
             OtpCode::create([
                 'otp' => $user->generateOtp(),
+                'user_id' => $user->id,
+            ]);
+            Billing::create([
                 'user_id' => $user->id,
             ]);
         });
@@ -76,9 +78,9 @@ class User extends \Illuminate\Foundation\Auth\User
         return $this->hasOne(OtpCode::class);
     }
 
-    public function billing(): HasOne
+    public function billing(): Billing
     {
-        return $this->hasOne(Billing::class);
+        return $this->hasOne(Billing::class)->first();
     }
 
     public function posts(): HasMany

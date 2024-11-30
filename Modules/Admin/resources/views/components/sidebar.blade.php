@@ -1,10 +1,7 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
         <a href="{{ route('admin.index') }}" class="app-brand-link">
-              <span class="app-brand-logo demo">
-                  <img src="/assets/admin/img/branding/logo.svg" width="100%">
-              </span>
-            <span class="app-brand-text demo menu-text fs-5 fw-bold ms-2">مجموعه آموزشی رز</span>
+            <img src="/assets/admin/img/branding/logo.svg" alt="logo">
         </a>
 
         <a class="layout-menu-toggle menu-link text-large ms-auto">

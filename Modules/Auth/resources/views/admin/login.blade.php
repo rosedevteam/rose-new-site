@@ -50,10 +50,7 @@
               <!-- Logo -->
                 <div class="d-flex flex-column justify-content-center">
                     <div class="app-brand justify-content-center flex-column">
-                        <a href="#" class="app-brand-link gap-2">
-                            <img src="/assets/admin/img/branding/logo.svg" width="100%">
-                        </a>
-                        <h6 class="mt-3">مجموعه آموزشی رز</h6>
+                        <img src="/assets/admin/img/branding/logo.svg" alt="logo">
                     </div>
                 </div>
               <!-- /Logo -->
@@ -68,12 +65,6 @@
                     @error('phone')
                     <div class="error" data-field="phone" data-validator="notEmpty">شماره وارد شده نامعتبر است.</div>
                     @enderror
-                </div>
-                <div class="mb-3">
-                  <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="remember">
-                      <label class="form-check-label" for="remember"> به خاطر سپاری </label>
-                  </div>
                 </div>
                 <div class="mb-3">
                   <button class="btn btn-primary d-grid w-100" type="submit">ورود</button>

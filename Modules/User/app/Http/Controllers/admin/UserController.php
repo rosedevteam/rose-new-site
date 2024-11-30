@@ -88,19 +88,22 @@ class UserController extends Controller
     public function update(User $user): Application|Redirector|RedirectResponse
     {
         Gate::authorize('edit-users');
-        $data = request()->validate([
+        $userData = request()->validate([
             'first_name' => 'bail|nullable|string|max:255',
             'last_name' => 'bail|nullable|string|max:255',
             'phone' => 'bail|nullable|string|digits:11|unique:users,phone',
             'email' => 'bail|nullable|string|email|unique:users,email',
         ]);
-        $updateData = array();
-        foreach ($data as $key => $value) {
-            if (!is_null($value)) {
-                $updateData[$key] = $value;
-            }
-        }
-        $user->update($updateData);
+        $billingData = request()->validate([
+            'address' => 'bail|nullable|string|max:255',
+            'city' => 'bail|nullable|string|max:255',
+            'province' => 'bail|nullable|string|max:255',
+            'postal_code' => 'bail|nullable|string|digits:10',
+        ]);
+        $updateUserData = $this->removeNullKeys($userData);
+        $updateBillingData = $this->removeNullKeys($billingData);
+        $user->update($updateUserData);
+        $user->billing()->update($updateBillingData);
         return redirect(route('admin.user.show', $user));
     }
 
@@ -109,6 +112,17 @@ class UserController extends Controller
         Gate::authorize('delete-users');
         $user->delete();
         return redirect(route('admin.user.index'));
+    }
+
+    private function removeNullKeys(array $array): array
+    {
+        $data = array();
+        foreach ($array as $key => $value) {
+            if (!is_null($value)) {
+                $data[$key] = $value;
+            }
+        }
+        return $data;
     }
 
 }
