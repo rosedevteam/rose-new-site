@@ -71,11 +71,13 @@
                                     </li>
                                     <li class="mb-3">
                                         <span class="fw-bold me-2">تاریخ ساخت اکانت:</span>
-                                        <span class="d-inline-block">{{ verta($user->created_at) }}</span>
+                                        <span
+                                            class="d-inline-block">{{ verta($user->created_at)->formatJalaliDatetime() }}</span>
                                     </li>
                                     <li class="mb-3">
                                         <span class="fw-bold me-2">تاریخ آخرین آپدیت اکانت:</span>
-                                        <span class="d-inline-block">{{ verta($user->updated_at) }}</span>
+                                        <span
+                                            class="d-inline-block">{{ verta($user->updated_at)->formatJalaliDatetime() }}</span>
                                     </li>
                                 </ul>
                                 <div class="d-flex justify-content-center pt-3">
@@ -94,70 +96,83 @@
                 <!--/ User Sidebar -->
 
                 @can('view-orders')
-                <!-- User Content -->
-                <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
-                    <!-- Invoice table -->
-                    <div class="card">
+                    <!-- User Content -->
+                    <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
+                        <!-- Invoice table -->
+                        <div class="card">
                             <div class="card-header border-bottom">
                                 <h5 class="card-title">سفارش ها</h5>
                             </div>
-                        <div class="table-responsive mb-3">
-                            <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                                <table class="table datatable-invoice border-top dataTable no-footer dtr-column"
-                                       id="DataTables_Table_1" aria-describedby="DataTables_Table_1_info"
-                                       style="width: 100%;">
-                                    <thead>
-                                    <tr>
-                                        <th class="control sorting dtr-hidden" tabindex="0"
-                                            aria-controls="DataTables_Table_1" rowspan="1" colspan="1"
-                                            style="width: 15%; display: none;"
-                                            aria-label=": فعال سازی نمایش به صورت صعودی">تاریخ سفارش
-                                        </th>
-                                        <th class="sorting sorting_desc" tabindex="0" aria-controls="DataTables_Table_1"
-                                            rowspan="1" colspan="1" style="width: 15%;"
-                                            aria-label=": فعال سازی نمایش به صورت صعودی" aria-sort="descending">روش
-                                            پرداخت
-                                        </th>
-                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1"
-                                            colspan="1" style="width: 15%;"
-                                            aria-label=": فعال سازی نمایش به صورت صعودی">وضعیت
-                                        </th>
-                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_1" rowspan="1"
-                                            colspan="1" style="width: 15%;"
-                                            aria-label="جمع: فعال سازی نمایش به صورت صعودی">قیمت
-                                        </th>
-                                        <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                            style="width: 5%;">مشاهده
-                                        </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($orders as $order)
-                                        -
-                                        <tr class="odd">
-                                            <td>{{ verta($order->created_at) }}</td>
-                                            <td>{{ $order->status }}</td>
-                                            <td>{{ $order->payment_method }}</td>
-                                            <td>{{ $order->price }}</td>
-                                            <td>
-                                                <div class="d-inline-block text-nowrap">
-                                                    <button class="btn btn-sm btn-icon">
-                                                        <a href="">
-                                                            <i class="bx bx-edit"></i>
-                                                        </a>
-                                                    </button>
-                                                </div>
-                                            </td>
+                            <div class="table-responsive mb-3">
+                                <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                                    <table class="table datatable-invoice border-top dataTable no-footer dtr-column"
+                                           id="DataTables_Table_1" aria-describedby="DataTables_Table_1_info"
+                                           style="width: 100%;">
+                                        <thead>
+                                        <tr>
+                                            <th tabindex="0"
+                                                aria-controls="DataTables_Table_1" rowspan="1" colspan="1"
+                                                style="width: 15%;">دوره
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_1"
+                                                rowspan="1"
+                                                colspan="1" style="width: 15%;"
+                                                aria-label=": فعال سازی نمایش به صورت صعودی">وضعیت
+                                            </th>
+                                            <th class="sorting sorting_desc" tabindex="0"
+                                                aria-controls="DataTables_Table_1"
+                                                rowspan="1" colspan="1" style="width: 15%;"
+                                                aria-label=": فعال سازی نمایش به صورت صعودی" aria-sort="descending">روش
+                                                پرداخت
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_1"
+                                                rowspan="1"
+                                                colspan="1" style="width: 15%;"
+                                                aria-label="جمع: فعال سازی نمایش به صورت صعودی">قیمت خرید
+                                            </th>
+                                            <th class="control sorting dtr-hidden" tabindex="0"
+                                                aria-controls="DataTables_Table_1" rowspan="1" colspan="1"
+                                                style="width: 15%;"
+                                                aria-label=": فعال سازی نمایش به صورت صعودی">تاریخ سفارش
+                                            </th>
+                                            <th class="control sorting dtr-hidden" tabindex="0"
+                                                aria-controls="DataTables_Table_1" rowspan="1" colspan="1"
+                                                style="width: 15%;"
+                                                aria-label=": فعال سازی نمایش به صورت صعودی">آخرین تغییر
+                                            </th>
                                         </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($orders as $order)
+                                            <tr>
+                                                <td>
+                                                    <a href="{{ route('admin.product.show', $order->product()) }}">{{ $order->product()->title }}</a>
+                                                </td>
+                                                <td>
+                                                    @switch($order->status)
+                                                        @case('completed')کامل شده@break
+                                                        @case('pending')در حال انجام@break
+                                                        @case('returned')پس گرفته@break
+                                                        @case('cancelled')لغو شده@break
+                                                    @endswitch
+                                                </td>
+                                                <td>@switch($order->payment_method)
+                                                        @case('shaparak') درگاه بانکی@break
+                                                        @case('card')کارت به کارت@break
+                                                    @endswitch</td>
+                                                <td>{{ $order->price }}</td>
+                                                <td>{{ verta($order->created_at)->formatJalaliDatetime() }}</td>
+                                                <td>{{ verta($order->updated_at)->formatJalaliDatetime() }}</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                        </div>
-                </div>
-                <!--/ User Content -->
-                @endcan()
+                        <!--/ User Content -->
+                    </div>
+                @endcan
             </div>
 
             <!-- Modal -->
@@ -230,29 +245,29 @@
 
             <!-- delete User modal -->
             @can('delete-users')
-            <div class="modal fade" id="deleteUser" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-simple">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <div class="text-center mb-4 mt-0 mt-md-n2">
-                                <h3 class="secondary-font">آیا اطمینان دارید؟</h3>
-                            </div>
-                            <form id="deleteUserForm" action="{{ route('admin.user.destroy', $user) }}"
-                                  method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <div class="col-12 text-center mt-4">
-                                    <button type="submit" class="btn btn-danger me-sm-3 me-1">بله، حذف کن!</button>
-                                    <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
-                                            aria-label="Close">
-                                        انصراف
-                                    </button>
+                <div class="modal fade" id="deleteUser" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-simple">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="text-center mb-4 mt-0 mt-md-n2">
+                                    <h3 class="secondary-font">آیا اطمینان دارید؟</h3>
                                 </div>
-                            </form>
+                                <form id="deleteUserForm" action="{{ route('admin.user.destroy', $user) }}"
+                                      method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <div class="col-12 text-center mt-4">
+                                        <button type="submit" class="btn btn-danger me-sm-3 me-1">بله، حذف کن!</button>
+                                        <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
+                                                aria-label="Close">
+                                            انصراف
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             @endcan
             <!--/ delete User modal -->
             <!-- /Modal -->

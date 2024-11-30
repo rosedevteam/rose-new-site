@@ -18,12 +18,9 @@ class Product extends Model
 
     public function author(): User
     {
-        return $this->belongsTo(User::class)->get()[0];
+        return $this->belongsTo(User::class)->first();
     }
 
-    /**
-     * @return Collection
-     */
     public function orders(): Collection
     {
         return $this->hasMany(Order::class)->get();

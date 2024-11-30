@@ -4,8 +4,7 @@ namespace Modules\Order\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Modules\Order\Database\Factories\OrderFactory;
 use Modules\Product\Models\Product;
 use Modules\User\Models\User;
 
@@ -16,13 +15,18 @@ class Order extends Model
 
     protected $guarded = [];
 
-    public function user(): BelongsTo
+    public function user(): User
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->first();
     }
 
-    public function product(): hasOne
+    public function product(): Product
     {
-        return $this->hasOne(Product::class);
+        return $this->belongsTo(Product::class)->first();
+    }
+
+    protected static function newFactory(): OrderFactory
+    {
+        return OrderFactory::new();
     }
 }

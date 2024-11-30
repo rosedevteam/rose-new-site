@@ -1,7 +1,7 @@
 @extends('admin::layouts.main')
 
 @section('title')
-    کاربران
+    لاگ
 @endsection
 
 @section('content')
@@ -14,7 +14,7 @@
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
-                    <form action="{{ route('admin.user.index') }}" method="GET">
+                    <form action="{{ route('admin.log.index') }}" method="GET">
                         <div
                             class="d-flex justify-content-start align-items-center row py-3 gap-1 gap-md-0 primary-font">
                             <div class="col-md-3">
@@ -24,30 +24,10 @@
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                <label for="role" class="form-label">نقش: </label>
-                                <select id="role" name="role" class="form-select text-capitalize">
-                                    <option value="" selected>همه نقش ها</option>
-                                    @foreach($roles as $role)
-                                        <option
-                                            value="{{ $role['id'] }}" {{ $role_id == $role['id'] ? 'selected' : ''}}>{{ $role['name'] }}</option>
-                                    @endforeach
-                                </select></div>
-                            <div class="col-md-2">
-                                <label for="sort_by" class="form-label">ترتیب بر اساس: </label>
-                                <select id="sort_by" name="sort_by" class="form-select text-capitalize">
-                                    <option value="created_at" selected>تاریخ ثبت نام</option>
-                                    <option value="first_name" {{ $sort_by == 'first_name' ? 'selected' : '' }}>نام
-                                    </option>
-                                    <option value="last_name" {{ $sort_by == 'last_name' ? 'selected' : '' }}>نام
-                                        خانوادگی
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="col-md-2">
                                 <label for="sort_direction" class="form-label">نوع ترتیب: </label>
                                 <select id="sort_direction" name="sort_direction" class="form-select text-capitalize">
-                                    <option value="asc" selected>صعودی</option>
-                                    <option value="desc"{{ $sort_direction == 'desc' ? 'selected' : '' }}>نزولی</option>
+                                    <option value="asc" {{ $sort_direction == 'asc' ? 'selected' : '' }}>صعودی</option>
+                                    <option value="desc" selected>نزولی</option>
                                 </select>
                             </div>
                             <div class="col-md-2">
@@ -68,93 +48,60 @@
                 </div>
                 <div class="card-datatable table-responsive">
                     <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                        @can('create-users')
-                            <div class="row mx-2 my-2">
-                                <div class="col-md-20">
-                                    <div
-                                        class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
-                                        <div class="dt-buttons btn-group flex-wrap">
-                                            <button class="btn btn-secondary add-new btn-primary ms-2"
-                                                    aria-controls="DataTables_Table_0" type="button"
-                                                    data-bs-toggle="offcanvas"
-                                                    data-bs-target="#offcanvasAddUser"><span><i
-                                                        class="bx bx-plus me-0 me-lg-2"></i><span
-                                                        class="d-none d-lg-inline-block">افزودن کاربر جدید</span></span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endcan
                         <table class="datatables-users table border-top dataTable no-footer dtr-column"
                                id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 100%;">
                             <thead>
                             <tr>
                                 <th aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width: 12%" aria-sort="ascending">نام
+                                    colspan="1" style="width: 12%" aria-sort="ascending">توضیحات
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 12%;">نام
-                                    خانوادگی
+                                    style="width: 12%;">توسط
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 10%;">شماره
-                                    موبایل
+                                    style="width: 10%;">روی
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 15%;">ایمیل
-                                </th>
-                                <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 10%;">نقش
-                                </th>
-                                <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">تاریخ ثبت نام
-                                </th>
-                                <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">جزییات
+                                    style="width: 5%;">تاریخ
                                 </th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($users as $user)
+                            @foreach($logs as $log)
                                 <tr>
-                                    <td class="sorting_1">
+                                    <td>
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column">
-                                                    <span class="fw-semibold">{{ $user->first_name }}</span>
+                                                <span class="fw-semibold">{{ $log->description }}</span>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                <span class="fw-semibold">
-                                    {{ $user->last_name }}
+                                <span class="fw-semibold"><a href="{{ route('admin.user.show', $log->causer) }}">
+                                    {{ $log->causer->name() }}</a>
                                 </span>
                                     </td>
-                                    <td><span class="fw-semibold">{{ $user->phone }}</span></td>
-                                    <td>{{ $user->email }}</td>
                                     @php
-                                        $role = $user->getRoleNames()[0]
+                                        switch (substr(strrchr(get_class($log->subject), '\\'), 1)) {
+                                            case 'User': $type = 'کاربر'; break;
+                                            case 'Product': $type = 'دوره'; break;
+                                            case 'Post': $type = 'پست'; break;
+                                            case 'Order': $type = 'سفارش'; break;
+                                            case 'DailyReport': $type = 'گزارش روزانه'; break;
+                                            case 'Metadata': $type = 'متادیتا'; break;
+                                            case 'Comment': $type = 'نظر'; break;
+                                            case 'Category': $type = 'طبقه بندی'; break;
+                                        }
                                     @endphp
                                     <td>
-                                        @foreach($user->getRoleNames() as $role)
-                                            <span @class(['badge', 'bg-label-primary' => $role == 'مشتری', 'bg-label-reddit' => $role == 'ادمین', 'bg-label-info' => $role == 'نویسنده', 'bg-label-github' => $role == 'پشتیبان'])>{{ $role }}</span>
-                                        @endforeach
+                                        <span class="fw-semibold">{{ $type }}</span>
                                     </td>
-                                    <td>{{ verta($user->created_at)->formatJalaliDate() }}</td>
-                                    <td>
-                                        <div class="d-inline-block text-nowrap">
-                                            <button class="btn btn-sm btn-icon">
-                                                <a href="{{ route('admin.user.show', $user->id) }}">
-                                                    <i class="bx bx-detail"></i>
-                                                </a>
-                                            </button>
-                                        </div>
-                                    </td>
+                                    <td>{{ verta($log->created_at)->formatJalaliDateTime() }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
-                        {{ $users->links() }}
+                        {{ $logs->links() }}
                     </div>
 
                 </div>
@@ -214,3 +161,4 @@
     <script src="/assets/admin/vendor/libs/cleavejs/cleave.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave-phone.js"></script>
 @endpush
+

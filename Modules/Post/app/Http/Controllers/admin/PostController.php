@@ -4,11 +4,14 @@ namespace Modules\Post\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Gate;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
 use Modules\Post\Models\Post;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(): Application|Factory|View
     {
         Gate::authorize('view-posts');
         $sort_by = request('sort_by');
@@ -43,8 +46,9 @@ class PostController extends Controller
         ]);
     }
 
-    public function show(Post $post)
+    public function show(Post $post): Application|Factory|View
     {
         Gate::authorize('view-posts');
+        return view('post::admin.show', $post);
     }
 }

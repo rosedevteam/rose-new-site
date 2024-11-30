@@ -74,9 +74,6 @@
                                id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 100%;">
                             <thead>
                             <tr>
-                                <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width: 12%" aria-sort="ascending">تاریخ ثبت
-                                </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 12%;">خریدار
                                 </th>
@@ -84,7 +81,7 @@
                                     style="width: 10%;">دوره
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 15%;">قیمت فروش
+                                    style="width: 15%;">قیمت خرید
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 10%;">وضعیت
@@ -92,26 +89,22 @@
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 5%;">روش پرداخت
                                 </th>
+                                <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                    colspan="1" style="width: 12%" aria-sort="ascending">تاریخ ثبت
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($orders as $order)
                                 <tr class="">
                                     <td>
-                                        <div class="d-flex justify-content-start align-items-center user-name">
-                                            <div class="d-flex flex-column">
-                                                <span
-                                                    class="fw-semibold">{{ verta($order->created_at)->formatJalaliDate() }}</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
                                 <span class="fw-semibold">
-                                    <a href="{{ route('admin.user.show', $order->user) }}"
-                                    {{ $order->user->name() }}
+                                    <a href="{{ route('admin.user.show', $order->user()) }}"><span
+                                            class="fw-semibold">{{ $order->user()->name() }}</span> </a>
                                 </span>
                                     </td>
-                                    <td><span class="fw-semibold">{{ $order->product->title }}</span></td>
+                                    <td><a href="{{ route('admin.product.show', $order->product()) }}"><span
+                                                class="fw-semibold">{{ $order->product()->title }}</span></a></td>
                                     <td>{{ $order->price }}</td>
                                     <td>
                                         <span class="fw-semibold">{{ $order->status }}</span>
@@ -119,6 +112,14 @@
                                     <td>
                                         <div class="d-inline-block text-nowrap">
                                             {{ $order->payment_method }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex justify-content-start align-items-center user-name">
+                                            <div class="d-flex flex-column">
+                                                <span
+                                                    class="fw-semibold">{{ verta($order->created_at)->formatJalaliDatetime() }}</span>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>

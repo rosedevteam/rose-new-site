@@ -72,9 +72,6 @@
                                id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 100%;">
                             <thead>
                             <tr>
-                                <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 10%;">تاریخ ساخت
-                                </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
                                     colspan="1" style="width: 12%" aria-sort="ascending">نام
                                 </th>
@@ -90,13 +87,15 @@
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 5%;">نویسنده
                                 </th>
+                                <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                    style="width: 10%;">تاریخ ساخت
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($products as $product)
                                 <tr class="">
-                                    <td>{{ verta($product->created_at)->formatJalaliDate() }}</td>
-                                    <td class="sorting_1">
+                                    <td>
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column"><a
                                                         href="{{ route('admin.product.show', $product) }}"
@@ -118,6 +117,7 @@
                                             </a>
                                         </div>
                                     </td>
+                                    <td>{{ verta($product->created_at)->formatJalaliDate() }}</td>
                                 </tr>
                             @endforeach
                             </tbody>

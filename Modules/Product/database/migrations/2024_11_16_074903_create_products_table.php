@@ -23,6 +23,7 @@ return new class extends Migration
             $table->boolean('comment_status')->default(true);
             $table->string('image');
             $table->string('url');
+            $table->string('spot_player_key')->nullable();
             $table->timestamps();
         });
     }

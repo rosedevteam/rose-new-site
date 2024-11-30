@@ -69,6 +69,9 @@ class UserController extends Controller
             'phone' => $data['phone'],
         ]);
         $user->assignRole('customer');
+        activity()->causedBy(auth()->user())
+            ->performedOn($user)
+            ->log('ساخت کاربر');
         return redirect(route('admin.user.index'));
     }
 
@@ -104,6 +107,9 @@ class UserController extends Controller
         $updateBillingData = $this->removeNullKeys($billingData);
         $user->update($updateUserData);
         $user->billing()->update($updateBillingData);
+        activity()->causedBy(auth()->user())
+            ->performedOn($user)
+            ->log('ادیت کاربر');
         return redirect(route('admin.user.show', $user));
     }
 
@@ -111,18 +117,17 @@ class UserController extends Controller
     {
         Gate::authorize('delete-users');
         $user->delete();
+        activity()->causedBy(auth()->user())
+            ->performedOn($user)
+            ->log('حذف کاربر');
         return redirect(route('admin.user.index'));
     }
 
     private function removeNullKeys(array $array): array
     {
-        $data = array();
-        foreach ($array as $key => $value) {
-            if (!is_null($value)) {
-                $data[$key] = $value;
-            }
-        }
-        return $data;
+        return array_filter($array, function ($value) {
+            return !is_null($value);
+        });
     }
 
 }

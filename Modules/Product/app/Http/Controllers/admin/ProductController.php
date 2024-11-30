@@ -35,4 +35,10 @@ class ProductController extends Controller
             'count' => $count,
         ]);
     }
+
+    public function show(Product $product): Application|Factory|View
+    {
+        Gate::authorize('view-products');
+        return view('product::admin.show', $product);
+    }
 }

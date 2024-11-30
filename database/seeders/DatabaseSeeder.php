@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\Order\Models\Order;
 use Modules\Post\Models\Post;
 use Modules\Product\Models\Product;
 use Modules\User\Models\User;
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->seedUsersAndPermissions();
         $this->seedProducts();
         $this->seedPosts();
+        $this->seedOrders();
     }
 
     private function seedUsersAndPermissions(): void
@@ -57,13 +59,15 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'create-orders']);
         Permission::create(['name' => 'delete-orders']);
         //
+        Permission::create(['name' => 'view-logs']);
+        Permission::create(['name' => 'promote-user']);
 
         $customer = Role::create(['name' => 'مشتری']);
-        $superAdmin = Role::create(['name' => 'ادمین']);
+        $admin = Role::create(['name' => 'ادمین']);
         $writer = Role::create(['name' => 'نویسنده']);
         $support = Role::create(['name' => 'پشتیبان']);
 
-        $superAdmin->givePermissionTo(Permission::all());
+        $admin->givePermissionTo(Permission::all());
 
         $writer->givePermissionTo([
             'admin-panel',
@@ -157,7 +161,8 @@ class DatabaseSeeder extends Seeder
             'status' => 'public',
             'comment_status' => 1,
             'image' => "asdijbnag",
-            'url' => "asdbniadsg"
+            'url' => "asdbniadsg",
+            'spot_player_key' => null
         ]);
         $product2 = Product::factory()->create([
             'title' => "هخشصذدلهخصشلد",
@@ -169,7 +174,8 @@ class DatabaseSeeder extends Seeder
             'status' => 'draft',
             'comment_status' => 0,
             'image' => "asdijbnag",
-            'url' => "asdbniadsg"
+            'url' => "asdbniadsg",
+            'spot_player_key' => null
         ]);
         $product3 = Product::factory()->create([
             'title' => "شسیمتهلدشل",
@@ -181,7 +187,8 @@ class DatabaseSeeder extends Seeder
             'status' => 'hidden',
             'comment_status' => 1,
             'image' => "asdijbnag",
-            'url' => "asdbniadsg"
+            'url' => "asdbniadsg",
+            'spot_player_key' => null
         ]);
         $product4 = Product::factory()->create([
             'title' => "هخشصذدلهخصشلد",
@@ -193,7 +200,8 @@ class DatabaseSeeder extends Seeder
             'status' => 'public',
             'comment_status' => 0,
             'image' => "asdijbnag",
-            'url' => "asdbniadsg"
+            'url' => "asdbniadsg",
+            'spot_player_key' => null
         ]);
     }
 
@@ -231,5 +239,41 @@ class DatabaseSeeder extends Seeder
             'comment_status' => 0,
             'url' => "asdf"
         ]);
+    }
+
+    private function seedOrders(): void
+    {
+        $order1 = Order::factory()->create([
+            'user_id' => 1,
+            'product_id' => 1,
+            'price' => 2000000,
+            'status' => "completed",
+            'payment_method' => 'shaparak'
+        ]);
+
+        $order2 = Order::factory()->create([
+            'user_id' => 1,
+            'product_id' => 2,
+            'price' => 1000000,
+            'status' => "cancelled",
+            'payment_method' => 'shaparak'
+        ]);
+
+        $order3 = Order::factory()->create([
+            'user_id' => 1,
+            'product_id' => 3,
+            'price' => 2000000,
+            'status' => "pending",
+            'payment_method' => 'card'
+        ]);
+
+        $order4 = Order::factory()->create([
+            'user_id' => 1,
+            'product_id' => 3,
+            'price' => 2000000,
+            'status' => "returned",
+            'payment_method' => 'shaparak'
+        ]);
+
     }
 }
