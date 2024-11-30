@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'edit-users']);
         Permission::create(['name' => 'create-users']);
         Permission::create(['name' => 'delete-users']);
+        Permission::create(['name' => 'restore-users']);
         //
         Permission::create(['name' => 'view-daily-reports']);
         Permission::create(['name' => 'edit-daily-reports']);
@@ -57,7 +58,6 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'delete-orders']);
         //
         Permission::create(['name' => 'view-logs']);
-        Permission::create(['name' => 'promote-users']);
 
         $customer = Role::create(['name' => 'مشتری']);
         $admin = Role::create(['name' => 'ادمین']);

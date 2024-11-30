@@ -4,6 +4,7 @@ namespace Modules\User\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Gate;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -89,6 +90,9 @@ class UserController extends Controller
     public function show(User $user): Application|Factory|View
     {
         Gate::authorize('view-users');
+        if ($user->trashed() && Gate::denies('restore-users')) {
+            abort(404);
+        }
         try {
             $orders = null;
             $logs = null;
@@ -98,7 +102,6 @@ class UserController extends Controller
             if (Gate::allows('view-logs')) {
                 $logs = Activity::causedBy($user)->orderByDesc('created_at')->get();
             }
-//            dd($logs->first()->subject);
             return view('user::admin.show', compact('user', 'orders', 'logs'));
         } catch (\Throwable $th) {
             abort(500);
@@ -142,12 +145,72 @@ class UserController extends Controller
     public function destroy(User $user): RedirectResponse
     {
         Gate::authorize('delete-users');
+        if ($user->hasPermissionTo('admin-panel')
+            && !auth()->user()->hasRole('ادمین')
+            && auth()->user()->id != $user->id) {
+            throw new AuthorizationException();
+        }
         try {
             $user->delete();
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($user)
                 ->log('حذف کاربر');
+            return redirect(route('admin.user.index'));
+        } catch (\Throwable $th) {
+            abort(500);
+        }
+    }
+
+    public function deleted(): View|Factory|Application
+    {
+        gate::authorize('restore-users');
+        try {
+            $roles = Role::all()->select('name', 'id');
+            $role_id = request('role');
+            $sort_by = request('sort_by');
+            $sort_direction = request('sort_direction', 'asc');
+            $search = request('search');
+            $count = request('count', 10);
+            $users = User::onlyTrashed()->with('roles');
+            if ($role_id) {
+                $users = $users->whereHas('roles', function ($query) use ($role_id) {
+                    return $query->where('role_id', $role_id);
+                });
+            }
+            if ($search) {
+                $users = $users->where('first_name', 'like', '%' . $search . '%')
+                    ->orWhere('last_name', 'like', '%' . $search . '%')
+                    ->orWhere('email', 'like', '%' . $search . '%')
+                    ->orWhere('phone', 'like', '%' . $search . '%');
+            }
+            if ($sort_by || $sort_direction) {
+                $users = $users->orderBy($sort_by, $sort_direction);
+            }
+            $users = $users->paginate($count)->withQueryString();
+            return view('user::admin.deleted', compact(
+                'users',
+                'roles',
+                'sort_by',
+                'sort_direction',
+                'search',
+                'role_id',
+                'count'
+            ));
+        } catch (\Throwable $th) {
+            abort(500);
+        }
+    }
+
+    public function restore(User $user): RedirectResponse
+    {
+        Gate::authorize('restore-users');
+        try {
+            $user->restore();
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($user)
+                ->log('restore');
             return redirect(route('admin.user.index'));
         } catch (\Throwable $th) {
             abort(500);

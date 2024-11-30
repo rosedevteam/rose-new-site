@@ -80,10 +80,17 @@
                                 <div class="d-flex justify-content-center pt-3">
                                     <a href="javascript:;" class="btn btn-primary me-3" data-bs-target="#editUser"
                                        data-bs-toggle="modal">ویرایش</a>
-                                    @can('delete-users')
+                                    @if(!$user->trashed())
+                                        @can('delete-users')
+                                            @if((!$user->hasPermissionTo('admin-panel') || auth()->user()->hasRole('ادمین') && $user->id != auth()->user()->id))
+                                                <a href="javascript:;" class="btn btn-label-danger suspend-user"
+                                                   data-bs-target="#deleteUser" data-bs-toggle="modal">حذف کاربر</a>
+                                            @endif
+                                        @endcan
+                                    @else
                                         <a href="javascript:;" class="btn btn-label-danger suspend-user"
-                                           data-bs-target="#deleteUser" data-bs-toggle="modal">حذف کاربر</a>
-                                    @endcan
+                                           data-bs-target="#deleteUser" data-bs-toggle="modal">restore</a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -293,18 +300,34 @@
                                 <div class="text-center mb-4 mt-0 mt-md-n2">
                                     <h3 class="secondary-font">آیا اطمینان دارید؟</h3>
                                 </div>
-                                <form id="deleteUserForm" action="{{ route('admin.user.destroy', $user) }}"
-                                      method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <div class="col-12 text-center mt-4">
-                                        <button type="submit" class="btn btn-danger me-sm-3 me-1">بله، حذف کن!</button>
-                                        <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
-                                                aria-label="Close">
-                                            انصراف
-                                        </button>
-                                    </div>
-                                </form>
+                                @if(!$user->trashed())
+                                    <form id="deleteUserForm" action="{{ route('admin.user.destroy', $user) }}"
+                                          method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <div class="col-12 text-center mt-4">
+                                            <button type="submit" class="btn btn-danger me-sm-3 me-1">بله، حذف کن!
+                                            </button>
+                                            <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
+                                                    aria-label="Close">
+                                                انصراف
+                                            </button>
+                                        </div>
+                                    </form>
+                                @else
+                                    <form id="deleteUserForm" action="{{ route('admin.user.restore', $user) }}"
+                                          method="POST">
+                                        @csrf
+                                        @method('PATCH')
+                                        <div class="col-12 text-center mt-4">
+                                            <button type="submit" class="btn btn-danger me-sm-3 me-1">restore</button>
+                                            <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
+                                                    aria-label="Close">
+                                                انصراف
+                                            </button>
+                                        </div>
+                                    </form>
+                                @endif
                             </div>
                         </div>
                     </div>
