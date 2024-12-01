@@ -24,7 +24,6 @@ class AdminController extends Controller
         $logs = Activity::query();
         $logs = $logs->orderBy('created_at', $sort_direction);
         $logs = $logs->paginate($count)->withQueryString();
-//        dd($logs->first());
         return view('admin::log.index', compact('logs', 'sort_direction', 'count'));
     }
 }

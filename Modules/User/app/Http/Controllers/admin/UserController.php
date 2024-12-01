@@ -23,10 +23,10 @@ class UserController extends Controller
         try {
             $roles = Role::all()->select('name', 'id');
             $role_id = request('role');
-            $sort_by = request('sort_by');
-            $sort_direction = request('sort_direction', 'asc');
+            $sort_by = request('sort_by', 'created_at');
+            $sort_direction = request('sort_direction', 'desc');
             $search = request('search');
-            $count = request('count', 10);
+            $count = request('count', 50);
             $users = User::with('roles');
             if ($role_id) {
                 $users = $users->whereHas('roles', function ($query) use ($role_id) {
@@ -39,9 +39,7 @@ class UserController extends Controller
                     ->orWhere('email', 'like', '%' . $search . '%')
                     ->orWhere('phone', 'like', '%' . $search . '%');
             }
-            if ($sort_by || $sort_direction) {
-                $users = $users->orderBy($sort_by, $sort_direction);
-            }
+            $users = $users->orderBy($sort_by, $sort_direction);
             $users = $users->paginate($count)->withQueryString();
             return view('user::admin.index', compact(
                 'users',
@@ -210,7 +208,7 @@ class UserController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($user)
-                ->log('restore');
+                ->log('restore user');
             return redirect(route('admin.user.index'));
         } catch (\Throwable $th) {
             abort(500);

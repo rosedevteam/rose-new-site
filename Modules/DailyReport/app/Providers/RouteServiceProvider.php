@@ -38,7 +38,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::middleware('web')
             ->namespace($this->moduleNamespace)
-            ->namespace("dailyreport")
+            ->name("dailyreport")
             ->group(module_path('DailyReport', 'Routes/web.php'));
     }
 

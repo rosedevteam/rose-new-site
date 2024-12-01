@@ -236,7 +236,7 @@
                             <form id="editUserForm" class="row g-3" action="{{ route('admin.user.update', $user) }}"
                                   method="POST">
                                 @csrf
-                                @method('PUT')
+                                @method('PATCH')
                                 <div class="col-12 col-md-6">
                                     <label class="form-label" for="first_name">نام</label>
                                     <input type="text" id="first_name" name="first_name"

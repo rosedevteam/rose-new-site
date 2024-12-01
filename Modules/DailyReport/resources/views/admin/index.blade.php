@@ -6,27 +6,28 @@
 
 @section('content')
     <div class="content-wrapper">
+        @if($errors->any())
+            <div class="alert alert-danger" style="padding-right: 80px">{{ $errors->first() }}</div>
+        @endif
         <div class="container-xxl flex-grow-1 container-p-y">
             <!-- Users List Table -->
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
-                    <form action="{{ route('admin.daily-report.index') }}" method="GET">
+                    <form action="{{ route('admin.dailyreport.index') }}" method="GET">
                         <div
                             class="d-flex justify-content-start align-items-center row py-3 gap-3 gap-md-0 primary-font">
                             <div class="col-md-2">
                                 <label for="sort_direction" class="form-label">نوع ترتیب: </label>
                                 <select id="sort_direction" name="sort_direction" class="form-select text-capitalize">
-                                    <option value="asc" selected>صعودی</option>
-                                    <option value="desc"{{ $sort_direction == 'desc' ? 'selected' : '' }}>نزولی</option>
+                                    <option value="desc" selected>نزولی</option>
+                                    <option value="asc"{{ $sort_direction == 'asc' ? 'selected' : '' }}>صعودی</option>
                                 </select>
                             </div>
                             <div class="col-md-1">
                                 <label for="count" class="form-label">تعداد: </label>
                                 <select id="count" name="count" class="form-select text-capitalize">
-                                    <option value="10" selected>10</option>
-                                    <option value="20" {{ $count == "20" ? 'selected' : '' }}>20</option>
-                                    <option value="50" {{ $count == "50" ? 'selected' : '' }}>50</option>
+                                    <option value="50" selected>50</option>
                                     <option value="100" {{ $count == "100" ? 'selected' : '' }}>100</option>
                                 </select>
                             </div>
@@ -46,7 +47,9 @@
                                         class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
                                         <div class="dt-buttons btn-group flex-wrap">
                                             <button class="btn btn-secondary add-new btn-primary ms-2" tabindex="0"
-                                                    aria-controls="DataTables_Table_0" type="button"><span><i
+                                                    aria-controls="DataTables_Table_0" type="button"
+                                                    data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddDailyReport"
+                                            ><span><i
                                                         class="bx bx-plus me-0 me-lg-2"></i><span
                                                         class="d-none d-lg-inline-block">گزارش جدید</span></span>
                                             </button>
@@ -80,18 +83,20 @@
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column">
                                                 <span
-                                                    class="fw-semibold">{{ verta($dailyReport->created_at)->formatJalaliDate() }}</span>
+                                                    class="fw-semibold">{{ verta($dailyReport->created_at)->formatJalaliDateTime() }}</span>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                 <span class="fw-semibold">
-                                    <a href="{{ route('admin.user.show', $order->author) }}"
-                                    {{ $order->user->name() }}
+                                    <a href="{{ route('admin.user.show', $dailyReport->author->id) }}"
+                                    {{ $dailyReport->author->name() }}
                                 </span>
                                     </td>
-                                    <td><span class="fw-semibold">{{ $dailyReport->title }}</span></td>
-                                    <td>{{ $dailyReport->file }}</td>
+                                    <td><span
+                                            class="fw-semibold">{{ $dailyReport->title }}</span></td>
+                                    <td><a href="{{ asset('/daily-reports/' . $dailyReport->file) }}"
+                                           download="true">{{ $dailyReport->file }}</a></td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -100,6 +105,36 @@
                     </div>
 
                 </div>
+                @can('create-daily-reports')
+                    <div class="offcanvas offcanvas-end" id="offcanvasAddDailyReport"
+                         aria-labelledby="offcanvasAddUserLabel">
+                        <div class="offcanvas-header border-bottom">
+                            <h6 id="offcanvasAddUserLabel" class="offcanvas-title">افزودن گزارش روزانه</h6>
+                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body mx-0 flex-grow-0">
+                            <form class="add-new-user pt-0" id="addNewUserForm"
+                                  action="{{ route('admin.dailyreport.store') }}"
+                                  method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="flatpickr-date" class="form-label">روز</label>
+                                    <input type="text" class="form-control" id="flatpickr-date" name="date"
+                                           placeholder="YYYY/MM/DD">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="file">فایل</label>
+                                    <input id="file" type="file" name="file" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">ثبت</button>
+                                <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">
+                                    انصراف
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                @endcan
             </div>
         </div>
         <div class="content-backdrop fade"></div>

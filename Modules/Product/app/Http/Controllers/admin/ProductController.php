@@ -14,18 +14,16 @@ class ProductController extends Controller
     public function index(): Application|Factory|View
     {
         Gate::authorize('view-products');
-        $sort_by = request('sort_by');
-        $sort_direction = request('sort_direction', 'asc');
+        $sort_by = request('sort_by', 'created_at');
+        $sort_direction = request('sort_direction', 'desc');
         $search = request('search');
-        $count = request('count', 10);
+        $count = request('count', 50);
         $products = Product::query();
         if ($search) {
             $products = $products->where('title', 'like', '%' . $search . '%')
                 ->orWhere('short_description', 'like', '%' . $search . '%');
         }
-        if ($sort_by || $sort_direction) {
-            $products = $products->orderBy($sort_by, $sort_direction);
-        }
+        $products = $products->orderBy($sort_by, $sort_direction);
         $products = $products->paginate($count)->withQueryString();
         return view('product::admin.index', [
             "products" => $products,
@@ -39,7 +37,6 @@ class ProductController extends Controller
     public function show(Product $product): Application|Factory|View
     {
         Gate::authorize('view-products');
-        dd($product);
         return view('product::admin.show', $product);
     }
 }

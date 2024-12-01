@@ -14,11 +14,11 @@ class OrderController extends Controller
     public function index(): Application|Factory|View
     {
         Gate::authorize('view-orders');
-        $sort_by = request('sort_by');
-        $sort_direction = request('sort_direction', 'asc');
+        $sort_by = request('sort_by', 'created_at');
+        $sort_direction = request('sort_direction', 'desc');
         $status = request('status', 'all');
-        $paymentMethod = request('paymentMethod', 'all');
-        $count = request('count', 10);
+        $paymentMethod = request('payment_method', 'all');
+        $count = request('count', 50);
         $orders = Order::query();
         if ($status !== 'all') {
             $orders = $orders->where('status', $status);
@@ -26,9 +26,7 @@ class OrderController extends Controller
         if ($paymentMethod !== 'all') {
             $orders = $orders->where('payment_method', $paymentMethod);
         }
-        if ($sort_by || $sort_direction) {
-            $orders = $orders->orderBy($sort_by, $sort_direction);
-        }
+        $orders = $orders->orderBy($sort_by, $sort_direction);
         $orders = $orders->paginate($count)->withQueryString();
         return view('order::admin.index', [
             'orders' => $orders,

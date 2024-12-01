@@ -14,10 +14,10 @@ class PostController extends Controller
     public function index(): Application|Factory|View
     {
         Gate::authorize('view-posts');
-        $sort_by = request('sort_by');
-        $sort_direction = request('sort_direction', 'asc');
+        $sort_by = request('sort_by', 'created_at');
+        $sort_direction = request('sort_direction', 'desc');
         $search = request('search');
-        $count = request('count', 10);
+        $count = request('count', 50);
         $status = request('status', 'all');
         $comment_status = request('comment_status', true);
         $posts = Post::query();
@@ -31,9 +31,7 @@ class PostController extends Controller
             $posts = $posts->where('title', 'like', '%' . $search . '%')
                 ->orWhere('content', 'like', '%' . $search . '%');
         }
-        if ($sort_by || $sort_direction) {
-            $posts = $posts->orderBy($sort_by, $sort_direction);
-        }
+        $posts = $posts->orderBy($sort_by, $sort_direction);
         $posts = $posts->paginate($count)->withQueryString();
         return view('post::admin.index', [
             'posts' => $posts,

@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
-                    <form action="{{ route('admin.order.index') }}" method="GET">
+                    <form action="{{ route('admin.comment.index') }}" method="GET">
                         <div
                             class="d-flex justify-content-start align-items-center row py-3 gap-3 gap-md-0 primary-font">
                             <div class="col-md-3">
@@ -35,7 +35,7 @@
                             <div class="col-md-2">
                                 <label for="type" class="form-label">نوع کامنت:</label>
                                 <select id="type" name="sort_direction" class="form-select text-capitalize">
-                                    <option value="all" selected>صعودی</option>
+                                    <option value="all" selected>همه</option>
                                     <option value="product"{{ $type == 'product' ? 'selected' : '' }}>دوره</option>
                                     <option value="post"{{ $type == 'post' ? 'selected' : '' }}>پست</option>
                                     <option value="comment"{{ $type == 'product' ? 'comment' : '' }}>کامنت</option>
@@ -44,8 +44,8 @@
                             <div class="col-md-2">
                                 <label for="sort_direction" class="form-label">نوع ترتیب: </label>
                                 <select id="sort_direction" name="sort_direction" class="form-select text-capitalize">
-                                    <option value="asc" selected>صعودی</option>
-                                    <option value="desc"{{ $sort_direction == 'desc' ? 'selected' : '' }}>نزولی</option>
+                                    <option value="desc" selected>نزولی</option>
+                                    <option value="asc" {{ $sort_direction == 'asc' ? 'selected' : '' }}>صعودی</option>
                                 </select>
                             </div>
                             <div class="col-md-1">

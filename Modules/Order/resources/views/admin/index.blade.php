@@ -37,27 +37,27 @@
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <label for="status" class="form-label">نوع پرداخت:</label>
-                                <select id="status" name="status" class="form-select text-capitalize">
+                                <label for="payment_method" class="form-label">نوع پرداخت:</label>
+                                <select id="payment_method" name="payment_method" class="form-select text-capitalize">
                                     <option value="all" selected>همه</option>
-                                    <option value="shaparak"{{ $status == 'shaparak' ? 'selected' : '' }}>درگاه بانکی
+                                    <option value="shaparak"{{ $payment_method == 'shaparak' ? 'selected' : '' }}>درگاه
+                                        بانکی
                                     </option>
-                                    <option value="card"{{ $status == 'card' ? 'selected' : '' }}>کارت به کارت</option>
+                                    <option value="card"{{ $payment_method == 'card' ? 'selected' : '' }}>کارت به کارت
+                                    </option>
                                 </select>
                             </div>
                             <div class="col-md-2">
                                 <label for="sort_direction" class="form-label">نوع ترتیب: </label>
                                 <select id="sort_direction" name="sort_direction" class="form-select text-capitalize">
-                                    <option value="asc" selected>صعودی</option>
-                                    <option value="desc"{{ $sort_direction == 'desc' ? 'selected' : '' }}>نزولی</option>
+                                    <option value="asc" {{ $sort_direction == 'asc' ? 'selected' : '' }}>صعودی</option>
+                                    <option value="desc" selected>نزولی</option>
                                 </select>
                             </div>
                             <div class="col-md-1">
                                 <label for="count" class="form-label">تعداد: </label>
                                 <select id="count" name="count" class="form-select text-capitalize">
-                                    <option value="10" selected>10</option>
-                                    <option value="20" {{ $count == "20" ? 'selected' : '' }}>20</option>
-                                    <option value="50" {{ $count == "50" ? 'selected' : '' }}>50</option>
+                                    <option value="50" selected>50</option>
                                     <option value="100" {{ $count == "100" ? 'selected' : '' }}>100</option>
                                 </select>
                             </div>
@@ -78,7 +78,7 @@
                                     style="width: 12%;">خریدار
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 10%;">دوره
+                                    style="width: 10%;">دوره ها
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 15%;">قیمت خرید
@@ -103,8 +103,12 @@
                                             class="fw-semibold">{{ $order->user()->name() }}</span> </a>
                                 </span>
                                     </td>
-                                    <td><a href="{{ route('admin.product.show', $order->product()) }}"><span
-                                                class="fw-semibold">{{ $order->product()->title }}</span></a></td>
+                                    <td>
+                                        @foreach($order->products()->get() as $product)
+                                            <a href="{{ route('admin.product.show', $product) }}"><span
+                                                    class="fw-semibold">{{ $product->title }}</span></a>
+                                        @endforeach
+                                    </td>
                                     <td>{{ $order->price }}</td>
                                     <td>
                                         <span class="fw-semibold">{{ $order->status }}</span>

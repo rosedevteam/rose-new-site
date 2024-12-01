@@ -2,9 +2,9 @@
 
 namespace Modules\Product\Models;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Modules\Comment\Models\Comment;
@@ -17,9 +17,9 @@ class Product extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function author(): User
+    public function author(): BelongsTo
     {
-        return $this->belongsTo(User::class)->first();
+        return $this->belongsTo(User::class);
     }
 
     public function orders(): BelongsToMany

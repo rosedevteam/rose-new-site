@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
-                    <form action="{{ route('admin.user.index') }}" method="GET">
+                    <form action="{{ route('admin.post.index') }}" method="GET">
                         <div
                             class="d-flex justify-content-start align-items-center row py-3 gap-3 gap-md-0 primary-font">
                             <div class="col-md-3">
@@ -31,16 +31,14 @@
                             <div class="col-md-2">
                                 <label for="sort_direction" class="form-label">نوع ترتیب: </label>
                                 <select id="sort_direction" name="sort_direction" class="form-select text-capitalize">
-                                    <option value="asc" selected>صعودی</option>
-                                    <option value="desc"{{ $sort_direction == 'desc' ? 'selected' : '' }}>نزولی</option>
+                                    <option value="desc" selected>نزولی</option>
+                                    <option value="asc" {{ $sort_direction == 'asc' ? 'selected' : '' }}>صعودی</option>
                                 </select>
                             </div>
                             <div class="col-md-1">
                                 <label for="count" class="form-label">تعداد: </label>
                                 <select id="count" name="count" class="form-select text-capitalize">
-                                    <option value="10" selected>10</option>
-                                    <option value="20" {{ $count == "20" ? 'selected' : '' }}>20</option>
-                                    <option value="50" {{ $count == "50" ? 'selected' : '' }}>50</option>
+                                    <option value="50" selected>50</option>
                                     <option value="100" {{ $count == "100" ? 'selected' : '' }}>100</option>
                                 </select>
                             </div>
