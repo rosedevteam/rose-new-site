@@ -46,11 +46,15 @@ class DailyReportController extends Controller
         try {
             $name = 'daily-report-' . now()->timestamp . '.pdf';
             request()->file('file')->storeAs('daily-reports', $name, 'public');
-            DailyReport::create([
+            $dailyReport = DailyReport::create([
                 'title' => $data['date'],
                 'file' => $name,
                 'author_id' => auth()->user()->id,
             ]);
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($dailyReport)
+                ->log('created daily report');
             return redirect()->route('admin.dailyreport.index');
         } catch (\Throwable $th) {
             abort(500);
