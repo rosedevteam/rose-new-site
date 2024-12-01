@@ -78,6 +78,7 @@ class UserController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($user)
+                ->withProperties($data)
                 ->log('ساخت کاربر');
             return redirect(route('admin.user.index'));
         } catch (\Throwable $th) {
@@ -133,6 +134,7 @@ class UserController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($user)
+                ->withProperties([$userData, $billingData])
                 ->log('ادیت کاربر');
             return redirect(route('admin.user.show', $user));
         } catch (\Throwable $th) {

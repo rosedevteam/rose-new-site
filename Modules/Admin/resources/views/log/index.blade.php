@@ -54,6 +54,9 @@
                                     style="width: 10%;">روی
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                    style="width: 10%;">تغییرات
+                                </th>
+                                <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 5%;">تاریخ
                                 </th>
                             </tr>
@@ -74,6 +77,7 @@
                                 </span>
                                     </td>
                                     <x-admin::logsubject :log="$log"/>
+                                    <td>{{ $log->properties }}</td>
                                     <td>{{ verta($log->created_at)->formatJalaliDateTime() }}</td>
                                 </tr>
                             @endforeach

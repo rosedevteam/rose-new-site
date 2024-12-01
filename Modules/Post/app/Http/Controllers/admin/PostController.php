@@ -7,7 +7,6 @@ use Gate;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Http\RedirectResponse;
 use Modules\Post\Models\Post;
 
 class PostController extends Controller
@@ -84,6 +83,11 @@ class PostController extends Controller
                 'content' => $data['content'],
                 'author_id' => auth()->id()
             ]);
+            activity()
+                ->causedBy(auth()->id())
+                ->performedOn($post)
+                ->withProperties($data)
+                ->log('Post created');
             return redirect(route('admin.post.index'));
         } catch (\Throwable $th) {
             abort(500);
@@ -118,6 +122,11 @@ class PostController extends Controller
                 'comment_status' => $data['comment_status'] == '1',
                 'status' => $data['status'],
             ]);
+            activity()
+                ->causedBy(auth()->id())
+                ->performedOn($post)
+                ->withProperties($data)
+                ->log('Post updated');
             return redirect(route('admin.post.show', compact('post')));
         } catch (\Throwable $th) {
             abort(500);
