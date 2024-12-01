@@ -18,7 +18,6 @@ class DatabaseSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
         $this->seedUsersAndPermissions();
         $this->seedProducts();
-        $this->seedPosts();
         $this->seedOrders();
     }
 

@@ -29,6 +29,8 @@
     <link rel="stylesheet" href="/assets/admin/vendor/libs/typeahead-js/typeahead.css">
     <link rel="stylesheet" href="/assets/admin/vendor/libs/apex-charts/apex-charts.css">
 
+    @stack('css')
+
     <!-- Page CSS -->
 
     <!-- Helpers -->

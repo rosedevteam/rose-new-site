@@ -7,6 +7,7 @@ use Gate;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Modules\Post\Models\Post;
 
 class PostController extends Controller
@@ -20,7 +21,7 @@ class PostController extends Controller
             $search = request('search');
             $count = request('count', 50);
             $status = request('status', 'all');
-            $comment_status = request('comment_status', true);
+            $comment_status = request('comment_status', 'all');
             $posts = Post::query();
             if ($status !== 'all') {
                 $posts = $posts->where('status', $status);
@@ -52,7 +53,72 @@ class PostController extends Controller
     {
         Gate::authorize('view-posts');
         try {
-            return view('post::admin.show', $post);
+            return view('post::admin.show', compact('post'));
+        } catch (\Throwable $th) {
+            abort(500);
+        }
+    }
+
+    public function create(): Application|Factory|View
+    {
+        Gate::authorize('create-posts');
+        try {
+            return view('post::admin.create');
+        } catch (\Throwable $th) {
+            abort(500);
+        }
+    }
+
+    public function store()
+    {
+        Gate::authorize('create-posts');
+        $data = request()->validate([
+            'title' => 'required|string|max:255',
+            'url' => 'required|string|max:255',
+            'content' => 'required|string',
+        ]);
+        try {
+            $post = Post::create([
+                'title' => $data['title'],
+                'url' => $data['url'],
+                'content' => $data['content'],
+                'author_id' => auth()->id()
+            ]);
+            return redirect(route('admin.post.index'));
+        } catch (\Throwable $th) {
+            abort(500);
+        }
+    }
+
+    public function edit(Post $post): Application|Factory|View
+    {
+        Gate::authorize('edit-posts');
+        try {
+            return view('post::admin.edit', compact('post'));
+        } catch (\Throwable $th) {
+            abort(500);
+        }
+    }
+
+    public function update(Post $post)
+    {
+        Gate::authorize('edit-posts');
+        try {
+            $data = request()->validate([
+                'title' => 'required|string|max:255',
+                'url' => 'required|string|max:255',
+                'content' => 'required|string',
+                'comment_status' => 'required',
+                'status' => 'required',
+            ]);
+            $post->update([
+                'title' => $data['title'],
+                'url' => $data['url'],
+                'content' => $data['content'],
+                'comment_status' => $data['comment_status'] == '1',
+                'status' => $data['status'],
+            ]);
+            return redirect(route('admin.post.show', compact('post')));
         } catch (\Throwable $th) {
             abort(500);
         }
