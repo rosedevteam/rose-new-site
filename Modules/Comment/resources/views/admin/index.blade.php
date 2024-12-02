@@ -1,7 +1,7 @@
 @extends('admin::layouts.main')
 
 @section('title')
-
+    نظرات
 @endsection
 
 @section('content')
@@ -76,38 +76,41 @@
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 10%;">نویسنده
                                 </th>
-                                <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width: 12%" aria-sort="ascending">کامنت
-                                </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 12%;">برای
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 10%;">وضعیت
                                 </th>
+                                <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                    style="width: 5%;">جزییات
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($comments as $comment)
                                 <tr class="">
-                                    <td>{{ verta($comment->created_at)->formatJalaliDate() }}</td>
+                                    <td>{{ verta($comment->created_at)->formatJalaliDateTime() }}</td>
                                     <td class="sorting_1">
-                                        <div class="d-flex justify-content-start align-items-center user-name">
-                                            <div class="d-flex flex-column"><a
-                                                    href="{{ route('admin.user.show', $comment->author) }}"
-                                                    class="text-body text-truncate">
-                                                    <span class="fw-semibold">{{ $comment->user->name() }}</span>
+                                        <a href="{{ route('admin.user.show', $comment->author()) }}"
+                                           class="text-body text-truncate">
+                                            <span class="fw-semibold">{{ $comment->author()->name() }}</span>
+                                        </a>
+                                    </td>
+                                    <td><a href="{{
+                                        route("admin." . strtolower(substr(strrchr($comment->commentable_type, '\\'), 1)) . ".show", $comment->commentable)
+                                    }}" class="text-body text-truncate">
+                                            <span class="fw-semibold">{{ $comment->commentable->title }}</span></a></td>
+                                    <td>{{ $comment->status }}</td>
+                                    <td>
+                                        <div class="d-inline-block text-nowrap">
+                                            <button class="btn btn-sm btn-icon">
+                                                <a href="{{ route('admin.comment.show', $comment) }}">
+                                                    <i class="bx bx-detail"></i>
                                                 </a>
-                                            </div>
+                                            </button>
                                         </div>
                                     </td>
-                                    <td>
-                                <span class="fw-semibold">
-                                    {{ $comment->content }}
-                                </span>
-                                    </td>
-                                    <td><span class="fw-semibold">{{ $user->commentable->title }}</span></td>
-                                    <td>{{ $user->status }}</td>
                                 </tr>
                             @endforeach
                             </tbody>

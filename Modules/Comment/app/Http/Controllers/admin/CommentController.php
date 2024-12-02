@@ -22,7 +22,7 @@ class CommentController extends Controller
             $count = request('count', 50);
             $comments = Comment::query();
             if ($status != 'all') {
-                $comments = $comments->where('approved', $status);
+                $comments = $comments->where('status', $status);
             }
             if ($type != 'all') {
                 $comments = $comments->where('commentable_type', $type);
@@ -44,4 +44,61 @@ class CommentController extends Controller
             abort(500);
         }
     }
+
+    public function show(Comment $comment): Application|Factory|View
+    {
+        Gate::authorize('view-comments');
+        try {
+            return view('comment::admin.show', compact('comment'));
+        } catch (\Throwable $th) {
+            abort(500);
+        }
+    }
+
+    public function update(Comment $comment): Application|Factory|View
+    {
+        Gate::authorize('edit-comments');
+        $data = request()->validate([
+            'status' => 'required|string|in:pending,approved,rejected',
+        ]);
+        try {
+            $comment->update($data);
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($comment)
+                ->withProperties($data)
+                ->log('updated comment');
+            return view('comment::admin.show', compact('comment'));
+        } catch (\Throwable $th) {
+            abort(500);
+        }
+    }
+
+    public function store(): Application|Factory|View
+    {
+        Gate::authorize('edit-comments');
+        $data = request()->validate([
+            'content' => 'required|string',
+            'commentable_id' => 'required|string',
+            'commentable_type' => 'required|string',
+        ]);
+        try {
+            $comment = Comment::create([
+                'content' => $data['content'],
+                'commentable_id' => $data['commentable_id'],
+                'commentable_type' => $data['commentable_type'],
+                'author_id' => auth()->id(),
+                'status' => 'approved',
+            ]);
+            activity()
+                ->causedBy(auth()->id())
+                ->performedOn($comment)
+                ->withProperties($data)
+                ->log('created comment');
+            return redirect(route('admin.comment.show', $comment));
+        } catch (\Throwable $th) {
+            abort(500);
+        }
+    }
+
 }

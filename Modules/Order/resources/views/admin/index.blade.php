@@ -99,13 +99,15 @@
                                 <tr class="">
                                     <td>
                                 <span class="fw-semibold">
-                                    <a href="{{ route('admin.user.show', $order->user()) }}"><span
+                                    <a href="{{ route('admin.user.show', $order->user()) }}"
+                                       class="text-body text-truncate"><span
                                             class="fw-semibold">{{ $order->user()->name() }}</span> </a>
                                 </span>
                                     </td>
                                     <td>
                                         @foreach($order->products()->get() as $product)
-                                            <a href="{{ route('admin.product.show', $product) }}"><span
+                                            <a href="{{ route('admin.product.show', $product) }}"
+                                               class="text-body text-truncate"><span
                                                     class="fw-semibold">{{ $product->title }}</span></a>
                                         @endforeach
                                     </td>

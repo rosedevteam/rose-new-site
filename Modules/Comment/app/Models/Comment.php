@@ -2,13 +2,15 @@
 
 namespace Modules\Comment\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Modules\Comment\Database\Factories\CommentFactory;
 use Modules\User\Models\User;
 
 class Comment extends Model
 {
+    use HasFactory;
     protected $guarded = [];
 
     public function commentable(): MorphTo
@@ -16,8 +18,13 @@ class Comment extends Model
         return $this->morphTo();
     }
 
-    public function user(): BelongsTo
+    public function author(): User
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->get()[0];
+    }
+
+    public static function newFactory(): CommentFactory
+    {
+        return CommentFactory::new();
     }
 }

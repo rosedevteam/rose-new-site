@@ -90,7 +90,9 @@
                                     <td>
                                 <span class="fw-semibold">
                                     <a href="{{ route('admin.user.show', $dailyReport->author->id) }}"
+                                       class="text-body text-truncate">
                                     {{ $dailyReport->author->name() }}
+                                    </a>
                                 </span>
                                     </td>
                                     <td><span

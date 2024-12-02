@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\Comment\Models\Comment;
 use Modules\Order\Models\Order;
 use Modules\Post\Models\Post;
 use Modules\Product\Models\Product;
@@ -18,7 +19,9 @@ class DatabaseSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
         $this->seedUsersAndPermissions();
         $this->seedProducts();
+        $this->seedPosts();
         $this->seedOrders();
+        $this->seedComments();
     }
 
     private function seedUsersAndPermissions(): void
@@ -271,5 +274,31 @@ class DatabaseSeeder extends Seeder
         ]);
         $order4->products()->attach([1]);
 
+    }
+
+    private function seedComments(): void
+    {
+        $comment1 = Comment::factory()->create([
+            'author_id' => 2,
+            'commentable_id' => 1,
+            'commentable_type' => '\\Modules\\Product\\Models\\Product',
+            'status' => 'approved',
+            'content' => "alskgong;qwbegqwbegipbqg",
+        ]);
+        $comment2 = Comment::factory()->create([
+            'author_id' => 1,
+            'commentable_id' => 1,
+            'commentable_type' => '\\Modules\\Product\\Models\\Product',
+            'status' => 'pending',
+            'content' => "alskgong;qwbegqwbegipbqg",
+        ]);
+
+        $comment3 = Comment::factory()->create([
+            'author_id' => 3,
+            'commentable_id' => 2,
+            'commentable_type' => '\\Modules\\Product\\Models\\Product',
+            'status' => 'rejected',
+            'content' => "asvdnawn;wgn;iweagbqiugi",
+        ]);
     }
 }
