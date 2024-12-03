@@ -5,7 +5,6 @@
 @endsection
 
 @section('content')
-
     <div class="content-wrapper">
         @if($errors->any())
             <div class="alert alert-danger" style="padding-right: 80px">{{ $errors->first() }}</div>
@@ -32,6 +31,3 @@
             </div>
         </div>
 @endsection
-
-@push('script')
-@endpush

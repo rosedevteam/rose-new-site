@@ -38,7 +38,6 @@
                                     <option value="all" selected>همه</option>
                                     <option value="product"{{ $type == 'product' ? 'selected' : '' }}>دوره</option>
                                     <option value="post"{{ $type == 'post' ? 'selected' : '' }}>پست</option>
-                                    <option value="comment"{{ $type == 'product' ? 'comment' : '' }}>کامنت</option>
                                 </select>
                             </div>
                             <div class="col-md-2">
@@ -48,12 +47,10 @@
                                     <option value="asc" {{ $sort_direction == 'asc' ? 'selected' : '' }}>صعودی</option>
                                 </select>
                             </div>
-                            <div class="col-md-1">
+                            <div class="col-md-2">
                                 <label for="count" class="form-label">تعداد: </label>
                                 <select id="count" name="count" class="form-select text-capitalize">
-                                    <option value="10" selected>10</option>
-                                    <option value="20" {{ $count == "20" ? 'selected' : '' }}>20</option>
-                                    <option value="50" {{ $count == "50" ? 'selected' : '' }}>50</option>
+                                    <option value="50" selected>50</option>
                                     <option value="100" {{ $count == "100" ? 'selected' : '' }}>100</option>
                                 </select>
                             </div>

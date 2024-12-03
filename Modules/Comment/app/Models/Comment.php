@@ -18,6 +18,13 @@ class Comment extends Model
         return $this->morphTo();
     }
 
+    public function comments(): ?MorphTo
+    {
+        if ($this->commentable_type == "\\Modules\\Comment\\Models\\Comment")
+            return $this->commentable();
+        return null;
+    }
+
     public function author(): User
     {
         return $this->belongsTo(User::class)->get()[0];

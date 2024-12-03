@@ -26,6 +26,8 @@ class CommentController extends Controller
             }
             if ($type != 'all') {
                 $comments = $comments->where('commentable_type', $type);
+            } else {
+                $comments = $comments->where('commentable_type', "!=", 'App\\Comment\\Models\\Comment');
             }
             if ($search) {
                 $comments = $comments->where('content', 'like', '%' . $search . '%');
