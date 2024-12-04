@@ -40,6 +40,7 @@
     <script src="/assets/admin/js/config.js"></script>
 </head>
 <body>
+
 <!-- Layout wrapper -->
 <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">
@@ -91,5 +92,6 @@
 
 <!-- Page JS -->
 @stack('script')
+@include('sweetalert::alert')
 </body>
 </html>

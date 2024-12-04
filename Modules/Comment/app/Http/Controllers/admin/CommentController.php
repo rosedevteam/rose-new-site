@@ -4,14 +4,12 @@ namespace Modules\Comment\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Gate;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
 use Modules\Comment\Models\Comment;
+use Throwable;
 
 class CommentController extends Controller
 {
-    public function index(): Application|Factory|View
+    public function index()
     {
         Gate::authorize('view-comments');
         try {
@@ -40,22 +38,24 @@ class CommentController extends Controller
                 'type' => $type,
                 'count' => $count,
             ]);
-        } catch (\Throwable $th) {
-            abort(500);
+        } catch (Throwable $th) {
+            alert()->error("خطا", "خطایی رخ داد");
+            return back();
         }
     }
 
-    public function show(Comment $comment): Application|Factory|View
+    public function show(Comment $comment)
     {
         Gate::authorize('view-comments');
         try {
             return view('comment::admin.show', compact('comment'));
-        } catch (\Throwable $th) {
-            abort(500);
+        } catch (Throwable $th) {
+            alert()->error("خطا");
+            return back();
         }
     }
 
-    public function update(Comment $comment): Application|Factory|View
+    public function update(Comment $comment)
     {
         Gate::authorize('edit-comments');
         $data = request()->validate([
@@ -68,9 +68,11 @@ class CommentController extends Controller
                 ->performedOn($comment)
                 ->withProperties($data)
                 ->log('ویرایش کامنت');
+            alert()->success("موفق", 'ویرایش با موفقیت انجام شد');
             return view('comment::admin.show', compact('comment'));
-        } catch (\Throwable $th) {
-            abort(500);
+        } catch (Throwable $th) {
+            alert()->error("خطا", "خطایی رخ داد");
+            return back();
         }
     }
 
@@ -93,9 +95,11 @@ class CommentController extends Controller
                 ->performedOn($comment)
                 ->withProperties($data)
                 ->log('ساخت پست');
+            alert()->success("موفق", 'کامنت با موفقیت ثبت شد');
             return redirect(route('admin.comment.show', $comment));
-        } catch (\Throwable $th) {
-            abort(500);
+        } catch (Throwable $th) {
+            alert()->error("خطا", "خطایی رخ داد");
+            return back();
         }
     }
 

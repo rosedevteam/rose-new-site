@@ -4,15 +4,12 @@ namespace Modules\DailyReport\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Gate;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
 use Illuminate\Validation\Rules\File;
 use Modules\DailyReport\Models\DailyReport;
 
 class DailyReportController extends Controller
 {
-    public function index(): View|Factory|Application
+    public function index()
     {
         Gate::authorize('view-daily-reports');
         try {
@@ -29,7 +26,8 @@ class DailyReportController extends Controller
                 'count' => $count,
             ]);
         } catch (\Throwable $th) {
-            abort(500);
+            alert()->error("خطا", "خطایی رخ داد");
+            return back();
         }
     }
 
@@ -55,9 +53,11 @@ class DailyReportController extends Controller
                 ->causedBy(auth()->user())
                 ->performedOn($dailyReport)
                 ->log('ساخت گزارش روزانه');
+            alert()->success("موفق", "با موفقیت انجام شد");
             return redirect()->route('admin.dailyreport.index');
         } catch (\Throwable $th) {
-            abort(500);
+            alert()->error("خطا", "خطایی رخ داد");
+            return back();
         }
     }
 }

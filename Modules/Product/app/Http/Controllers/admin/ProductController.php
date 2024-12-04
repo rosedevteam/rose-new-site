@@ -4,14 +4,11 @@ namespace Modules\Product\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Gate;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
 use Modules\Product\Models\Product;
 
 class ProductController extends Controller
 {
-    public function index(): Application|Factory|View
+    public function index()
     {
         Gate::authorize('view-products');
         try {
@@ -34,17 +31,19 @@ class ProductController extends Controller
                 'count' => $count,
             ]);
         } catch (\Throwable $th) {
-            abort(500);
+            alert()->error("خطا", "خطایی رخ داد");
+            return back();
         }
     }
 
-    public function show(Product $product): Application|Factory|View
+    public function show(Product $product)
     {
         Gate::authorize('view-products');
         try {
             return view('product::admin.show', $product);
         } catch (\Throwable $th) {
-            abort(500);
+            alert()->error("خطا", "خطایی رخ داد");
+            return back();
         }
     }
 }

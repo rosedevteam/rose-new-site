@@ -5,19 +5,15 @@ namespace Modules\User\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
 use Modules\User\Models\User;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    public function index(): Application|Factory|View
+    public function index()
     {
         Gate::authorize('view-users');
         try {
@@ -51,11 +47,12 @@ class UserController extends Controller
                 'count'
             ));
         } catch (\Throwable $th) {
-            abort(500);
+            alert()->error("خطا", "خطایی رخ داد");
+            return back();
         }
     }
 
-    public function store(Request $request): Application|Redirector|RedirectResponse
+    public function store(Request $request)
     {
         Gate::authorize('create-users');
         $data = $request->validate([
@@ -80,13 +77,15 @@ class UserController extends Controller
                 ->performedOn($user)
                 ->withProperties($data)
                 ->log('ساخت کاربر');
+            alert()->success("موفق", "کاربر با موفقیت ساخته شد");
             return redirect(route('admin.user.index'));
         } catch (\Throwable $th) {
-            abort(500);
+            alert()->error("خطا", "خطایی رخ داد");
+            return back();
         }
     }
 
-    public function show(User $user): Application|Factory|View
+    public function show(User $user)
     {
         Gate::authorize('view-users');
         if ($user->trashed() && Gate::denies('restore-users')) {
@@ -103,11 +102,12 @@ class UserController extends Controller
             }
             return view('user::admin.show', compact('user', 'orders', 'logs'));
         } catch (\Throwable $th) {
-            abort(500);
+            alert()->error("خطا", "خطایی رخ داد");
+            return back();
         }
     }
 
-    public function update(User $user): Application|Redirector|RedirectResponse
+    public function update(User $user)
     {
         Gate::authorize('edit-users');
         $userData = request()->validate([
@@ -156,13 +156,15 @@ class UserController extends Controller
                 ->causedBy(auth()->user())
                 ->performedOn($user)
                 ->log('حذف کاربر');
+            alert()->success("موفق", "کاربر حذف شد");
             return redirect(route('admin.user.index'));
         } catch (\Throwable $th) {
-            abort(500);
+            alert()->error("خطا", "خطایی رخ داد");
+            return back();
         }
     }
 
-    public function deleted(): View|Factory|Application
+    public function deleted()
     {
         gate::authorize('restore-users');
         try {
@@ -198,11 +200,12 @@ class UserController extends Controller
                 'count'
             ));
         } catch (\Throwable $th) {
-            abort(500);
+            alert()->error("خطا", "خطایی رخ داد");
+            return back();
         }
     }
 
-    public function restore(User $user): RedirectResponse
+    public function restore(User $user)
     {
         Gate::authorize('restore-users');
         try {
@@ -211,9 +214,11 @@ class UserController extends Controller
                 ->causedBy(auth()->user())
                 ->performedOn($user)
                 ->log('لغو حذف کاربر');
+            alert()->success("موفق", 'با موفقیت انجام شد');
             return redirect(route('admin.user.index'));
         } catch (\Throwable $th) {
-            abort(500);
+            alert()->error("خطا", "خطایی رخ داد");
+            return back();
         }
     }
 }

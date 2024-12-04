@@ -4,14 +4,11 @@ namespace Modules\Post\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Gate;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
 use Modules\Post\Models\Post;
 
 class PostController extends Controller
 {
-    public function index(): Application|Factory|View
+    public function index()
     {
         Gate::authorize('view-posts');
         try {
@@ -44,27 +41,30 @@ class PostController extends Controller
                 'count' => $count,
             ]);
         } catch (\Throwable $th) {
-            abort(500);
+            alert()->error("خطا", "خطایی رخ داد");
+            return back();
         }
     }
 
-    public function show(Post $post): Application|Factory|View
+    public function show(Post $post)
     {
         Gate::authorize('view-posts');
         try {
             return view('post::admin.show', compact('post'));
         } catch (\Throwable $th) {
-            abort(500);
+            alert()->error("خطا", "خطایی رخ داد");
+            return back();
         }
     }
 
-    public function create(): Application|Factory|View
+    public function create()
     {
         Gate::authorize('create-posts');
         try {
             return view('post::admin.create');
         } catch (\Throwable $th) {
-            abort(500);
+            alert()->error("خطا", "خطایی رخ داد");
+            return back();
         }
     }
 
@@ -88,19 +88,22 @@ class PostController extends Controller
                 ->performedOn($post)
                 ->withProperties($data)
                 ->log('ساخت پست');
+            alert()->success("موفق", "با موفقیت انجام شد");
             return redirect(route('admin.post.index'));
         } catch (\Throwable $th) {
-            abort(500);
+            alert()->error("خطا", "خطایی رخ داد");
+            return back();
         }
     }
 
-    public function edit(Post $post): Application|Factory|View
+    public function edit(Post $post)
     {
         Gate::authorize('edit-posts');
         try {
             return view('post::admin.edit', compact('post'));
         } catch (\Throwable $th) {
-            abort(500);
+            alert()->error("خطا", "خطایی رخ داد");
+            return back();
         }
     }
 
@@ -127,9 +130,11 @@ class PostController extends Controller
                 ->performedOn($post)
                 ->withProperties($data)
                 ->log('ویرایش پست');
+            alert()->success("موفق", "ویرایش با موفقیت انجام شد");
             return redirect(route('admin.post.show', compact('post')));
         } catch (\Throwable $th) {
-            abort(500);
+            alert()->error("خطا", "خطایی رخ داد");
+            return back();
         }
     }
 }
