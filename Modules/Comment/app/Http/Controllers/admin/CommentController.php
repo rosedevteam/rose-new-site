@@ -39,7 +39,7 @@ class CommentController extends Controller
                 'count' => $count,
             ]);
         } catch (Throwable $th) {
-            alert()->error("خطا", "خطایی رخ داد");
+            alert()->error("خطا", $th->getMessage());
             return back();
         }
     }
@@ -71,7 +71,7 @@ class CommentController extends Controller
             alert()->success("موفق", 'ویرایش با موفقیت انجام شد');
             return view('comment::admin.show', compact('comment'));
         } catch (Throwable $th) {
-            alert()->error("خطا", "خطایی رخ داد");
+            alert()->error("خطا", $th->getMessage());
             return back();
         }
     }
@@ -98,7 +98,7 @@ class CommentController extends Controller
             alert()->success("موفق", 'کامنت با موفقیت ثبت شد');
             return redirect(route('admin.comment.show', $comment));
         } catch (Throwable $th) {
-            alert()->error("خطا", "خطایی رخ داد");
+            alert()->error("خطا", $th->getMessage());
             return back();
         }
     }

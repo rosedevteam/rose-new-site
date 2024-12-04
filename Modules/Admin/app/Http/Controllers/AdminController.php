@@ -4,23 +4,21 @@ namespace Modules\Admin\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Gate;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
 use Spatie\Activitylog\Models\Activity;
 
 class AdminController extends Controller
 {
-    public function index(): Application|Factory|View
+    public function index()
     {
         try {
             return view('admin::index');
         } catch (\Throwable $th) {
-            abort(500);
+            alert()->error("خطا", $th->getMessage());
+            return back();
         }
     }
 
-    public function logIndex(): Application|Factory|View
+    public function logIndex()
     {
         Gate::authorize('view-logs');
         try {
@@ -31,7 +29,8 @@ class AdminController extends Controller
             $logs = $logs->paginate($count)->withQueryString();
             return view('admin::log.index', compact('logs', 'sort_direction', 'count'));
         } catch (\Throwable $th) {
-            abort(500);
+            alert()->error("خطا", $th->getMessage());
+            return back();
         }
     }
 }

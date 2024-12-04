@@ -26,7 +26,7 @@ class DailyReportController extends Controller
                 'count' => $count,
             ]);
         } catch (\Throwable $th) {
-            alert()->error("خطا", "خطایی رخ داد");
+            alert()->error("خطا", $th->getMessage());
             return back();
         }
     }
@@ -56,7 +56,7 @@ class DailyReportController extends Controller
             alert()->success("موفق", "با موفقیت انجام شد");
             return redirect()->route('admin.dailyreport.index');
         } catch (\Throwable $th) {
-            alert()->error("خطا", "خطایی رخ داد");
+            alert()->error("خطا", $th->getMessage());
             return back();
         }
     }

@@ -35,7 +35,7 @@ class OrderController extends Controller
                 'count' => $count,
             ]);
         } catch (\Throwable $th) {
-            alert()->error("خطا", "خطایی رخ داد");
+            alert()->error("خطا", $th->getMessage());
             return back();
         }
     }

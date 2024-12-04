@@ -41,7 +41,7 @@ class PostController extends Controller
                 'count' => $count,
             ]);
         } catch (\Throwable $th) {
-            alert()->error("خطا", "خطایی رخ داد");
+            alert()->error("خطا", $th->getMessage());
             return back();
         }
     }
@@ -63,7 +63,7 @@ class PostController extends Controller
         try {
             return view('post::admin.create');
         } catch (\Throwable $th) {
-            alert()->error("خطا", "خطایی رخ داد");
+            alert()->error("خطا", $th->getMessage());
             return back();
         }
     }
@@ -91,7 +91,7 @@ class PostController extends Controller
             alert()->success("موفق", "با موفقیت انجام شد");
             return redirect(route('admin.post.index'));
         } catch (\Throwable $th) {
-            alert()->error("خطا", "خطایی رخ داد");
+            alert()->error("خطا", $th->getMessage());
             return back();
         }
     }
@@ -133,7 +133,7 @@ class PostController extends Controller
             alert()->success("موفق", "ویرایش با موفقیت انجام شد");
             return redirect(route('admin.post.show', compact('post')));
         } catch (\Throwable $th) {
-            alert()->error("خطا", "خطایی رخ داد");
+            alert()->error("خطا", $th->getMessage());
             return back();
         }
     }

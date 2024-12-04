@@ -31,7 +31,7 @@ class ProductController extends Controller
                 'count' => $count,
             ]);
         } catch (\Throwable $th) {
-            alert()->error("خطا", "خطایی رخ داد");
+            alert()->error("خطا", $th->getMessage());
             return back();
         }
     }
@@ -42,7 +42,7 @@ class ProductController extends Controller
         try {
             return view('product::admin.show', $product);
         } catch (\Throwable $th) {
-            alert()->error("خطا", "خطایی رخ داد");
+            alert()->error("خطا", $th->getMessage());
             return back();
         }
     }

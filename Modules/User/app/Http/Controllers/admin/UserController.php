@@ -47,7 +47,7 @@ class UserController extends Controller
                 'count'
             ));
         } catch (\Throwable $th) {
-            alert()->error("خطا", "خطایی رخ داد");
+            alert()->error("خطا", $th->getMessage());
             return back();
         }
     }
@@ -55,13 +55,13 @@ class UserController extends Controller
     public function store(Request $request)
     {
         Gate::authorize('create-users');
-        $data = $request->validate([
-            'first_name' => 'bail|string|max:255',
-            'last_name' => 'bail|string|max:255',
-            "phone" => 'bail|required|string|digits:11|unique:users,phone',
-            'role_id' => 'bail|integer|exists:roles,id',
-        ]);
         try {
+            $data = $request->validate([
+                'first_name' => 'bail|string|max:255',
+                'last_name' => 'bail|string|max:255',
+                "phone" => ['bail', 'required', 'string', 'unique:users,phone', 'regex:/^09[0|1|2|3][0-9]{8}$/'],
+                'role_id' => 'bail|integer|exists:roles,id',
+            ]);
             $data['role_id'] = Role::where('id', $data['role_id'])->first()->name;
             $user = User::query()->create([
                 'first_name' => $data['first_name'],
@@ -80,7 +80,7 @@ class UserController extends Controller
             alert()->success("موفق", "کاربر با موفقیت ساخته شد");
             return redirect(route('admin.user.index'));
         } catch (\Throwable $th) {
-            alert()->error("خطا", "خطایی رخ داد");
+            alert()->error("خطا", $th->getMessage());
             return back();
         }
     }
@@ -102,7 +102,7 @@ class UserController extends Controller
             }
             return view('user::admin.show', compact('user', 'orders', 'logs'));
         } catch (\Throwable $th) {
-            alert()->error("خطا", "خطایی رخ داد");
+            alert()->error("خطا", $th->getMessage());
             return back();
         }
     }
@@ -110,19 +110,19 @@ class UserController extends Controller
     public function update(User $user)
     {
         Gate::authorize('edit-users');
-        $userData = request()->validate([
-            'first_name' => 'bail|nullable|string|max:255',
-            'last_name' => 'bail|nullable|string|max:255',
-            'phone' => 'bail|nullable|string|digits:11|unique:users,phone',
-            'email' => 'bail|nullable|string|email|unique:users,email',
-        ]);
-        $billingData = request()->validate([
-            'address' => 'bail|nullable|string|max:255',
-            'city' => 'bail|nullable|string|max:255',
-            'province' => 'bail|nullable|string|max:255',
-            'postal_code' => 'bail|nullable|string|digits:10',
-        ]);
         try {
+            $userData = request()->validate([
+                'first_name' => 'bail|nullable|string|max:255',
+                'last_name' => 'bail|nullable|string|max:255',
+                'phone' => 'bail|nullable|string|digits:11|unique:users,phone',
+                'email' => 'bail|nullable|string|email|unique:users,email',
+            ]);
+            $billingData = request()->validate([
+                'address' => 'bail|nullable|string|max:255',
+                'city' => 'bail|nullable|string|max:255',
+                'province' => 'bail|nullable|string|max:255',
+                'postal_code' => 'bail|nullable|string|digits:10',
+            ]);
             $userData = array_filter($userData, function ($value) {
                 return !is_null($value);
             });
@@ -136,9 +136,11 @@ class UserController extends Controller
                 ->performedOn($user)
                 ->withProperties([$userData, $billingData])
                 ->log('ویرایش کاربر');
+            alert()->success("موفق", "با موفقیت انجام شد");
             return redirect(route('admin.user.show', $user));
         } catch (\Throwable $th) {
-            abort(500);
+            alert()->error("خطا", $th->getMessage());
+            return back();
         }
     }
 
@@ -159,7 +161,7 @@ class UserController extends Controller
             alert()->success("موفق", "کاربر حذف شد");
             return redirect(route('admin.user.index'));
         } catch (\Throwable $th) {
-            alert()->error("خطا", "خطایی رخ داد");
+            alert()->error("خطا", $th->getMessage());
             return back();
         }
     }
@@ -200,7 +202,7 @@ class UserController extends Controller
                 'count'
             ));
         } catch (\Throwable $th) {
-            alert()->error("خطا", "خطایی رخ داد");
+            alert()->error("خطا", $th->getMessage());
             return back();
         }
     }
@@ -217,7 +219,7 @@ class UserController extends Controller
             alert()->success("موفق", 'با موفقیت انجام شد');
             return redirect(route('admin.user.index'));
         } catch (\Throwable $th) {
-            alert()->error("خطا", "خطایی رخ داد");
+            alert()->error("خطا", $th->getMessage());
             return back();
         }
     }
