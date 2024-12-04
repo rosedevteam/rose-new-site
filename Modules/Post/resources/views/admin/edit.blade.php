@@ -67,7 +67,7 @@
                                         <option value="public" {{ $post->status == 'public' ? 'selected' : '' }}>منتشر
                                             شده
                                         </option>
-                                        <option value="draft"{{ $post->status == 'draft' ? 'selected' : '' }}>درفت
+                                        <option value="draft"{{ $post->status == 'draft' ? 'selected' : '' }}>پیشنویس
                                         </option>
                                         <option value="hidden"{{ $post->status == 'hidden' ? 'selected' : '' }}>پنهان
                                         </option>

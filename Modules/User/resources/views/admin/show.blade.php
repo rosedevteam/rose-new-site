@@ -148,8 +148,15 @@
                                         @foreach($orders as $order)
                                             <tr>
                                                 <td>
+                                                    @php
+                                                        $len = count($order->products()->get())-1;
+                                                        $i = 0
+                                                    @endphp
                                                     @foreach($order->products()->get() as $product)
-                                                        <a href="{{ route('admin.product.show', $product) }}">{{ $product->title }}</a>
+                                                        <a href="{{ route('admin.product.show', $product) }}"
+                                                           class="text-body text-truncate"><span
+                                                                class="fw-semibold">{{ $product->title . ($i != $len ? "، " : "") }}</span></a>
+                                                        @php $i++ @endphp
                                                     @endforeach
                                                 </td>
                                                 <td>

@@ -54,7 +54,7 @@ class DailyReportController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($dailyReport)
-                ->log('created daily report');
+                ->log('ساخت گزارش روزانه');
             return redirect()->route('admin.dailyreport.index');
         } catch (\Throwable $th) {
             abort(500);

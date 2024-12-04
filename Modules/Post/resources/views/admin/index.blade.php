@@ -58,11 +58,11 @@
                                         class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
                                         <div class="dt-buttons btn-group flex-wrap">
                                             <a href="{{ route('admin.post.create') }}">
-                                            <button class="btn btn-secondary add-new btn-primary ms-2" tabindex="0"
-                                                    aria-controls="DataTables_Table_0" type="button"><span><i
-                                                        class="bx bx-plus me-0 me-lg-2"></i><span
-                                                        class="d-none d-lg-inline-block">نوشتن پست جدید</span></span>
-                                            </button>
+                                                <button class="btn btn-secondary add-new btn-primary ms-2" tabindex="0"
+                                                        aria-controls="DataTables_Table_0" type="button"><span><i
+                                                            class="bx bx-plus me-0 me-lg-2"></i><span
+                                                            class="d-none d-lg-inline-block">نوشتن پست جدید</span></span>
+                                                </button>
                                             </a>
                                         </div>
                                     </div>
@@ -114,7 +114,13 @@
                                     {{ $post->author()->name() }}</a>
                                 </span>
                                     </td>
-                                    <td><span class="fw-semibold">{{ $post->status }}</span></td>
+                                    <td><span class="fw-semibold">
+                                            @switch($post->status)
+                                                @case('public')منتشر شده@break
+                                                @case('draft')پیشنویس@break
+                                                @case('hidden')پنهان@break
+                                            @endswitch
+</span></td>
                                     <td>{{ $post->comment_status ? 'باز' : 'بسته' }}</td>
                                     <td>
                                         <div class="d-inline-block text-nowrap">

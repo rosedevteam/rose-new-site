@@ -106,7 +106,13 @@
                                     <td><span class="fw-semibold">{{ $product->price }}</span></td>
                                     <td>{{ $product->sale_price }}</td>
                                     <td>
-                                        <span class="fw-semibold">{{ $product->status }}</span>
+                                        <span class="fw-semibold">
+                                            @switch($product->status)
+                                                @case('public')منتشر شده@break
+                                                @case('draft')پیشنویس@break
+                                                @case('hidden')پنهان@break
+                                            @endswitch
+                                        </span>
                                     </td>
                                     <td>
                                         <div class="d-inline-block text-nowrap">

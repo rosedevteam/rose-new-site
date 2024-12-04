@@ -105,19 +105,34 @@
                                 </span>
                                     </td>
                                     <td>
+                                        @php
+                                            $len = count($order->products()->get())-1;
+                                            $i = 0
+                                        @endphp
                                         @foreach($order->products()->get() as $product)
                                             <a href="{{ route('admin.product.show', $product) }}"
                                                class="text-body text-truncate"><span
-                                                    class="fw-semibold">{{ $product->title }}</span></a>
+                                                    class="fw-semibold">{{ $product->title . ($i != $len ? "، " : "") }}</span></a>
+                                            @php $i++ @endphp
                                         @endforeach
                                     </td>
                                     <td>{{ $order->price }}</td>
                                     <td>
-                                        <span class="fw-semibold">{{ $order->status }}</span>
+                                        <span class="fw-semibold">
+                                            @switch($order->status)
+                                                @case('completed')کامل شده@break
+                                                @case('pending')در حال انجام@break
+                                                @case('returned')پس گرفته@break
+                                                @case('cancelled')لغو شده@break
+                                            @endswitch
+                                        </span>
                                     </td>
                                     <td>
                                         <div class="d-inline-block text-nowrap">
-                                            {{ $order->payment_method }}
+                                            @switch($order->payment_method)
+                                                @case('shaparak')درگاه@break
+                                                @case('card')کارت به کارت@break
+                                            @endswitch
                                         </div>
                                     </td>
                                     <td>

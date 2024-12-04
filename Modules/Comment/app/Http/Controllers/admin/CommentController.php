@@ -67,7 +67,7 @@ class CommentController extends Controller
                 ->causedBy(auth()->user())
                 ->performedOn($comment)
                 ->withProperties($data)
-                ->log('updated comment');
+                ->log('ویرایش کامنت');
             return view('comment::admin.show', compact('comment'));
         } catch (\Throwable $th) {
             abort(500);
@@ -92,10 +92,9 @@ class CommentController extends Controller
                 ->causedBy(auth()->id())
                 ->performedOn($comment)
                 ->withProperties($data)
-                ->log('created comment');
+                ->log('ساخت پست');
             return redirect(route('admin.comment.show', $comment));
         } catch (\Throwable $th) {
-            dd($th);
             abort(500);
         }
     }

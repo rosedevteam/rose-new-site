@@ -87,7 +87,7 @@ class PostController extends Controller
                 ->causedBy(auth()->id())
                 ->performedOn($post)
                 ->withProperties($data)
-                ->log('Post created');
+                ->log('ساخت پست');
             return redirect(route('admin.post.index'));
         } catch (\Throwable $th) {
             abort(500);
@@ -126,7 +126,7 @@ class PostController extends Controller
                 ->causedBy(auth()->id())
                 ->performedOn($post)
                 ->withProperties($data)
-                ->log('Post updated');
+                ->log('ویرایش پست');
             return redirect(route('admin.post.show', compact('post')));
         } catch (\Throwable $th) {
             abort(500);
