@@ -135,7 +135,7 @@
                                             <span @class(['badge', 'bg-label-primary' => $role == 'مشتری', 'bg-label-reddit' => $role == 'ادمین', 'bg-label-info' => $role == 'نویسنده', 'bg-label-github' => $role == 'پشتیبان'])>{{ $role }}</span>
                                         @endforeach
                                     </td>
-                                    <td>{{ verta($user->created_at)->formatJalaliDate() }}</td>
+                                    <td>{{ verta($user->created_at)->formatJalaliDateTime() }}</td>
                                     <td>
                                         <div class="d-inline-block text-nowrap">
                                             <button class="btn btn-sm btn-icon">
