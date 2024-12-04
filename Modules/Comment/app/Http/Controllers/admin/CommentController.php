@@ -25,9 +25,7 @@ class CommentController extends Controller
                 $comments = $comments->where('status', $status);
             }
             if ($type != 'all') {
-                $comments = $comments->where('commentable_type', $type);
-            } else {
-                $comments = $comments->where('commentable_type', "!=", 'App\\Comment\\Models\\Comment');
+                $comments = $comments->where('commentable_type', "\\Modules\\" . $type . "\\Models\\" . $type);
             }
             if ($search) {
                 $comments = $comments->where('content', 'like', '%' . $search . '%');
@@ -76,19 +74,17 @@ class CommentController extends Controller
         }
     }
 
-    public function store(): Application|Factory|View
+    public function store(Comment $comment)
     {
         Gate::authorize('edit-comments');
         $data = request()->validate([
             'content' => 'required|string',
-            'commentable_id' => 'required|string',
-            'commentable_type' => 'required|string',
         ]);
         try {
-            $comment = Comment::create([
+            $newComment = Comment::create([
                 'content' => $data['content'],
-                'commentable_id' => $data['commentable_id'],
-                'commentable_type' => $data['commentable_type'],
+                'commentable_id' => $comment->id,
+                'commentable_type' => "\\Modules\\Comment\\Models\\Comment",
                 'author_id' => auth()->id(),
                 'status' => 'approved',
             ]);
@@ -99,6 +95,7 @@ class CommentController extends Controller
                 ->log('created comment');
             return redirect(route('admin.comment.show', $comment));
         } catch (\Throwable $th) {
+            dd($th);
             abort(500);
         }
     }

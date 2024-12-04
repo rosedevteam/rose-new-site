@@ -34,10 +34,11 @@
                             </div>
                             <div class="col-md-2">
                                 <label for="type" class="form-label">نوع کامنت:</label>
-                                <select id="type" name="sort_direction" class="form-select text-capitalize">
+                                <select id="type" name="type" class="form-select text-capitalize">
                                     <option value="all" selected>همه</option>
-                                    <option value="product"{{ $type == 'product' ? 'selected' : '' }}>دوره</option>
-                                    <option value="post"{{ $type == 'post' ? 'selected' : '' }}>پست</option>
+                                    <option value="Product"{{ $type == 'Product' ? 'selected' : '' }}>دوره</option>
+                                    <option value="Post"{{ $type == 'Post' ? 'selected' : '' }}>پست</option>
+                                    <option value="Comment"{{ $type == 'Comment' ? 'selected' : '' }}>کامنت</option>
                                 </select>
                             </div>
                             <div class="col-md-2">
@@ -97,8 +98,14 @@
                                     <td><a href="{{
                                         route("admin." . strtolower(substr(strrchr($comment->commentable_type, '\\'), 1)) . ".show", $comment->commentable)
                                     }}" class="text-body text-truncate">
-                                            <span class="fw-semibold">{{ $comment->commentable->title }}</span></a></td>
-                                    <td>{{ $comment->status }}</td>
+                                            <span
+                                                class="fw-semibold">{{ $comment->commentable->title ?: "کامنت " . $comment->author()->name() }}</span></a>
+                                    </td>
+                                    <td>@switch($comment->status)
+                                            @case("approved")تایید شده@break
+                                            @case("rejected") رد شده@break
+                                            @case("pending") در انتظار@break
+                                        @endswitch</td>
                                     <td>
                                         <div class="d-inline-block text-nowrap">
                                             <button class="btn btn-sm btn-icon">
@@ -135,4 +142,3 @@
     <script src="/assets/admin/vendor/libs/cleavejs/cleave.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave-phone.js"></script>
 @endpush
-
