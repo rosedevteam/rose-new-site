@@ -111,7 +111,7 @@
                                     colspan="1" style="width: 12%" aria-sort="ascending">تاریخ ثبت
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width: 12%" aria-sort="ascending">ویرایش
+                                    colspan="1" style="width: 12%" aria-sort="ascending">جزییات
                                 </th>
                             </tr>
                             </thead>

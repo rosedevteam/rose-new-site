@@ -43,27 +43,88 @@ class OrderController extends Controller
     public function create()
     {
         Gate::authorize('create-orders');
-        return view('order::admin.create');
+        try {
+            return view('order::admin.create');
+        } catch (\Throwable $th) {
+            alert()->error("خطا", $th->getMessage());
+            return back();
+        }
     }
 
     public function store()
     {
         Gate::authorize('create-orders');
+        try {
+            $data = request()->validate([
+                'price' => 'required|numeric',
+                'note' => 'nullable|string',
+                'status' => 'required',
+                'payment_method' => 'required',
+            ]);
+            $order = Order::create($data);
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($order)
+                ->withProperties($data)
+                ->log('ساخت سفارش');
+            alert()->success('موفق', 'سفارش با موفقیت ساخته شد');
+            return redirect(route('admin.orders.show', compact('order')));
+        } catch (\Throwable $th) {
+            alert()->error("خطا", $th->getMessage());
+            return back();
+        }
     }
 
     public function show(Order $order)
     {
         Gate::authorize('view-orders');
-        return view('order::admin.show', compact('order'));
+        try {
+            return view('order::admin.show', compact('order'));
+        } catch (\Throwable $th) {
+            alert()->error("خطا", $th->getMessage());
+            return back();
+        }
     }
 
     public function update(Order $order)
     {
         Gate::authorize('edit-orders');
+        try {
+            $data = request()->validate([
+                'price' => 'nullable|numeric',
+                'note' => 'nullable|string',
+                'status' => 'nullable',
+                'payment_method' => 'nullable',
+            ]);
+            $data = array_filter($data, function ($value) {
+                return !is_null($value);
+            });
+            $order->update($data);
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($order)
+                ->withProperties($data)
+                ->log('ویرایش سفارش');
+            alert()->success('موفق', 'سفارش با موفقیت ساخته شد');
+        } catch (\Throwable $th) {
+            alert()->error("خطا", $th->getMessage());
+            return back();
+        }
     }
 
     public function destroy(Order $order)
     {
         Gate::authorize('delete-orders');
+        try {
+            $order->delete();
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($order)
+                ->log('حذف سفارش');
+            alert()->success('موفق', 'سفارش با موفقیت حذف شد');
+        } catch (\Throwable $th) {
+            alert()->error("خطا", $th->getMessage());
+            return back();
+        }
     }
 }
