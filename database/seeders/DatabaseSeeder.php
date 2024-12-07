@@ -54,7 +54,14 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'create-products']);
         Permission::create(['name' => 'delete-products']);
         //
-
+        Permission::create(['name' => 'view-job-offers']);
+        Permission::create(['name' => 'edit-job-offers']);
+        Permission::create(['name' => 'create-job-offers']);
+        Permission::create(['name' => 'delete-job-offers']);
+        //
+        Permission::create(['name' => 'view-job-applications']);
+        Permission::create(['name' => 'edit-job-applications']);
+        //
         Permission::create(['name' => 'view-orders']);
         Permission::create(['name' => 'edit-orders']);
         Permission::create(['name' => 'create-orders']);

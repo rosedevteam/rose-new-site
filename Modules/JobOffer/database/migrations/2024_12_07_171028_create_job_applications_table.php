@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('resume');
             $table->text('description')->nullable();
+            $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
             $table->timestamps();
         });
     }

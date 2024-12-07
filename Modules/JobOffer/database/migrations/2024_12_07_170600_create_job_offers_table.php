@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('content');
             $table->enum('team', ['marketing', 'financialMarkets']);
             $table->string('type');
+            $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->timestamps();
         });
     }
