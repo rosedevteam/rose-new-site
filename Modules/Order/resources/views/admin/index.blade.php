@@ -70,6 +70,24 @@
                 </div>
                 <div class="card-datatable table-responsive">
                     <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                        @can('create-orders')
+                            <div class="row mx-2 my-2">
+                                <div class="col-md-20">
+                                    <div
+                                        class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
+                                        <div class="dt-buttons btn-group flex-wrap">
+                                            <a href="{{ route('admin.order.create') }}">
+                                                <button class="btn btn-secondary add-new btn-primary ms-2" tabindex="0"
+                                                        aria-controls="DataTables_Table_0" type="button"><span><i
+                                                            class="bx bx-plus me-0 me-lg-2"></i><span
+                                                            class="d-none d-lg-inline-block">ساخت سفارش جدید</span></span>
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endcan
                         <table class="datatables-users table border-top dataTable no-footer dtr-column"
                                id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 100%;">
                             <thead>

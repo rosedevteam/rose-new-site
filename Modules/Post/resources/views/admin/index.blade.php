@@ -120,7 +120,7 @@
                                                 @case('draft')پیشنویس@break
                                                 @case('hidden')پنهان@break
                                             @endswitch
-</span></td>
+                                    </span></td>
                                     <td>{{ $post->comment_status ? 'باز' : 'بسته' }}</td>
                                     <td>
                                         <div class="d-inline-block text-nowrap">

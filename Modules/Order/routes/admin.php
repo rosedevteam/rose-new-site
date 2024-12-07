@@ -8,6 +8,6 @@ Route::controller(OrderController::class)->prefix('/order')->group(function () {
     Route::get('{order}', 'show')->name('show');
     Route::patch('/{order}', 'update')->name('update');
     Route::delete('/{order}', 'destroy')->name('destroy');
-    Route::get('create', 'create')->name('create');
+    Route::get('/create', 'create')->name('create');
     Route::post('/create', 'store')->name('store');
 });
