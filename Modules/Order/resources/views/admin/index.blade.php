@@ -92,6 +92,9 @@
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
                                     colspan="1" style="width: 12%" aria-sort="ascending">تاریخ ثبت
                                 </th>
+                                <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                    colspan="1" style="width: 12%" aria-sort="ascending">ویرایش
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -141,6 +144,15 @@
                                                 <span
                                                     class="fw-semibold">{{ verta($order->created_at)->formatJalaliDatetime() }}</span>
                                             </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-inline-block text-nowrap">
+                                            <button class="btn btn-sm btn-icon">
+                                                <a href="{{ route('admin.order.show', $order) }}">
+                                                    <i class="bx bx-detail"></i>
+                                                </a>
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>

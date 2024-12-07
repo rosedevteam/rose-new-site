@@ -21,7 +21,7 @@ class AuthController extends Controller
     public function requestOtp(Request $request): Application|Response|Redirector|RedirectResponse
     {
         $phone = $request->validate([
-            'phone' => 'bail|required|numeric|exists:users,phone',
+            'phone' => ['bail', 'required', 'regex:/^09[0|1|2|3][0-9]{8}$/'],
         ]);
         $user = User::query()->where('phone', $phone)->first();
         if (!$user->hasAnyRole(Role::all())) {
@@ -52,7 +52,7 @@ class AuthController extends Controller
         ])['otp'];
         $phone = $request->session()->get('phone')['phone'];
         $user = User::query()->where('phone', $phone)->first();
-        $result = $user->validateOtp($otp);
+        $result = $user->checkOtp($otp);
         if ($result == 0) {
             return view('auth::admin.otp', [
                 'error' => true,

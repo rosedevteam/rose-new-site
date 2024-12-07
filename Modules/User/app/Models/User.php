@@ -54,7 +54,7 @@ class User extends \Illuminate\Foundation\Auth\User
     }
 
     // 0 -> wrongOtp, 1 -> correct, 2 -> expired
-    public function validateOtp(string $otp): int
+    public function checkOtp(string $otp): int
     {
         $currentCode = $this->otp;
         if ($currentCode->updated_at <= now()->subMinutes(self::OTP_DURATION)) {

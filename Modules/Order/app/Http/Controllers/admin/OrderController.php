@@ -39,4 +39,31 @@ class OrderController extends Controller
             return back();
         }
     }
+
+    public function create()
+    {
+        Gate::authorize('create-orders');
+        return view('order::admin.create');
+    }
+
+    public function store()
+    {
+        Gate::authorize('create-orders');
+    }
+
+    public function show(Order $order)
+    {
+        Gate::authorize('view-orders');
+        return view('order::admin.show', compact('order'));
+    }
+
+    public function update(Order $order)
+    {
+        Gate::authorize('edit-orders');
+    }
+
+    public function destroy(Order $order)
+    {
+        Gate::authorize('delete-orders');
+    }
 }

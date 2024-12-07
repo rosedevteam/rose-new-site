@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->string('price');
+            $table->string('notes')->nullable()->default(null);
             $table->enum('status', ['pending', 'completed', 'cancelled', 'returned'])->default('pending');
             $table->enum('payment_method', ['shaparak', 'card'])->default('shaparak');
             $table->timestamps();
