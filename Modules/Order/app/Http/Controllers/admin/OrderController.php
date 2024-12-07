@@ -57,7 +57,7 @@ class OrderController extends Controller
         try {
             $data = request()->validate([
                 'price' => 'required|numeric',
-                'note' => 'nullable|string',
+                'note' => 'required|nullable|string',
                 'status' => 'required',
                 'payment_method' => 'required',
             ]);
