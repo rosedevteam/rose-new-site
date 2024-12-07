@@ -106,6 +106,7 @@ class OrderController extends Controller
                 ->withProperties($data)
                 ->log('ویرایش سفارش');
             alert()->success('موفق', 'سفارش با موفقیت ساخته شد');
+            return redirect(route('admin.orders.show', compact('order')));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -122,6 +123,7 @@ class OrderController extends Controller
                 ->performedOn($order)
                 ->log('حذف سفارش');
             alert()->success('موفق', 'سفارش با موفقیت حذف شد');
+            return redirect(route('admin.orders.index'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
