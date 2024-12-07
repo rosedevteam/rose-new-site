@@ -5,7 +5,7 @@ namespace Modules\Admin\View\Components;
 use Illuminate\View\Component;
 use Illuminate\View\View;
 
-class navbar extends Component
+class Navbar extends Component
 {
     /**
      * Create a new component instance.

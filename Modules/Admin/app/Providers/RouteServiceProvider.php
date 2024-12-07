@@ -39,6 +39,6 @@ class RouteServiceProvider extends ServiceProvider
             ->namespace($this->moduleNamespace)
             ->prefix(config('services.admin.prefix'))
             ->name('admin.')
-            ->group(module_path('Admin', 'Routes/admin.php'));
+            ->group(module_path('Admin', 'routes/admin.php'));
     }
 }

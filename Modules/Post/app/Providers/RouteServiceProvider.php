@@ -39,7 +39,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
             ->namespace($this->moduleNamespace)
             ->name('order.')
-            ->group(module_path('Post', 'Routes/web.php'));
+            ->group(module_path('Post', 'routes/web.php'));
     }
 
     /**
@@ -53,6 +53,6 @@ class RouteServiceProvider extends ServiceProvider
             ->namespace($this->moduleNamespace . '\admin')
             ->prefix(config('services.admin.prefix'))
             ->name('admin.post.')
-            ->group(module_path('Post', 'Routes/admin.php'));
+            ->group(module_path('Post', 'routes/admin.php'));
     }
 }

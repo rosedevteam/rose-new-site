@@ -39,7 +39,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
             ->namespace($this->moduleNamespace)
             ->name("dailyreport")
-            ->group(module_path('DailyReport', 'Routes/web.php'));
+            ->group(module_path('DailyReport', 'routes/web.php'));
     }
 
     /**
@@ -53,6 +53,6 @@ class RouteServiceProvider extends ServiceProvider
             ->namespace($this->moduleNamespace . '\admin')
             ->prefix(config('services.admin.prefix'))
             ->name('admin.dailyreport.')
-            ->group(module_path('DailyReport', 'Routes/admin.php'));
+            ->group(module_path('DailyReport', 'routes/admin.php'));
     }
 }

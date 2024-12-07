@@ -38,7 +38,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::middleware('web')
             ->namespace($this->moduleNamespace)
-            ->group(module_path('Comment', 'Routes/web.php'));
+            ->group(module_path('Comment', 'routes/web.php'));
     }
 
     /**
@@ -52,6 +52,6 @@ class RouteServiceProvider extends ServiceProvider
             ->namespace($this->moduleNamespace . '\admin')
             ->prefix(config('services.admin.prefix'))
             ->name('admin.comment.')
-            ->group(module_path('Comment', 'Routes/admin.php'));
+            ->group(module_path('Comment', 'routes/admin.php'));
     }
 }
