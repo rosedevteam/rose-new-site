@@ -8,5 +8,6 @@
     "Category": true,
     "Metadata": true,
     "Admin": true,
-    "Order": true
+    "Order": true,
+    "JobOffer": true
 }
