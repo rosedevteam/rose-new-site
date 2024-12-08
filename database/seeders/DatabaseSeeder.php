@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\Category\Models\Category;
 use Modules\Comment\Models\Comment;
 use Modules\Order\Models\Order;
 use Modules\Post\Models\Post;
@@ -310,15 +311,22 @@ class DatabaseSeeder extends Seeder
             'content' => "asvdnawn;wgn;iweagbqiugi",
         ]);
 
-//        Category::factory()->create([
-//            'author_id' => 1,
-//            'name' => 'بازار های مالی',
-//            'group' => 'team'
-//        ]);
-//        Category::factory()->create([
-//            'author_id' => 1,
-//            'name' => 'مارگتینگ',
-//            'group' => 'team',
-//        ]);
+        $parent = Category::factory()->create([
+            'author_id' => 1,
+            'name' => 'team',
+            'is_parent' => true,
+        ]);
+
+        $category1 = Category::factory()->create([
+            'author_id' => 1,
+            'name' => 'بازار های مالی',
+        ]);
+        $category1->group()->attach($parent->id);
+
+        $category2 = Category::factory()->create([
+            'author_id' => 1,
+            'name' => 'مارگتینگ',
+        ]);
+        $category2->group()->attach($parent->id);
     }
 }

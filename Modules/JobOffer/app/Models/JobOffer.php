@@ -25,7 +25,7 @@ class JobOffer extends Model
 
     public function categories()
     {
-        return $this->morphedByMany(Category::class, 'categoryable');
+        return $this->morphToMany(Category::class, 'categoryable');
     }
 
 }

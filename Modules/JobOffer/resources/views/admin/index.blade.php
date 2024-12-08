@@ -99,7 +99,7 @@
                                 </span>
                                     </td>
                                     <td><span class="fw-semibold">{{ $jobOffer->team }}</span></td>
-                                    <td>{{ $jobOffer->categories()->first() }}</td>
+                                    <td>{{ $jobOffer->categories()->first()->name }}</td>
                                     <td>{{ $jobOffer->status }}</td>
                                     <td>{{ verta($jobOffer->created_at)->formatJalaliDateTime() }}</td>
                                     <td>

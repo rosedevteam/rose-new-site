@@ -28,9 +28,11 @@ class JobOfferController extends Controller
     {
         Gate::authorize('create-job-offers');
         try {
-            $categories = Category::where('group', 'team')->get();
+            $team = Category::where('name', 'team')->first();
+            $categories = Category::where('name', 'team')->first()->children;
             return view('joboffer::admin.create', compact('categories'));
         } catch (\Throwable $th) {
+            dd($th);
             alert()->error('خطا', $th->getMessage());
             return back();
         }
@@ -52,8 +54,7 @@ class JobOfferController extends Controller
                 'type' => $data['type'],
                 'author_id' => auth()->id(),
             ]);
-            $category = Category::where('id', $data['team'])->get();
-            $jobOffer->categories()->attach($category);
+            $jobOffer->categories()->attach($data['team']);
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($jobOffer)
@@ -92,10 +93,15 @@ class JobOfferController extends Controller
             $data = array_filter($data, function ($value) {
                 return !is_null($value);
             });
+            $jobOffer->update([
+                'title' => $data['title'],
+                'content' => $data['content'],
+                'type' => $data['type'],
+                'status' => $data['status'],
+            ]);
             if (!is_null($data['team'])) {
                 $data['team'] = Category::where('name', $data['team'])->first();
             }
-            $jobOffer->update($data);
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($jobOffer)

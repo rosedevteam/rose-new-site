@@ -93,7 +93,7 @@ class CommentController extends Controller
             activity()
                 ->causedBy(auth()->id())
                 ->performedOn($comment)
-                ->withProperties($data)
+                ->withProperties($newComment)
                 ->log('ساخت پست');
             alert()->success("موفق", 'کامنت با موفقیت ثبت شد');
             return redirect(route('admin.comment.show', $comment));

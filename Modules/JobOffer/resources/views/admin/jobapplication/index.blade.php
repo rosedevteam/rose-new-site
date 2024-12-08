@@ -56,13 +56,13 @@
                             <thead>
                             <tr>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 12%;">نام
+                                    style="width: 8%;">نام
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 10%;">ایمیل
+                                    style="width: 8%;">ایمیل
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">شماره
+                                    style="width: 8%;">شماره
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 5%;">رزومه
@@ -71,7 +71,7 @@
                                     style="width: 5%;">وضعیت
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">تاریخ ارسال
+                                    style="width: 8%;">تاریخ ارسال
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 5%;">جزییات
