@@ -1,7 +1,7 @@
 @extends('admin::layouts.main')
 
 @section('title')
-    فرصت هاس شغلی
+    فرصت های شغلی
 @endsection
 
 @section('content')

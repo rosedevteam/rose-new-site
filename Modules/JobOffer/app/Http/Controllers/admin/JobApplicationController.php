@@ -12,7 +12,6 @@ class JobApplicationController
         Gate::authorize('view-job-applications');
         try {
             $count = request('count', 50);
-            $sort_by = request('sort_by', 'created_at');
             $sort_direction = request('sort_direction', 'desc');
             $search = request('search');
             $status = request('status', 'all');
@@ -25,11 +24,10 @@ class JobApplicationController
                     ->orWhere('email', 'like', '%' . $search . '%')
                     ->orWhere('phone', 'like', '%' . $search . '%');
             }
-            $jobApplications = $jobApplications->orderBy($sort_by, $sort_direction)->paginate($count);
+            $jobApplications = $jobApplications->orderBy('created_at', $sort_direction)->paginate($count);
             return view('joboffer::admin.jobapplication.index', compact(
                 'jobApplications',
                 'count',
-                'sort_by',
                 'sort_direction',
                 'search',
                 'status',
