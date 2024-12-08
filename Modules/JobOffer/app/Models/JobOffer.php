@@ -2,8 +2,9 @@
 
 namespace Modules\JobOffer\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Modules\Category\Models\Category;
 use Modules\User\Models\User;
 
 class JobOffer extends Model
@@ -20,6 +21,11 @@ class JobOffer extends Model
     public function author()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function categories()
+    {
+        return $this->morphedByMany(Category::class, 'categoryable');
     }
 
 }

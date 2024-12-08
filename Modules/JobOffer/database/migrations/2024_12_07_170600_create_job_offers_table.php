@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('author_id')->constrained('users');
             $table->string('title');
             $table->text('content');
-            $table->enum('team', ['marketing', 'financialMarkets']);
             $table->string('type');
             $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->timestamps();
