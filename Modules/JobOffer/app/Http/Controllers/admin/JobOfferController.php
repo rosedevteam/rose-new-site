@@ -28,11 +28,9 @@ class JobOfferController extends Controller
     {
         Gate::authorize('create-job-offers');
         try {
-            $team = Category::where('name', 'team')->first();
             $categories = Category::where('name', 'team')->first()->children;
             return view('joboffer::admin.create', compact('categories'));
         } catch (\Throwable $th) {
-            dd($th);
             alert()->error('خطا', $th->getMessage());
             return back();
         }

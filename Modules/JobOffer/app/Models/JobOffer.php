@@ -5,6 +5,7 @@ namespace Modules\JobOffer\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Category\Models\Category;
+use Modules\JobOffer\Database\Factories\JobOfferFactory;
 use Modules\User\Models\User;
 
 class JobOffer extends Model
@@ -28,4 +29,8 @@ class JobOffer extends Model
         return $this->morphToMany(Category::class, 'categoryable');
     }
 
+    protected static function newFactory()
+    {
+        return JobOfferFactory::new();
+    }
 }

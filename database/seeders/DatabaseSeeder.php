@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Modules\Category\Models\Category;
 use Modules\Comment\Models\Comment;
+use Modules\JobOffer\Models\JobApplication;
+use Modules\JobOffer\Models\JobOffer;
 use Modules\Order\Models\Order;
 use Modules\Post\Models\Post;
 use Modules\Product\Models\Product;
@@ -321,12 +323,31 @@ class DatabaseSeeder extends Seeder
             'author_id' => 1,
             'name' => 'بازار های مالی',
         ]);
-        $category1->group()->attach($parent->id);
+        $category1->parent()->attach($parent->id);
 
         $category2 = Category::factory()->create([
             'author_id' => 1,
             'name' => 'مارگتینگ',
         ]);
-        $category2->group()->attach($parent->id);
+        $category2->parent()->attach($parent->id);
+
+        $c = JobOffer::factory()->create([
+            'author_id' => 1,
+            'title' => 'akjbfipasbug',
+            'content' => 'asjdbg',
+            'type' => 'afbaisdgb',
+            'status' => 'active',
+        ]);
+        $c->categories()->attach($category1->id);
+
+        $resume = JobApplication::factory()->create([
+            'joboffer_id' => 1,
+            'full_name' => "akjnga aoaiog",
+            'email' => 'akjngaaoaiog@gmail.com',
+            'phone' => '12546982365',
+            'resume' => 'adfjka',
+            'description' => null,
+            'status' => 'pending',
+        ]);
     }
 }

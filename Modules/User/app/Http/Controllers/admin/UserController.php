@@ -40,9 +40,9 @@ class UserController extends Controller
             return view('user::admin.index', compact(
                 'users',
                 'roles',
-                'sort_by',
-                'sort_direction',
                 'search',
+                'sort_direction',
+                'sort_by',
                 'role_id',
                 'count'
             ));

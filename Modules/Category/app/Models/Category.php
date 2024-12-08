@@ -15,7 +15,7 @@ class Category extends Model
 
     public function children()
     {
-        if ($this->is_parent) return null;
+        if (!$this->is_parent) return null;
         return $this->morphToMany(Category::class, 'categoryable');
     }
 
