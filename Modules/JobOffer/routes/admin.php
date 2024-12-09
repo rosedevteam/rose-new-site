@@ -3,7 +3,7 @@
 use Modules\JobOffer\Http\Controllers\admin\JobApplicationController;
 use Modules\JobOffer\Http\Controllers\admin\JobOfferController;
 
-Route::controller(JobOfferController::class)->prefix('/job-offer')->group(function () {
+Route::controller(JobOfferController::class)->prefix('/job-offer')->name('joboffer.')->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/create', 'create')->name('create');
     Route::post('/create', 'store')->name('store');

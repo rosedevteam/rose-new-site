@@ -80,8 +80,8 @@
                 </li>
             @endcan
             @can('view-job-applications')
-                <li @class(["menu-item", 'active' => url()->current() == route('admin.joboffer.jobapplication.index')])>
-                    <a href="{{ route("admin.joboffer.jobapplication.index") }}" class="menu-link">
+                <li @class(["menu-item", 'active' => url()->current() == route('admin.jobapplication.index')])>
+                    <a href="{{ route("admin.jobapplication.index") }}" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-receipt"></i>
                         <div data-i18n="رزومه های ارسال شده">رزومه های ارسال شده</div>
                     </a>

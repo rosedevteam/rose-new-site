@@ -17,7 +17,7 @@
                         <div
                             class="d-flex justify-content-start align-items-center row py-3 gap-1 gap-md-0 primary-font">
                             <div class="col-md-2">
-                                <label for="sort_by" class="form-label">ترتیب بر اساس: </label>
+                                <label for="sort_by" class="form-label">ترتیب بر اساس: </label>ساخت جدول کتگوری و ادیت فرصت شغلی
                                 <select id="sort_by" name="sort_by" class="form-select text-capitalize">
                                     <option value="created_at" selected>تاریخ ثبت نام</option>
                                 </select>

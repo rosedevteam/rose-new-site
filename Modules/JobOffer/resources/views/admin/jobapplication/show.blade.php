@@ -31,7 +31,7 @@
                         <div class="row mx-2 my-2">توضیحات:
                             {{ $jobApplication->description }}
                         </div>
-                        <form action="{{ route("admin.joboffer.jobapplication.update", $jobApplication) }}"
+                        <form action="{{ route("admin.jobapplication.update", $jobApplication) }}"
                               method="POST">
                             <div class="row mt-4">
                                 @method("PATCH")
@@ -40,7 +40,7 @@
                                     <label for="status" class="form-label">وضعیت</label>
                                     <select class="form-select" id="status" name="status">
                                         <option
-                                            value="" {{ $jobApplication->status == "accepted" ? "selected" : "" }}>
+                                            value="accepted" {{ $jobApplication->status == "accepted" ? "selected" : "" }}>
                                             تایید شده
                                         </option>
                                         <option

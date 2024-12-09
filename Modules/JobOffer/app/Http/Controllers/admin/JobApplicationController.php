@@ -54,7 +54,7 @@ class JobApplicationController
         Gate::authorize('edit-job-applications');
         try {
             $data = request()->validate([
-                'status' => 'required',
+                'status' => 'required|string',
             ]);
             $jobApplication->update($data);
             activity()
@@ -63,7 +63,7 @@ class JobApplicationController
                 ->withProperties($data)
                 ->log('ویرایش رزومه');
             alert()->success('موفق', 'ویرایش رزومه با موفقیت انجام شد');
-            return redirect(route('admin.joboffer.jobapplication.show', $jobApplication));
+            return redirect(route('admin.jobapplication.show', $jobApplication));
         } catch (\Throwable $th) {
             alert()->error('خطا', $th->getMessage());
             return back();
