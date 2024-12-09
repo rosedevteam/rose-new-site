@@ -8,7 +8,6 @@ Route::controller(JobOfferController::class)->prefix('/job-offer')->group(functi
     Route::get('/create', 'create')->name('create');
     Route::post('/create', 'store')->name('store');
     Route::get('{jobOffer}', 'show')->name('show');
-    Route::get('{jobOffer}/edit', 'edit')->name('edit');
     Route::patch('{jobOffer}/edit', 'update')->name('update');
     Route::delete('{jobOffer}', 'destroy')->name('destroy');
 });

@@ -10,7 +10,6 @@
             <div class="alert alert-danger" style="padding-right: 80px">{{ $errors->first() }}</div>
         @endif
         <div class="container-xxl flex-grow-1 container-p-y">
-            <!-- Users List Table -->
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
@@ -100,7 +99,12 @@
                                     </td>
                                     <td><span class="fw-semibold">{{ $jobOffer->team }}</span></td>
                                     <td>{{ $jobOffer->categories()->first()->name }}</td>
-                                    <td>{{ $jobOffer->status }}</td>
+                                    <td>
+                                        @switch($jobOffer->status)
+                                            @case('active')فعال@break
+                                            @case('inactive')غیر فعال@break
+                                        @endswitch
+                                    </td>
                                     <td>{{ verta($jobOffer->created_at)->formatJalaliDateTime() }}</td>
                                     <td>
                                         <div class="d-inline-block text-nowrap">

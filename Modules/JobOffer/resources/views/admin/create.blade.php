@@ -37,8 +37,8 @@
                                 <div class="col-md-3">
                                     <label class="form-label" for="status">وضعیت</label>
                                     <select class="form-select" id="status" name="status">
-                                        <option value="inactive" selected>غیر فعال</option>
                                         <option value="active" selected>فعال</option>
+                                        <option value="inactive" >غیر فعال</option>
                                     </select>
                                 </div>
                             </div>
@@ -53,6 +53,7 @@
                                 <button type="reset" class="btn btn-label-secondary">انصراف</button>
                             </div>
                         </div>
+                    </div>
                 </form>
             </div>
         </div>

@@ -65,9 +65,6 @@
                                     style="width: 8%;">شماره
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">رزومه
-                                </th>
-                                <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 5%;">وضعیت
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
@@ -94,8 +91,12 @@
                                 </span>
                                     </td>
                                     <td><span class="fw-semibold">{{ $jobApplication->phone }}</span></td>
-                                    <td>{{ $jobApplication->resume }}</td>
-                                    <td>{{ $jobApplication->status }}</td>
+                                    <td>
+                                        @switch($jobApplication->status)
+                                    @case('accepted')تایید شده@break
+                                    @case('pending')در حال بررسی@break
+                                    @case('rejected')رد شده@break
+                                    @endswitch </td>
                                     <td>{{ verta($jobApplication->created_at)->formatJalaliDateTime() }}</td>
                                     <td>
                                         <div class="d-inline-block text-nowrap">

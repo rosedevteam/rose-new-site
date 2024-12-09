@@ -45,12 +45,14 @@ class JobOfferController extends Controller
                 'content' => 'bail|required',
                 'team' => 'bail|required|string',
                 'type' => 'bail|required|string',
+                'status' => 'bail|required|string',
             ]);
             $jobOffer = JobOffer::create([
                 'title' => $data['title'],
                 'content' => $data['content'],
                 'type' => $data['type'],
                 'author_id' => auth()->id(),
+                'status' => $data['status'],
             ]);
             $jobOffer->categories()->attach($data['team']);
             activity()
@@ -59,7 +61,7 @@ class JobOfferController extends Controller
                 ->withProperties($data)
                 ->log('ساخت فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت ساخته شد');
-            return redirect(route("joboffer::admin.show", $jobOffer));
+            return redirect(route("admin.joboffer.show", $jobOffer));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -70,7 +72,8 @@ class JobOfferController extends Controller
     {
         Gate::authorize('view-job-offers');
         try {
-            return view('joboffer::admin.show', compact('jobOffer'));
+            $categories = Category::where('name', 'team')->first()->children;
+            return view('joboffer::admin.show', compact('jobOffer', 'categories'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -129,14 +132,4 @@ class JobOfferController extends Controller
         }
     }
 
-    public function edit(JobOffer $jobOffer)
-    {
-        Gate::authorize('edit-job-offers');
-        try {
-            return view('joboffer::admin.edit', compact('jobOffer'));
-        } catch (\Throwable $th) {
-            alert()->error('خطا', $th->getMessage());
-            return back();
-        }
-    }
 }
