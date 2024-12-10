@@ -1,0 +1,151 @@
+/*--------------------------------------
+    Buttons Styles
+--------------------------------------*/
+button {
+  cursor: pointer;
+}
+
+.btn {
+  @include transition(.3s);
+  &:hover {
+    @include transition(.3s);
+  }
+  &:focus {
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+  }
+  //bootstrap buttons
+  &.btn-primary {
+    &:hover {
+      border: solid 1px $primary;
+      color: $primary;
+      background-color: transparent;
+    }
+  }
+  &.btn-secondary {
+    color: $white;
+    &:hover {
+      border: solid 1px $secondary;
+      color: #fff !important;
+      background-color: transparent;
+    }
+  }
+  &.btn-success {
+    color: $white;
+    &:hover {
+      border: solid 1px $success;
+      color: $success;
+      background-color: transparent;
+    }
+  }
+  &.btn-danger {
+    color: $white;
+    &:hover {
+      border: solid 1px $danger;
+      color: $danger;
+      background-color: transparent;
+    }
+  }
+  &.btn-warning {
+    color: $black;
+    &:hover {
+      border: solid 1px $warning;
+      color: $warning;
+      background-color: transparent;
+    }
+  }
+  &.btn-info{
+    color: $white;
+    &:hover {
+      border: solid 1px $info;
+      color: $info;
+      background-color: transparent;
+    }
+  }
+  &.btn-dark{
+    color: $white;
+    &:hover {
+      border: solid 1px $dark;
+      color: $dark;
+      background-color: transparent;
+    }
+  }
+  &.btn-link {
+    text-decoration: none;
+    color: $black;
+    position: relative;
+    padding: .5rem 0;
+    font-weight: 500;
+    &:after {
+      bottom: 0;
+      content: "";
+      display: block;
+      height: 2px;
+      left: 50%;
+      position: absolute;
+      background: var(--theme-default);
+      transition: width 0.3s ease 0s, left 0.3s ease 0s;
+      width: 0;
+    }
+    &:hover {
+      color: var(--theme-default);
+    }
+    &:hover:after {
+      width: 100%;
+      left: 0;
+    }
+  }
+  //bootstrap buttons end
+
+  //button with icon
+  i {
+    vertical-align: middle;
+  }
+  //button with icon end
+
+  //default buttons
+  &.btn-default {
+    color: $white;
+    background-color: var(--theme-default);
+    border-radius: 5px;
+    transition: .3s all ease;
+    padding: .5rem 2rem ;
+
+    &:hover {
+      transition: .3s all ease;
+      color: #FFFFFF !important;
+      background-image: linear-gradient(244deg, #068894 0%, #0FABB5 100%);
+      box-shadow: 0 0 20px 4px #0fabb540;
+      -webkit-animation: Animation 5s ease infinite;
+      -moz-animation: Animation 5s ease infinite;
+      animation: Animation 5s ease infinite;
+    }
+  }
+  //default buttons end
+
+  //default outline buttons
+  &.btn-default-outline {
+    color: var(--theme-default);
+    border: 1px solid var(--theme-default);
+    background-color: transparent;
+    &:hover {
+      border: solid 1px var(--theme-default);
+      color: $white !important;
+      background-color: var(--theme-default);
+    }
+  }
+  //default outline buttons end
+}
+
+.btn-wrapper {
+  > .btn {
+    margin: 1rem 0;
+  }
+}
+
+
+@keyframes Animation {
+  0%{background-image:10% 0%}
+  50%{background-image:91% 100%}
+  100%{background-image:10% 0%}
+}

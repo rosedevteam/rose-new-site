@@ -1,0 +1,58 @@
+/*--------------------------------------
+Footer Styles
+----------------------------------------*/
+
+footer {
+  .footer-top {
+    padding: 2rem 1.5rem;
+
+    .title {
+      font-size: 25px;
+      font-weight: 600;
+    }
+
+    .email-sub {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      padding: 1rem;
+      border-radius: .5rem;
+
+      .email-submit {
+        border: none;
+        color: #737887 !important;
+        background: #f0f2f7;
+        padding: 16px;
+        border-radius: 5px;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .footer-main {
+    margin: 3rem 0;
+
+    .footer-inner {
+      padding: 1rem 0;
+
+      ul {
+        list-style: disc;
+        padding: 0 1rem;
+        margin-top: 1rem;
+        li {
+          color: #8E8E8E;
+          font-weight: 500;
+          padding: .5rem 0;
+          a {
+            color: #8E8E8E;
+            font-weight: 500;
+          }
+
+          &::marker {
+            color: $theme-primary;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,155 @@
+/*-------------------------------
+Shop Page Styles
+--------------------------------*/
+.shop {
+  .canvas-overlay {
+    position: fixed;
+    left: 0;
+    z-index: 9;
+    opacity: 0;
+    visibility: hidden;
+    @include minMedium {
+      display: none;
+    }
+  }
+}
+
+.shop-nav {
+  @include flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  border-bottom: solid 1px #ddd;
+  margin-bottom: 1rem;
+  position: relative;
+
+  //select box styles
+  .shop-nav-select {
+    font-size: .9rem;
+    width: auto;
+    height: 100%;
+    margin: 0 .54rem;
+    max-width: 7rem;
+    cursor: pointer;
+    @include minSmall {
+      max-width: 100%;
+    }
+  }
+
+  .shop-nav-left {
+    .shop-filter-btn {
+      @include transition(.3s);
+      cursor: pointer;
+
+      &:hover {
+        color: $link-hover-color;
+      }
+    }
+  }
+
+  .shop-nav-right {
+    @include flex;
+    flex-wrap: wrap;
+
+    .shop-nav-item {
+      .product-count {
+        @include flex;
+        align-items: center;
+      }
+
+      .shop-sort {
+        @include flex;
+        align-items: center;
+      }
+
+      //label of select box
+      label {
+        display: none;
+        font-weight: 600;
+        font-size: .9rem;
+        @include minSmall {
+          display: block;
+        }
+      }
+    }
+
+  }
+
+
+}
+
+.shop-nav-filters {
+  display: none;
+  position: static;
+  width: 100%;
+  margin-top: 1rem;
+  padding-top: 2rem;
+  border-top: solid 1px #ddd;
+
+}
+
+.shop-filter-collection {
+  @include flex;
+  align-items: center;
+  padding: 1rem 0;
+  cursor: pointer;
+
+  .shop-filter-checkbox {
+    margin-right: 1rem;
+    cursor: pointer;
+    margin-top: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    @include transition(.3s);
+  }
+
+  .shop-filter-label {
+    font-weight: normal;
+    cursor: pointer;
+  }
+}
+
+.shop-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 300px;
+  padding: 1rem;
+  z-index: 999;
+  background: white;
+  right: 0;
+  display: none;
+  overflow-y: auto;
+  @include minMedium {
+    position: sticky;
+    width: auto;
+    display: block !important;
+  }
+
+  .shop-sidebar-header {
+    @include flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: solid 1px #ddd;
+
+    label {
+      font-weight: 600;
+    }
+  }
+
+  .canvas-overlay {
+    left: 0;
+  }
+}
+
+.shop-pagination {
+  @include flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  border-top: solid 1px #ddd;
+  padding-top: 1rem;
+}

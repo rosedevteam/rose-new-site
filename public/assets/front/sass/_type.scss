@@ -1,0 +1,103 @@
+/*----------------------------------
+   Typography
+------------------------------------*/
+@font-face {
+  font-family: "Yekan Bakh";
+  src: url("./../fonts/yekanbakh/woff/YekanBakhFaNum-Thin.woff") format('woff'),
+  url("./../fonts/yekanbakh/woff2/YekanBakhFaNum-Thin.woff2") format('woff2');
+  font-weight: 200;
+}
+@font-face {
+  font-family: "Yekan Bakh";
+  src: url("./../fonts/yekanbakh/woff/YekanBakhFaNum-Light.woff") format('woff'),
+  url("./../fonts/yekanbakh/woff2/YekanBakhFaNum-Light.woff2") format('woff2');
+  font-weight: 300;
+}
+@font-face {
+  font-family: "Yekan Bakh";
+  src: url("./../fonts/yekanbakh/woff/YekanBakhFaNum-Regular.woff") format('woff'),
+  url("./../fonts/yekanbakh/woff2/YekanBakhFaNum-Regular.woff2") format('woff2');
+  font-weight: normal;
+}
+@font-face {
+  font-family: "Yekan Bakh";
+  src: url("./../fonts/yekanbakh/woff/YekanBakhFaNum-SemiBold.woff") format('woff'),
+  url("./../fonts/yekanbakh/woff2/YekanBakhFaNum-SemiBold.woff2") format('woff2');
+  font-weight: 500;
+}
+@font-face {
+  font-family: "Yekan Bakh";
+  src: url("./../fonts/yekanbakh/woff/YekanBakhFaNum-Bold.woff") format('woff'),
+  url("./../fonts/yekanbakh/woff2/YekanBakhFaNum-Bold.woff2") format('woff2');
+  font-weight: 600;
+}
+@font-face {
+  font-family: "Yekan Bakh";
+  src: url("./../fonts/yekanbakh/woff/YekanBakhFaNum-ExtraBold.woff") format('woff'),
+  url("./../fonts/yekanbakh/woff2/YekanBakhFaNum-ExtraBold.woff2") format('woff2');
+  font-weight: 700;
+}
+@font-face {
+  font-family: "Yekan Bakh";
+  src: url("./../fonts/yekanbakh/woff/YekanBakhFaNum-Black.woff") format('woff'),
+  url("./../fonts/yekanbakh/woff2/YekanBakhFaNum-Black.woff2") format('woff2');
+  font-weight: 800;
+}
+@font-face {
+  font-family: "Yekan Bakh";
+  src: url("./../fonts/yekanbakh/woff/YekanBakhFaNum-ExtraBlack.woff") format('woff'),
+  url("./../fonts/yekanbakh/woff2/YekanBakhFaNum-ExtraBlack.woff2") format('woff2');
+  font-weight: 900;
+}
+
+
+html,body {
+  font-family: $default-font !important;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.3rem;
+}
+
+h3  {
+  font-size: 1.2rem;
+}
+
+h4  {
+  font-size: 1rem;
+}
+
+h5  {
+  font-size: .8rem;
+}
+
+h6  {
+  font-size: .7rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.2 !important;
+  color: $title-color;
+  font-weight: 700 !important;
+}
+
+.rose-default-p {
+  color: $paragraph-color;
+  font-weight: 400;
+  line-height: 37px;
+  text-align: justify;
+}
+
+p {
+  line-height: 35px;
+  color: $paragraph-color;
+}

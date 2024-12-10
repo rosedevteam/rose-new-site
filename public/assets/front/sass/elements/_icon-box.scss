@@ -1,0 +1,240 @@
+/*---------------------------------------
+Icon Boxes
+----------------------------------------*/
+
+.icon-box-section {
+  .owl-stage-outer {
+    padding: 2rem;
+    margin: -2rem;
+  }
+}
+
+.icon-box {
+
+  //common styles
+  .icon {
+    @include flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    @include transition(.3s);
+  }
+
+  .icon-box-title {
+    margin-bottom: 0;
+
+    a {
+      color: inherit;
+
+      &:hover {
+        color: $link-hover-color;
+      }
+    }
+  }
+
+  .icon-box-subtitle {
+    word-break: break-word;
+  }
+
+  .icon-box-desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  &.icon-center {
+    @include flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    .icon {
+      margin-bottom: .54rem;
+    }
+
+    &:hover {
+      .icon {
+        cursor: pointer;
+      }
+    }
+  }
+
+  &.icon-left {
+    @include flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    @include minSmall {
+      flex-direction: row;
+      text-align: left;
+    }
+
+    .icon-box-details {
+      @include minSmall {
+        margin-left: 1rem;
+      }
+
+      .icon-box-subtitle {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &.icon-boxed {
+    .icon {
+      border: solid 1px #ddd;
+      width: 4rem;
+      height: 4rem;
+    }
+  }
+
+  &.icon-colored {
+    .icon {
+      background-color: var(--theme-default);
+      color: $white;
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+    }
+  }
+
+  &.full-boxed {
+    border: solid 1px #ddd;
+    padding: 2.5rem .6rem 1.125rem;
+    @include transition(.3s);
+
+    &:hover {
+      box-shadow: 0 2px 35px rgb(0 0 0 / 10%);
+    }
+  }
+
+  &.bg-white {
+    background: $white;
+    box-shadow: #e7e7e7 0 0 14px 0;
+  }
+}
+
+
+.rose-icon-box-wrapper {
+  background: #fff;
+  padding: 56px 24px 40px 24px;
+  border-radius: 10px;
+  border: solid 1px #E7EAF2;
+  cursor: pointer;
+  transition: all .3s ease-out;
+  position: relative;
+}
+
+.rose-icon-box-wrapper:hover .description {
+  color: #0FABB5 !important;
+}
+
+.rose-icon-box-wrapper:hover {
+  border: solid 1px #0FABB5;
+  box-shadow: #0fabb51c 0px 4px 20px 0px;
+  background: #fff;
+}
+
+.rose-icon-box-wrapper:hover .description {
+  color: #0FABB5 !important;
+}
+
+.rose-icon-box-wrapper .description {
+  color: #737887;
+}
+
+.rose-icon-box-wrapper .description p {
+  text-align: center;
+}
+
+.rose-icon-box-wrapper .icon {
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background: #0FABB5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  border-radius: 10rem;
+  border: solid #ffffffe0 6px;
+}
+
+.rose-icon-box-wrapper .left {
+  position: absolute;
+  left: -2rem;
+}
+
+.rose-icon-box-wrapper .right {
+  position: absolute;
+  right: -2rem
+}
+
+.icon-box-about {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  img {
+
+  }
+
+  .content {
+    background-color: #fff;
+    border: solid 1px #E7EAF2;
+
+    p {
+      text-align: center;
+    }
+  }
+}
+
+.icon-box-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  border: solid 1px #E7EAF2;
+
+  img {
+
+  }
+
+  .content {
+
+    p {
+      text-align: center;
+    }
+  }
+}
+
+
+.icon-box-inline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  margin: .5rem 0;
+  .content {
+    .title {
+      color: #2a2a2a !important;
+    }
+
+    .desc {
+      color: #40403D;
+      font-weight: 300;
+      font-size: 15px;
+    }
+  }
+
+}

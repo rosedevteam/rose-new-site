@@ -1,0 +1,57 @@
+/*-----------------------------------
+Accordions Styles
+------------------------------------*/
+.accordion {
+  .accordion-item {
+    border: none;
+    margin-top: 1rem;
+
+
+  }
+
+  &.accordion-icon {
+    .accordion-item {
+      padding: .5rem 0 !important;
+      .accordion-header {
+        background: #fff !important;
+
+        &:focus {
+          background: #fff;
+        }
+        .accordion-button {
+
+          &:focus {
+            border: none !important;
+          }
+          i {
+            margin-right: .54rem;
+            font-size: 1.5rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #fff !important;
+  box-shadow: none !important;
+}
+
+.accordion-body {
+  line-height: 1.8 !important;
+  color: #737887 !important;
+}
+
+.accordion-button {
+  justify-content: space-between;
+}
+
+
+.accordion-item {
+  padding: .5rem 0 !important;
+}
+
+.accordion-button::after {
+  margin-left: unset !important;
+}

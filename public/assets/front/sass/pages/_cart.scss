@@ -1,0 +1,102 @@
+/*--------------------------------
+  Cart CSS Codes
+----------------------------------*/
+
+.cart-product-image {
+  img {
+    width: 100px;
+  }
+}
+
+.course-holder {
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 10px;
+  border: solid #E7EAF2 1px;
+  margin-bottom: 1rem;
+}
+
+.course-holder .course-thumb img {
+  width: 100%;
+  border-radius: 10px 10px 0 0;
+}
+
+
+.course-holder .course-holder-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.course-holder .course-title-th {
+  padding: 16px 0;
+  text-align: center;
+  color: #737887;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+  border-bottom: #E7EAF2 solid 1px;
+}
+
+.course-holder .desc {
+  color: #2A2A2A;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  padding: 10px 0;
+  margin: 1rem ;
+  align-items: center;
+
+}
+
+.remove-btn {
+  color: #E06983 !important;
+}
+
+.course-holder .desc a{
+  text-decoration: none;
+  color: #2A2A2A;
+  font-weight: 500;
+  max-width: 200px !important;
+  overflow: hidden;
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+  text-overflow: ellipsis;
+}
+
+.course-holder .remove-from-cart {
+  color: #E06983 !important;
+}
+
+
+.course-holder .spot-licence {
+  flex: .5;
+}
+
+.spotplayer-platform img {
+  width: 70%;
+  border-radius: 5px;
+}
+
+.spotplayer-platform .card-subtitle {
+  color: #2a2a2a;
+  font-weight: 700;
+  margin-top: .5rem;
+}
+
+@media screen and (min-width: 992px) {
+  .course-holder .course-thumb img {
+    width: 227px;
+    border-radius: 0 10px 10px 0;
+  }
+}
+
+
+.discount-code-wrapper {
+  display: flex;
+  border: solid 1px #e7e7e7;
+  border-radius: 10px;
+  padding: 10px;
+}

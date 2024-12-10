@@ -1,0 +1,77 @@
+
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+//import required bootstrap
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import "../../node_modules/bootstrap/scss/functions";
+
+// 2. Include any default variable overrides here
+
+// 3. Include remainder of required Bootstrap stylesheets
+@import "../../node_modules/bootstrap/scss/variables";
+
+// 4. Include any default map overrides here
+
+// 5. Include remainder of required parts
+@import "../../node_modules/bootstrap/scss/maps";
+@import "../../node_modules/bootstrap/scss/mixins";
+@import "../../node_modules/bootstrap/scss/root";
+
+// 6. Optionally include any other parts as needed
+@import "../../node_modules/bootstrap/scss/utilities";
+@import "../../node_modules/bootstrap/scss/reboot";
+@import "../../node_modules/bootstrap/scss/type";
+@import "../../node_modules/bootstrap/scss/images";
+@import "../../node_modules/bootstrap/scss/containers";
+@import "../../node_modules/bootstrap/scss/grid";
+@import "../../node_modules/bootstrap/scss/helpers";
+
+// 7. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
+@import "../../node_modules/bootstrap/scss/utilities/api";
+
+//Helpers
+
+@import "helpers/variables";
+@import "helpers/root";
+@import "helpers/mixins";
+@import "helpers/global";
+@import "helpers/normalize";
+@import "type";
+
+//components
+@import "components/breadcrumb";
+@import "components/form";
+@import "components/alert";
+
+
+//Elements
+@import "elements/header";
+@import "elements/page-header";
+@import "elements/products";
+@import "elements/title";
+@import "elements/buttons";
+@import "elements/blog";
+@import "elements/owl-carousel";
+@import "elements/tab";
+@import "elements/testimonials";
+@import "elements/icon-box";
+@import "elements/cart";
+@import "elements/wishlist";
+@import "elements/instagram";
+@import "elements/accordions";
+@import "elements/widgets";
+@import "elements/sticky-nav";
+@import "elements/footer";
+@import "elements/slider";
+@import "elements/banner";
+
+//Pages
+@import "pages/shop";
+@import "pages/single-product";
+@import "pages/cart";
+@import "pages/register";
+@import "pages/checkout";
+@import "pages/hammasir";
+
+

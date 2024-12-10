@@ -1,0 +1,36 @@
+/*--------------------------------
+BreadCrumbs
+----------------------------------*/
+//breadcrumb Style 1
+.tm-breadcrumb-1 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1rem;
+  .tm-breadcrumb-item {
+    @include flex;
+    justify-content: center;
+    align-items: center;
+    color: $breadcrumb-color;
+    > a {
+      text-decoration: none;
+      color: $breadcrumb-color;
+      &:hover {
+        color: var(--theme-default);
+      }
+    }
+
+    &:not(:last-child) {
+      &:after {
+        font-family: 'bootstrap-icons';
+        content: '\F284';
+        font-size: .7rem;
+        margin: 0 .2rem;
+      }
+    }
+
+    &.active {
+      font-weight: 500;
+    }
+  }
+}

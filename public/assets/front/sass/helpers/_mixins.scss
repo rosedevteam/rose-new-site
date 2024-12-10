@@ -1,0 +1,69 @@
+//media query
+@mixin minMobile {
+  @media (min-width:576px) {
+    @content;
+  }
+}
+@mixin maxMobile {
+  @media (max-width:767px) {
+    @content;
+  }
+}
+@mixin maxSmall {
+  @media (max-width:991px) {
+    @content;
+  }
+}
+@mixin minSmall {
+  @media (min-width:768px) {
+    @content;
+  }
+}
+
+@mixin minMedium {
+  @media (min-width:992px) {
+    @content;
+  }
+}
+@mixin minMediumLarge {
+  @media (min-width:1024px) {
+    @content;
+  }
+}
+@mixin minLarge {
+  @media (min-width:1200px) {
+    @content;
+  }
+}
+
+//flex prefixes
+
+@mixin flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+//auto prefixer
+
+@mixin prefixer($property, $value, $prefixes: ()) {
+  @each $prefix in $prefixes {
+    #{'-' + $prefix + '-' + $property}: $value !important;
+  }
+  #{$property}: $value !important;
+}
+
+//transitions
+@mixin transition($duration) {
+  -webkit-transition: all $duration ease;
+  transition: all $duration ease;
+}
+
+//transform
+@mixin transform($scale) {
+  -webkit-transform: scale($scale);
+  -moz-transform: scale($scale);
+  -ms-transform: scale($scale);
+  -o-transform: scale($scale);
+  transform: scale($scale);
+}

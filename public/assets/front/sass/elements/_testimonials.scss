@@ -1,0 +1,138 @@
+/*----------------------------------------
+Testimonials Style
+------------------------------------------*/
+
+
+.testimonials-carousel .testimonial-item .testimonial-inner .testimonial-author{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.testimonials-carousel .testimonial-item .testimonial-inner .testimonial-avatar{
+  background: #fff;
+  border-radius: 50%;
+  width: 110px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 15px;
+}
+
+.testimonials-carousel .testimonial-item .testimonial-inner .testimonial-avatar img{
+  width: 110px;
+  padding: .5rem;
+  border-radius: 50%;
+}
+
+.testimonials-carousel .testimonial-item .testimonial-inner .testimonial-author-main{
+  text-align: center;
+}
+
+.testimonials-carousel .testimonial-item .testimonial-inner .testimonial-author-main .testimonial-author-name{
+  margin-top: 32px;
+  color: #2A2A2A;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.testimonials-carousel .testimonial-item .testimonial-inner .testimonial-author-main .testimonial-author-role {
+  color: #0FABB5;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.testimonials-carousel .testimonial-item .testimonial-inner .testimonial-content blockquote{
+  text-align: center;
+  color: #737887;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+
+.testimonials-wrapper .comments-background {
+  position: absolute;
+  top: 10%;
+  width: 100%;
+}
+
+.testimonials-carousel .owl-item.active .testimonial-content-box{
+  display: none;
+}
+
+.testimonials-carousel .owl-item.active.center .testimonial-content-box{
+  display: block;
+}
+
+.testimonials-wrapper .owl-next svg{
+  position: absolute;
+  left: 25rem !important;
+  top: 4rem !important;
+}
+
+
+
+.testimonials-wrapper .owl-prev svg{
+  position: absolute;
+  right: 25rem !important;
+  top: 4rem !important;
+}
+
+.testimonials-carousel {
+
+  .owl-dots {
+    > .owl-dot {
+      span {
+        background-color: transparent;
+        border: 1px solid var(--theme-default);
+      }
+
+      &:hover span {
+        background-color: var(--theme-default);
+      }
+
+      &.active {
+        span {
+          background-color: var(--theme-default);
+        }
+      }
+    }
+  }
+
+  .owl-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    .owl-prev {
+      > span {
+        display: none;
+      }
+
+      &:after {
+        right: 23rem;
+        position: absolute;
+        content: url("../images/owl-right.svg");
+      }
+    }
+
+    .owl-next {
+      > span {
+        display: none;
+      }
+      &:after {
+        position: absolute;
+        left: 23rem;
+        content: url("../images/owl-left.svg");
+
+      }
+    }
+
+    .owl-prev, .owl-next {
+      @include transition(.3s);
+
+      &:hover {
+        background-color: transparent;
+        color: var(--theme-default);
+      }
+    }
+  }
+
+}

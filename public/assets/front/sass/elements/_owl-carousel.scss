@@ -1,0 +1,76 @@
+/*-------------------------------
+  Customize Owl Carousel
+---------------------------------*/
+//owl dots
+.owl-carousel {
+
+  .owl-dots {
+    > .owl-dot {
+      span {
+        background-color: transparent;
+        border: 1px solid var(--theme-default);
+      }
+
+      &:hover span {
+        background-color: var(--theme-default);
+      }
+
+      &.active {
+        span {
+          background-color: var(--theme-default);
+        }
+      }
+    }
+  }
+
+  .owl-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    .owl-prev {
+      > span {
+        display: none;
+      }
+
+        &:after {
+          right: -3rem;
+          position: absolute;
+          content: url("../images/owl-right.svg");
+      }
+    }
+
+    .owl-next {
+      > span {
+        display: none;
+      }
+        &:after {
+          position: absolute;
+          left: -3rem;
+          content: url("../images/owl-left.svg");
+
+      }
+    }
+
+    .owl-prev, .owl-next {
+      @include transition(.3s);
+
+      &:hover {
+        background-color: transparent;
+        color: var(--theme-default);
+      }
+    }
+  }
+
+}
+
+.owl-thumb {
+  margin-top: .6rem;
+  .item {
+    cursor: pointer;
+  }
+  .synced {
+    border: solid 2px var(--theme-default);
+  }
+}
+
+

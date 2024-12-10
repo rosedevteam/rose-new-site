@@ -1,0 +1,65 @@
+
+/*----------------------------------------
+Product Banners
+------------------------------------------*/
+
+.banner {
+  position: relative;
+  overflow: hidden;
+
+  .banner-img {
+    img {
+      @include transition(1s);
+      width: 100%;
+    }
+
+    margin-bottom: 0;
+  }
+
+  .banner-pre-title {
+    color: #5f5f5f;
+    max-width: 100%;
+    font-size: 1.1rem;
+    margin-bottom: 0;
+  }
+
+  &.banner-default {
+    .banner-details {
+
+      .banner-title {
+        color: #fff;
+        font-size: 1.3rem;
+        @include minMedium {
+          font-size: 1.6rem;
+        }
+      }
+    }
+  }
+
+  &.banner-with-btn {
+    .banner-details {
+      position: absolute;
+      left: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  &.banner-btn-hover {
+    .banner-details {
+      .btn-banner {
+        opacity: 0;
+        visibility: hidden;
+        @include transition(.3s);
+      }
+    }
+
+    &:hover {
+      .btn-banner {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(-10%);
+      }
+    }
+  }
+}

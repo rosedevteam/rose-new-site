@@ -1,0 +1,33 @@
+/*-----------------------------------
+  Tabs
+-------------------------------------*/
+.nav-tabs {
+  .nav-link {
+    border: none !important;
+  }
+}
+
+.tab {
+  margin-bottom: 1rem;
+
+  &.tab-solid {
+    .nav {
+      &.nav-tabs {
+        .nav-item {
+          font-size: 1.2rem;
+          .nav-link {
+            font-weight: 500;
+            &.active {
+              border-bottom: solid 2px var(--theme-default) !important;
+            }
+          }
+        }
+        &:first-child {
+          padding-left: 0;
+        }
+      }
+    }
+  }
+}
+
+

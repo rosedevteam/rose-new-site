@@ -1,0 +1,83 @@
+/*-------------------------------------------
+Home Slider style - 1
+---------------------------------------------*/
+.slider-1 {
+  position: relative;
+  height: 320px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  @include minSmall {
+    height: 510px;
+  }
+  .slider-info {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    text-align: left;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    &.right {
+      left: unset;
+      right: 10%;
+    }
+    .pre-title {
+      font-size: 1rem;
+      font-weight: 100;
+      @include minSmall {
+        font-size: 3rem;
+      }
+      @include minMedium {
+        font-size: 4rem;
+      }
+      &.font-small {
+        @include minSmall {
+          font-size: 2rem;
+        }
+        @include minMedium {
+          font-size: 2rem;
+        }
+      }
+    }
+    .title {
+      font-size: 1rem;
+      font-weight: 900;
+      @include minSmall {
+        font-size: 3rem;
+      }
+      @include minMedium {
+        font-size: 4rem;
+      }
+      &.font-small {
+        @include minSmall {
+          font-size: 2rem;
+        }
+        @include minMedium {
+          font-size: 2rem;
+        }
+      }
+    }
+  }
+}
+
+.slider-box {
+  display: none;
+  @include minMedium {
+    display: block;
+    position: absolute;
+    width: 90%;
+    padding: 1rem;
+    border-radius: 1rem;
+    left: 50%;
+    transform: translate(-50%);
+    background: white;
+    bottom: -10%;
+    z-index: 9;
+    box-shadow: 0 0 13px rgba(216, 216, 216, 0.25);
+  }
+  @include minLarge {
+    width: 70%;
+  }
+}

@@ -1,0 +1,41 @@
+/*----------------------------------
+CSS Reset
+------------------------------------*/
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul , dl {
+  list-style: none;
+  margin-bottom: 0 !important;
+  padding-left: 0 !important;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+  @include transition(.3s);
+}
+
+img {
+  max-width: 100%;
+}
+
+p {
+  margin-bottom: 0 !important;
+}

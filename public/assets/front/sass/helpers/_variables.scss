@@ -1,0 +1,172 @@
+//basic colors
+$white: #ffff;
+$black: #000;
+$light-gray: #979797;
+
+//bg color
+$default-bg-color: #F7F9FE;
+
+//Theme Colors
+$theme-red: #E82D2D;
+$theme-pink: #FF9393;
+$theme-purple: #55033F;
+$theme-green: #82A667;
+$theme-green-2: #3A6351;
+$theme-green-3: #00AE70;
+$theme-brown: #865439;
+$theme-blue: #1F59AF;
+$theme-blue-2: #288ED9;
+$theme-orange: #FFA714;
+$theme-purple-2: #867AE9;
+$theme-gold: #ECB65C;
+$theme-primary: #0FABB5;
+$theme-secondary: #F8B806;
+
+// Detail Colors
+$title-color: #333;
+$subtitle-color: #666;
+$paragraph-color: #737887;
+$page-header-color: #eee;
+$breadcrumb-color: #666;
+
+//header
+$header-search-border: #ebebeb;
+$header-search-btn: #c0c0c0;
+$header-search-placeholder-color: #c0c0c0;
+
+
+//footer colors
+$footer-light: #f9f9f9;
+$footer-dark: #222;
+
+
+//Customize Bootstrap Variables
+
+//Container width
+$container-max-widths: (
+        sm: 540px,
+        md: 720px,
+        lg: 960px,
+        xl: 1140px,
+        xxl: 1320px
+);
+
+//Font family
+$default-font: 'Yekan Bakh', sans-serif;
+$font-family-sans-serif: 'Yekan Bakh', sans-serif !important;
+$font-family-monospace: 'Yekan Bakh', sans-serif !important;
+$input-btn-font-family: 'Yekan Bakh', sans-serif !important;
+
+
+// $font-size-base affects the font size of the body text
+$font-size-base: 1rem; // Assumes the browser default, typically `16px`
+$h1-font-size: $font-size-base * 1.8;
+$h2-font-size: $font-size-base * 1.6;
+$h3-font-size: $font-size-base * 1.4;
+$h4-font-size: $font-size-base * 1;
+$h5-font-size: .8;
+$h6-font-size: .7;
+// scss-docs-end font-variables
+
+
+//bootstrap inputs variables
+$input-focus-box-shadow: none;
+$input-border-radius: 0;
+$input-focus-border-color: var(--theme-default);
+
+
+//bootstrap select box variables
+$form-select-border-radius: 0;
+$form-select-focus-box-shadow: 0;
+$form-select-focus-border-color: var(--theme-default);
+
+
+//bootstrap checkbox variables
+$form-check-input-checked-bg-color: $black;
+$form-check-input-checked-border-color: none;
+$form-check-input-border-radius: 0;
+$form-check-input-focus-border: 0;
+$form-check-input-focus-box-shadow: 0;
+
+//bootstrap form range thumb variables
+$form-range-thumb-focus-box-shadow: 0;
+$form-range-thumb-bg: $black;
+$form-range-thumb-active-bg: tint-color($black, 70%);
+
+
+//bootstrap pagination variables
+$pagination-focus-box-shadow: 0;
+$pagination-focus-color: var(--theme-default);
+$pagination-hover-color: var(--theme-default);
+$pagination-margin-start: .3rem;
+$pagination-border-radius: 0;
+$pagination-color: $black;
+$pagination-active-color: $white;
+$pagination-active-bg: var(--theme-default);
+$pagination-active-border-color: none;
+
+
+//accordions bootstrap variables
+$accordion-button-active-bg: #f9f9f9;
+$accordion-button-active-color: var(--theme-default);
+$accordion-button-focus-border-color: none;
+$accordion-button-focus-box-shadow: none;
+$accordion-icon-color: $black;
+$accordion-icon-active-color: $black;
+$accordion-button-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$black}'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>");
+$accordion-button-active-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{var(--theme-default)}'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>");
+$accordion-border-radius: none;
+
+
+//link and nav-link variables
+$link-color: inherit;
+$link-hover-color: var(--theme-default);
+$link-decoration: none;
+$nav-link-color: $light-gray;
+$nav-link-hover-color: $black;
+$nav-tabs-link-active-color: var(--theme-default);
+
+
+//customize bootstrap colors
+$primary: $theme-primary;
+$secondary: #5c636a;
+$success: #157347;
+$info: #31d2f2;
+$warning: #ffca2c;
+$danger: #bb2d3b;
+$light: $gray-100;
+$dark: #333;
+$theme-colors: (
+        "primary": $primary,
+        "secondary": $secondary,
+        "success": $success,
+        "info": $info,
+        "warning": $warning,
+        "danger": $danger,
+        "light": $light,
+        "dark": $dark
+);
+
+
+//media query
+$minMobile: "(min-width:576px)";
+$maxMobile: "(max-width:767px)";
+$maxSmall: "(max-width:991px)";
+$minSmall: "(min-width:768px)";
+$minMedium: "(min-width:992px)";
+$minLarge: "(min-width:1200px)";
+
+//add to cart alert
+$add-to-cart-alert-bg: var(--theme-default);
+$add-to-cart-text-color: $white;
+
+//navbar variables
+$nav-active-color: var(--theme-default);
+$nav-submenu-background-color: $white;
+$nav-mainmenu-font-weight: 600;
+$nav-submenu-font-weight: normal;
+$nav-submenu-box-shadow: 0 0 10px 1px rgb(0 0 0 / 10%);
+$nav-submenu-font-color: $paragraph-color;
+$nav-mobile-background-color: $white;
+$nav-mobile-box-shadow: 0 0 10px 1px rgb(0 0 0 / 10%);
+$header-brand-logo-size: 150px;

@@ -1,0 +1,89 @@
+/*--------------------------------
+  SideBar wishlist CSS Codes
+----------------------------------*/
+.side-wishlist {
+  display: none;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  background-color: $white;
+  width: 300px;
+  box-shadow: 0 2px 35px rgb(0 0 0 / 10%);
+  @include minSmall {
+    width: 320px;
+  }
+
+  .side-wishlist-header {
+    @include flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: solid 1px #ddd;
+
+    .wishlist-icon-box {
+      @include flex;
+      align-items: center;
+
+      .icon {
+        font-size: 3rem;
+        color: var(--theme-default);
+      }
+
+      .details {
+        margin-left: 1rem;
+
+        .side-wishlist-title {
+          margin-bottom: 0;
+        }
+
+        .side-wishlist-items-count {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .close-wishlist {
+      cursor: pointer;
+    }
+  }
+
+  .side-wishlist-content {
+    padding: 1rem;
+    overflow-y: auto !important;
+    flex: 1 1 auto;
+    min-height: 1px;
+    .delete-item {
+      a {
+          color: #ddd;
+        &:hover {
+          color: $link-hover-color;
+        }
+      }
+    }
+  }
+
+  .side-wishlist-footer {
+    padding: 1rem;
+    @include transition(.3s);
+    .side-wishlist-actions {
+      @include flex;
+      flex-direction: column;
+
+      a {
+        &:last-child {
+          margin-top: .54rem;
+        }
+      }
+    }
+  }
+
+  .canvas-overlay {
+    opacity: 0;
+    right: 100%;
+    left: auto;
+  }
+}
+
