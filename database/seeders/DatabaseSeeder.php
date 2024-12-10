@@ -54,7 +54,15 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'create-products']);
         Permission::create(['name' => 'delete-products']);
         //
-
+        Permission::create(['name' => 'view-job-offers']);
+        Permission::create(['name' => 'edit-job-offers']);
+        Permission::create(['name' => 'create-job-offers']);
+        Permission::create(['name' => 'delete-job-offers']);
+        //
+        Permission::create(['name' => 'view-job-applications']);
+        Permission::create(['name' => 'edit-job-applications']);
+        Permission::create(['name' => 'delete-job-applications']);
+        //
         Permission::create(['name' => 'view-orders']);
         Permission::create(['name' => 'edit-orders']);
         Permission::create(['name' => 'create-orders']);
@@ -103,7 +111,7 @@ class DatabaseSeeder extends Seeder
         $user1 = User::factory()->create([
             'first_name' => 'admin',
             'password' => bcrypt('admin'),
-            'phone' => '123456789',
+            'phone' => '09121111111',
             'last_name' => 'admin',
             'email' => null,
             'birthday' => null,
@@ -115,7 +123,7 @@ class DatabaseSeeder extends Seeder
         $user2 = User::factory()->create([
             'first_name' => 'writer',
             'password' => bcrypt('writer'),
-            'phone' => '111111111',
+            'phone' => '09122222222',
             'last_name' => 'writer',
             'email' => null,
             'birthday' => null,
@@ -127,7 +135,7 @@ class DatabaseSeeder extends Seeder
         $user3 = User::factory()->create([
             'first_name' => 'support',
             'password' => bcrypt('support'),
-            'phone' => '333333333',
+            'phone' => '09123333333',
             'last_name' => 'support',
             'email' => null,
             'birthday' => null,
@@ -139,7 +147,7 @@ class DatabaseSeeder extends Seeder
         $user4 = User::factory()->create([
             'first_name' => 'customer',
             'password' => bcrypt('customer'),
-            'phone' => '222222222',
+            'phone' => '09124444444',
             'last_name' => 'customer',
             'email' => null,
             'birthday' => null,
@@ -301,5 +309,16 @@ class DatabaseSeeder extends Seeder
             'status' => 'rejected',
             'content' => "asvdnawn;wgn;iweagbqiugi",
         ]);
+
+//        Category::factory()->create([
+//            'author_id' => 1,
+//            'name' => 'بازار های مالی',
+//            'group' => 'team'
+//        ]);
+//        Category::factory()->create([
+//            'author_id' => 1,
+//            'name' => 'مارگتینگ',
+//            'group' => 'team',
+//        ]);
     }
 }

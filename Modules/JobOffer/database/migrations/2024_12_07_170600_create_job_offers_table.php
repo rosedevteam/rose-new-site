@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('job_offers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('author_id')->constrained('users');
-            $table->string('name');
-            $table->string('group');
-            $table->morphs('categoryable');
+            $table->string('title');
+            $table->text('content');
+            $table->string('type');
+            $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->timestamps();
         });
-
     }
 
     /**
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('job_offers');
     }
 };

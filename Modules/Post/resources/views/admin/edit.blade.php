@@ -54,7 +54,7 @@
                             <div class="row g-3 mb-4">
                                 <div class="col-md-6">
                                     <label class="form-label" for="comment_status">کامنت</label>
-                                    <select class="form-control" name="comment_status" id="comment_status">
+                                    <select class="form-select" name="comment_status" id="comment_status">
                                         <option value="1" {{ $post->comment_status == 1 ? 'selected' : '' }}>باز
                                         </option>
                                         <option value="0"{{ $post->comment_status == 0 ? 'selected' : '' }}>بسته
@@ -63,7 +63,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label" for="status">وضعیت</label>
-                                    <select class="form-control" id="status" name="status">
+                                    <select class="form-select" id="status" name="status">
                                         <option value="public" {{ $post->status == 'public' ? 'selected' : '' }}>منتشر
                                             شده
                                         </option>

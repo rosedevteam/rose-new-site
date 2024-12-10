@@ -71,6 +71,22 @@
                 </a>
             </li>
         @endcan
+            @can('view-job-offers')
+                <li @class(["menu-item", 'active' => url()->current() == route('admin.joboffer.index')])>
+                    <a href="{{ route("admin.joboffer.index") }}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bxl-linkedin"></i>
+                        <div data-i18n="فرصت های شغلی">فرصت های شغلی</div>
+                    </a>
+                </li>
+            @endcan
+            @can('view-job-applications')
+                <li @class(["menu-item", 'active' => url()->current() == route('admin.joboffer.jobapplication.index')])>
+                    <a href="{{ route("admin.joboffer.jobapplication.index") }}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-receipt"></i>
+                        <div data-i18n="رزومه های ارسال شده">رزومه های ارسال شده</div>
+                    </a>
+                </li>
+            @endcan
         @can('view-logs')
             <li @class(["menu-item", 'active' => url()->current() == route('admin.log.index')])>
                 <a href="{{ route("admin.log.index") }}" class="menu-link">
