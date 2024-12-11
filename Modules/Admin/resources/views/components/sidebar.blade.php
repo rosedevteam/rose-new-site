@@ -25,14 +25,6 @@ $route = explode('.', Route::currentRouteName())[1];
                 </a>
             </li>
         @endcan
-        {{--            @can('restore-users')--}}
-        {{--                <li @class(["menu-item"])>--}}
-        {{--                    <a href="{{ route("admin.user.deleted") }}" class="menu-link">--}}
-        {{--                        <i class="menu-icon tf-icons bx bx-trash"></i>--}}
-        {{--                        <div data-i18n="کاربران حذف شده">کاربران حذف شده</div>--}}
-        {{--                    </a>--}}
-        {{--                </li>--}}
-        {{--            @endcan--}}
         @can('view-comments')
             <li @class(["menu-item", 'active' => $route == 'comment'])>
                 <a href="{{ route("admin.comment.index") }}" class="menu-link">
