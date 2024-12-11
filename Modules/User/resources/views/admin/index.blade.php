@@ -89,10 +89,10 @@
                             <thead>
                             <tr>
                                 <th aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width: 12%" aria-sort="ascending">نام
+                                    colspan="1" style="width: 10%" aria-sort="ascending">نام
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 12%;">نام
+                                    style="width: 10%;">نام
                                     خانوادگی
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
@@ -103,13 +103,13 @@
                                     style="width: 15%;">ایمیل
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 10%;">نقش
+                                    style="width: 7%;">نقش
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">تاریخ ثبت نام
+                                    style="width: 12%;">تاریخ ثبت نام
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">جزییات
+                                    style="width: 2%;">جزییات
                                 </th>
                             </tr>
                             </thead>

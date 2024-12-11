@@ -77,7 +77,7 @@
                                     style="width: 10%;">تاریخ ساخت
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width: 12%" aria-sort="ascending">نام
+                                    colspan="1" style="width: 15%" aria-sort="ascending">نام
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 12%;">نویسنده
@@ -86,7 +86,7 @@
                                     style="width: 10%;">وضعیت
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 15%;">کامنت
+                                    style="width: 5%;">کامنت
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 5%;">ویرایش
@@ -96,7 +96,7 @@
                             <tbody>
                             @foreach($posts as $post)
                                 <tr class="">
-                                    <td>{{ verta($post->created_at)->formatJalaliDate() }}</td>
+                                    <td>{{ verta($post->created_at)->formatJalaliDateTime() }}</td>
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column"><a

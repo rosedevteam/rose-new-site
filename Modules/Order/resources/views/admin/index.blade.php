@@ -96,13 +96,13 @@
                                     style="width: 12%;">خریدار
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 10%;">دوره ها
+                                    style="width: 15%;">دوره ها
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 15%;">قیمت خرید
+                                    style="width: 5%;">قیمت خرید
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 10%;">وضعیت
+                                    style="width: 5%;">وضعیت
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 5%;">روش پرداخت
@@ -111,7 +111,7 @@
                                     colspan="1" style="width: 12%" aria-sort="ascending">تاریخ ثبت
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width: 12%" aria-sort="ascending">جزییات
+                                    colspan="1" style="width: 5%" aria-sort="ascending">جزییات
                                 </th>
                             </tr>
                             </thead>

@@ -71,19 +71,19 @@
                             <thead>
                             <tr>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width: 12%" aria-sort="ascending">نام
+                                    colspan="1" style="width: 15%" aria-sort="ascending">نام
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 10%;">قیمت اصلی
+                                    style="width: 7%;">قیمت اصلی
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 15%;">قیمت فروش
+                                    style="width: 7%;">قیمت فروش
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 10%;">وضعیت
+                                    style="width: 5%;">وضعیت
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">نویسنده
+                                    style="width: 10%;">نویسنده
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 10%;">تاریخ ساخت
@@ -122,7 +122,7 @@
                                             </a>
                                         </div>
                                     </td>
-                                    <td>{{ verta($product->created_at)->formatJalaliDate() }}</td>
+                                    <td>{{ verta($product->created_at)->formatJalaliDateTime() }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
