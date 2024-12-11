@@ -8,39 +8,21 @@
     <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
             <div class="card">
-                <div class="card-header border-bottom">
-                    <h5 class="card-title">فیلتر جستجو</h5>
-                    <form action="{{ route('admin.menu.index') }}" method="GET">
-                        <div
-                            class="d-flex justify-content-start align-items-center row py-3 gap-1 gap-md-0 primary-font">
-                            <div class="col-md-2">
-                                <label for="sort_direction" class="form-label">نوع ترتیب: </label>
-                                <select id="sort_direction" name="sort_direction" class="form-select text-capitalize">
-                                    <option value="desc" selected>نزولی</option>
-                                    <option value="asc" {{ $sort_direction == 'asc' ? 'selected' : '' }}>صعودی</option>
-                                </select>
-                            </div>
-                            <div class="col-md-1">
-                                <button id="submit" type="submit" class="btn btn-primary mt-4 data-submit">جستجو
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
                 <div class="card-datatable table-responsive">
                     <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                        @can('create-job-offers')
+                        @can('create-menu-entries')
                             <div class="row mx-2 my-2">
                                 <div class="col-md-20">
                                     <div
                                         class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
                                         <div class="dt-buttons btn-group flex-wrap">
-                                            <a href="{{ route('admin.menu.create') }}">
-                                                <button class="btn btn-secondary add-new btn-primary ms-2"><span><i
-                                                            class="bx bx-plus me-0 me-lg-2"></i><span
-                                                            class="d-none d-lg-inline-block">ساخت آیتم منو جدید</span></span>
-                                                </button>
-                                            </a>
+                                            <button class="btn btn-secondary add-new btn-primary ms-2"
+                                                    aria-controls="DataTables_Table_0" type="button"
+                                                    data-bs-toggle="offcanvas"
+                                                    data-bs-target="#offcanvasAddUser"><span><i
+                                                        class="bx bx-plus me-0 me-lg-2"></i><span
+                                                        class="d-none d-lg-inline-block">ساخت آیتم منو جدید</span></span>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -51,13 +33,13 @@
                             <thead>
                             <tr>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                    style="width: 5%;">ردیف
+                                </th>
+                                <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 12%;">نام
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 10%;">نویسنده
-                                </th>
-                                <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">نوع
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 5%;">تاریخ ساخت
@@ -68,8 +50,11 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($menuEntries as $menuEntry)
+                            @foreach($active as $menuEntry)
                                 <tr>
+                                    <td class="fw-semibold">
+                                        {{ $menuEntry?->order ?: 'غیر فعال'}}
+                                    </td>
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column">
@@ -82,12 +67,39 @@
                                     {{ $menuEntry->author->name() }}
                                 </span>
                                     </td>
-                                    <td><span class="fw-semibold">@if($menuEntry->is_parent)اصلی@elseزیرگروه@endif</span></td>
                                     <td>{{ verta($menuEntry->created_at)->formatJalaliDateTime() }}</td>
                                     <td>
                                         <div class="d-inline-block text-nowrap">
                                             <button class="btn btn-sm btn-icon">
-                                                <a href="{{ route('admin.menu.show', $menuEntry) }}">
+                                                <a href="{{ route('admin.menuentry.show', $menuEntry) }}">
+                                                    <i class="bx bx-detail"></i>
+                                                </a>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            @foreach($inactive as $menuEntry)
+                                <tr>
+                                    <td class="fw-semibold">غیر فعال
+                                    </td>
+                                    <td class="sorting_1">
+                                        <div class="d-flex justify-content-start align-items-center user-name">
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-semibold">{{ $menuEntry->name }}</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                <span class="fw-semibold">
+                                    {{ $menuEntry->author->name() }}
+                                </span>
+                                    </td>
+                                    <td>{{ verta($menuEntry->created_at)->formatJalaliDateTime() }}</td>
+                                    <td>
+                                        <div class="d-inline-block text-nowrap">
+                                            <button class="btn btn-sm btn-icon">
+                                                <a href="{{ route('admin.menuentry.show', $menuEntry) }}">
                                                     <i class="bx bx-detail"></i>
                                                 </a>
                                             </button>
@@ -97,10 +109,40 @@
                             @endforeach
                             </tbody>
                         </table>
-                        {{ $menuEntries->links() }}
                     </div>
 
                 </div>
+                @can('create-menu-entries')
+                    <div class="offcanvas offcanvas-end" id="offcanvasAddUser"
+                         aria-labelledby="offcanvasAddUserLabel">
+                        <div class="offcanvas-header border-bottom">
+                            <h6 id="offcanvasAddUserLabel" class="offcanvas-title">افزودن آیتم جدید</h6>
+                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body mx-0 flex-grow-0">
+                            <form class="add-new-user pt-0" id="addNewUserForm"
+                                  action="{{ route('admin.menuentry.store') }}"
+                                  method="POST">
+                                @csrf
+                                <div class="mb-3">
+                                    <label class="form-label" for="name">نام</label>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                           required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="slug">لینک</label>
+                                    <input type="text" class="form-control" id="slug" name="slug"
+                                           required>
+                                </div>
+                                <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">ثبت</button>
+                                <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">
+                                    انصراف
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                @endcan
             </div>
         </div>
         <div class="content-backdrop fade"></div>

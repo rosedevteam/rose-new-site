@@ -88,8 +88,8 @@
             </li>
         @endcan
         @can('view-menu-entries')
-            <li @class(["menu-item", 'active' => url()->current() == route('admin.menu.index')])>
-                <a href="{{ route("admin.menu.index") }}" class="menu-link">
+            <li @class(["menu-item", 'active' => url()->current() == route('admin.menuentry.index')])>
+                <a href="{{ route("admin.menuentry.index") }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-menu"></i>
                     <div data-i18n="منو">منو</div>
                 </a>
