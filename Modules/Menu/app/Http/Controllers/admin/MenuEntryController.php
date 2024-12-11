@@ -13,8 +13,11 @@ class MenuEntryController extends Controller
     {
         Gate::authorize('view-menu-entries');
         try {
-            $menuEntries = MenuEntry::all();
-            return view('menu::admin.index', compact('menuEntries'));
+            $sort_direction = request('sort_direction', 'desc');
+            $menuEntries = MenuEntry::query()
+                ->orderBy('created_at', $sort_direction)
+                ->paginate(50);
+            return view('menu::admin.index', compact('menuEntries', 'sort_direction'));
         } catch (\Throwable $th) {
             alert()->error('خطا', $th->getMessage());
             return back();
@@ -25,7 +28,8 @@ class MenuEntryController extends Controller
     {
         Gate::authorize('view-menu-entries');
         try {
-            return view('menu::admin.show', compact('menuEntry'));
+            $children = $menuEntry->children()->get();
+            return view('menu::admin.show', compact('menuEntry', 'children'));
         } catch (\Throwable $th) {
             alert()->error('خطا', $th->getMessage());
             return back();
@@ -48,6 +52,12 @@ class MenuEntryController extends Controller
             ]
         ]);
         try {
+            $data = array_filter($data, function ($value) {
+                return !is_null($value);
+            });
+            $data -= $data['icon'];
+            $name = 'menu-icon-' . now()->timestamp . '.pdf';
+            request()->file('icon')->storeAs('assests/admin/svg/icons', $name, 'public');
             $menuEntry->update($data);
             activity()
                 ->causedBy(auth()->user())
@@ -66,7 +76,8 @@ class MenuEntryController extends Controller
     {
        Gate::authorize('create-menu-entries');
        try {
-           return view('menu::admin.create');
+           $parents = MenuEntry::where('is_parent', true)->get();
+           return view('menu::admin.create', compact('parents'));
        } catch (\Throwable $th) {
            alert()->error('خطا', $th->getMessage());
            return back();
@@ -80,7 +91,7 @@ class MenuEntryController extends Controller
             'name' => 'bail|required|string',
             'slug' => 'bail|required|string',
             'is_parent' => 'bail|required|boolean',
-            'is_active' => 'bail|required|boolean',
+            'order' => 'bail|required|int',
             'parent_id' => 'bail|required|integer',
             'icon' => [
                 'bail',
@@ -90,12 +101,11 @@ class MenuEntryController extends Controller
         ]);
         try {
             $name = 'menu-icon-' . now()->timestamp . '.pdf';
-            request()->file('file')->storeAs('menu-icons', $name, 'public');
+            request()->file('icon')->storeAs('assests/admin/svg/icons', $name, 'public');
             $menuEntry = MenuEntry::create([
                 'name' => $data['name'],
                 'slug' => $data['slug'],
                 'is_parent' => $data['is_parent'],
-                'is_active' => $data['is_active'],
                 'icon' => $name,
                 'author_id' => auth()->id
             ]);

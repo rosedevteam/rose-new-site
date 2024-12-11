@@ -1,27 +1,18 @@
 @extends('admin::layouts.main')
 
 @section('title')
-    فرصت های شغلی
+    منو
 @endsection
 
 @section('content')
     <div class="content-wrapper">
-        @if($errors->any())
-            <div class="alert alert-danger" style="padding-right: 80px">{{ $errors->first() }}</div>
-        @endif
         <div class="container-xxl flex-grow-1 container-p-y">
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
-                    <form action="{{ route('admin.joboffer.index') }}" method="GET">
+                    <form action="{{ route('admin.menu.index') }}" method="GET">
                         <div
                             class="d-flex justify-content-start align-items-center row py-3 gap-1 gap-md-0 primary-font">
-                            <div class="col-md-2">
-                                <label for="sort_by" class="form-label">ترتیب بر اساس: </label>
-                                <select id="sort_by" name="sort_by" class="form-select text-capitalize">
-                                    <option value="created_at" selected>تاریخ ثبت نام</option>
-                                </select>
-                            </div>
                             <div class="col-md-2">
                                 <label for="sort_direction" class="form-label">نوع ترتیب: </label>
                                 <select id="sort_direction" name="sort_direction" class="form-select text-capitalize">
@@ -44,10 +35,10 @@
                                     <div
                                         class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
                                         <div class="dt-buttons btn-group flex-wrap">
-                                            <a href="{{ route('admin.joboffer.create') }}">
+                                            <a href="{{ route('admin.menu.create') }}">
                                                 <button class="btn btn-secondary add-new btn-primary ms-2"><span><i
                                                             class="bx bx-plus me-0 me-lg-2"></i><span
-                                                            class="d-none d-lg-inline-block">ساخت فرصت شغلی جدید</span></span>
+                                                            class="d-none d-lg-inline-block">ساخت آیتم منو جدید</span></span>
                                                 </button>
                                             </a>
                                         </div>
@@ -60,19 +51,13 @@
                             <thead>
                             <tr>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 12%;">عنوان
+                                    style="width: 12%;">نام
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 10%;">نویسنده
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">تیم
-                                </th>
-                                <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 5%;">نوع
-                                </th>
-                                <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">وضعیت
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 5%;">تاریخ ساخت
@@ -83,33 +68,26 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($jobOffers as $jobOffer)
+                            @foreach($menuEntries as $menuEntry)
                                 <tr>
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column">
-                                                <span class="fw-semibold">{{ $jobOffer->title }}</span>
+                                                <span class="fw-semibold">{{ $menuEntry->name }}</span>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                 <span class="fw-semibold">
-                                    {{ $jobOffer->author->name() }}
+                                    {{ $menuEntry->author->name() }}
                                 </span>
                                     </td>
-                                    <td><span class="fw-semibold">{{ $jobOffer->team }}</span></td>
-                                    <td>{{ $jobOffer->categories()->first()->name }}</td>
-                                    <td>
-                                        @switch($jobOffer->status)
-                                            @case('active')فعال@break
-                                            @case('inactive')غیر فعال@break
-                                        @endswitch
-                                    </td>
-                                    <td>{{ verta($jobOffer->created_at)->formatJalaliDateTime() }}</td>
+                                    <td><span class="fw-semibold">@if($menuEntry->is_parent)اصلی@elseزیرگروه@endif</span></td>
+                                    <td>{{ verta($menuEntry->created_at)->formatJalaliDateTime() }}</td>
                                     <td>
                                         <div class="d-inline-block text-nowrap">
                                             <button class="btn btn-sm btn-icon">
-                                                <a href="{{ route('admin.joboffer.show', $jobOffer) }}">
+                                                <a href="{{ route('admin.menu.show', $menuEntry) }}">
                                                     <i class="bx bx-detail"></i>
                                                 </a>
                                             </button>
@@ -119,7 +97,7 @@
                             @endforeach
                             </tbody>
                         </table>
-                        {{ $jobOffers->links() }}
+                        {{ $menuEntries->links() }}
                     </div>
 
                 </div>

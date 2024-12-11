@@ -100,7 +100,7 @@
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column"><a
-                                                    href="{{ route('admin.post.show', $post) }}"
+                                                    href="{{ route('admin.post.show', $post->slug) }}"
                                                     class="text-body text-truncate">
                                                     <span class="fw-semibold">{{ $post->title }}</span>
                                                 </a>
@@ -109,7 +109,7 @@
                                     </td>
                                     <td>
                                 <span class="fw-semibold">
-                                    <a href="{{ route('admin.user.show', $post->author()->first()) }}"
+                                    <a href="{{ route('admin.user.show', $post->author) }}"
                                        class="text-body text-truncate">
                                     {{ $post->author()->first()->name() }}</a>
                                 </span>

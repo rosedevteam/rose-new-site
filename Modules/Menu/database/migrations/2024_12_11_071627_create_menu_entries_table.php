@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('slug');
             $table->string('icon')->nullable();
             $table->boolean('is_parent')->default(false);
-            $table->boolean('is_active');
-            $table->foreignId('parent_id')->constrained('menu_entries')->onDelete('cascade');
+            $table->foreignId('parent_id')->nullable()->constrained('menu_entries')->onDelete('cascade');
+            $table->integer('order')->nullable()->default(null);
             $table->timestamps();
         });
     }

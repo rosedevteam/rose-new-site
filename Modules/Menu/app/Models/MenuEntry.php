@@ -4,10 +4,11 @@ namespace Modules\Menu\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Menu\Database\Factories\MenuEntryFactory;
 use Modules\User\Models\User;
 
 /**
- * 
+ *
  *
  * @property-read User|null $author
  * @property-read MenuEntry|null $parent
@@ -37,5 +38,10 @@ class MenuEntry extends Model
     {
         if($this->is_parent) return null;
         return $this->belongsTo(MenuEntry::class, 'parent_id');
+    }
+
+    protected static function newFactory()
+    {
+        return MenuEntryFactory::new();
     }
 }
