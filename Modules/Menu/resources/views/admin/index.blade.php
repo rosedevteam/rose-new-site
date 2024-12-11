@@ -10,24 +10,22 @@
             <div class="card">
                 <div class="card-datatable table-responsive">
                     <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                        @can('create-menu-entries')
-                            <div class="row mx-2 my-2">
-                                <div class="col-md-20">
-                                    <div
-                                        class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
-                                        <div class="dt-buttons btn-group flex-wrap">
-                                            <button class="btn btn-secondary add-new btn-primary ms-2"
-                                                    aria-controls="DataTables_Table_0" type="button"
-                                                    data-bs-toggle="offcanvas"
-                                                    data-bs-target="#offcanvasAddUser"><span><i
-                                                        class="bx bx-plus me-0 me-lg-2"></i><span
-                                                        class="d-none d-lg-inline-block">ساخت آیتم منو جدید</span></span>
-                                            </button>
-                                        </div>
+                        <div class="row mx-2 my-2">
+                            <div class="col-md-20">
+                                <div
+                                    class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
+                                    <div class="dt-buttons btn-group flex-wrap">
+                                        <button class="btn btn-secondary add-new btn-primary ms-2"
+                                                aria-controls="DataTables_Table_0" type="button"
+                                                data-bs-toggle="offcanvas"
+                                                data-bs-target="#offcanvasAddUser"><span><i
+                                                    class="bx bx-plus me-0 me-lg-2"></i><span
+                                                    class="d-none d-lg-inline-block">ساخت آیتم منو جدید</span></span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                        @endcan
+                        </div>
                         <table class="datatables-users table border-top dataTable no-footer dtr-column"
                                id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 100%;">
                             <thead>
@@ -112,37 +110,35 @@
                     </div>
 
                 </div>
-                @can('create-menu-entries')
-                    <div class="offcanvas offcanvas-end" id="offcanvasAddUser"
-                         aria-labelledby="offcanvasAddUserLabel">
-                        <div class="offcanvas-header border-bottom">
-                            <h6 id="offcanvasAddUserLabel" class="offcanvas-title">افزودن آیتم جدید</h6>
-                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                                    aria-label="Close"></button>
-                        </div>
-                        <div class="offcanvas-body mx-0 flex-grow-0">
-                            <form class="add-new-user pt-0" id="addNewUserForm"
-                                  action="{{ route('admin.menuentry.store') }}"
-                                  method="POST">
-                                @csrf
-                                <div class="mb-3">
-                                    <label class="form-label" for="name">نام</label>
-                                    <input type="text" class="form-control" id="name" name="name"
-                                           required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label" for="slug">لینک</label>
-                                    <input type="text" class="form-control" id="slug" name="slug"
-                                           required>
-                                </div>
-                                <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">ثبت</button>
-                                <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">
-                                    انصراف
-                                </button>
-                            </form>
-                        </div>
+                <div class="offcanvas offcanvas-end" id="offcanvasAddUser"
+                     aria-labelledby="offcanvasAddUserLabel">
+                    <div class="offcanvas-header border-bottom">
+                        <h6 id="offcanvasAddUserLabel" class="offcanvas-title">افزودن آیتم جدید</h6>
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
                     </div>
-                @endcan
+                    <div class="offcanvas-body mx-0 flex-grow-0">
+                        <form class="add-new-user pt-0" id="addNewUserForm"
+                              action="{{ route('admin.menuentry.store') }}"
+                              method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <label class="form-label" for="name">نام</label>
+                                <input type="text" class="form-control" id="name" name="name"
+                                       required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="slug">لینک</label>
+                                <input type="text" class="form-control" id="slug" name="slug"
+                                       required>
+                            </div>
+                            <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">ثبت</button>
+                            <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">
+                                انصراف
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="content-backdrop fade"></div>

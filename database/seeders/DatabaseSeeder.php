@@ -73,9 +73,7 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'create-orders']);
         Permission::create(['name' => 'delete-orders']);
         //
-        Permission::create(['name' => 'create-menu-entries']);
-        Permission::create(['name' => 'view-menu-entries']);
-        Permission::create(['name' => 'edit-menu-entries']);
+        Permission::create(['name' => 'menu-entries']);
         //
         Permission::create(['name' => 'view-logs']);
 

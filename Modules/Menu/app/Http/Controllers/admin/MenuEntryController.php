@@ -11,7 +11,7 @@ class MenuEntryController extends Controller
 {
     public function index()
     {
-        Gate::authorize('view-menu-entries');
+        Gate::authorize('menu-entries');
         try {
             $menuEntries = MenuEntry::query()
                 ->where('is_parent', true)
@@ -27,7 +27,7 @@ class MenuEntryController extends Controller
 
     public function show(MenuEntry $menuEntry)
     {
-        Gate::authorize('view-menu-entries');
+        Gate::authorize('menu-entries');
         try {
             $children = $menuEntry->children()->get();
             return view('menu::admin.show', compact('menuEntry', 'children'));
@@ -39,7 +39,7 @@ class MenuEntryController extends Controller
 
     public function update(MenuEntry $menuEntry)
     {
-        Gate::authorize('edit-menu-entries');
+        Gate::authorize('menu-entries');
         $data = request()->validate([
             'name' => 'bail|nullable|string',
             'slug' => 'bail|nullable|string',
@@ -73,21 +73,9 @@ class MenuEntryController extends Controller
         }
     }
 
-    public function create()
-    {
-       Gate::authorize('create-menu-entries');
-       try {
-           $parents = MenuEntry::where('is_parent', true)->get();
-           return view('menu::admin.create', compact('parents'));
-       } catch (\Throwable $th) {
-           alert()->error('خطا', $th->getMessage());
-           return back();
-       }
-    }
-
     public function store()
     {
-        Gate::authorize('create-menu-entries');
+        Gate::authorize('menu-entries');
         $data = request()->validate([
             'name' => 'bail|required|string',
             'slug' => 'bail|nullable|string',

@@ -94,43 +94,6 @@
                     </div>
 
                 </div>
-                <!-- Offcanvas to add new user -->
-                @can('create-users')
-                    <div class="offcanvas offcanvas-end" id="offcanvasAddUser"
-                         aria-labelledby="offcanvasAddUserLabel">
-                        <div class="offcanvas-header border-bottom">
-                            <h6 id="offcanvasAddUserLabel" class="offcanvas-title">افزودن کاربر</h6>
-                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                                    aria-label="Close"></button>
-                        </div>
-                        <div class="offcanvas-body mx-0 flex-grow-0">
-                            <form class="add-new-user pt-0" id="addNewUserForm"
-                                  action="{{ route('admin.user.store') }}"
-                                  method="POST">
-                                @csrf
-                                <div class="mb-3">
-                                    <label class="form-label" for="first_name">نام</label>
-                                    <input type="text" class="form-control" id="first_name" name="first_name"
-                                           required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label" for="last_name">نام خانوادگی</label>
-                                    <input type="text" class="form-control" id="last_name" name="last_name"
-                                           required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label" for="phone">شماره موبایل</label>
-                                    <input type="number" class="form-control" id="phone" name="phone" maxlength="11"
-                                           required>
-                                </div>
-                                <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">ثبت</button>
-                                <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">
-                                    انصراف
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                @endcan
             </div>
         </div>
         <div class="content-backdrop fade"></div>
