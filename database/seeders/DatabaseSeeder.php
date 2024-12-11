@@ -71,6 +71,10 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'create-orders']);
         Permission::create(['name' => 'delete-orders']);
         //
+        Permission::create(['name' => 'create-menu-entries']);
+        Permission::create(['name' => 'view-menu-entries']);
+        Permission::create(['name' => 'edit-menu-entries']);
+        //
         Permission::create(['name' => 'view-logs']);
 
         $customer = Role::create(['name' => 'مشتری']);
@@ -172,7 +176,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'public',
             'comment_status' => 1,
             'image' => "asdijbnag",
-            'url' => "asdbniadsg",
+            'slug' => "asdbniaskgadsg",
             'spot_player_key' => null
         ]);
         $product2 = Product::factory()->create([
@@ -185,7 +189,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'draft',
             'comment_status' => 0,
             'image' => "asdijbnag",
-            'url' => "asdbniadsg",
+            'slug' => "asdbniadsg",
             'spot_player_key' => null
         ]);
         $product3 = Product::factory()->create([
@@ -198,7 +202,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'hidden',
             'comment_status' => 1,
             'image' => "asdijbnag",
-            'url' => "asdbniadsg",
+            'slug' => "aognasdgnasdbniadsg",
             'spot_player_key' => null
         ]);
         $product4 = Product::factory()->create([
@@ -211,7 +215,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'public',
             'comment_status' => 0,
             'image' => "asdijbnag",
-            'url' => "asdbniadsg",
+            'slug' => "asdbni234234adsg",
             'spot_player_key' => null
         ]);
     }
@@ -224,7 +228,7 @@ class DatabaseSeeder extends Seeder
             'content' => "asdkjasdg",
             'status' => 'public',
             'comment_status' => 0,
-            'url' => "asdbniadssdfg"
+            'slug' => "asdbniadssasjgasgdfg"
         ]);
         $post2 = Post::factory()->create([
             'author_id' => 2,
@@ -232,7 +236,7 @@ class DatabaseSeeder extends Seeder
             'content' => "asdkjasdg",
             'status' => 'public',
             'comment_status' => 1,
-            'url' => "sdgg"
+            'slug' => "sdgg"
         ]);
         $post3 = Post::factory()->create([
             'author_id' => 3,
@@ -240,7 +244,7 @@ class DatabaseSeeder extends Seeder
             'content' => "asdkjasdg",
             'status' => 'public',
             'comment_status' => 0,
-            'url' => "234sfeg"
+            'slug' => "234sfegasofaw4"
         ]);
         $post4 = Post::factory()->create([
             'author_id' => 1,
@@ -248,7 +252,7 @@ class DatabaseSeeder extends Seeder
             'content' => "asdkjasdg",
             'status' => 'public',
             'comment_status' => 0,
-            'url' => "asdf"
+            'slug' => "asdf029340420"
         ]);
     }
 

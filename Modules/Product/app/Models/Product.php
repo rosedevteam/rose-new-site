@@ -13,7 +13,7 @@ use Modules\Product\Database\Factories\ProductFactory;
 use Modules\User\Models\User;
 
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $title

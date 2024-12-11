@@ -10,5 +10,5 @@ Route::controller(PostController::class)->prefix('post')->group(function () {
     Route::post('/create', 'store')->name("store");
     Route::get('/{post:url}', 'show')->name("show");
     Route::patch('/{post:url}', 'update')->name("update");
-    Route::get('/{post:url}/edit', 'edit')->name("edit");
+    Route::get('/{post:slug}/edit', 'edit')->name("edit");
 });

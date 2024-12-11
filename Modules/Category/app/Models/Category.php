@@ -8,7 +8,7 @@ use Modules\Category\Database\Factories\CategoryFactory;
 use Modules\JobOffer\Models\JobOffer;
 
 /**
- *
+ * 
  *
  * @property int $id
  * @property int $author_id
@@ -51,6 +51,7 @@ class Category extends Model
 
     public function parent()
     {
+        if($this->is_parent) return null;
         return $this->morphedByMany(Category::class, 'categoryable');
     }
 

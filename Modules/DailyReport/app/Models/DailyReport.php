@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Modules\User\Models\User;
 
 /**
- *
+ * 
  *
  * @property int $id
  * @property int $author_id

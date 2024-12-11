@@ -43,9 +43,9 @@ class Post extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function author(): User
+    public function author()
     {
-        return $this->belongsTo(User::class)->get()[0];
+        return $this->belongsTo(User::class);
     }
 
     public function comments(): MorphMany

@@ -51,9 +51,9 @@ class Comment extends Model
         return null;
     }
 
-    public function author(): User
+    public function author()
     {
-        return $this->belongsTo(User::class)->get()[0];
+        return $this->belongsTo(User::class);
     }
 
     public static function newFactory(): CommentFactory

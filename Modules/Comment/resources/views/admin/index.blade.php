@@ -90,9 +90,9 @@
                                 <tr class="">
                                     <td>{{ verta($comment->created_at)->formatJalaliDateTime() }}</td>
                                     <td class="sorting_1">
-                                        <a href="{{ route('admin.user.show', $comment->author()) }}"
+                                        <a href="{{ route('admin.user.show', $comment->author()->first()) }}"
                                            class="text-body text-truncate">
-                                            <span class="fw-semibold">{{ $comment->author()->name() }}</span>
+                                            <span class="fw-semibold">{{ $comment->author()->first()->name() }}</span>
                                         </a>
                                     </td>
                                     <td><a href="{{

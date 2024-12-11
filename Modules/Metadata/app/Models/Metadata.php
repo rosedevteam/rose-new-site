@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 // use Modules\Metadata\Database\Factories\MetadataFactory;
 
 /**
- *
+ * 
  *
  * @property int $id
  * @property \Illuminate\Support\Carbon|null $created_at

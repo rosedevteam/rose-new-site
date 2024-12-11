@@ -9,7 +9,7 @@ use Modules\JobOffer\Database\Factories\JobOfferFactory;
 use Modules\User\Models\User;
 
 /**
- *
+ * 
  *
  * @property int $id
  * @property int $author_id

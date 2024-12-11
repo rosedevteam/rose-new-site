@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Modules\JobOffer\Database\Factories\JobApplicationFactory;
 
 /**
- *
+ * 
  *
  * @property int $id
  * @property int $joboffer_id

@@ -11,7 +11,7 @@ use Modules\User\Models\User;
 
 
 /**
- *
+ * 
  *
  * @property int $id
  * @property int $user_id

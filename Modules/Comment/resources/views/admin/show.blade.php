@@ -23,8 +23,8 @@
                         <div class="row mx-2 my-2">
                             <div class="col mb-2">
                                 نویسنده:
-                                <a href="{{ route("admin.user.show", $comment->author()) }}">
-                                    {{ $comment->author()->name() }}
+                                <a href="{{ route("admin.user.show", $comment->author()->first()) }}">
+                                    {{ $comment->author()->first()->name() }}
                                 </a>
                             </div>
                         </div>

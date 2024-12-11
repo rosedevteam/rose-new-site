@@ -18,7 +18,7 @@ use Modules\User\Database\Factories\UserFactory;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
- *
+ * 
  *
  * @property int $id
  * @property string|null $first_name

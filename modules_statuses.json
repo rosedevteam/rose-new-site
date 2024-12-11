@@ -9,5 +9,6 @@
     "Metadata": true,
     "Admin": true,
     "Order": true,
-    "JobOffer": true
+    "JobOffer": true,
+    "Menu": true
 }

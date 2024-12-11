@@ -23,14 +23,14 @@
                 </a>
             </li>
         @endcan
-            {{--            @can('restore-users')--}}
-            {{--                <li @class(["menu-item", 'active' => url()->current() == route('admin.user.deleted')])>--}}
-            {{--                    <a href="{{ route("admin.user.deleted") }}" class="menu-link">--}}
-            {{--                        <i class="menu-icon tf-icons bx bx-trash"></i>--}}
-            {{--                        <div data-i18n="کاربران حذف شده">کاربران حذف شده</div>--}}
-            {{--                    </a>--}}
-            {{--                </li>--}}
-            {{--            @endcan--}}
+        {{--            @can('restore-users')--}}
+        {{--                <li @class(["menu-item", 'active' => url()->current() == route('admin.user.deleted')])>--}}
+        {{--                    <a href="{{ route("admin.user.deleted") }}" class="menu-link">--}}
+        {{--                        <i class="menu-icon tf-icons bx bx-trash"></i>--}}
+        {{--                        <div data-i18n="کاربران حذف شده">کاربران حذف شده</div>--}}
+        {{--                    </a>--}}
+        {{--                </li>--}}
+        {{--            @endcan--}}
         @can('view-comments')
             <li @class(["menu-item", 'active' => url()->current() == route('admin.comment.index')])>
                 <a href="{{ route("admin.comment.index") }}" class="menu-link">
@@ -64,29 +64,37 @@
             </li>
         @endcan
         @can('view-daily-reports')
-                <li @class(["menu-item", 'active' => url()->current() == route('admin.dailyreport.index')])>
-                    <a href="{{ route("admin.dailyreport.index") }}" class="menu-link">
+            <li @class(["menu-item", 'active' => url()->current() == route('admin.dailyreport.index')])>
+                <a href="{{ route("admin.dailyreport.index") }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-chart"></i>
                     <div data-i18n="گزارش روزانه بازار">گزارش روزانه بازار</div>
                 </a>
             </li>
         @endcan
-            @can('view-job-offers')
-                <li @class(["menu-item", 'active' => url()->current() == route('admin.joboffer.index')])>
-                    <a href="{{ route("admin.joboffer.index") }}" class="menu-link">
-                        <i class="menu-icon tf-icons bx bxl-linkedin"></i>
-                        <div data-i18n="فرصت های شغلی">فرصت های شغلی</div>
-                    </a>
-                </li>
-            @endcan
-            @can('view-job-applications')
-                <li @class(["menu-item", 'active' => url()->current() == route('admin.jobapplication.index')])>
-                    <a href="{{ route("admin.jobapplication.index") }}" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-receipt"></i>
-                        <div data-i18n="رزومه های ارسال شده">رزومه های ارسال شده</div>
-                    </a>
-                </li>
-            @endcan
+        @can('view-job-offers')
+            <li @class(["menu-item", 'active' => url()->current() == route('admin.joboffer.index')])>
+                <a href="{{ route("admin.joboffer.index") }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bxl-linkedin"></i>
+                    <div data-i18n="فرصت های شغلی">فرصت های شغلی</div>
+                </a>
+            </li>
+        @endcan
+        @can('view-job-applications')
+            <li @class(["menu-item", 'active' => url()->current() == route('admin.jobapplication.index')])>
+                <a href="{{ route("admin.jobapplication.index") }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-receipt"></i>
+                    <div data-i18n="رزومه های ارسال شده">رزومه های ارسال شده</div>
+                </a>
+            </li>
+        @endcan
+        @can('view-menu-entries')
+            <li @class(["menu-item", 'active' => url()->current() == route('admin.menu.index')])>
+                <a href="{{ route("admin.menu.index") }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-menu"></i>
+                    <div data-i18n="منو">منو</div>
+                </a>
+            </li>
+        @endcan
         @can('view-logs')
             <li @class(["menu-item", 'active' => url()->current() == route('admin.log.index')])>
                 <a href="{{ route("admin.log.index") }}" class="menu-link">

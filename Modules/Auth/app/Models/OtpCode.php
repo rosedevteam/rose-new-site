@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Prunable;
 
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $otp
