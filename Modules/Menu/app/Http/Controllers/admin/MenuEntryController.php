@@ -97,10 +97,39 @@ class MenuEntryController extends Controller
                 ->withProperties($data)
                 ->log('ساخت آیتم منو جدید');
             alert()->success('موفق', 'آیتم منو جدید ساخته شد');
-            return redirect(route('admin.menuentry.index'));
+            return back();
         } catch (\Throwable $th) {
             alert()->error('خطا', $th->getMessage());
             return back();
         }
     }
+
+    public function sort()
+    {
+        Gate::authorize('menu-entries');
+        try {
+            $data = request()->validate([
+                '*.id' => 'required|integer|exists:menu_entries,id',
+                '*.order' => 'required|integer|min:1',
+                '*.status' => 'required|boolean',
+            ]);
+            foreach ($data as $item) {
+                $menu = MenuEntry::where('id', $item['id'])->first();
+                $menu->update([
+                    'order' => $item['order'],
+                    'is_active' => $item['status'],
+                ]);
+            }
+            activity()
+                ->causedBy(auth()->user())
+                ->withProperties($data)
+                ->log('ویرایش منو با موفقیت انجام شد');
+            alert()->success('موفق', 'ویرایش منو با موفقیت انجام شد');
+            return back();
+        } catch (\Throwable $th) {
+            alert()->error('خطا', $th->getMessage());
+            return back();
+        }
+    }
+
 }

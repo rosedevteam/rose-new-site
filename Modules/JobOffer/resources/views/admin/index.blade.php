@@ -97,7 +97,7 @@
                                     {{ $jobOffer->author->name() }}
                                 </span>
                                     </td>
-                                    <td><span class="fw-semibold">{{ $jobOffer->team }}</span></td>
+                                    <td><span class="fw-semibold">{{ $jobOffer->team() }}</span></td>
                                     <td>{{ $jobOffer->categories()->first()->name }}</td>
                                     <td>
                                         @switch($jobOffer->status)

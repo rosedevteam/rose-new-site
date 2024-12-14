@@ -9,7 +9,7 @@ use Modules\JobOffer\Database\Factories\JobOfferFactory;
 use Modules\User\Models\User;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property int $author_id
@@ -57,6 +57,11 @@ class JobOffer extends Model
     public function categories()
     {
         return $this->morphToMany(Category::class, 'categoryable');
+    }
+
+    public function team()
+    {
+        return $this->categories()->first()->name;
     }
 
     protected static function newFactory()

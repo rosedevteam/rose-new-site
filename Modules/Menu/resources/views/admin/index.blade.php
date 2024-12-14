@@ -15,6 +15,9 @@
                                 <div
                                     class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
                                     <div class="dt-buttons btn-group flex-wrap">
+                                        <button type="button" class="btn btn-primary ms-2" data-bs-toggle="modal"
+                                                data-bs-target="#modalCenter">ویرایش ترتیب
+                                        </button>
                                         <button class="btn btn-secondary add-new btn-primary ms-2"
                                                 aria-controls="DataTables_Table_0" type="button"
                                                 data-bs-toggle="offcanvas"
@@ -110,6 +113,58 @@
                     </div>
 
                 </div>
+                <div class="modal fade" id="modalCenter" tabindex="-1" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title secondary-font" id="modalCenterTitle">ویرایش ترتیب</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row mb-4">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-6 col-12 mb-md-0 mb-4">
+                                                        <p>فعال</p>
+                                                        <ul class="list-group list-group-flush" id="active">
+                                                            @foreach($active as $item)
+                                                                <li class="list-group-item drag-item cursor-move d-flex justify-content-between align-items-center"
+                                                                    data-id="{{ $item->id }}" style="">
+                                                                    <span>{{ $item->name }}</span>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-md-6 col-12 mb-md-0 mb-4">
+                                                        <p>غیر فعال</p>
+                                                        <ul class="list-group list-group-flush" id="inactive">
+                                                            @foreach($inactive as $item)
+                                                                <li class="list-group-item drag-item cursor-move d-flex justify-content-between align-items-center"
+                                                                    data-id="{{ $item->id }}" style="">
+                                                                    <span>{{ $item->name }}</span>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">بستن
+                                </button>
+                                <button type="button" id="edit-order" class="btn btn-primary" data-bs-dismiss="modal">
+                                    ویرایش
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="offcanvas offcanvas-end" id="offcanvasAddUser"
                      aria-labelledby="offcanvasAddUserLabel">
                     <div class="offcanvas-header border-bottom">
@@ -157,4 +212,40 @@
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave-phone.js"></script>
+    <script src="/assets/admin/vendor/libs/sortablejs/sortable.js"></script>
+    <script src="/assets/admin/js/extended-ui-drag-and-drop.js"></script>
+    <script>
+        document.getElementById('edit-order').addEventListener('click', function () {
+            const pendingTasks = [...document.querySelectorAll('#active > li')].map((el, index) => ({
+                id: el.dataset.id,
+                order: index + 1,
+                status: true
+            }));
+
+            const completedTasks = [...document.querySelectorAll('#inactive > li')].map((el, index) => ({
+                id: el.dataset.id,
+                order: index + 1,
+                status: false
+            }));
+
+            const sortedData = [...pendingTasks, ...completedTasks];
+
+            saveSortedData(sortedData);
+        });
+
+        function saveSortedData(sortedData) {
+            fetch('{{ route("admin.menuentry.sort") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify(sortedData)
+            }).then(response => {
+                if (response.ok) {
+                    location.reload()
+                }
+            })
+        }
+    </script>
 @endpush
