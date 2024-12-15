@@ -9,7 +9,7 @@ class MenuEntryFactory extends Factory
     /**
      * The name of the factory's corresponding model.
      */
-    protected $model = \Modules\Menu\Models\MenuEntry::class;
+    protected $model = \Modules\Menu\Models\Menu::class;
 
     /**
      * Define the model's default state.

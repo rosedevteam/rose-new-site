@@ -2,8 +2,8 @@
 
 namespace Modules\Menu\Providers;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -38,7 +38,6 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::middleware('web')
             ->namespace($this->moduleNamespace)
-            ->name("menu.")
             ->group(module_path('menu', 'routes/web.php'));
     }
 
@@ -52,7 +51,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware(['web', 'admin'])
             ->namespace($this->moduleNamespace . '\admin')
             ->prefix(config('services.admin.prefix'))
-            ->name('admin.menuentry.')
+            ->name('admin.')
             ->group(module_path('Menu', 'routes/admin.php'));
     }
 }

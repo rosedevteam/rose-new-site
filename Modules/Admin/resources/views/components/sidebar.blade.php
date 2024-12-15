@@ -81,9 +81,9 @@ $route = explode('.', Route::currentRouteName())[1];
                 </a>
             </li>
         @endcan
-        @can('menu-entries')
-            <li @class(["menu-item", 'active' => $route == 'menuentry'])>
-                <a href="{{ route("admin.menuentry.index") }}" class="menu-link">
+            @can('view-menus')
+                <li @class(["menu-item", 'active' => $route == 'menus'])>
+                    <a href="{{ route("admin.menus.index") }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-menu"></i>
                     <div data-i18n="منو">منو</div>
                 </a>

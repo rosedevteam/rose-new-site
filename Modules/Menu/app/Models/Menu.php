@@ -2,8 +2,8 @@
 
 namespace Modules\Menu\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Modules\Menu\Database\Factories\MenuEntryFactory;
 use Modules\User\Models\User;
 
@@ -11,13 +11,13 @@ use Modules\User\Models\User;
  *
  *
  * @property-read User|null $author
- * @property-read MenuEntry|null $parent
- * @method static \Illuminate\Database\Eloquent\Builder<static>|MenuEntry newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|MenuEntry newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|MenuEntry query()
+ * @property-read Menu|null $parent
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Menu newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Menu newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Menu query()
  * @mixin \Eloquent
  */
-class MenuEntry extends Model
+class Menu extends Model
 {
     use HasFactory;
 
@@ -30,14 +30,13 @@ class MenuEntry extends Model
 
     public function children()
     {
-        if(!$this->is_parent) return null;
-        return $this->hasMany(MenuEntry::class, 'parent_id');
+        return $this->hasMany(Menu::class, 'parent_id');
     }
 
     public function parent()
     {
         if($this->is_parent) return null;
-        return $this->belongsTo(MenuEntry::class, 'parent_id');
+        return $this->belongsTo(Menu::class, 'parent_id');
     }
 
     protected static function newFactory()

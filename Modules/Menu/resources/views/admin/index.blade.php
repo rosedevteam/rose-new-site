@@ -15,16 +15,20 @@
                                 <div
                                     class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
                                     <div class="dt-buttons btn-group flex-wrap">
-                                        <button type="button" class="btn btn-primary ms-2" data-bs-toggle="modal"
-                                                data-bs-target="#modalCenter">ویرایش ترتیب
-                                        </button>
-                                        <button class="btn btn-secondary add-new btn-primary ms-2"
-                                                aria-controls="DataTables_Table_0" type="button"
-                                                data-bs-toggle="offcanvas"
-                                                data-bs-target="#offcanvasAddUser"><span><i
-                                                    class="bx bx-plus me-0 me-lg-2"></i><span
-                                                    class="d-none d-lg-inline-block">ساخت آیتم منو جدید</span></span>
-                                        </button>
+                                        @can('edit-menus')
+                                            <button type="button" class="btn btn-primary ms-2" data-bs-toggle="modal"
+                                                    data-bs-target="#modalCenter">ویرایش ترتیب
+                                            </button>
+                                        @endcan
+                                        @can('create-menus')
+                                            <button class="btn btn-secondary add-new btn-primary ms-2"
+                                                    aria-controls="DataTables_Table_0" type="button"
+                                                    data-bs-toggle="offcanvas"
+                                                    data-bs-target="#offcanvasAddUser"><span><i
+                                                        class="bx bx-plus me-0 me-lg-2"></i><span
+                                                        class="d-none d-lg-inline-block">ساخت آیتم منو جدید</span></span>
+                                            </button>
+                                        @endcan
                                     </div>
                                 </div>
                             </div>
@@ -51,28 +55,28 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($active as $menuEntry)
+                            @foreach($active as $menu)
                                 <tr>
                                     <td class="fw-semibold">
-                                        {{ $menuEntry?->order ?: 'غیر فعال'}}
+                                        {{ $menu?->order ?: 'غیر فعال'}}
                                     </td>
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column">
-                                                <span class="fw-semibold">{{ $menuEntry->name }}</span>
+                                                <span class="fw-semibold">{{ $menu->name }}</span>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                 <span class="fw-semibold">
-                                    {{ $menuEntry->author->name() }}
+                                    {{ $menu->author->name() }}
                                 </span>
                                     </td>
-                                    <td>{{ verta($menuEntry->created_at)->formatJalaliDateTime() }}</td>
+                                    <td>{{ verta($menu->created_at)->formatJalaliDateTime() }}</td>
                                     <td>
                                         <div class="d-inline-block text-nowrap">
                                             <button class="btn btn-sm btn-icon">
-                                                <a href="{{ route('admin.menuentry.show', $menuEntry) }}">
+                                                <a href="{{ route('admin.menus.show', $menu) }}">
                                                     <i class="bx bx-detail"></i>
                                                 </a>
                                             </button>
@@ -80,27 +84,27 @@
                                     </td>
                                 </tr>
                             @endforeach
-                            @foreach($inactive as $menuEntry)
+                            @foreach($inactive as $menu)
                                 <tr>
                                     <td class="fw-semibold">غیر فعال
                                     </td>
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column">
-                                                <span class="fw-semibold">{{ $menuEntry->name }}</span>
+                                                <span class="fw-semibold">{{ $menu->name }}</span>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                 <span class="fw-semibold">
-                                    {{ $menuEntry->author->name() }}
+                                    {{ $menu->author->name() }}
                                 </span>
                                     </td>
-                                    <td>{{ verta($menuEntry->created_at)->formatJalaliDateTime() }}</td>
+                                    <td>{{ verta($menu->created_at)->formatJalaliDateTime() }}</td>
                                     <td>
                                         <div class="d-inline-block text-nowrap">
                                             <button class="btn btn-sm btn-icon">
-                                                <a href="{{ route('admin.menuentry.show', $menuEntry) }}">
+                                                <a href="{{ route('admin.menus.show', $menu) }}">
                                                     <i class="bx bx-detail"></i>
                                                 </a>
                                             </button>
@@ -113,87 +117,92 @@
                     </div>
 
                 </div>
-                <div class="modal fade" id="modalCenter" tabindex="-1" style="display: none;" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title secondary-font" id="modalCenterTitle">ویرایش ترتیب</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row mb-4">
-                                    <div class="col-12">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-md-6 col-12 mb-md-0 mb-4">
-                                                        <p>فعال</p>
-                                                        <ul class="list-group list-group-flush" id="active">
-                                                            @foreach($active as $item)
-                                                                <li class="list-group-item drag-item cursor-move d-flex justify-content-between align-items-center"
-                                                                    data-id="{{ $item->id }}" style="">
-                                                                    <span>{{ $item->name }}</span>
-                                                                </li>
-                                                            @endforeach
-                                                        </ul>
-                                                    </div>
-                                                    <div class="col-md-6 col-12 mb-md-0 mb-4">
-                                                        <p>غیر فعال</p>
-                                                        <ul class="list-group list-group-flush" id="inactive">
-                                                            @foreach($inactive as $item)
-                                                                <li class="list-group-item drag-item cursor-move d-flex justify-content-between align-items-center"
-                                                                    data-id="{{ $item->id }}" style="">
-                                                                    <span>{{ $item->name }}</span>
-                                                                </li>
-                                                            @endforeach
-                                                        </ul>
+                @can('edit-menus')
+                    <div class="modal fade" id="modalCenter" tabindex="-1" style="display: none;" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title secondary-font" id="modalCenterTitle">ویرایش ترتیب</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row mb-4">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-12 mb-md-0 mb-4">
+                                                            <p>فعال</p>
+                                                            <ul class="list-group list-group-flush" id="active">
+                                                                @foreach($active as $item)
+                                                                    <li class="list-group-item drag-item cursor-move d-flex justify-content-between align-items-center"
+                                                                        data-id="{{ $item->id }}" style="">
+                                                                        <span>{{ $item->name }}</span>
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>
+                                                        <div class="col-md-6 col-12 mb-md-0 mb-4">
+                                                            <p>غیر فعال</p>
+                                                            <ul class="list-group list-group-flush" id="inactive">
+                                                                @foreach($inactive as $item)
+                                                                    <li class="list-group-item drag-item cursor-move d-flex justify-content-between align-items-center"
+                                                                        data-id="{{ $item->id }}" style="">
+                                                                        <span>{{ $item->name }}</span>
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">بستن
-                                </button>
-                                <button type="button" id="edit-order" class="btn btn-primary" data-bs-dismiss="modal">
-                                    ویرایش
-                                </button>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">بستن
+                                    </button>
+                                    <button type="button" id="edit-order" class="btn btn-primary"
+                                            data-bs-dismiss="modal">
+                                        ویرایش
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="offcanvas offcanvas-end" id="offcanvasAddUser"
-                     aria-labelledby="offcanvasAddUserLabel">
-                    <div class="offcanvas-header border-bottom">
-                        <h6 id="offcanvasAddUserLabel" class="offcanvas-title">افزودن آیتم جدید</h6>
-                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                                aria-label="Close"></button>
+                @endcan
+                @can('create-menus')
+                    <div class="offcanvas offcanvas-end" id="offcanvasAddUser"
+                         aria-labelledby="offcanvasAddUserLabel">
+                        <div class="offcanvas-header border-bottom">
+                            <h6 id="offcanvasAddUserLabel" class="offcanvas-title">افزودن آیتم جدید</h6>
+                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body mx-0 flex-grow-0">
+                            <form class="add-new-user pt-0" id="addNewUserForm"
+                                  action="{{ route('admin.menus.store') }}"
+                                  method="POST">
+                                @csrf
+                                <div class="mb-3">
+                                    <label class="form-label" for="name">نام</label>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                           required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="slug">لینک</label>
+                                    <input type="text" class="form-control" id="slug" name="slug"
+                                           required>
+                                </div>
+                                <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">ثبت</button>
+                                <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">
+                                    انصراف
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                    <div class="offcanvas-body mx-0 flex-grow-0">
-                        <form class="add-new-user pt-0" id="addNewUserForm"
-                              action="{{ route('admin.menuentry.store') }}"
-                              method="POST">
-                            @csrf
-                            <div class="mb-3">
-                                <label class="form-label" for="name">نام</label>
-                                <input type="text" class="form-control" id="name" name="name"
-                                       required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="slug">لینک</label>
-                                <input type="text" class="form-control" id="slug" name="slug"
-                                       required>
-                            </div>
-                            <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">ثبت</button>
-                            <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">
-                                انصراف
-                            </button>
-                        </form>
-                    </div>
-                </div>
+                @endcan
             </div>
         </div>
         <div class="content-backdrop fade"></div>
@@ -230,12 +239,8 @@
 
             const sortedData = [...pendingTasks, ...completedTasks];
 
-            saveSortedData(sortedData);
-        });
-
-        function saveSortedData(sortedData) {
-            fetch('{{ route("admin.menuentry.sort") }}', {
-                method: 'POST',
+            fetch('{{ route('admin.menus.sort') }}', {
+                method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
@@ -246,6 +251,6 @@
                     location.reload()
                 }
             })
-        }
+        });
     </script>
 @endpush

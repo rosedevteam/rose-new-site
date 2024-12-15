@@ -5,19 +5,19 @@ namespace Modules\Menu\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Gate;
 use Illuminate\Validation\Rules\File;
-use Modules\Menu\Models\MenuEntry;
+use Modules\Menu\Models\Menu;
 
-class MenuEntryController extends Controller
+class MenuController extends Controller
 {
     public function index()
     {
-        Gate::authorize('menu-entries');
+        Gate::authorize('view-menus');
         try {
-            $menuEntries = MenuEntry::query()
+            $menus = Menu::query()
                 ->where('is_parent', true)
                 ->orderBy('order');
-            $active = $menuEntries->get()->where('is_active', true);
-            $inactive = $menuEntries->get()->where('is_active', false);
+            $active = $menus->get()->where('is_active', true);
+            $inactive = $menus->get()->where('is_active', false);
             return view('menu::admin.index', compact('active', 'inactive'));
         } catch (\Throwable $th) {
             alert()->error('خطا', $th->getMessage());
@@ -25,25 +25,31 @@ class MenuEntryController extends Controller
         }
     }
 
-    public function show(MenuEntry $menuEntry)
+    public function show(Menu $menu)
     {
-        Gate::authorize('menu-entries');
+        Gate::authorize('view-menus');
         try {
-            $children = $menuEntry->children()->get();
-            return view('menu::admin.show', compact('menuEntry', 'children'));
+            if (!$menu->has_children) {
+                return view('menu::admin.show', compact('menu'));
+            }
+            $children = $menu->children();
+            $active = $children->get()->where('is_active', true);
+            $inactive = $children->where('is_active', false);
+            return view('menu::admin.show', compact('menu', 'active', 'inactive'));
         } catch (\Throwable $th) {
             alert()->error('خطا', $th->getMessage());
             return back();
         }
     }
 
-    public function update(MenuEntry $menuEntry)
+    public function update(Menu $menu)
     {
-        Gate::authorize('menu-entries');
+        Gate::authorize('edit-menus');
         $data = request()->validate([
             'name' => 'bail|nullable|string',
             'slug' => 'bail|nullable|string',
             'is_active' => 'bail|nullable|boolean',
+            'has_children' => 'bail|nullable|boolean',
             'icon' => [
                 'bail',
                 'nullable',
@@ -51,7 +57,7 @@ class MenuEntryController extends Controller
             ]
         ]);
         try {
-            if(!is_null($data['icon'])) {
+            if (!is_null($data['icon'])) {
                 $name = 'menu-icon-' . now()->timestamp . '.pdf';
                 request()->file('icon')->storeAs('assests/admin/svg/icons', $name, 'public');
                 $data['icon'] = null;
@@ -59,14 +65,14 @@ class MenuEntryController extends Controller
             $data = array_filter($data, function ($value) {
                 return !is_null($value);
             });
-            $menuEntry->update($data);
+            $menu->update($data);
             activity()
                 ->causedBy(auth()->user())
-                ->performedOn($menuEntry)
+                ->performedOn($menu)
                 ->withProperties($data)
                 ->log('ویرایش آیتم منو');
             alert()->success('موفق', 'با موفقیت انجام شد');
-            return redirect(route('admin.menuentry.show', $menuEntry));
+            return redirect(route('admin.menus.show', $menu));
         } catch (\Throwable $th) {
             alert()->error('خطا', $th->getMessage());
             return back();
@@ -75,25 +81,27 @@ class MenuEntryController extends Controller
 
     public function store()
     {
-        Gate::authorize('menu-entries');
+        Gate::authorize('create-menus');
         $data = request()->validate([
             'name' => 'bail|required|string',
             'slug' => 'bail|nullable|string',
+            'has_children' => 'bail|boolean',
         ]);
         try {
-            $menuEntry = MenuEntry::create([
+            $menu = Menu::create([
                 'name' => $data['name'],
                 'slug' => $data['slug'] ?: '#',
                 'is_parent' => true,
                 'icon' => null,
                 'author_id' => auth()->id(),
+                'has_children' => $data['has_children'],
                 'order' => null,
                 'parent_id' => null,
                 'is_active' => false,
             ]);
             activity()
                 ->causedBy(auth()->user())
-                ->performedOn($menuEntry)
+                ->performedOn($menu)
                 ->withProperties($data)
                 ->log('ساخت آیتم منو جدید');
             alert()->success('موفق', 'آیتم منو جدید ساخته شد');
@@ -104,9 +112,26 @@ class MenuEntryController extends Controller
         }
     }
 
+    public function destroy(Menu $menu)
+    {
+        Gate::authorize('delete-menus');
+        try {
+            $menu->delete();
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($menu)
+                ->log('حذف منو');
+            alert()->success('موفق', 'با موفقیت انجام شد');
+            return route('admin.menus.index');
+        } catch (\Throwable $th) {
+            alert()->error('خطا', $th->getMessage());
+            return back();
+        }
+    }
+
     public function sort()
     {
-        Gate::authorize('menu-entries');
+        Gate::authorize('edit-menus');
         try {
             $data = request()->validate([
                 '*.id' => 'required|integer|exists:menu_entries,id',
@@ -114,7 +139,7 @@ class MenuEntryController extends Controller
                 '*.status' => 'required|boolean',
             ]);
             foreach ($data as $item) {
-                $menu = MenuEntry::where('id', $item['id'])->first();
+                $menu = Menu::where('id', $item['id'])->first();
                 $menu->update([
                     'order' => $item['order'],
                     'is_active' => $item['status'],

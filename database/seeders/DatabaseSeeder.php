@@ -7,7 +7,7 @@ use Modules\Category\Models\Category;
 use Modules\Comment\Models\Comment;
 use Modules\JobOffer\Models\JobApplication;
 use Modules\JobOffer\Models\JobOffer;
-use Modules\Menu\Models\MenuEntry;
+use Modules\Menu\Models\Menu;
 use Modules\Order\Models\Order;
 use Modules\Post\Models\Post;
 use Modules\Product\Models\Product;
@@ -73,7 +73,10 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'create-orders']);
         Permission::create(['name' => 'delete-orders']);
         //
-        Permission::create(['name' => 'menu-entries']);
+        Permission::create(['name' => 'view-menus']);
+        Permission::create(['name' => 'edit-menus']);
+        Permission::create(['name' => 'create-menus']);
+        Permission::create(['name' => 'delete-menus']);
         //
         Permission::create(['name' => 'view-logs']);
 
@@ -357,7 +360,7 @@ class DatabaseSeeder extends Seeder
 
     private function seedMenu()
     {
-       MenuEntry::factory()->create([
+        Menu::factory()->create([
            'is_active' => true,
            'author_id' => 1,
            'parent_id' => null,
@@ -367,27 +370,29 @@ class DatabaseSeeder extends Seeder
            'is_parent' => true,
            'order' => 1,
        ]);
-        MenuEntry::factory()->create([
+        Menu::factory()->create([
             'author_id' => 1,
             'parent_id' => null,
             'name' => 'دوره ها',
             'is_active' => true,
+            'has_children' => true,
             'slug' => '#',
             'icon' => 'asgd',
             'is_parent' => true,
             'order' => 2,
         ]);
-        MenuEntry::factory()->create([
+        Menu::factory()->create([
             'is_active' => true,
             'author_id' => 1,
             'parent_id' => null,
             'name' => 'آموزش ها',
             'slug' => '#',
+            'has_children' => true,
             'icon' => null,
             'is_parent' => true,
             'order' => 3,
         ]);
-        MenuEntry::factory()->create([
+        Menu::factory()->create([
             'author_id' => 1,
             'parent_id' => null,
             'name' => 'گزارش روزانه بازار',
@@ -397,39 +402,41 @@ class DatabaseSeeder extends Seeder
             'is_parent' => true,
             'order' => 4,
         ]);
-        MenuEntry::factory()->create([
+        Menu::factory()->create([
             'author_id' => 1,
             'is_active' => true,
             'parent_id' => null,
             'name' => 'ارتباط با ما',
+            'has_children' => true,
             'slug' => '#',
             'icon' => null,
             'is_parent' => true,
             'order' => 5,
         ]);
-        MenuEntry::factory()->create([
+        Menu::factory()->create([
             'author_id' => 1,
             'parent_id' => null,
             'is_active' => true,
             'name' => 'امتیازدهی',
+            'has_children' => true,
             'slug' => '#',
             'icon' => null,
             'is_parent' => true,
             'order' => 6,
         ]);
-        MenuEntry::factory()->create([
+        Menu::factory()->create([
             'author_id' => 1,
             'is_active' => true,
-            'parent_id' => 1,
+            'parent_id' => 2,
             'name' => 'دوره های آموزشی',
             'slug' => 'product-category/دوره-ها',
             'icon' => 'graduate-hat-square.svg',
             'is_parent' => false,
             'order' => 1,
         ]);
-        MenuEntry::factory()->create([
+        Menu::factory()->create([
             'author_id' => 1,
-            'parent_id' => 1,
+            'parent_id' => 2,
             'name' => 'بازنشستگی در ۷ سال',
             'is_active' => true,
             'slug' => 'بازنشستگی-در-۷سال',
@@ -437,19 +444,19 @@ class DatabaseSeeder extends Seeder
             'is_parent' => false,
             'order' => 2,
         ]);
-        MenuEntry::factory()->create([
+        Menu::factory()->create([
             'author_id' => 1,
             'is_active' => true,
-            'parent_id' => 2,
+            'parent_id' => 3,
             'name' => 'وبلاگ',
             'slug' => 'blog',
             'icon' => 'scroll.svg',
             'is_parent' => false,
             'order' => 3,
         ]);
-        MenuEntry::factory()->create([
+        Menu::factory()->create([
             'author_id' => 1,
-            'parent_id' => 2,
+            'parent_id' => 3,
             'name' => 'پادکست',
             'is_active' => true,
             'slug' => 'podcast',
@@ -457,19 +464,19 @@ class DatabaseSeeder extends Seeder
             'is_parent' => false,
             'order' => 4,
         ]);
-        MenuEntry::factory()->create([
+        Menu::factory()->create([
             'author_id' => 1,
             'is_active' => true,
-            'parent_id' => 4,
+            'parent_id' => 5,
             'name' => 'درباره ما',
             'slug' => 'about',
             'icon' => 'News-Bookmark-1.svg',
             'is_parent' => false,
             'order' => 1,
         ]);
-        MenuEntry::factory()->create([
+        Menu::factory()->create([
             'author_id' => 1,
-            'parent_id' => 4,
+            'parent_id' => 5,
             'name' => 'همکاری با ما',
             'slug' => 'همکاری-با-ما',
             'is_active' => true,
@@ -477,9 +484,9 @@ class DatabaseSeeder extends Seeder
             'is_parent' => false,
             'order' => 2,
         ]);
-        MenuEntry::factory()->create([
+        Menu::factory()->create([
             'author_id' => 1,
-            'parent_id' => 4,
+            'parent_id' => 5,
             'name' => 'تماس با ما',
             'slug' => 'تماس-با-ما',
             'icon' => 'Headphones-Customer-support.svg',
@@ -487,9 +494,9 @@ class DatabaseSeeder extends Seeder
             'is_parent' => false,
             'order' => 3,
         ]);
-        MenuEntry::factory()->create([
+        Menu::factory()->create([
             'author_id' => 1,
-            'parent_id' => 5,
+            'parent_id' => 6,
             'name' => 'هم مسیر',
             'slug' => 'ham-masir',
             'icon' => 'crystal.svg',
