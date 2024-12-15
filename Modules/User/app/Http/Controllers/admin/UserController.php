@@ -166,61 +166,61 @@ class UserController extends Controller
         }
     }
 
-    public function deleted()
-    {
-        gate::authorize('restore-users');
-        try {
-            $roles = Role::all()->select('name', 'id');
-            $role_id = request('role');
-            $sort_by = request('sort_by');
-            $sort_direction = request('sort_direction', 'asc');
-            $search = request('search');
-            $count = request('count', 10);
-            $users = User::onlyTrashed()->with('roles');
-            if ($role_id) {
-                $users = $users->whereHas('roles', function ($query) use ($role_id) {
-                    return $query->where('role_id', $role_id);
-                });
-            }
-            if ($search) {
-                $users = $users->where('first_name', 'like', '%' . $search . '%')
-                    ->orWhere('last_name', 'like', '%' . $search . '%')
-                    ->orWhere('email', 'like', '%' . $search . '%')
-                    ->orWhere('phone', 'like', '%' . $search . '%');
-            }
-            if ($sort_by || $sort_direction) {
-                $users = $users->orderBy($sort_by, $sort_direction);
-            }
-            $users = $users->paginate($count)->withQueryString();
-            return view('user::admin.deleted', compact(
-                'users',
-                'roles',
-                'sort_by',
-                'sort_direction',
-                'search',
-                'role_id',
-                'count'
-            ));
-        } catch (\Throwable $th) {
-            alert()->error("خطا", $th->getMessage());
-            return back();
-        }
-    }
+//    public function deleted()
+//    {
+//        gate::authorize('restore-users');
+//        try {
+//            $roles = Role::all()->select('name', 'id');
+//            $role_id = request('role');
+//            $sort_by = request('sort_by');
+//            $sort_direction = request('sort_direction', 'asc');
+//            $search = request('search');
+//            $count = request('count', 10);
+//            $users = User::onlyTrashed()->with('roles');
+//            if ($role_id) {
+//                $users = $users->whereHas('roles', function ($query) use ($role_id) {
+//                    return $query->where('role_id', $role_id);
+//                });
+//            }
+//            if ($search) {
+//                $users = $users->where('first_name', 'like', '%' . $search . '%')
+//                    ->orWhere('last_name', 'like', '%' . $search . '%')
+//                    ->orWhere('email', 'like', '%' . $search . '%')
+//                    ->orWhere('phone', 'like', '%' . $search . '%');
+//            }
+//            if ($sort_by || $sort_direction) {
+//                $users = $users->orderBy($sort_by, $sort_direction);
+//            }
+//            $users = $users->paginate($count)->withQueryString();
+//            return view('user::admin.deleted', compact(
+//                'users',
+//                'roles',
+//                'sort_by',
+//                'sort_direction',
+//                'search',
+//                'role_id',
+//                'count'
+//            ));
+//        } catch (\Throwable $th) {
+//            alert()->error("خطا", $th->getMessage());
+//            return back();
+//        }
+//    }
 
-    public function restore(User $user)
-    {
-        Gate::authorize('restore-users');
-        try {
-            $user->restore();
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($user)
-                ->log('لغو حذف کاربر');
-            alert()->success("موفق", 'با موفقیت انجام شد');
-            return redirect(route('admin.users.index'));
-        } catch (\Throwable $th) {
-            alert()->error("خطا", $th->getMessage());
-            return back();
-        }
-    }
+//    public function restore(User $user)
+//    {
+//        Gate::authorize('restore-users');
+//        try {
+//            $user->restore();
+//            activity()
+//                ->causedBy(auth()->user())
+//                ->performedOn($user)
+//                ->log('لغو حذف کاربر');
+//            alert()->success("موفق", 'با موفقیت انجام شد');
+//            return redirect(route('admin.users.index'));
+//        } catch (\Throwable $th) {
+//            alert()->error("خطا", $th->getMessage());
+//            return back();
+//        }
+//    }
 }

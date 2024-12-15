@@ -100,7 +100,7 @@
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column"><a
-                                                    href="{{ route('admin.posts.show', $post->slug) }}"
+                                                    href="{{ route('admin.posts.show', $post) }}"
                                                     class="text-body text-truncate">
                                                     <span class="fw-semibold">{{ $post->title }}</span>
                                                 </a>
