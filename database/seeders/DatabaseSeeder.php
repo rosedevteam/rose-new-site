@@ -376,7 +376,7 @@ class DatabaseSeeder extends Seeder
             'is_active' => true,
             'has_children' => true,
             'slug' => '#',
-            'icon' => 'asgd',
+            'icon' => null,
             'order' => 2,
         ]);
         Menu::factory()->create([

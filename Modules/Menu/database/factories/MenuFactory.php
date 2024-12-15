@@ -4,7 +4,7 @@ namespace Modules\Menu\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class MenuEntryFactory extends Factory
+class MenuFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

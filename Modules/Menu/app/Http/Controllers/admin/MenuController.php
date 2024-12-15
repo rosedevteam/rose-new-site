@@ -14,7 +14,7 @@ class MenuController extends Controller
         Gate::authorize('view-menus');
         try {
             $menus = Menu::query()
-                ->where('is_parent', true)
+                ->where('parent_id')
                 ->orderBy('order');
             $active = $menus->get()->where('is_active', true);
             $inactive = $menus->get()->where('is_active', false);
@@ -85,16 +85,14 @@ class MenuController extends Controller
         $data = request()->validate([
             'name' => 'bail|required|string',
             'slug' => 'bail|nullable|string',
-            'has_children' => 'bail|boolean',
         ]);
         try {
             $menu = Menu::create([
                 'name' => $data['name'],
                 'slug' => $data['slug'] ?: '#',
-                'is_parent' => true,
                 'icon' => null,
                 'author_id' => auth()->id(),
-                'has_children' => $data['has_children'],
+                'has_children' => false,
                 'order' => null,
                 'parent_id' => null,
                 'is_active' => false,
@@ -134,7 +132,7 @@ class MenuController extends Controller
         Gate::authorize('edit-menus');
         try {
             $data = request()->validate([
-                '*.id' => 'required|integer|exists:menu_entries,id',
+                '*.id' => 'required|integer|exists:menus,id',
                 '*.order' => 'required|integer|min:1',
                 '*.status' => 'required|boolean',
             ]);
