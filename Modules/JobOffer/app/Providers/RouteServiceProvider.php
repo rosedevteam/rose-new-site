@@ -2,8 +2,8 @@
 
 namespace Modules\JobOffer\Providers;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -38,7 +38,6 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::middleware('web')
             ->namespace($this->moduleNamespace)
-            ->name("joboffer")
             ->group(module_path('JobOffer', 'routes/web.php'));
     }
 

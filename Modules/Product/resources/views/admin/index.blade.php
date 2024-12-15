@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
-                    <form action="{{ route('admin.product.index') }}" method="GET">
+                    <form action="{{ route('admin.products.index') }}" method="GET">
                         <div class="d-flex justify-content-start align-items-center row py-3 gap-3 gap-md-0 primary-font">
                             <div class="col-md-3">
                                 <label for="title" class="form-label">جستجو: </label>
@@ -96,7 +96,7 @@
                                     <td>
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column"><a
-                                                        href="{{ route('admin.product.show', $product) }}"
+                                                    href="{{ route('admin.products.show', $product) }}"
                                                         class="text-body text-truncate">
                                                     <span class="fw-semibold">{{ $product->title }}</span>
                                                 </a>
@@ -116,7 +116,7 @@
                                     </td>
                                     <td>
                                         <div class="d-inline-block text-nowrap">
-                                            <a href="{{ route('admin.user.show', $product->author) }}"
+                                            <a href="{{ route('admin.users.show', $product->author) }}"
                                                class="text-body text-truncate">
                                                 {{ $product->author->name() }}
                                             </a>

@@ -14,7 +14,7 @@
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
-                    <form action="{{ route('admin.log.index') }}" method="GET">
+                    <form action="{{ route('admin.logs.index') }}" method="GET">
                         <div
                             class="d-flex justify-content-start align-items-center row py-3 gap-1 gap-md-0 primary-font">
                             <div class="col-md-3">
@@ -78,7 +78,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                <span class="fw-semibold"><a href="{{ route('admin.user.show', $log->causer) }}"
+                                <span class="fw-semibold"><a href="{{ route('admin.users.show', $log->causer) }}"
                                                              class="text-body text-truncate">
                                     {{ $log->causer->name() }}</a>
                                 </span>

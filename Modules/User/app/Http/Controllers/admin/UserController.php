@@ -78,7 +78,7 @@ class UserController extends Controller
                 ->withProperties($data)
                 ->log('ساخت کاربر');
             alert()->success("موفق", "کاربر با موفقیت ساخته شد");
-            return redirect(route('admin.user.index'));
+            return redirect(route('admin.users.index'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -137,7 +137,7 @@ class UserController extends Controller
                 ->withProperties([$userData, $billingData])
                 ->log('ویرایش کاربر');
             alert()->success("موفق", "با موفقیت انجام شد");
-            return redirect(route('admin.user.show', $user));
+            return redirect(route('admin.users.show', $user));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -159,7 +159,7 @@ class UserController extends Controller
                 ->performedOn($user)
                 ->log('حذف کاربر');
             alert()->success("موفق", "کاربر حذف شد");
-            return redirect(route('admin.user.index'));
+            return redirect(route('admin.users.index'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -217,7 +217,7 @@ class UserController extends Controller
                 ->performedOn($user)
                 ->log('لغو حذف کاربر');
             alert()->success("موفق", 'با موفقیت انجام شد');
-            return redirect(route('admin.user.index'));
+            return redirect(route('admin.users.index'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();

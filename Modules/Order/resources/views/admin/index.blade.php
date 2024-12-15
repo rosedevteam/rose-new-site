@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
-                    <form action="{{ route('admin.order.index') }}" method="GET">
+                    <form action="{{ route('admin.orders.index') }}" method="GET">
                         <div
                             class="d-flex justify-content-start align-items-center row py-3 gap-3 gap-md-0 primary-font">
                             <div class="col-md-2">
@@ -76,7 +76,7 @@
                                     <div
                                         class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
                                         <div class="dt-buttons btn-group flex-wrap">
-                                            <a href="{{ route('admin.order.create') }}">
+                                            <a href="{{ route('admin.orders.create') }}">
                                                 <button class="btn btn-secondary add-new btn-primary ms-2" tabindex="0"
                                                         aria-controls="DataTables_Table_0" type="button"><span><i
                                                             class="bx bx-plus me-0 me-lg-2"></i><span
@@ -120,7 +120,7 @@
                                 <tr class="">
                                     <td>
                                 <span class="fw-semibold">
-                                    <a href="{{ route('admin.user.show', $order->user()) }}"
+                                    <a href="{{ route('admin.users.show', $order->user()) }}"
                                        class="text-body text-truncate"><span
                                             class="fw-semibold">{{ $order->user()->name() }}</span> </a>
                                 </span>
@@ -131,7 +131,7 @@
                                             $i = 0
                                         @endphp
                                         @foreach($order->products()->get() as $product)
-                                            <a href="{{ route('admin.product.show', $product) }}"
+                                            <a href="{{ route('admin.products.show', $product) }}"
                                                class="text-body text-truncate"><span
                                                     class="fw-semibold">{{ $product->title . ($i != $len ? "، " : "") }}</span></a>
                                             @php $i++ @endphp
@@ -167,7 +167,7 @@
                                     <td>
                                         <div class="d-inline-block text-nowrap">
                                             <button class="btn btn-sm btn-icon">
-                                                <a href="{{ route('admin.order.show', $order) }}">
+                                                <a href="{{ route('admin.orders.show', $order) }}">
                                                     <i class="bx bx-detail"></i>
                                                 </a>
                                             </button>

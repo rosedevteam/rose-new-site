@@ -14,7 +14,7 @@
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
-                    <form action="{{ route('admin.jobapplication.index') }}" method="GET">
+                    <form action="{{ route('admin.job-applications.index') }}" method="GET">
                         <div
                             class="d-flex justify-content-start align-items-center row py-3 gap-1 gap-md-0 primary-font">
                             <div class="col-md-3">
@@ -101,7 +101,7 @@
                                     <td>
                                         <div class="d-inline-block text-nowrap">
                                             <button class="btn btn-sm btn-icon">
-                                                <a href="{{ route('admin.jobapplication.show', $jobApplication) }}">
+                                                <a href="{{ route('admin.job-applications.show', $jobApplication) }}">
                                                     <i class="bx bx-detail"></i>
                                                 </a>
                                             </button>

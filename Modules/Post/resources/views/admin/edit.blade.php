@@ -34,7 +34,7 @@
                     </ul>
                 </div>
 
-                <form action="{{ route('admin.post.update', $post) }}" method="POST">
+                <form action="{{ route('admin.posts.update', $post) }}" method="POST">
                     @method('PATCH')
                     @csrf
                     <div class="tab-content">

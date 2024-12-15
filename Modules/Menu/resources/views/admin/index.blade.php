@@ -69,7 +69,10 @@
                                     </td>
                                     <td>
                                 <span class="fw-semibold">
+                                                <a href="{{ route("admin.users.show", $menu->author) }}"
+                                                   class="text-body text-truncate">
                                     {{ $menu->author->name() }}
+                                                </a>
                                 </span>
                                     </td>
                                     <td>{{ verta($menu->created_at)->formatJalaliDateTime() }}</td>

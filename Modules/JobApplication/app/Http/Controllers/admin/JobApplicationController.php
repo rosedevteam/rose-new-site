@@ -1,11 +1,12 @@
 <?php
 
-namespace Modules\JobOffer\Http\Controllers\admin;
+namespace Modules\JobApplication\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
 use Gate;
-use Modules\JobOffer\Models\JobApplication;
+use Modules\JobApplication\Models\JobApplication;
 
-class JobApplicationController
+class JobApplicationController extends Controller
 {
     public function index()
     {
@@ -25,7 +26,7 @@ class JobApplicationController
                     ->orWhere('phone', 'like', '%' . $search . '%');
             }
             $jobApplications = $jobApplications->orderBy('created_at', $sort_direction)->paginate($count);
-            return view('joboffer::admin.jobapplication.index', compact(
+            return view('jobapplication::admin.index', compact(
                 'jobApplications',
                 'count',
                 'sort_direction',
@@ -42,7 +43,7 @@ class JobApplicationController
     {
         Gate::authorize('view-job-applications');
         try {
-            return view('joboffer::admin.jobapplication.show', compact('jobApplication'));
+            return view('jobapplication::admin.show', compact('jobApplication'));
         } catch (\Throwable $th) {
             alert()->error('خطا', $th->getMessage());
             return back();
@@ -63,10 +64,11 @@ class JobApplicationController
                 ->withProperties($data)
                 ->log('ویرایش رزومه');
             alert()->success('موفق', 'ویرایش رزومه با موفقیت انجام شد');
-            return redirect(route('admin.jobapplication.show', $jobApplication));
+            return redirect(route('admin.job-applications.show', $jobApplication));
         } catch (\Throwable $th) {
             alert()->error('خطا', $th->getMessage());
             return back();
         }
     }
+
 }

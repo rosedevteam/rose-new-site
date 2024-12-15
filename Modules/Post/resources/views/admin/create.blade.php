@@ -29,7 +29,7 @@
                     </ul>
                 </div>
 
-                <form action="{{ route('admin.post.store') }}" method="post">
+                <form action="{{ route('admin.posts.store') }}" method="post">
                     @csrf
                     <div class="tab-content">
                         <div class="tab-pane fade active show" id="form-tabs-post" role="tabpanel">

@@ -153,7 +153,7 @@
                                                         $i = 0
                                                     @endphp
                                                     @foreach($order->products()->get() as $product)
-                                                        <a href="{{ route('admin.product.show', $product) }}"
+                                                        <a href="{{ route('admin.products.show', $product) }}"
                                                            class="text-body text-truncate"><span
                                                                 class="fw-semibold">{{ $product->title . ($i != $len ? "، " : "") }}</span></a>
                                                         @php $i++ @endphp
@@ -244,7 +244,7 @@
                             <div class="text-center mb-4 mt-0 mt-md-n2">
                                 <h3 class="secondary-font">ویرایش اطلاعات کاربر</h3>
                             </div>
-                            <form id="editUserForm" class="row g-3" action="{{ route('admin.user.update', $user) }}"
+                            <form id="editUserForm" class="row g-3" action="{{ route('admin.users.update', $user) }}"
                                   method="POST">
                                 @csrf
                                 @method('PATCH')
@@ -312,7 +312,7 @@
                                     <h3 class="secondary-font">آیا اطمینان دارید؟</h3>
                                 </div>
                                 @if(!$user->trashed())
-                                    <form id="deleteUserForm" action="{{ route('admin.user.destroy', $user) }}"
+                                    <form id="deleteUserForm" action="{{ route('admin.users.destroy', $user) }}"
                                           method="POST">
                                         @csrf
                                         @method('DELETE')
@@ -326,7 +326,7 @@
                                         </div>
                                     </form>
                                 @else
-                                    <form id="deleteUserForm" action="{{ route('admin.user.restore', $user) }}"
+                                    <form id="deleteUserForm" action="{{ route('admin.users.restore', $user) }}"
                                           method="POST">
                                         @csrf
                                         @method('PATCH')

@@ -76,7 +76,7 @@ class CommentController extends Controller
         }
     }
 
-    public function store(Comment $comment)
+    public function reply(Comment $comment)
     {
         Gate::authorize('edit-comments');
         $data = request()->validate([
@@ -96,7 +96,7 @@ class CommentController extends Controller
                 ->withProperties($newComment)
                 ->log('ساخت پست');
             alert()->success("موفق", 'کامنت با موفقیت ثبت شد');
-            return redirect(route('admin.comment.show', $comment));
+            return redirect(route('admin.comments.show', $comment));
         } catch (Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();

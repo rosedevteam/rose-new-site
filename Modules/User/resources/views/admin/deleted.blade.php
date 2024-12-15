@@ -14,7 +14,7 @@
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
-                    <form action="{{ route('admin.user.deleted') }}" method="GET">
+                    <form action="{{ route('admin.users.deleted') }}" method="GET">
                         <div
                             class="d-flex justify-content-start align-items-center row py-3 gap-1 gap-md-0 primary-font">
                             <div class="col-md-3">
@@ -123,7 +123,7 @@
                                     <td>
                                         <div class="d-inline-block text-nowrap">
                                             <button class="btn btn-sm btn-icon">
-                                                <a href="{{ route('admin.user.show', $user->id) }}">
+                                                <a href="{{ route('admin.users.show', $user->id) }}">
                                                     <i class="bx bx-detail"></i>
                                                 </a>
                                             </button>

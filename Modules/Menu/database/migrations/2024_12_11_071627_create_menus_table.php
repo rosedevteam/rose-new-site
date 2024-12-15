@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug');
             $table->string('icon')->nullable();
-            $table->boolean('is_parent')->default(false);
             $table->boolean('has_children')->default(false);
             $table->foreignId('parent_id')->nullable()->constrained('menus');
             $table->integer('order')->nullable();

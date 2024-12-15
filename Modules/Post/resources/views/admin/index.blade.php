@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
-                    <form action="{{ route('admin.post.index') }}" method="GET">
+                    <form action="{{ route('admin.posts.index') }}" method="GET">
                         <div
                             class="d-flex justify-content-start align-items-center row py-3 gap-3 gap-md-0 primary-font">
                             <div class="col-md-3">
@@ -57,7 +57,7 @@
                                     <div
                                         class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
                                         <div class="dt-buttons btn-group flex-wrap">
-                                            <a href="{{ route('admin.post.create') }}">
+                                            <a href="{{ route('admin.posts.create') }}">
                                                 <button class="btn btn-secondary add-new btn-primary ms-2" tabindex="0"
                                                         aria-controls="DataTables_Table_0" type="button"><span><i
                                                             class="bx bx-plus me-0 me-lg-2"></i><span
@@ -100,7 +100,7 @@
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column"><a
-                                                    href="{{ route('admin.post.show', $post->slug) }}"
+                                                    href="{{ route('admin.posts.show', $post->slug) }}"
                                                     class="text-body text-truncate">
                                                     <span class="fw-semibold">{{ $post->title }}</span>
                                                 </a>
@@ -109,7 +109,7 @@
                                     </td>
                                     <td>
                                 <span class="fw-semibold">
-                                    <a href="{{ route('admin.user.show', $post->author) }}"
+                                    <a href="{{ route('admin.users.show', $post->author) }}"
                                        class="text-body text-truncate">
                                     {{ $post->author()->first()->name() }}</a>
                                 </span>
@@ -125,7 +125,7 @@
                                     <td>
                                         <div class="d-inline-block text-nowrap">
                                             <button class="btn btn-sm btn-icon">
-                                                <a href="{{ route('admin.post.edit', $post) }}">
+                                                <a href="{{ route('admin.posts.edit', $post) }}">
                                                     <i class="bx bx-edit"></i>
                                                 </a>
                                             </button>

@@ -10,5 +10,6 @@
     "Admin": true,
     "Order": true,
     "JobOffer": true,
-    "Menu": true
+    "Menu": true,
+    "JobApplication": true
 }

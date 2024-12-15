@@ -31,7 +31,7 @@
                         <div class="row mx-2 my-2">توضیحات:
                             {{ $jobApplication->description }}
                         </div>
-                        <form action="{{ route("admin.jobapplication.update", $jobApplication) }}"
+                        <form action="{{ route("admin.job-applications.update", $jobApplication) }}"
                               method="POST">
                             <div class="row mt-4">
                                 @method("PATCH")
