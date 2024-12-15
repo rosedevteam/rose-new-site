@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Modules\Category\Models\Category;
 use Modules\Comment\Models\Comment;
-use Modules\JobOffer\Models\JobApplication;
+use Modules\JobApplication\Models\JobApplication;
 use Modules\JobOffer\Models\JobOffer;
 use Modules\Menu\Models\Menu;
 use Modules\Order\Models\Order;
@@ -367,7 +367,6 @@ class DatabaseSeeder extends Seeder
            'name' => 'صفحه نخست',
            'slug' => '#',
            'icon' => null,
-           'is_parent' => true,
            'order' => 1,
        ]);
         Menu::factory()->create([
@@ -378,7 +377,6 @@ class DatabaseSeeder extends Seeder
             'has_children' => true,
             'slug' => '#',
             'icon' => 'asgd',
-            'is_parent' => true,
             'order' => 2,
         ]);
         Menu::factory()->create([
@@ -389,7 +387,6 @@ class DatabaseSeeder extends Seeder
             'slug' => '#',
             'has_children' => true,
             'icon' => null,
-            'is_parent' => true,
             'order' => 3,
         ]);
         Menu::factory()->create([
@@ -399,7 +396,6 @@ class DatabaseSeeder extends Seeder
             'slug' => 'گزارش-روزانه-بازار',
             'icon' => null,
             'is_active' => true,
-            'is_parent' => true,
             'order' => 4,
         ]);
         Menu::factory()->create([
@@ -410,7 +406,6 @@ class DatabaseSeeder extends Seeder
             'has_children' => true,
             'slug' => '#',
             'icon' => null,
-            'is_parent' => true,
             'order' => 5,
         ]);
         Menu::factory()->create([
@@ -421,7 +416,6 @@ class DatabaseSeeder extends Seeder
             'has_children' => true,
             'slug' => '#',
             'icon' => null,
-            'is_parent' => true,
             'order' => 6,
         ]);
         Menu::factory()->create([
@@ -431,7 +425,6 @@ class DatabaseSeeder extends Seeder
             'name' => 'دوره های آموزشی',
             'slug' => 'product-category/دوره-ها',
             'icon' => 'graduate-hat-square.svg',
-            'is_parent' => false,
             'order' => 1,
         ]);
         Menu::factory()->create([
@@ -441,7 +434,6 @@ class DatabaseSeeder extends Seeder
             'is_active' => true,
             'slug' => 'بازنشستگی-در-۷سال',
             'icon' => 'target-goal.svg',
-            'is_parent' => false,
             'order' => 2,
         ]);
         Menu::factory()->create([
@@ -451,7 +443,6 @@ class DatabaseSeeder extends Seeder
             'name' => 'وبلاگ',
             'slug' => 'blog',
             'icon' => 'scroll.svg',
-            'is_parent' => false,
             'order' => 3,
         ]);
         Menu::factory()->create([
@@ -461,7 +452,6 @@ class DatabaseSeeder extends Seeder
             'is_active' => true,
             'slug' => 'podcast',
             'icon' => 'headphones.svg',
-            'is_parent' => false,
             'order' => 4,
         ]);
         Menu::factory()->create([
@@ -471,7 +461,6 @@ class DatabaseSeeder extends Seeder
             'name' => 'درباره ما',
             'slug' => 'about',
             'icon' => 'News-Bookmark-1.svg',
-            'is_parent' => false,
             'order' => 1,
         ]);
         Menu::factory()->create([
@@ -481,7 +470,6 @@ class DatabaseSeeder extends Seeder
             'slug' => 'همکاری-با-ما',
             'is_active' => true,
             'icon' => 'star-review.svg',
-            'is_parent' => false,
             'order' => 2,
         ]);
         Menu::factory()->create([
@@ -491,7 +479,6 @@ class DatabaseSeeder extends Seeder
             'slug' => 'تماس-با-ما',
             'icon' => 'Headphones-Customer-support.svg',
             'is_active' => true,
-            'is_parent' => false,
             'order' => 3,
         ]);
         Menu::factory()->create([
@@ -501,7 +488,6 @@ class DatabaseSeeder extends Seeder
             'slug' => 'ham-masir',
             'icon' => 'crystal.svg',
             'is_active' => true,
-            'is_parent' => false,
             'order' => 4,
         ]);
     }
