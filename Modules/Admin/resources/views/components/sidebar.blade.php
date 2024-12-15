@@ -18,7 +18,7 @@ $route = explode('.', Route::currentRouteName())[1];
 
     <ul class="menu-inner py-1">
         @can('view-users')
-            <li @class(["menu-item", 'active' => $route == 'user'])>
+            <li @class(["menu-item", 'active' => $route == 'users'])>
                 <a href="{{ route("admin.users.index") }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-user"></i>
                     <div data-i18n="کاربران">کاربران</div>
@@ -26,7 +26,7 @@ $route = explode('.', Route::currentRouteName())[1];
             </li>
         @endcan
         @can('view-comments')
-            <li @class(["menu-item", 'active' => $route == 'comment'])>
+            <li @class(["menu-item", 'active' => $route == 'comments'])>
                 <a href="{{ route("admin.comments.index") }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-chat"></i>
                     <div data-i18n="نظرات">نظرات</div>
@@ -34,7 +34,7 @@ $route = explode('.', Route::currentRouteName())[1];
             </li>
         @endcan
         @can('view-orders')
-            <li @class(["menu-item", 'active' => $route == 'order'])>
+            <li @class(["menu-item", 'active' => $route == 'orders'])>
                 <a href="{{ route("admin.orders.index") }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-food-menu"></i>
                     <div data-i18n="سفارش ها">سفارش ها</div>
@@ -42,7 +42,7 @@ $route = explode('.', Route::currentRouteName())[1];
             </li>
         @endcan
         @can('view-products')
-            <li @class(["menu-item", 'active' => $route == 'product'])>
+            <li @class(["menu-item", 'active' => $route == 'products'])>
                 <a href="{{ route("admin.products.index") }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-layout"></i>
                     <div data-i18n="دوره ها">دوره ها</div>
@@ -50,7 +50,7 @@ $route = explode('.', Route::currentRouteName())[1];
             </li>
         @endcan
         @can('view-posts')
-            <li @class(["menu-item", 'active' => $route == 'post'])>
+            <li @class(["menu-item", 'active' => $route == 'posts'])>
                 <a href="{{ route("admin.posts.index") }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-detail"></i>
                     <div data-i18n="پست ها">پست ها</div>
