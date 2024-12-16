@@ -14,7 +14,7 @@
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
-                    <form action="{{ route('admin.dailyreport.index') }}" method="GET">
+                    <form action="{{ route('admin.daily-reports.index') }}" method="GET">
                         <div
                             class="d-flex justify-content-start align-items-center row py-3 gap-3 gap-md-0 primary-font">
                             <div class="col-md-2">
@@ -89,7 +89,7 @@
                                     </td>
                                     <td>
                                 <span class="fw-semibold">
-                                    <a href="{{ route('admin.user.show', $dailyReport->author->id) }}"
+                                    <a href="{{ route('admin.users.show', $dailyReport->author->id) }}"
                                        class="text-body text-truncate">
                                     {{ $dailyReport->author->name() }}
                                     </a>
@@ -117,7 +117,7 @@
                         </div>
                         <div class="offcanvas-body mx-0 flex-grow-0">
                             <form class="add-new-user pt-0" id="addNewUserForm"
-                                  action="{{ route('admin.dailyreport.store') }}"
+                                  action="{{ route('admin.daily-reports.store') }}"
                                   method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="mb-3">

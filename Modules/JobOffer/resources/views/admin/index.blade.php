@@ -1,7 +1,7 @@
 @extends('admin::layouts.main')
 
 @section('title')
-    فرصت هاس شغلی
+    فرصت های شغلی
 @endsection
 
 @section('content')
@@ -10,11 +10,10 @@
             <div class="alert alert-danger" style="padding-right: 80px">{{ $errors->first() }}</div>
         @endif
         <div class="container-xxl flex-grow-1 container-p-y">
-            <!-- Users List Table -->
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
-                    <form action="{{ route('admin.joboffer.index') }}" method="GET">
+                    <form action="{{ route('admin.job-offers.index') }}" method="GET">
                         <div
                             class="d-flex justify-content-start align-items-center row py-3 gap-1 gap-md-0 primary-font">
                             <div class="col-md-2">
@@ -45,7 +44,7 @@
                                     <div
                                         class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
                                         <div class="dt-buttons btn-group flex-wrap">
-                                            <a href="{{ route('admin.joboffer.create') }}">
+                                            <a href="{{ route('admin.job-offers.create') }}">
                                                 <button class="btn btn-secondary add-new btn-primary ms-2"><span><i
                                                             class="bx bx-plus me-0 me-lg-2"></i><span
                                                             class="d-none d-lg-inline-block">ساخت فرصت شغلی جدید</span></span>
@@ -98,14 +97,19 @@
                                     {{ $jobOffer->author->name() }}
                                 </span>
                                     </td>
-                                    <td><span class="fw-semibold">{{ $jobOffer->team }}</span></td>
-                                    <td>{{ $jobOffer->categories()->first() }}</td>
-                                    <td>{{ $jobOffer->status }}</td>
+                                    <td><span class="fw-semibold">{{ $jobOffer->team() }}</span></td>
+                                    <td>{{ $jobOffer->categories()->first()->name }}</td>
+                                    <td>
+                                        @switch($jobOffer->status)
+                                            @case('active')فعال@break
+                                            @case('inactive')غیر فعال@break
+                                        @endswitch
+                                    </td>
                                     <td>{{ verta($jobOffer->created_at)->formatJalaliDateTime() }}</td>
                                     <td>
                                         <div class="d-inline-block text-nowrap">
                                             <button class="btn btn-sm btn-icon">
-                                                <a href="{{ route('admin.joboffer.show', $jobOffer) }}">
+                                                <a href="{{ route('admin.job-offers.show', $jobOffer) }}">
                                                     <i class="bx bx-detail"></i>
                                                 </a>
                                             </button>

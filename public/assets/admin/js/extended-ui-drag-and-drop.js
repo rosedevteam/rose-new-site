@@ -5,8 +5,8 @@
 
 (function () {
   const cardEl = document.getElementById('sortable-cards'),
-    pendingTasks = document.getElementById('pending-tasks'),
-    completedTasks = document.getElementById('completed-tasks'),
+      pendingTasks = document.getElementById('active'),
+      completedTasks = document.getElementById('inactive'),
     cloneSource1 = document.getElementById('clone-source-1'),
     cloneSource2 = document.getElementById('clone-source-2'),
     handleList1 = document.getElementById('handle-list-1'),

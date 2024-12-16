@@ -14,7 +14,7 @@
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
-                    <form action="{{ route('admin.user.index') }}" method="GET">
+                    <form action="{{ route('admin.users.index') }}" method="GET">
                         <div
                             class="d-flex justify-content-start align-items-center row py-3 gap-1 gap-md-0 primary-font">
                             <div class="col-md-3">
@@ -89,10 +89,10 @@
                             <thead>
                             <tr>
                                 <th aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width: 12%" aria-sort="ascending">نام
+                                    colspan="1" style="width: 10%" aria-sort="ascending">نام
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 12%;">نام
+                                    style="width: 10%;">نام
                                     خانوادگی
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
@@ -103,13 +103,13 @@
                                     style="width: 15%;">ایمیل
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 10%;">نقش
+                                    style="width: 7%;">نقش
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">تاریخ ثبت نام
+                                    style="width: 12%;">تاریخ ثبت نام
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">جزییات
+                                    style="width: 2%;">جزییات
                                 </th>
                             </tr>
                             </thead>
@@ -139,7 +139,7 @@
                                     <td>
                                         <div class="d-inline-block text-nowrap">
                                             <button class="btn btn-sm btn-icon">
-                                                <a href="{{ route('admin.user.show', $user->id) }}">
+                                                <a href="{{ route('admin.users.show', $user->id) }}">
                                                     <i class="bx bx-detail"></i>
                                                 </a>
                                             </button>
@@ -164,7 +164,7 @@
                         </div>
                         <div class="offcanvas-body mx-0 flex-grow-0">
                             <form class="add-new-user pt-0" id="addNewUserForm"
-                                  action="{{ route('admin.user.store') }}"
+                                  action="{{ route('admin.users.store') }}"
                                   method="POST">
                                 @csrf
                                 <div class="mb-3">

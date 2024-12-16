@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
-                    <form action="{{ route('admin.post.index') }}" method="GET">
+                    <form action="{{ route('admin.posts.index') }}" method="GET">
                         <div
                             class="d-flex justify-content-start align-items-center row py-3 gap-3 gap-md-0 primary-font">
                             <div class="col-md-3">
@@ -57,7 +57,7 @@
                                     <div
                                         class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
                                         <div class="dt-buttons btn-group flex-wrap">
-                                            <a href="{{ route('admin.post.create') }}">
+                                            <a href="{{ route('admin.posts.create') }}">
                                                 <button class="btn btn-secondary add-new btn-primary ms-2" tabindex="0"
                                                         aria-controls="DataTables_Table_0" type="button"><span><i
                                                             class="bx bx-plus me-0 me-lg-2"></i><span
@@ -77,7 +77,7 @@
                                     style="width: 10%;">تاریخ ساخت
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width: 12%" aria-sort="ascending">نام
+                                    colspan="1" style="width: 15%" aria-sort="ascending">نام
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 12%;">نویسنده
@@ -86,7 +86,7 @@
                                     style="width: 10%;">وضعیت
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 15%;">کامنت
+                                    style="width: 5%;">کامنت
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 5%;">ویرایش
@@ -96,7 +96,7 @@
                             <tbody>
                             @foreach($posts as $post)
                                 <tr class="">
-                                    <td>{{ verta($post->created_at)->formatJalaliDate() }}</td>
+                                    <td>{{ verta($post->created_at)->formatJalaliDateTime() }}</td>
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column"><a
@@ -109,9 +109,9 @@
                                     </td>
                                     <td>
                                 <span class="fw-semibold">
-                                    <a href="{{ route('admin.user.show', $post->author()) }}"
+                                    <a href="{{ route('admin.users.show', $post->author) }}"
                                        class="text-body text-truncate">
-                                    {{ $post->author()->name() }}</a>
+                                    {{ $post->author()->first()->name() }}</a>
                                 </span>
                                     </td>
                                     <td><span class="fw-semibold">

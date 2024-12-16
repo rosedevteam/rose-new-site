@@ -66,43 +66,6 @@ class AuthController extends Controller
 
     }
 
-    public function getOtpPage(Request $request): Factory|View|Application|Redirector|RedirectResponse
-    {
-        try {
-            $phone = $request->session()->get('phone')['phone'];
-            $user = User::query()->where('phone', $phone)->first();
-            $user->requestOtp();
-
-            return view('auth::admin.otp', [
-                'error' => false,
-            ]);
-        } catch (Exception $e) {
-            return redirect(route('admin.login'));
-        }
-    }
-
-    public function validateOtp(Request $request): Factory|View|Application|Redirector|RedirectResponse
-    {
-        $otp = $request->validate([
-            'otp' => "bail|required|digits:6",
-        ])['otp'];
-        $phone = $request->session()->get('phone')['phone'];
-        $user = User::query()->where('phone', $phone)->first();
-        $result = $user->checkOtp($otp);
-        if ($result == 0) {
-            return view('auth::admin.otp', [
-                'error' => true,
-            ]);
-        } elseif ($result == 1) {
-            auth()->login($user);
-            $user->otp()->delete();
-            return redirect(route('admin.index'));
-        } else {
-            $request->session()->forget('phone');
-            return redirect(route('admin.login'));
-        }
-    }
-
     public function logout(Request $request): Application|Redirector|RedirectResponse
     {
         Auth::logout();

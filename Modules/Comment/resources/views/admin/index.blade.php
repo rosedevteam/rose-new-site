@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
-                    <form action="{{ route('admin.comment.index') }}" method="GET">
+                    <form action="{{ route('admin.comments.index') }}" method="GET">
                         <div
                             class="d-flex justify-content-start align-items-center row py-3 gap-3 gap-md-0 primary-font">
                             <div class="col-md-3">
@@ -90,16 +90,16 @@
                                 <tr class="">
                                     <td>{{ verta($comment->created_at)->formatJalaliDateTime() }}</td>
                                     <td class="sorting_1">
-                                        <a href="{{ route('admin.user.show', $comment->author()) }}"
+                                        <a href="{{ route('admin.users.show', $comment->author()->first()) }}"
                                            class="text-body text-truncate">
-                                            <span class="fw-semibold">{{ $comment->author()->name() }}</span>
+                                            <span class="fw-semibold">{{ $comment->author()->first()->name() }}</span>
                                         </a>
                                     </td>
                                     <td><a href="{{
-                                        route("admin." . strtolower(substr(strrchr($comment->commentable_type, '\\'), 1)) . ".show", $comment->commentable)
+                                        route("admin." . strtolower(substr(strrchr($comment->commentable_type, '\\'), 1)) . "s.show", $comment->commentable)
                                     }}" class="text-body text-truncate">
                                             <span
-                                                class="fw-semibold">{{ $comment->commentable->title ?: "کامنت " . $comment->author()->name() }}</span></a>
+                                                class="fw-semibold">{{ $comment->commentable->title ?: "کامنت " . $comment->author()->first()->name() }}</span></a>
                                     </td>
                                     <td>@switch($comment->status)
                                             @case("approved")تایید شده@break
@@ -109,7 +109,7 @@
                                     <td>
                                         <div class="d-inline-block text-nowrap">
                                             <button class="btn btn-sm btn-icon">
-                                                <a href="{{ route('admin.comment.show', $comment) }}">
+                                                <a href="{{ route('admin.comments.show', $comment) }}">
                                                     <i class="bx bx-detail"></i>
                                                 </a>
                                             </button>

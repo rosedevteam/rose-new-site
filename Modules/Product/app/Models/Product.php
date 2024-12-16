@@ -12,6 +12,48 @@ use Modules\Order\Models\Order;
 use Modules\Product\Database\Factories\ProductFactory;
 use Modules\User\Models\User;
 
+/**
+ * 
+ *
+ * @property int $id
+ * @property string $title
+ * @property int $author_id
+ * @property string $short_description
+ * @property int $price
+ * @property int $sale_price
+ * @property int $content
+ * @property string $status
+ * @property int $comment_status
+ * @property string $image
+ * @property string $url
+ * @property string|null $spot_player_key
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read User $author
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Comment> $comments
+ * @property-read int|null $comments_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Order> $orders
+ * @property-read int|null $orders_count
+ * @method static \Modules\Product\Database\Factories\ProductFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereAuthorId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereCommentStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereSalePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereShortDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereSpotPlayerKey($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereUrl($value)
+ * @mixin \Eloquent
+ */
 class Product extends Model
 {
     use HasFactory;
