@@ -16,12 +16,10 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        app()[PermissionRegistrar::class]->forgetCachedPermissions();
-        $this->seedUsersAndPermissions();
-        $this->seedProducts();
+//        app()[PermissionRegistrar::class]->forgetCachedPermissions();
+
         $this->seedPosts();
-        $this->seedOrders();
-        $this->seedComments();
+
     }
 
     private function seedUsersAndPermissions(): void
@@ -69,6 +67,11 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'delete-orders']);
         //
         Permission::create(['name' => 'view-logs']);
+        //
+        Permission::create(['name' => 'view-menus']);
+        Permission::create(['name' => 'edit-menus']);
+        Permission::create(['name' => 'create-menus']);
+        Permission::create(['name' => 'delete-menus']);
 
         $customer = Role::create(['name' => 'مشتری']);
         $admin = Role::create(['name' => 'ادمین']);
@@ -215,38 +218,21 @@ class DatabaseSeeder extends Seeder
 
     private function seedPosts(): void
     {
-        $post1 = Post::factory()->create([
-            'author_id' => 1,
-            'title' => "شهسیذل",
-            'content' => "asdkjasdg",
-            'status' => 'public',
-            'comment_status' => 0,
-            'url' => "asdbniadssdfg"
-        ]);
-        $post2 = Post::factory()->create([
-            'author_id' => 2,
-            'title' => "شسهختیذدلهخ",
-            'content' => "asdkjasdg",
-            'status' => 'public',
-            'comment_status' => 1,
-            'url' => "sdgg"
-        ]);
-        $post3 = Post::factory()->create([
-            'author_id' => 3,
-            'title' => "شهسیذل",
-            'content' => "asdkjasdg",
-            'status' => 'public',
-            'comment_status' => 0,
-            'url' => "234sfeg"
-        ]);
-        $post4 = Post::factory()->create([
-            'author_id' => 1,
-            'title' => "شهسیذل",
-            'content' => "asdkjasdg",
-            'status' => 'public',
-            'comment_status' => 0,
-            'url' => "asdf"
-        ]);
+        $json = \File::get(database_path() . '/posts.json');
+        $data =  json_decode($json, true);
+
+        foreach ($data as $item) {
+            Post::create([
+                'author_id' => 1,
+                'title' => $item['title'],
+                'content' => $item['content'],
+                'status' => ($item['status'] == 'publish') ? 'public' : 'draft' ,
+                'url' => $item['slug'],
+                'comment_status' => $item['comment_status'],
+                'created_at' => $item['created_at'],
+                'updated_at' => $item['updated_at'],
+            ]);
+        }
     }
 
     private function seedOrders(): void
@@ -321,4 +307,5 @@ class DatabaseSeeder extends Seeder
 //            'group' => 'team',
 //        ]);
     }
+
 }

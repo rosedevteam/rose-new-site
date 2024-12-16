@@ -100,7 +100,7 @@
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column"><a
-                                                    href="{{ route('admin.post.show', $post) }}"
+                                                    href="{{ route('admin.posts.show', $post) }}"
                                                     class="text-body text-truncate">
                                                     <span class="fw-semibold">{{ $post->title }}</span>
                                                 </a>
@@ -125,7 +125,7 @@
                                     <td>
                                         <div class="d-inline-block text-nowrap">
                                             <button class="btn btn-sm btn-icon">
-                                                <a href="{{ route('admin.post.edit', $post) }}">
+                                                <a href="{{ route('admin.posts.edit', $post) }}">
                                                     <i class="bx bx-edit"></i>
                                                 </a>
                                             </button>
