@@ -146,7 +146,7 @@ class MenuController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->withProperties($data)
-                ->log('ویرایش منو با موفقیت انجام شد');
+                ->log('ویرایش منو');
             alert()->success('موفق', 'ویرایش منو با موفقیت انجام شد');
             return back();
         } catch (\Throwable $th) {
