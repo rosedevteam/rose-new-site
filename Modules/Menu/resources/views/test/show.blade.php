@@ -37,17 +37,17 @@
                                     <div
                                         class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
                                         <div class="dt-buttons btn-group flex-wrap">
-                                            @can('edit-menu-entries')
+                                            @can('edit-menus')
                                                 <button type="button" class="btn btn-primary ms-2"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#modalCenter">ویرایش ترتیب
                                                 </button>
                                             @endcan
-                                            @can('create-menu-entries')
+                                            @can('create-menus')
                                                 <button class="btn btn-secondary add-new btn-primary ms-2"
                                                         aria-controls="DataTables_Table_0" type="button"
                                                         data-bs-toggle="offcanvas"
-                                                        data-bs-target="#offcanvasAddUser"><span><i
+                                                        data-bs-target="#offcanvasAdd"><span><i
                                                             class="bx bx-plus me-0 me-lg-2"></i><span
                                                             class="d-none d-lg-inline-block">ساخت آیتم منو جدید</span></span>
                                                 </button>
@@ -68,72 +68,86 @@
                                         style="width: 12%;">نام
                                     </th>
                                     <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                        style="width: 12%;">لینک
+                                    </th>
+                                    <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                         style="width: 10%;">نویسنده
                                     </th>
                                     <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                         style="width: 5%;">تاریخ ساخت
                                     </th>
-                                    <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                        style="width: 5%;">جزییات
-                                    </th>
+                                    @can('edit-menus')
+                                        <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                            style="width: 5%;">ویرایش
+                                        </th>
+                                    @endcan
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($active as $menuEntry)
+                                @foreach($active as $item)
                                     <tr>
                                         <td class="fw-semibold">
-                                            {{ $menuEntry?->order ?: 'غیر فعال'}}
+                                            {{ $item?->order ?: 'غیر فعال'}}
                                         </td>
                                         <td class="sorting_1">
                                             <div class="d-flex justify-content-start align-items-center user-name">
                                                 <div class="d-flex flex-column">
-                                                    <span class="fw-semibold">{{ $menuEntry->name }}</span>
+                                                    <span class="fw-semibold">{{ $item->name }}</span>
                                                 </div>
                                             </div>
                                         </td>
+                                        <td>{{ $item->slug }}</td>
                                         <td>
                                 <span class="fw-semibold">
-                                    {{ $menuEntry->author->name() }}
+                                                <a href="{{ route("admin.users.show", $item->author) }}"
+                                                   class="text-body text-truncate">
+                                    {{ $item->author->name() }}
+                                                </a>
                                 </span>
                                         </td>
-                                        <td>{{ verta($menuEntry->created_at)->formatJalaliDateTime() }}</td>
+                                        <td>{{ verta($item->created_at)->formatJalaliDateTime() }}</td>
                                         <td>
                                             <div class="d-inline-block text-nowrap">
-                                                <button class="btn btn-sm btn-icon">
-                                                    <a href="{{ route('admin.menus.show', $menuEntry) }}">
-                                                        <i class="bx bx-detail"></i>
-                                                    </a>
+                                                <button class="btn btn-sm btn-icon" data-bs-toggle="offcanvas"
+                                                        data-bs-target="#offcanvasEditSub">
+                                                    <span>
+                                                        <i class="bx bx-edit"></i>
+                                                    </span>
                                                 </button>
                                             </div>
                                         </td>
                                     </tr>
                                 @endforeach
-                                @foreach($inactive as $menuEntry)
+                                @foreach($inactive as $item)
                                     <tr>
                                         <td class="fw-semibold">غیر فعال
                                         </td>
                                         <td class="sorting_1">
                                             <div class="d-flex justify-content-start align-items-center user-name">
                                                 <div class="d-flex flex-column">
-                                                    <span class="fw-semibold">{{ $menuEntry->name }}</span>
+                                                    <span class="fw-semibold">{{ $item->name }}</span>
                                                 </div>
                                             </div>
                                         </td>
+                                        <td>{{ $item->slug }}</td>
                                         <td>
                                 <span class="fw-semibold">
-                                    {{ $menuEntry->author->name() }}
+                                    {{ $item->author->name() }}
                                 </span>
                                         </td>
-                                        <td>{{ verta($menuEntry->created_at)->formatJalaliDateTime() }}</td>
-                                        <td>
-                                            <div class="d-inline-block text-nowrap">
-                                                <button class="btn btn-sm btn-icon">
-                                                    <a href="{{ route('admin.menus.show', $menuEntry) }}">
-                                                        <i class="bx bx-detail"></i>
-                                                    </a>
-                                                </button>
-                                            </div>
-                                        </td>
+                                        <td>{{ verta($item->created_at)->formatJalaliDateTime() }}</td>
+                                        @can('edit-menus')
+                                            <td>
+                                                <div class="d-inline-block text-nowrap">
+                                                    <button class="btn btn-sm btn-icon" data-bs-toggle="offcanvas"
+                                                            data-bs-target="#offcanvasEditSub">
+                                                        <span>
+                                                        <i class="bx bx-edit"></i>
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        @endcan
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -147,7 +161,7 @@
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title secondary-font" id="modalCenterTitle">ویرایش ترتیب</h5>
+                                        <h5 class="modal-title secondary-font" id="modalCenter">ویرایش ترتیب</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                     </div>
@@ -199,7 +213,7 @@
                         </div>
                     @endcan
                     @can('create-menus')
-                        <div class="offcanvas offcanvas-end" id="offcanvasAddUser"
+                        <div class="offcanvas offcanvas-end" id="offcanvasAdd"
                              aria-labelledby="offcanvasAddUserLabel">
                             <div class="offcanvas-header border-bottom">
                                 <h6 id="offcanvasAddUserLabel" class="offcanvas-title">افزودن آیتم جدید</h6>
@@ -221,12 +235,13 @@
                                         <input type="text" class="form-control" id="slug" name="slug"
                                                required>
                                     </div>
-                                    <div class="mb-3">
-                                        <label class="form-label" for="slug">آیکون</label>
-                                        <input type="text" class="form-control" id="slug" name="slug"
-                                               required>
-                                    </div>
+                                    {{--                                    <div class="mb-3">--}}
+                                    {{--                                        <label class="form-label" for="slug">آیکون</label>--}}
+                                    {{--                                        <input type="text" class="form-control" id="slug" name="slug"--}}
+                                    {{--                                               required>--}}
+                                    {{--                                    </div>--}}
                                     <input type="hidden" value="{{ $menu->id }}" name="parent_id">
+                                    <input type="hidden" value="0" name="has_children">
                                     <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">ثبت</button>
                                     <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">
                                         انصراف
@@ -236,41 +251,88 @@
                         </div>
                     @endcan
                     @can('edit-menus')
-                        <div class="offcanvas offcanvas-end" id="offcanvasEdit"
+                        <div class="offcanvas offcanvas-end" id="offcanvasEditSub"
                              aria-labelledby="offcanvasAddUserLabel">
                             <div class="offcanvas-header border-bottom">
-                                <h6 id="offcanvasAddUserLabel" class="offcanvas-title">ویرایش منو</h6>
+                                <h6 id="offcanvasAddUserLabel" class="offcanvas-title">ویرایش زیر گروه</h6>
                                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                                         aria-label="Close"></button>
                             </div>
                             <div class="offcanvas-body mx-0 flex-grow-0">
-                                <form action="{{ route('admin.menus.update', $menu) }}" method="POST">
-                                    @csrf
+                                <form class="add-new-user pt-0" id="addNewUserForm"
+                                      action="{{ route('admin.menus.store') }}"
+                                      method="POST">
                                     @method('PATCH')
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <label for="name" class="form-label">نام</label>
-                                            <input id="name" name="name" class="form-control" type="text"
-                                                   value="{{ $menu->name }}">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label for="slug" class="form-label">لینک</label>
-                                            <input id="slug" name="slug" class="form-control" type="text"
-                                                   value="{{ $menu->slug }}">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="form-label" for="has_submenus">زیر گروه</label>
-                                            <select class="form-select" id="has_submenus" name="has_submenus">
-                                                <option class="form-control" value="1" selected>دارد</option>
-                                                <option class="form-control" value="0">ندارد</option>
-                                            </select>
-                                        </div>
+                                    @csrf
+                                    <div class="mb-3">
+                                        <label class="form-label" for="name">نام</label>
+                                        <input type="text" class="form-control" id="name" name="name"
+                                               required>
                                     </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="slug">لینک</label>
+                                        <input type="text" class="form-control" id="slug" name="slug"
+                                               required>
+                                    </div>
+                                    {{--                                    <div class="mb-3">--}}
+                                    {{--                                        <label class="form-label" for="slug">آیکون</label>--}}
+                                    {{--                                        <input type="text" class="form-control" id="slug" name="slug"--}}
+                                    {{--                                               required>--}}
+                                    {{--                                    </div>--}}
+                                    <input type="hidden" value="{{ $menu->id }}" name="parent_id">
+                                    <input type="hidden" value="0" name="has_children">
+                                    <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">ثبت</button>
+                                    <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">
+                                        انصراف
+                                    </button>
                                 </form>
                             </div>
                         </div>
                     @endcan
                 @endif
+                @can('edit-menus')
+                    <div class="offcanvas offcanvas-end" id="offcanvasEdit"
+                         aria-labelledby="offcanvasAddUserLabel">
+                        <div class="offcanvas-header border-bottom">
+                            <h6 id="offcanvasAddUserLabel" class="offcanvas-title">ویرایش منو</h6>
+                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body mx-0 flex-grow-0">
+                            <form action="{{ route('admin.menus.update', $menu) }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <div class="mb-3">
+                                    <label class="form-label" for="name">نام</label>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                           value="{{ $menu->name }}"
+                                           required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="slug">لینک</label>
+                                    <input type="text" class="form-control" id="slug" name="slug"
+                                           value="{{ $menu->slug }}"
+                                           required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="has_children">زیرگروه</label>
+                                    <select class="form-select" id="has_children" name="has_children">
+                                        <option value="0"
+                                                class="form-select" {{ $menu->has_children ? '' : 'selected'}}>ندارد
+                                        </option>
+                                        <option value="1"
+                                                class="form-select" {{ $menu->has_children ? 'selected' : '' }}>دارد
+                                        </option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">ویرایش</button>
+                                <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">
+                                    انصراف
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                @endcan
             </div>
         </div>
         <div class="content-backdrop fade"></div>
@@ -314,10 +376,8 @@
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
                 body: JSON.stringify(sortedData)
-            }).then(response => {
-                if (response.ok) {
-                    location.reload()
-                }
+            }).then(_ => {
+                location.reload()
             })
         });
     </script>

@@ -44,6 +44,9 @@
                                     style="width: 12%;">نام
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                    style="width: 12%;">لینک
+                                </th>
+                                <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 10%;">نویسنده
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
@@ -67,6 +70,7 @@
                                             </div>
                                         </div>
                                     </td>
+                                    <td>{{ $menu->slug }}</td>
                                     <td>
                                 <span class="fw-semibold">
                                                 <a href="{{ route("admin.users.show", $menu->author) }}"
@@ -98,6 +102,7 @@
                                             </div>
                                         </div>
                                     </td>
+                                    <td>{{ $menu->slug }}</td>
                                     <td>
                                 <span class="fw-semibold">
                                     {{ $menu->author->name() }}
@@ -198,6 +203,13 @@
                                     <input type="text" class="form-control" id="slug" name="slug"
                                            required>
                                 </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="has_children">زیرگروه</label>
+                                    <select class="form-select" id="has_children" name="has_children">
+                                        <option value="0" class="form-select" selected>ندارد</option>
+                                        <option value="1" class="form-select">دارد</option>
+                                    </select>
+                                </div>
                                 <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">ثبت</button>
                                 <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">
                                     انصراف
@@ -249,10 +261,8 @@
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
                 body: JSON.stringify(sortedData)
-            }).then(response => {
-                if (response.ok) {
-                    location.reload()
-                }
+            }).then(_ => {
+                location.reload()
             })
         });
     </script>
