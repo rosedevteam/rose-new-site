@@ -79,6 +79,11 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'create-menus']);
         Permission::create(['name' => 'delete-menus']);
         //
+        Permission::create(['name' => 'view-discounts']);
+        Permission::create(['name' => 'edit-discounts']);
+        Permission::create(['name' => 'create-discounts']);
+        Permission::create(['name' => 'delete-discounts']);
+        //
         Permission::create(['name' => 'view-logs']);
         //
         Permission::create(['name' => 'view-menus']);
@@ -397,7 +402,7 @@ class DatabaseSeeder extends Seeder
             'is_active' => true,
             'has_children' => true,
             'slug' => '#',
-            'icon' => 'asgd',
+            'icon' => null,
             'order' => 2,
         ]);
         Menu::factory()->create([

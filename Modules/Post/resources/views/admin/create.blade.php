@@ -7,9 +7,6 @@
 @section('content')
 
     <div class="content-wrapper">
-        @if($errors->any())
-            <div class="alert alert-danger" style="padding-right: 80px">{{ $errors->first() }}</div>
-        @endif
         <div class="container-xxl flex-grow-1 container-p-y">
             <div class="card mb-3">
                 <div class="card-header border-bottom">
@@ -94,7 +91,6 @@
                         </div>
                         <div class="pt-4">
                             <button type="submit" class="btn btn-primary me-sm-3 me-1">ثبت</button>
-                            <button type="reset" class="btn btn-label-secondary">انصراف</button>
                         </div>
                     </div>
                 </form>
