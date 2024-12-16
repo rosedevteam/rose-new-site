@@ -10322,8 +10322,11 @@
     },
     "platform-dev": [],
 <<<<<<< HEAD
+<<<<<<< HEAD
     "plugin-api-version": "2.3.0"
 =======
+=======
+>>>>>>> 9566fdd9d5057222f7877f7b4f3ad3d6bbf5e18d
     "plugin-api-version": "2.6.0"
 >>>>>>> 9566fdd9d5057222f7877f7b4f3ad3d6bbf5e18d
 }

@@ -10,8 +10,15 @@
     "Admin": true,
     "Order": true,
 <<<<<<< HEAD
+<<<<<<< HEAD
     "JobOffer": true
 }
+=======
+    "JobOffer": true,
+    "Menu": true,
+    "JobApplication": true
+}
+>>>>>>> 9566fdd9d5057222f7877f7b4f3ad3d6bbf5e18d
 =======
     "JobOffer": true,
     "Menu": true,
