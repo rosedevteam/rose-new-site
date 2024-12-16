@@ -82,4 +82,33 @@ class DiscountController extends Controller
         $products = Product::all();
         return view('discount::admin.create', compact('products'));
     }
+
+    public function show(Discount $discount)
+    {
+        Gate::authorize('view-discounts');
+        $products = Product::all();
+        return view('discount::admin.show', compact('discount', 'products'));
+    }
+
+    public function update(Discount $discount)
+    {
+        Gate::authorize('edit-discounts');
+    }
+
+    public function destroy(Discount $discount)
+    {
+        Gate::authorize('delete-discounts');
+        try {
+            $discount->delete();
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($discount)
+                ->log('حذف تخفیف');
+            alert()->success('موفق', 'تخفیف با موفقیت حذف شد');
+        } catch (\Throwable $th) {
+            alert()->error("خطا", $th->getMessage());
+            return back();
+        }
+    }
+
 }
