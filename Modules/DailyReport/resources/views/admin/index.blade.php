@@ -117,7 +117,7 @@
                         </div>
                         <div class="offcanvas-body mx-0 flex-grow-0">
                             <form class="add-new-user pt-0" id="addNewUserForm"
-                                  action="{{ route('admin.daily-reports.store') }}"
+                                  action="{{ route('admin.dailyreports.store') }}"
                                   method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="mb-3">

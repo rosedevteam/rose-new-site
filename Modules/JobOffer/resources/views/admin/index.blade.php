@@ -44,7 +44,7 @@
                                     <div
                                         class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
                                         <div class="dt-buttons btn-group flex-wrap">
-                                            <a href="{{ route('admin.job-offers.create') }}">
+                                            <a href="{{ route('admin.joboffers.create') }}">
                                                 <button class="btn btn-secondary add-new btn-primary ms-2"><span><i
                                                             class="bx bx-plus me-0 me-lg-2"></i><span
                                                             class="d-none d-lg-inline-block">ساخت فرصت شغلی جدید</span></span>
@@ -111,7 +111,7 @@
                                     <td>
                                         <div class="d-inline-block text-nowrap">
                                             <button class="btn btn-sm btn-icon">
-                                                <a href="{{ route('admin.job-offers.show', $jobOffer) }}">
+                                                <a href="{{ route('admin.joboffers.show', $jobOffer) }}">
                                                     <i class="bx bx-detail"></i>
                                                 </a>
                                             </button>
