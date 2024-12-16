@@ -3,7 +3,11 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\Category\Models\Category;
 use Modules\Comment\Models\Comment;
+use Modules\JobApplication\Models\JobApplication;
+use Modules\JobOffer\Models\JobOffer;
+use Modules\Menu\Models\Menu;
 use Modules\Order\Models\Order;
 use Modules\Post\Models\Post;
 use Modules\Product\Models\Product;
@@ -22,6 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->seedPosts();
         $this->seedOrders();
         $this->seedComments();
+        $this->seedMenu();
     }
 
     private function seedUsersAndPermissions(): void
@@ -67,6 +72,11 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'edit-orders']);
         Permission::create(['name' => 'create-orders']);
         Permission::create(['name' => 'delete-orders']);
+        //
+        Permission::create(['name' => 'view-menus']);
+        Permission::create(['name' => 'edit-menus']);
+        Permission::create(['name' => 'create-menus']);
+        Permission::create(['name' => 'delete-menus']);
         //
         Permission::create(['name' => 'view-logs']);
 
@@ -169,7 +179,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'public',
             'comment_status' => 1,
             'image' => "asdijbnag",
-            'url' => "asdbniadsg",
+            'slug' => "asdbniaskgadsg",
             'spot_player_key' => null
         ]);
         $product2 = Product::factory()->create([
@@ -182,7 +192,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'draft',
             'comment_status' => 0,
             'image' => "asdijbnag",
-            'url' => "asdbniadsg",
+            'slug' => "asdbniadsg",
             'spot_player_key' => null
         ]);
         $product3 = Product::factory()->create([
@@ -195,7 +205,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'hidden',
             'comment_status' => 1,
             'image' => "asdijbnag",
-            'url' => "asdbniadsg",
+            'slug' => "aognasdgnasdbniadsg",
             'spot_player_key' => null
         ]);
         $product4 = Product::factory()->create([
@@ -208,7 +218,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'public',
             'comment_status' => 0,
             'image' => "asdijbnag",
-            'url' => "asdbniadsg",
+            'slug' => "asdbni234234adsg",
             'spot_player_key' => null
         ]);
     }
@@ -221,7 +231,7 @@ class DatabaseSeeder extends Seeder
             'content' => "asdkjasdg",
             'status' => 'public',
             'comment_status' => 0,
-            'url' => "asdbniadssdfg"
+            'slug' => "asdbniadssasjgasgdfg"
         ]);
         $post2 = Post::factory()->create([
             'author_id' => 2,
@@ -229,7 +239,7 @@ class DatabaseSeeder extends Seeder
             'content' => "asdkjasdg",
             'status' => 'public',
             'comment_status' => 1,
-            'url' => "sdgg"
+            'slug' => "sdgg"
         ]);
         $post3 = Post::factory()->create([
             'author_id' => 3,
@@ -237,7 +247,7 @@ class DatabaseSeeder extends Seeder
             'content' => "asdkjasdg",
             'status' => 'public',
             'comment_status' => 0,
-            'url' => "234sfeg"
+            'slug' => "234sfegasofaw4"
         ]);
         $post4 = Post::factory()->create([
             'author_id' => 1,
@@ -245,7 +255,7 @@ class DatabaseSeeder extends Seeder
             'content' => "asdkjasdg",
             'status' => 'public',
             'comment_status' => 0,
-            'url' => "asdf"
+            'slug' => "asdf029340420"
         ]);
     }
 
@@ -310,15 +320,175 @@ class DatabaseSeeder extends Seeder
             'content' => "asvdnawn;wgn;iweagbqiugi",
         ]);
 
-//        Category::factory()->create([
-//            'author_id' => 1,
-//            'name' => 'بازار های مالی',
-//            'group' => 'team'
-//        ]);
-//        Category::factory()->create([
-//            'author_id' => 1,
-//            'name' => 'مارگتینگ',
-//            'group' => 'team',
-//        ]);
+        $parent = Category::factory()->create([
+            'author_id' => 1,
+            'name' => 'team',
+            'is_parent' => true,
+        ]);
+
+        $category1 = Category::factory()->create([
+            'author_id' => 1,
+            'name' => 'بازار های مالی',
+        ]);
+        $category1->parent()->attach($parent->id);
+
+        $category2 = Category::factory()->create([
+            'author_id' => 1,
+            'name' => 'مارگتینگ',
+        ]);
+        $category2->parent()->attach($parent->id);
+
+        $c = JobOffer::factory()->create([
+            'author_id' => 1,
+            'title' => 'akjbfipasbug',
+            'content' => 'asjdbg',
+            'type' => 'afbaisdgb',
+            'status' => 'active',
+        ]);
+        $c->categories()->attach($category1->id);
+
+        $resume = JobApplication::factory()->create([
+            'joboffer_id' => 1,
+            'full_name' => "akjnga aoaiog",
+            'email' => 'akjngaaoaiog@gmail.com',
+            'phone' => '12546982365',
+            'resume' => 'adfjka',
+            'description' => null,
+            'status' => 'pending',
+        ]);
+    }
+
+    private function seedMenu()
+    {
+        Menu::factory()->create([
+           'is_active' => true,
+           'author_id' => 1,
+           'parent_id' => null,
+           'name' => 'صفحه نخست',
+           'slug' => '#',
+           'icon' => null,
+           'order' => 1,
+       ]);
+        Menu::factory()->create([
+            'author_id' => 1,
+            'parent_id' => null,
+            'name' => 'دوره ها',
+            'is_active' => true,
+            'has_children' => true,
+            'slug' => '#',
+            'icon' => 'asgd',
+            'order' => 2,
+        ]);
+        Menu::factory()->create([
+            'is_active' => true,
+            'author_id' => 1,
+            'parent_id' => null,
+            'name' => 'آموزش ها',
+            'slug' => '#',
+            'has_children' => true,
+            'icon' => null,
+            'order' => 3,
+        ]);
+        Menu::factory()->create([
+            'author_id' => 1,
+            'parent_id' => null,
+            'name' => 'گزارش روزانه بازار',
+            'slug' => 'گزارش-روزانه-بازار',
+            'icon' => null,
+            'is_active' => true,
+            'order' => 4,
+        ]);
+        Menu::factory()->create([
+            'author_id' => 1,
+            'is_active' => true,
+            'parent_id' => null,
+            'name' => 'ارتباط با ما',
+            'has_children' => true,
+            'slug' => '#',
+            'icon' => null,
+            'order' => 5,
+        ]);
+        Menu::factory()->create([
+            'author_id' => 1,
+            'parent_id' => null,
+            'is_active' => true,
+            'name' => 'امتیازدهی',
+            'has_children' => true,
+            'slug' => '#',
+            'icon' => null,
+            'order' => 6,
+        ]);
+        Menu::factory()->create([
+            'author_id' => 1,
+            'is_active' => true,
+            'parent_id' => 2,
+            'name' => 'دوره های آموزشی',
+            'slug' => 'product-category/دوره-ها',
+            'icon' => 'graduate-hat-square.svg',
+            'order' => 1,
+        ]);
+        Menu::factory()->create([
+            'author_id' => 1,
+            'parent_id' => 2,
+            'name' => 'بازنشستگی در ۷ سال',
+            'is_active' => true,
+            'slug' => 'بازنشستگی-در-۷سال',
+            'icon' => 'target-goal.svg',
+            'order' => 2,
+        ]);
+        Menu::factory()->create([
+            'author_id' => 1,
+            'is_active' => true,
+            'parent_id' => 3,
+            'name' => 'وبلاگ',
+            'slug' => 'blog',
+            'icon' => 'scroll.svg',
+            'order' => 3,
+        ]);
+        Menu::factory()->create([
+            'author_id' => 1,
+            'parent_id' => 3,
+            'name' => 'پادکست',
+            'is_active' => true,
+            'slug' => 'podcast',
+            'icon' => 'headphones.svg',
+            'order' => 4,
+        ]);
+        Menu::factory()->create([
+            'author_id' => 1,
+            'is_active' => true,
+            'parent_id' => 5,
+            'name' => 'درباره ما',
+            'slug' => 'about',
+            'icon' => 'News-Bookmark-1.svg',
+            'order' => 1,
+        ]);
+        Menu::factory()->create([
+            'author_id' => 1,
+            'parent_id' => 5,
+            'name' => 'همکاری با ما',
+            'slug' => 'همکاری-با-ما',
+            'is_active' => true,
+            'icon' => 'star-review.svg',
+            'order' => 2,
+        ]);
+        Menu::factory()->create([
+            'author_id' => 1,
+            'parent_id' => 5,
+            'name' => 'تماس با ما',
+            'slug' => 'تماس-با-ما',
+            'icon' => 'Headphones-Customer-support.svg',
+            'is_active' => true,
+            'order' => 3,
+        ]);
+        Menu::factory()->create([
+            'author_id' => 1,
+            'parent_id' => 6,
+            'name' => 'هم مسیر',
+            'slug' => 'ham-masir',
+            'icon' => 'crystal.svg',
+            'is_active' => true,
+            'order' => 4,
+        ]);
     }
 }

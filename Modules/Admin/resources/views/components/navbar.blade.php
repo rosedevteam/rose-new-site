@@ -31,7 +31,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
-                            <a class="dropdown-item" href="{{ route("admin.user.show", auth()->user()) }}">
+                            <a class="dropdown-item" href="{{ route("admin.users.show", auth()->user()) }}">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-shrink-0 me-3">
                                         <div class="avatar avatar-md me-2">
@@ -56,7 +56,7 @@
                             <div class="dropdown-divider"></div>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="{{ route('admin.user.show', auth()->user()) }}">
+                            <a class="dropdown-item" href="{{ route('admin.users.show', auth()->user()) }}">
                                 <i class="bx bx-user me-2"></i>
                                 <span class="align-middle">پروفایل من</span>
                             </a>

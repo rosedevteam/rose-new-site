@@ -35,8 +35,9 @@ class DailyReportController extends Controller
     {
         Gate::authorize('create-daily-reports');
         $data = request()->validate([
-            'date' => 'required|string',
+            'date' => 'bail|required|string',
             'file' => [
+                'bail',
                 'required',
                 File::types(['pdf'])
             ],

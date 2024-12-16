@@ -18,7 +18,7 @@
                         </div>
                         <div class="col-1">
                             <button class="btn btn-sm btn-icon mt-3">
-                                <a href="{{ route('admin.post.edit', $post) }}">
+                                <a href="{{ route('admin.posts.edit', $post) }}">
                                     <i class="bx bx-edit"></i>
                                 </a>
                             </button>
