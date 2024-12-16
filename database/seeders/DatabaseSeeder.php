@@ -78,6 +78,11 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'create-menus']);
         Permission::create(['name' => 'delete-menus']);
         //
+        Permission::create(['name' => 'view-discounts']);
+        Permission::create(['name' => 'edit-discounts']);
+        Permission::create(['name' => 'create-discounts']);
+        Permission::create(['name' => 'delete-discounts']);
+        //
         Permission::create(['name' => 'view-logs']);
 
         $customer = Role::create(['name' => 'مشتری']);
