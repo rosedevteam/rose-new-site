@@ -19,9 +19,10 @@
     <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
             <div class="card mb-3">
-                <form action="{{ route('admin.discounts.store') }}" method="post">
-                    @csrf
-                    <div class="tab-content">
+                <div class="tab-content">
+                    <form action="{{ route('admin.discounts.update', $discount) }}" method="post">
+                        @csrf
+                        @method('PATCH')
                         <div class="row">
                             <div class="mb-3 col-md-4">
                                 <label class="form-label" for="code">کد</label>
@@ -76,8 +77,15 @@
                         <div class="pt-4">
                             <button type="submit" class="btn btn-primary me-sm-3 me-1">ثبت تغییرات</button>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                    {{--                    @can('delete-discounts')--}}
+                    {{--                        <form action="{{ route('admin.discounts.destroy', $discount) }}" method="POST">--}}
+                    {{--                            @csrf--}}
+                    {{--                            @method('DELETE')--}}
+                    {{--                        <button id="delete-discount" class="btn btn-danger mt-3">حذف تخفیف</button>--}}
+                    {{--                        </form>--}}
+                    {{--                    @endcan--}}
+                </div>
             </div>
         </div>
     </div>

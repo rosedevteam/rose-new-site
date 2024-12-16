@@ -93,6 +93,34 @@ class DiscountController extends Controller
     public function update(Discount $discount)
     {
         Gate::authorize('edit-discounts');
+        try {
+            $data = request()->validate([
+                'code' => 'bail|required|string|unique:discounts,code',
+                'type' => 'bail|required|string|in:amount,percentage',
+                'is_active' => 'bail|required|integer|in:0,1',
+                'expires_at' => 'bail|required|string|numeric',
+                'amount' => 'bail|required|string',
+                'products.*' => 'bail|required|integer|exists:products,id',
+            ]);
+            $discount->update([
+                'code' => $data['code'],
+                'type' => $data['type'],
+                'is_active' => $data['is_active'],
+                'expires_at' => $data['expires_at'],
+                'amount' => $data['amount'],
+            ]);
+            $discount->products()->delete();
+            $discount->products()->attach($data['products']);
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($discount)
+                ->withProperties($data);
+            alert()->success('موفق', 'تخفیف با موفقیت ویرایش شد');
+            return redirect(route('admin.discounts.show', $discount));
+        } catch (\Throwable $th) {
+            alert()->error("خطا", $th->getMessage());
+            return back();
+        }
     }
 
     public function destroy(Discount $discount)
@@ -105,6 +133,7 @@ class DiscountController extends Controller
                 ->performedOn($discount)
                 ->log('حذف تخفیف');
             alert()->success('موفق', 'تخفیف با موفقیت حذف شد');
+            return redirect(route('admin.discounts.index'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
