@@ -64,7 +64,7 @@ class JobApplicationController extends Controller
                 ->withProperties($data)
                 ->log('ویرایش رزومه');
             alert()->success('موفق', 'ویرایش رزومه با موفقیت انجام شد');
-            return redirect(route('admin.job-applications.show', $jobApplication));
+            return redirect(route('admin.jobapplications.show', $jobApplication));
         } catch (\Throwable $th) {
             alert()->error('خطا', $th->getMessage());
             return back();

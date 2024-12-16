@@ -9,4 +9,4 @@ use Modules\DailyReport\Http\Controllers\admin\DailyReportController;
 //    Route::patch('/{dailyReport}', 'update')->name('update');
 //});
 
-Route::resource('daily-reports', DailyReportController::class);
+Route::resource('dailyreports', DailyReportController::class);

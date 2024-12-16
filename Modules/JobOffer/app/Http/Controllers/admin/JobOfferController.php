@@ -109,7 +109,7 @@ class JobOfferController extends Controller
                 ->withProperties($data)
                 ->log('ویرایش فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت ویرایش شد');
-            return redirect(route("admin.joboffer.show", $jobOffer));
+            return redirect(route("admin.joboffers.show", $jobOffer));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -125,7 +125,7 @@ class JobOfferController extends Controller
                 ->performedOn($jobOffer)
                 ->log('حذف فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت حذف شد');
-            return view('admin.joboffer.index');
+            return view('admin.joboffers.index');
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();

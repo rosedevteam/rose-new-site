@@ -11,4 +11,4 @@ use Modules\JobOffer\Http\Controllers\admin\JobOfferController;
 //    Route::delete('{jobOffer}', 'destroy')->name('destroy');
 //});
 
-Route::resource('job-offers', JobOfferController::class);
+Route::resource('joboffers', JobOfferController::class);

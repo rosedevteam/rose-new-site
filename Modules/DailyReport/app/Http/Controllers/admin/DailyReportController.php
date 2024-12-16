@@ -55,7 +55,7 @@ class DailyReportController extends Controller
                 ->performedOn($dailyReport)
                 ->log('ساخت گزارش روزانه');
             alert()->success("موفق", "با موفقیت انجام شد");
-            return redirect()->route('admin.dailyreport.index');
+            return redirect()->route('admin.dailyreports.index');
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
