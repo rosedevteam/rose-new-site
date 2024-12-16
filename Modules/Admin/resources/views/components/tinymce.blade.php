@@ -1,6 +1,6 @@
-<script src="https://cdn.tiny.cloud/1/t6gsuwemfyzbh6oifmteyfsxczlig5oxso5lmfq8llnk58dy/tinymce/7/tinymce.min.js"
-        referrerpolicy="origin"></script>
-{{--<script src="/assets/admin/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>--}}
+{{--<script src="https://cdn.tiny.cloud/1/t6gsuwemfyzbh6oifmteyfsxczlig5oxso5lmfq8llnk58dy/tinymce/7/tinymce.min.js"--}}
+{{--        referrerpolicy="origin"></script>--}}
+<script src="/assets/admin/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
     tinymce.init({
         selector: '#adminEditor', // Replace this CSS selector to match the placeholder element for TinyMCE
@@ -10,6 +10,7 @@
         directionality: 'rtl',
         license_key: 'gpl',
         file_picker_types: "file image media",
+        promotion: false,
         file_picker_callback(callback, value, meta) {
             let x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth
             let y = window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight
