@@ -23,13 +23,11 @@ class DatabaseSeeder extends Seeder
 //        app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         $this->seedPosts();
-<<<<<<< HEAD
 
-=======
         $this->seedOrders();
         $this->seedComments();
         $this->seedMenu();
->>>>>>> 9566fdd9d5057222f7877f7b4f3ad3d6bbf5e18d
+
     }
 
     private function seedUsersAndPermissions(): void
@@ -233,7 +231,6 @@ class DatabaseSeeder extends Seeder
 
     private function seedPosts(): void
     {
-<<<<<<< HEAD
         $json = \File::get(database_path() . '/posts.json');
         $data =  json_decode($json, true);
 
@@ -249,7 +246,6 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => $item['updated_at'],
             ]);
         }
-=======
         $post1 = Post::factory()->create([
             'author_id' => 1,
             'title' => "شهسیذل",
@@ -282,7 +278,6 @@ class DatabaseSeeder extends Seeder
             'comment_status' => 0,
             'slug' => "asdf029340420"
         ]);
->>>>>>> 9566fdd9d5057222f7877f7b4f3ad3d6bbf5e18d
     }
 
     private function seedOrders(): void
