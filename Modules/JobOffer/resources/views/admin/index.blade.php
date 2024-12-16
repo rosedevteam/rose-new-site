@@ -19,7 +19,7 @@
                             <div class="col-md-2">
                                 <label for="sort_by" class="form-label">ترتیب بر اساس: </label>
                                 <select id="sort_by" name="sort_by" class="form-select text-capitalize">
-                                    <option value="created_at" selected>تاریخ ثبت نام</option>
+                                    <option value="created_at" selected>تاریخ ساخت</option>
                                 </select>
                             </div>
                             <div class="col-md-2">
@@ -98,12 +98,14 @@
                                 </span>
                                     </td>
                                     <td><span class="fw-semibold">{{ $jobOffer->team() }}</span></td>
-                                    <td>{{ $jobOffer->categories()->first()->name }}</td>
+                                    <td>{{ $jobOffer->type }}</td>
                                     <td>
+                                        <span @class(['badge', 'bg-label-success' => $jobOffer->status == 'active', 'bg-label-danger' => $jobOffer->status == 'inactive'])>
                                         @switch($jobOffer->status)
                                             @case('active')فعال@break
                                             @case('inactive')غیر فعال@break
                                         @endswitch
+                                        </span>
                                     </td>
                                     <td>{{ verta($jobOffer->created_at)->formatJalaliDateTime() }}</td>
                                     <td>

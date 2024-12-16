@@ -20,10 +20,10 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-//        app()[PermissionRegistrar::class]->forgetCachedPermissions();
-
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
+        $this->seedUsersAndPermissions();
         $this->seedPosts();
-
+        $this->seedProducts();
         $this->seedOrders();
         $this->seedComments();
         $this->seedMenu();
@@ -85,11 +85,6 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'delete-discounts']);
         //
         Permission::create(['name' => 'view-logs']);
-        //
-        Permission::create(['name' => 'view-menus']);
-        Permission::create(['name' => 'edit-menus']);
-        Permission::create(['name' => 'create-menus']);
-        Permission::create(['name' => 'delete-menus']);
 
         $customer = Role::create(['name' => 'مشتری']);
         $admin = Role::create(['name' => 'ادمین']);

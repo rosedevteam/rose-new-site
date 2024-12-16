@@ -61,7 +61,7 @@ class JobOfferController extends Controller
                 ->withProperties($data)
                 ->log('ساخت فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت ساخته شد');
-            return redirect(route("admin.joboffer.show", $jobOffer));
+            return redirect(route("admin.job-offers.show", $jobOffer));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
