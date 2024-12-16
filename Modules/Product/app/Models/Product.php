@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Modules\Comment\Models\Comment;
+use Modules\Discount\Models\Discount;
 use Modules\Order\Models\Order;
 use Modules\Product\Database\Factories\ProductFactory;
 use Modules\User\Models\User;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $title
@@ -72,6 +73,11 @@ class Product extends Model
     public function comments(): MorphMany
     {
         return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    public function discounts()
+    {
+        return $this->belongsToMany(Discount::class);
     }
 
     protected static function newFactory(): ProductFactory
