@@ -7,6 +7,7 @@ use Gate;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Modules\User\Models\Billing;
 use Modules\User\Models\User;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\Permission\Models\Role;
@@ -88,19 +89,24 @@ class UserController extends Controller
     public function show(User $user)
     {
         Gate::authorize('view-users');
-        if ($user->trashed() && Gate::denies('restore-users')) {
-            abort(404);
-        }
+//        if ($user->trashed() && Gate::denies('restore-users')) {
+//            abort(404);
+//        }
         try {
             $orders = null;
             $logs = null;
+            $billing = null;
+            $roles = Role::all()->select('name', 'id');
             if (Gate::allows('view-orders')) {
                 $orders = $user->orders()->orderByDesc('created_at')->get();
             }
             if (Gate::allows('view-logs')) {
                 $logs = Activity::causedBy($user)->orderByDesc('created_at')->get();
             }
-            return view('user::admin.show', compact('user', 'orders', 'logs'));
+            if (Gate::allows('view-billings')) {
+                $billing = Billing::orderByDesc('created_at')->first();
+            }
+            return view('user::admin.show', compact('user', 'orders', 'logs', 'billing', 'roles'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -117,20 +123,23 @@ class UserController extends Controller
                 'phone' => 'bail|nullable|string|digits:11|unique:users,phone',
                 'email' => 'bail|nullable|string|email|unique:users,email',
             ]);
-            $billingData = request()->validate([
-                'address' => 'bail|nullable|string|max:255',
-                'city' => 'bail|nullable|string|max:255',
-                'province' => 'bail|nullable|string|max:255',
-                'postal_code' => 'bail|nullable|string|digits:10',
-            ]);
+            $billingData = null;
             $userData = array_filter($userData, function ($value) {
                 return !is_null($value);
             });
-            $billingData = array_filter($billingData, function ($value) {
-                return !is_null($value);
-            });
+            if (!is_null($billingData)) {
+                $billingData = request()->validate([
+                    'address' => 'bail|nullable|string|max:255',
+                    'city' => 'bail|nullable|string|max:255',
+                    'province' => 'bail|nullable|string|max:255',
+                    'postal_code' => 'bail|nullable|string|digits:10',
+                ]);
+                $billingData = array_filter($billingData, function ($value) {
+                    return !is_null($value);
+                });
+                $user->billing()->update($billingData);
+            }
             $user->update($userData);
-            $user->billing()->update($billingData);
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($user)
@@ -147,9 +156,7 @@ class UserController extends Controller
     public function destroy(User $user): RedirectResponse
     {
         Gate::authorize('delete-users');
-        if ($user->hasPermissionTo('admin-panel')
-            && !auth()->user()->hasRole('ادمین')
-            && auth()->user()->id != $user->id) {
+        if ($user->hasRole('ادمین') || auth()->user()->id == $user->id) {
             throw new AuthorizationException();
         }
         try {
@@ -165,6 +172,31 @@ class UserController extends Controller
             return back();
         }
     }
+    public function setRole(User $user)
+    {
+        Gate::authorize('set-role');
+        if (auth()->user()->id == $user->id || $user->hasRole('ادمین')) {
+            throw new AuthorizationException();
+        }
+        try {
+            $data = request()->validate([
+                'role_id' => 'bail|required|string|exists:roles,id',
+            ]);
+            $user->syncRoles(Role::where('id', $data['role_id'])->first()->name);
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($user)
+                ->withProperties($data)
+                ->log('ویرایش نقش');
+            alert()->success('موفق', 'ویرایش نقش با موفقیت انجام شد');
+            return back();
+        } catch (\Throwable $th) {
+            alert()->error("خطا", $th->getMessage());
+            return back();
+        }
+    }
+
+
 
 //    public function deleted()
 //    {

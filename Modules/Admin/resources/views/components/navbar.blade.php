@@ -24,8 +24,8 @@
                             @if(!is_null(auth()->user()->avatar))
                                 <img src="{{ auth()->user()->avatar }}" alt class="rounded-circle">
                             @else
-                                <span class="avatar-initial rounded-circle bg-label-info fs-5"
-                                >{{ substr(auth()->user()->last_name, 0, 2) . ' ' . substr(auth()->user()->first_name, 0, 2) }}</span>
+                                <span class="avatar-initial rounded-circle bg-label-info fs-tiny"
+                                >{{ auth()->user()->name() }}</span>
                             @endif
                         </div>
                     </a>
@@ -39,8 +39,8 @@
                                                 <img src="{{ auth()->user()->avatar }}" alt class="rounded-circle">
                                             @else
                                                 <span
-                                                    class="avatar-initial rounded-circle bg-label-info align-content-center fs-5"
-                                                >{{ substr(auth()->user()->last_name, 0, 2) . ' ' . substr(auth()->user()->first_name, 0, 2) }}</span>
+                                                    class="avatar-initial rounded-circle bg-label-info align-content-center fs-tiny"
+                                                >{{ auth()->user()->name() }}</span>
                                             @endif
                                         </div>
                                     </div>

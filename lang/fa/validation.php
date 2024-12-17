@@ -147,6 +147,20 @@ return [
     "url"              => "فرمت آدرس :attribute اشتباه است.",
     'ulid'             => ':attribute باید یک فرمت درست ULID باشد.',
     'uuid'             => ':attribute باید یک فرمت درست UUID باشد.',
+    'jdate' => ':attribute معتبر نمی باشد.',
+    'jdate_equal' => ':attribute برابر :date نمی باشد.',
+    'jdate_not_equal' => ':attribute نامساوی :date نمی باشد.',
+    'jdatetime' => ':attribute معتبر نمی باشد.',
+    'jdatetime_equal' => ':attribute مساوی :date نمی باشد.',
+    'jdatetime_not_equal' => ':attribute نامساوی :date نمی باشد.',
+    'jdate_after' => ':attribute باید بعد از :date باشد.',
+    'jdate_after_equal' => ':attribute باید بعد یا برابر از :date باشد.',
+    'jdatetime_after' => ':attribute باید بعد از :date باشد.',
+    'jdatetime_after_equal' => ':attribute باید بعد یا برابر از :date باشد.',
+    'jdate_before' => ':attribute باید قبل از :date باشد.',
+    'jdate_before_equal' => ':attribute باید قبل یا برابر از :date باشد.',
+    'jdatetime_before' => ':attribute باید قبل از :date باشد.',
+    'jdatetime_before_equal' => ':attribute باید قبل یا برابر از :date باشد.',
 
     /*
     |--------------------------------------------------------------------------
@@ -224,5 +238,7 @@ return [
 		"sheba_number" => "شماره شبا",
 		"iban" => "شماره شبا",
 		"accountـnumber" => "شماره حساب",
+        'start_date' => 'تاریخ شروع',
+        'expires_at' => 'تاریخ انقضا',
     ],
 ];
