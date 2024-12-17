@@ -66,7 +66,7 @@
             </li>
         @endcan
         @can('view-daily-reports')
-            <li @class(["menu-item", 'active' => $route == 'daily-reports'])>
+                <li @class(["menu-item", 'active' => $route == 'dailyreports'])>
                 <a href="{{ route("admin.dailyreports.index") }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-chart"></i>
                     <div data-i18n="گزارش روزانه بازار">گزارش روزانه بازار</div>
@@ -74,7 +74,7 @@
             </li>
         @endcan
         @can('view-job-offers')
-            <li @class(["menu-item", 'active' => $route == 'job-offers'])>
+                <li @class(["menu-item", 'active' => $route == 'joboffers'])>
                 <a href="{{ route("admin.joboffers.index") }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bxl-linkedin"></i>
                     <div data-i18n="فرصت های شغلی">فرصت های شغلی</div>
@@ -82,7 +82,7 @@
             </li>
         @endcan
         @can('view-job-applications')
-            <li @class(["menu-item", 'active' => $route == 'job-applications'])>
+                <li @class(["menu-item", 'active' => $route == 'jobapplications'])>
                 <a href="{{ route("admin.jobapplications.index") }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-receipt"></i>
                     <div data-i18n="رزومه های ارسال شده">رزومه های ارسال شده</div>
