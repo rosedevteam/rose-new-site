@@ -25,7 +25,7 @@
                         <div class="row">
                             <div class="mb-3 col-md-4">
                                 <label class="form-label" for="code">کد</label>
-                                <input type="text" class="form-control" id="code" name="code"
+                                <input type="text" class="form-control" id="code" name="code" autocomplete="off"
                                        required>
                             </div>
                             <div class="mb-3 col-md-3">
@@ -46,16 +46,16 @@
                         <div class="row">
                             <div class="mb-3 col-md-4">
                                 <label class="form-label" for="amount">مقدار</label>
-                                <input class="form-control" id="amount" name="amount">
+                                <input class="form-control" id="amount" name="amount" autocomplete="off">
                             </div>
                             <div class="mb-3 col-md-3">
                                 <label class="form-label" for="expires_at">تاریخ انقضا</label>
-                                <input type="text" class="date-picker form-control" name="expires_at">
-                                <input type="hidden" class="expire-timestamp" name="expires_at">
+                                <input type="text" class="date-picker form-control" name="expires_at"
+                                       autocomplete="off">
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg mb-4">
+                            <div class="col-5 mb-4">
                                 <label for="select2Primary" class="form-label">دوره ها</label>
                                 <div class="select2-primary">
                                     <select id="select2Primary" class="select2 form-select" name="products[]" multiple>
@@ -94,7 +94,14 @@
         $(document).ready(function () {
             $(".date-picker").persianDatepicker({
                 initialValue: false,
-                altField: '.expire-timestamp',
+                format: 'YYYY/MM/DD HH:mm:ss',
+                minDate: new persianDate(),
+                timePicker: {
+                    enabled: true,
+                    meridian: {
+                        enabled: false,
+                    },
+                },
             });
         });
     </script>

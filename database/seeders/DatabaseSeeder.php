@@ -38,8 +38,12 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'edit-users']);
         Permission::create(['name' => 'create-users']);
         Permission::create(['name' => 'delete-users']);
-        Permission::create(['name' => 'promote-users']);
         Permission::create(['name' => 'restore-users']);
+        //
+        Permission::create(['name' => 'view-billings']);
+        Permission::create(['name' => 'edit-billings']);
+        Permission::create(['name' => 'create-billings']);
+        Permission::create(['name' => 'delete-billings']);
         //
         Permission::create(['name' => 'view-daily-reports']);
         Permission::create(['name' => 'edit-daily-reports']);
@@ -84,6 +88,7 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'create-discounts']);
         Permission::create(['name' => 'delete-discounts']);
         //
+        Permission::create(['name' => 'set-role']);
         Permission::create(['name' => 'view-logs']);
 
         $customer = Role::create(['name' => 'مشتری']);
@@ -171,6 +176,18 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $user4->assignRole($customer);
+
+        $user5 = User::factory()->create([
+            'first_name' => 'ارشیا',
+            'last_name' => 'رحیمی',
+            'email' => null,
+            'birthday' => null,
+            'avatar' => null,
+            'phone' => '09399080252',
+            'password' => null,
+        ]);
+
+        $user5->assignRole($admin);
     }
 
     private function seedProducts(): void
@@ -240,7 +257,7 @@ class DatabaseSeeder extends Seeder
                 'title' => $item['title'],
                 'content' => $item['content'],
                 'status' => ($item['status'] == 'publish') ? 'public' : 'draft' ,
-                'url' => $item['slug'],
+                'slug' => $item['slug'],
                 'comment_status' => $item['comment_status'],
                 'created_at' => $item['created_at'],
                 'updated_at' => $item['updated_at'],

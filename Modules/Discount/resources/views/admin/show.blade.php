@@ -27,8 +27,7 @@
                             <div class="mb-3 col-md-4">
                                 <label class="form-label" for="code">کد</label>
                                 <input type="text" class="form-control" id="code" name="code"
-                                       value="{{ $discount->code }}"
-                                       required>
+                                       value="{{ $discount->code }}" required>
                             </div>
                             <div class="mb-3 col-md-3">
                                 <label class="form-label" for="is_active">وضعیت</label>
@@ -38,7 +37,7 @@
                                 </select>
                             </div>
                             <div class="mb-3 col-md-3">
-                                <label class="form-label" for="type">وضعیت</label>
+                                <label class="form-label" for="type">نوع</label>
                                 <select class="form-select" id="type" name="type">
                                     <option value="amount" {{ $discount->type == 'amount' ? 'selected' : '' }}>مقدار
                                     </option>
@@ -51,14 +50,13 @@
                         <div class="row">
                             <div class="mb-3 col-md-4">
                                 <label class="form-label" for="amount">مقدار</label>
-                                <input class="form-control" id="amount" name="amount" value="{{ $discount->amount }}">
+                                <input class="form-control" id="amount" name="amount"
+                                       value="{{ $discount->amount }}" required>
                             </div>
                             <div class="mb-3 col-md-3">
                                 <label class="form-label" for="expires_at">تاریخ انقضا</label>
                                 <input type="text" class="date-picker form-control"
-                                       name="expires_at" {{ verta($discount->expires_at)->formatJalaliDatetime() }}>
-                                <input type="hidden" class="expire-timestamp" name="expires_at"
-                                       value="{{ $discount->expires_at }}">
+                                       name="expires_at" required>
                             </div>
                         </div>
                         <div class="row">
@@ -82,7 +80,7 @@
                     {{--                        <form action="{{ route('admin.discounts.destroy', $discount) }}" method="POST">--}}
                     {{--                            @csrf--}}
                     {{--                            @method('DELETE')--}}
-                    {{--                        <button id="delete-discount" class="btn btn-danger mt-3">حذف تخفیف</button>--}}
+                    {{--                            <button id="delete-discount" class="btn btn-danger mt-3">حذف تخفیف</button>--}}
                     {{--                        </form>--}}
                     {{--                    @endcan--}}
                 </div>
@@ -108,8 +106,18 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $(".date-picker").persianDatepicker({
-                initialValue: false,
-                altField: '.expire-timestamp',
+                initialValue: '{{ verta($discount->expires_at)->format('Y/m/d-H:i') }}',
+                format: 'YYYY/MM/DD HH:mm:ss',
+                minDate: new persianDate(),
+                timePicker: {
+                    enabled: true,
+                    meridian: {
+                        enabled: false,
+                    },
+                    second: {
+                        enabled: false,
+                    }
+                },
             });
         });
     </script>

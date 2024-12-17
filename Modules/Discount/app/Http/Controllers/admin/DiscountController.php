@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Gate;
 use Modules\Discount\Models\Discount;
 use Modules\Product\Models\Product;
+use Verta;
 
 class DiscountController extends Controller
 {
@@ -51,15 +52,16 @@ class DiscountController extends Controller
                 'code' => 'bail|required|string|unique:discounts,code',
                 'type' => 'bail|required|string|in:amount,percentage',
                 'is_active' => 'bail|required|integer|in:0,1',
-                'expires_at' => 'bail|required|string|numeric',
                 'amount' => 'bail|required|string',
                 'products.*' => 'bail|required|integer|exists:products,id',
+                'expires_at' => 'bail|required|string',
             ]);
+            $expires_at = self::formatDate($data['expires_at']);
             $discount = Discount::create([
                 'code' => $data['code'],
                 'type' => $data['type'],
                 'is_active' => $data['is_active'],
-                'expires_at' => $data['expires_at'],
+                'expires_at' => $expires_at,
                 'amount' => $data['amount'],
                 'author_id' => auth()->user()->id,
             ]);
@@ -94,23 +96,27 @@ class DiscountController extends Controller
     {
         Gate::authorize('edit-discounts');
         try {
-            $data = request()->validate([
-                'code' => 'bail|required|string|unique:discounts,code',
+            $data = request();
+            if ($data['code'] == $discount->code) {
+                $data['code'] = null;
+            }
+            $data = $data->validate([
+                'code' => 'bail|nullable|string|unique:discounts,code',
                 'type' => 'bail|required|string|in:amount,percentage',
                 'is_active' => 'bail|required|integer|in:0,1',
-                'expires_at' => 'bail|required|string|numeric',
                 'amount' => 'bail|required|string',
                 'products.*' => 'bail|required|integer|exists:products,id',
+                'expires_at' => 'bail|required|string',
             ]);
+            $data['expires_at'] = self::formatDate($data['expires_at']);
             $discount->update([
-                'code' => $data['code'],
+                'code' => $data['code'] ?: $discount->code,
                 'type' => $data['type'],
                 'is_active' => $data['is_active'],
                 'expires_at' => $data['expires_at'],
                 'amount' => $data['amount'],
             ]);
-            $discount->products()->delete();
-            $discount->products()->attach($data['products']);
+            $discount->products()->sync($data['products']);
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($discount)
@@ -139,5 +145,26 @@ class DiscountController extends Controller
             return back();
         }
     }
+
+    static function formatDate(string $d)
+    {
+        $expires_at = self::convertNums($d);
+        $t = explode(' ', $expires_at);
+        $date = explode('/', $t[0]);
+        $time = explode(':', $t[1]);
+        $verta = Verta::jalaliToGregorian($date[0], $date[1], $date[2]);
+        return $verta[0] . '/' . $verta[1] . '/' . $verta[2] . ' ' . $time[0] . ':' . $time[1];
+    }
+
+    static function convertNums($string)
+    {
+        $persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        $arabic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+
+        $num = range(0, 9);
+        $convertedPersianNums = str_replace($persian, $num, $string);
+        return str_replace($arabic, $num, $convertedPersianNums);
+    }
+
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Auth\Http\Controllers\Admin;
+namespace Modules\Auth\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Artesaos\SEOTools\Traits\SEOTools;

@@ -36,9 +36,6 @@
                                     </div>
                                 </div>
                             </div>
-                            @php
-                                $billing = $user->billing()
-                            @endphp
                             <h5 class="pb-2 border-bottom mb-4 secondary-font">جزئیات</h5>
                             <div class="info-container">
                                 <ul class="list-unstyled">
@@ -50,22 +47,26 @@
                                         <span class="fw-bold me-2">ایمیل:</span>
                                         <span>{{ $user->email }}</span>
                                     </li>
-                                    <li class="mb-3">
-                                        <span class="fw-bold me-2">آدرس:</span>
-                                        <span class="d-inline-block">{{ $billing->address }}</span>
-                                    </li>
-                                    <li class="mb-3">
-                                        <span class="fw-bold me-2">شهر:</span>
-                                        <span class="d-inline-block">{{ $billing-> city }}</span>
-                                    </li>
-                                    <li class="mb-3">
-                                        <span class="fw-bold me-2">استان:</span>
-                                        <span class="d-inline-block">{{ $billing->province }}</span>
-                                    </li>
-                                    <li class="mb-3">
-                                        <span class="fw-bold me-2">کد پستی:</span>
-                                        <span class="d-inline-block">{{ $billing->postal_code }}</span>
-                                    </li>
+                                    @can('view-billings')
+                                        @if(!is_null($billing))
+                                            <li class="mb-3">
+                                                <span class="fw-bold me-2">آدرس:</span>
+                                                <span class="d-inline-block">{{ $billing->address }}</span>
+                                            </li>
+                                            <li class="mb-3">
+                                                <span class="fw-bold me-2">شهر:</span>
+                                                <span class="d-inline-block">{{ $billing->city }}</span>
+                                            </li>
+                                            <li class="mb-3">
+                                                <span class="fw-bold me-2">استان:</span>
+                                                <span class="d-inline-block">{{ $billing->province }}</span>
+                                            </li>
+                                            <li class="mb-3">
+                                                <span class="fw-bold me-2">کد پستی:</span>
+                                                <span class="d-inline-block">{{ $billing->postal_code }}</span>
+                                            </li>
+                                        @endif
+                                    @endcan
                                     <li class="mb-3">
                                         <span class="fw-bold me-2">تاریخ ساخت اکانت:</span>
                                         <span
@@ -80,17 +81,18 @@
                                 <div class="d-flex justify-content-center pt-3">
                                     <a href="javascript:;" class="btn btn-primary me-3" data-bs-target="#editUser"
                                        data-bs-toggle="modal">ویرایش</a>
-                                    @if(!$user->trashed())
-                                        @can('delete-users')
-                                            @if((!$user->hasPermissionTo('admin-panel') || auth()->user()->hasRole('ادمین') && $user->id != auth()->user()->id))
-                                                <a href="javascript:;" class="btn btn-label-danger suspend-user"
-                                                   data-bs-target="#deleteUser" data-bs-toggle="modal">حذف کاربر</a>
-                                            @endif
-                                        @endcan
-                                    @else
-                                        <a href="javascript:;" class="btn btn-label-danger suspend-user"
-                                           data-bs-target="#deleteUser" data-bs-toggle="modal">restore</a>
-                                    @endif
+                                    @can('delete-users')
+                                        @if((!$user->hasPermissionTo('admin-panel') || auth()->user()->hasRole('ادمین') && $user->id != auth()->user()->id))
+                                            <a href="javascript:;" class="btn btn-label-danger me-3 suspend-user"
+                                               data-bs-target="#deleteUser" data-bs-toggle="modal">حذف کاربر</a>
+                                        @endif
+                                    @endcan
+                                    @can('set-role')
+                                        @if(auth()->user() !== $user && !$user->hasRole('admin'))
+                                            <a href="javascript:;" class="btn btn-label-danger suspend-user"
+                                               data-bs-target="#setRole" data-bs-toggle="modal">ویرایش نقش</a>
+                                        @endif
+                                    @endcan
                                 </div>
                             </div>
                         </div>
@@ -99,8 +101,8 @@
                 </div>
                 <!--/ User Sidebar -->
 
-                <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
-                    @if(!is_null($orders))
+                @if(!is_null($orders))
+                    <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
                         <div class="card mb-4">
                             <div class="card-header border-bottom">
                                 <h5 class="card-title">سفارش ها</h5>
@@ -181,8 +183,8 @@
                                 </div>
                             </div>
                         </div>
-                    @endif
-                </div>
+                    </div>
+                @endif
             </div>
 
             @if(!is_null($logs))
@@ -268,26 +270,33 @@
                                     <input type="text" id="email" name="email"
                                            class="form-control text-start" placeholder="{{ $user->email }}" dir="ltr">
                                 </div>
-                                <div class="col-12 col-md-6">
-                                    <label class="form-label" for="address">آدرس</label>
-                                    <input type="text" id="address" name="address"
-                                           class="form-control text-start" placeholder="{{ $billing->address }}">
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <label class="form-label" for="city">شهر</label>
-                                    <input type="text" id="city" name="city"
-                                           class="form-control text-start" placeholder="{{ $billing->city }}">
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <label class="form-label" for="province">استان</label>
-                                    <input type="text" id="province" name="province"
-                                           class="form-control text-start" placeholder="{{ $billing->province }}">
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <label class="form-label" for="postal_code">کد پستی</label>
-                                    <input type="text" id="postal_code" name="postal_code"
-                                           class="form-control text-start" placeholder="{{ $billing->postal_code }}">
-                                </div>
+                                @can('edit-billings')
+                                    @if(!is_null($billing))
+                                        <div class="col-12 col-md-6">
+                                            <label class="form-label" for="address">آدرس</label>
+                                            <input type="text" id="address" name="address"
+                                                   class="form-control text-start"
+                                                   placeholder="{{ $billing->address }}">
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label class="form-label" for="city">شهر</label>
+                                            <input type="text" id="city" name="city"
+                                                   class="form-control text-start" placeholder="{{ $billing->city }}">
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label class="form-label" for="province">استان</label>
+                                            <input type="text" id="province" name="province"
+                                                   class="form-control text-start"
+                                                   placeholder="{{ $billing->province }}">
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label class="form-label" for="postal_code">کد پستی</label>
+                                            <input type="text" id="postal_code" name="postal_code"
+                                                   class="form-control text-start"
+                                                   placeholder="{{ $billing->postal_code }}">
+                                        </div>
+                                    @endif
+                                @endcan
                                 <div class="col-12 text-center mt-4">
                                     <button type="submit" class="btn btn-primary me-sm-3 me-1">ثبت</button>
                                     <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
@@ -311,38 +320,58 @@
                                 <div class="text-center mb-4 mt-0 mt-md-n2">
                                     <h3 class="secondary-font">آیا اطمینان دارید؟</h3>
                                 </div>
-                                @if(!$user->trashed())
-                                    <form id="deleteUserForm" action="{{ route('admin.users.destroy', $user) }}"
-                                          method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <div class="col-12 text-center mt-4">
-                                            <button type="submit" class="btn btn-danger me-sm-3 me-1">بله، حذف کن!
-                                            </button>
-                                            <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
-                                                    aria-label="Close">
-                                                انصراف
-                                            </button>
-                                        </div>
-                                    </form>
-                                @else
-                                    <form id="deleteUserForm" action="{{ route('admin.users.restore', $user) }}"
-                                          method="POST">
-                                        @csrf
-                                        @method('PATCH')
-                                        <div class="col-12 text-center mt-4">
-                                            <button type="submit" class="btn btn-danger me-sm-3 me-1">restore</button>
-                                            <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
-                                                    aria-label="Close">
-                                                انصراف
-                                            </button>
-                                        </div>
-                                    </form>
-                                @endif
+                                <form id="deleteUserForm" action="{{ route('admin.users.destroy', $user) }}"
+                                      method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <div class="col-12 text-center mt-4">
+                                        <button type="submit" class="btn btn-danger me-sm-3 me-1">حذف</button>
+                                        <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
+                                                aria-label="Close">
+                                            انصراف
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
+            @endcan
+            @can('set-role')
+                @if(auth()->user() !== $user && !$user->hasRole('admin'))
+                    <div class="modal fade" id="setRole" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-simple">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div class="text-center mb-4 mt-0 mt-md-n2">
+                                        <h3 class="secondary-font">آیا اطمینان دارید؟</h3>
+                                    </div>
+                                    <form id="deleteUserForm" action="{{ route('admin.users.role', $user) }}"
+                                          method="POST">
+                                        @csrf
+                                        @method('PATCH')
+                                        <select name="role_id">
+                                            @foreach($roles as $role)
+                                                @if($role->name == $user->getRoleNames()[0])
+                                                    <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                        <div class="col-12 text-center mt-4">
+                                            <button type="submit" class="btn btn-danger me-sm-3 me-1">ویرایش نقش
+                                            </button>
+                                            <button type="reset" class="btn btn-label-secondary"
+                                                    data-bs-dismiss="modal"
+                                                    aria-label="Close">
+                                                انصراف
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             @endcan
             <!--/ delete User modal -->
             <!-- /Modal -->
