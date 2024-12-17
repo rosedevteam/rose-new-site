@@ -89,9 +89,9 @@ class UserController extends Controller
     public function show(User $user)
     {
         Gate::authorize('view-users');
-        if ($user->trashed() && Gate::denies('restore-users')) {
-            abort(404);
-        }
+//        if ($user->trashed() && Gate::denies('restore-users')) {
+//            abort(404);
+//        }
         try {
             $orders = null;
             $logs = null;
@@ -156,9 +156,7 @@ class UserController extends Controller
     public function destroy(User $user): RedirectResponse
     {
         Gate::authorize('delete-users');
-        if ($user->hasPermissionTo('admin-panel')
-            && !auth()->user()->hasRole('ادمین')
-            && auth()->user()->id != $user->id) {
+        if ($user->hasRole('ادمین') || auth()->user()->id == $user->id) {
             throw new AuthorizationException();
         }
         try {
@@ -174,18 +172,17 @@ class UserController extends Controller
             return back();
         }
     }
-
     public function setRole(User $user)
     {
         Gate::authorize('set-role');
-        if (auth()->user() === $user || $user->hasRole('admin')) {
+        if (auth()->user()->id == $user->id || $user->hasRole('ادمین')) {
             throw new AuthorizationException();
         }
         try {
             $data = request()->validate([
                 'role_id' => 'bail|required|string|exists:roles,id',
             ]);
-            $user->syncRoles($data['role_id']);
+            $user->syncRoles(Role::where('id', $data['role_id'])->first()->name);
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($user)
