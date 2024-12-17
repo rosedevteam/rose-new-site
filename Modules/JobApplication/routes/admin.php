@@ -10,4 +10,4 @@ use Modules\JobApplication\Http\Controllers\admin\JobApplicationController;
 //    });
 
 
-Route::resource('job-applications', JobApplicationController::class);
+Route::resource('jobapplications', JobApplicationController::class);

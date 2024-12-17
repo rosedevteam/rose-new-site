@@ -3,6 +3,7 @@
 namespace Modules\Auth\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use Artesaos\SEOTools\Traits\SEOTools;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
@@ -13,57 +14,56 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
+use Modules\Auth\Models\OtpCode;
+use Modules\Auth\Notifications\OtpNotification;
 use Modules\User\Models\User;
 use Spatie\Permission\Models\Role;
 
 class AuthController extends Controller
 {
-    public function requestOtp(Request $request): Application|Response|Redirector|RedirectResponse
+    use SEOTools;
+    public function index()
     {
-        $phone = $request->validate([
-            'phone' => ['bail', 'required', 'regex:/^09[0|1|2|3][0-9]{8}$/'],
+        $this->seo()->setTitle('ورود');
+        return view('auth::admin.login');
+    }
+
+    public function login(Request $request)
+    {
+        //validate data
+        $validData = $request->validate([
+            'phone' => ['required', 'exists:users' , 'regex:/^09[0|1|2|3][0-9]{8}$/']
         ]);
-        $user = User::query()->where('phone', $phone)->first();
-        if (!$user->hasAnyRole(Role::all())) {
+        //get user and role from users table
+        $user = User::where('phone', $validData['phone'])->first();
+        if (!$user?->hasAnyRole(Role::all())) {
             throw new AuthorizationException;
         }
-        $request->session()->put('phone', $phone);
-        return redirect(route('admin.otp'));
-    }
 
-    public function getOtpPage(Request $request): Factory|View|Application|Redirector|RedirectResponse
-    {
-        try {
-            $phone = $request->session()->get('phone')['phone'];
-            $user = User::query()->where('phone', $phone)->first();
-            $user->requestOtp();
-            return view('auth::admin.otp', [
-                'error' => false,
-            ]);
-        } catch (Exception $e) {
-            return redirect(route('admin.login'));
-        }
-    }
+        if ($user) {
+            // generate sms code
+            $code = OtpCode::generateCode($user);
 
-    public function validateOtp(Request $request): Factory|View|Application|Redirector|RedirectResponse
-    {
-        $otp = $request->validate([
-            'otp' => "bail|required|digits:6",
-        ])['otp'];
-        $phone = $request->session()->get('phone')['phone'];
-        $user = User::query()->where('phone', $phone)->first();
-        $result = $user->checkOtp($otp);
-        if ($result == 0) {
-            return view('auth::admin.otp', [
-                'error' => true,
+            // create session to store sms code in it
+            $request->session()->flash('auth', [
+                'user_id' => $user->id,
+                'forget' => false
             ]);
-        } elseif ($result == 1) {
-            auth()->login($user);
-            return redirect(route('admin.index'));
+
+            // send sms code to user
+            $user->notify(new OtpNotification($user->phone , $code));
+
+            //send response to front
+            return redirect(route('admin.login.token'));
+
         } else {
-            $request->session()->forget('phone');
-            return redirect(route('admin.login'));
+
+            //send error to front
+            toast('موبایل اشتباه است' , 'danger');
+            return back();
+
         }
+
     }
 
     public function logout(Request $request): Application|Redirector|RedirectResponse

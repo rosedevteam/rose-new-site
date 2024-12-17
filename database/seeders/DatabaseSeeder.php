@@ -22,11 +22,12 @@ class DatabaseSeeder extends Seeder
     {
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
         $this->seedUsersAndPermissions();
-        $this->seedProducts();
         $this->seedPosts();
+        $this->seedProducts();
         $this->seedOrders();
         $this->seedComments();
         $this->seedMenu();
+
     }
 
     private function seedUsersAndPermissions(): void
@@ -77,6 +78,11 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'edit-menus']);
         Permission::create(['name' => 'create-menus']);
         Permission::create(['name' => 'delete-menus']);
+        //
+        Permission::create(['name' => 'view-discounts']);
+        Permission::create(['name' => 'edit-discounts']);
+        Permission::create(['name' => 'create-discounts']);
+        Permission::create(['name' => 'delete-discounts']);
         //
         Permission::create(['name' => 'view-logs']);
 
@@ -225,6 +231,21 @@ class DatabaseSeeder extends Seeder
 
     private function seedPosts(): void
     {
+        $json = \File::get(database_path() . '/posts.json');
+        $data =  json_decode($json, true);
+
+        foreach ($data as $item) {
+            Post::create([
+                'author_id' => 1,
+                'title' => $item['title'],
+                'content' => $item['content'],
+                'status' => ($item['status'] == 'publish') ? 'public' : 'draft' ,
+                'url' => $item['slug'],
+                'comment_status' => $item['comment_status'],
+                'created_at' => $item['created_at'],
+                'updated_at' => $item['updated_at'],
+            ]);
+        }
         $post1 = Post::factory()->create([
             'author_id' => 1,
             'title' => "شهسیذل",
@@ -376,7 +397,7 @@ class DatabaseSeeder extends Seeder
             'is_active' => true,
             'has_children' => true,
             'slug' => '#',
-            'icon' => 'asgd',
+            'icon' => null,
             'order' => 2,
         ]);
         Menu::factory()->create([
@@ -491,4 +512,5 @@ class DatabaseSeeder extends Seeder
             'order' => 4,
         ]);
     }
+
 }

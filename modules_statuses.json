@@ -11,5 +11,6 @@
     "Order": true,
     "JobOffer": true,
     "Menu": true,
-    "JobApplication": true
+    "JobApplication": true,
+    "Discount": true
 }

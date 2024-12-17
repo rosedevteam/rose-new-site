@@ -27,8 +27,8 @@ class OtpNotification extends Notification
     {
         return [
             'template_id' => config('services.sms.verify'),
-            'phone' => $notifiable->phone,
-            'otp' => $notifiable->otp,
+            'phone' => $this->phone,
+            'otp' => $this->otp,
         ];
     }
 }

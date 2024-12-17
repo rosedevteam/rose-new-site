@@ -12,7 +12,7 @@
         @endif
         <div class="container-xxl flex-grow-1 container-p-y">
             <div class="card mb-3">
-                <form action="{{ route('admin.job-offers.store') }}" method="post">
+                <form action="{{ route('admin.joboffers.store') }}" method="post">
                     @csrf
                     <div class="tab-content">
                         <div class="tab-pane fade active show" id="form-tabs-post" role="tabpanel">

@@ -12,7 +12,7 @@
         @endif
         <div class="container-xxl flex-grow-1 container-p-y">
             <div class="card mb-3">
-                <form action="{{ route('admin.job-offers.update', $jobOffer) }}" method="post">
+                <form action="{{ route('admin.joboffers.update', $jobOffer) }}" method="post">
                     @method('PATCH')
                     @csrf
                     <div class="tab-content">

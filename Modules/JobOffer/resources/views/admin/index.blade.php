@@ -13,13 +13,13 @@
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
-                    <form action="{{ route('admin.job-offers.index') }}" method="GET">
+                    <form action="{{ route('admin.joboffers.index') }}" method="GET">
                         <div
                             class="d-flex justify-content-start align-items-center row py-3 gap-1 gap-md-0 primary-font">
                             <div class="col-md-2">
                                 <label for="sort_by" class="form-label">ترتیب بر اساس: </label>
                                 <select id="sort_by" name="sort_by" class="form-select text-capitalize">
-                                    <option value="created_at" selected>تاریخ ثبت نام</option>
+                                    <option value="created_at" selected>تاریخ ساخت</option>
                                 </select>
                             </div>
                             <div class="col-md-2">
@@ -44,7 +44,7 @@
                                     <div
                                         class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
                                         <div class="dt-buttons btn-group flex-wrap">
-                                            <a href="{{ route('admin.job-offers.create') }}">
+                                            <a href="{{ route('admin.joboffers.create') }}">
                                                 <button class="btn btn-secondary add-new btn-primary ms-2"><span><i
                                                             class="bx bx-plus me-0 me-lg-2"></i><span
                                                             class="d-none d-lg-inline-block">ساخت فرصت شغلی جدید</span></span>
@@ -98,18 +98,20 @@
                                 </span>
                                     </td>
                                     <td><span class="fw-semibold">{{ $jobOffer->team() }}</span></td>
-                                    <td>{{ $jobOffer->categories()->first()->name }}</td>
+                                    <td>{{ $jobOffer->type }}</td>
                                     <td>
+                                        <span @class(['badge', 'bg-label-success' => $jobOffer->status == 'active', 'bg-label-danger' => $jobOffer->status == 'inactive'])>
                                         @switch($jobOffer->status)
                                             @case('active')فعال@break
                                             @case('inactive')غیر فعال@break
                                         @endswitch
+                                        </span>
                                     </td>
                                     <td>{{ verta($jobOffer->created_at)->formatJalaliDateTime() }}</td>
                                     <td>
                                         <div class="d-inline-block text-nowrap">
                                             <button class="btn btn-sm btn-icon">
-                                                <a href="{{ route('admin.job-offers.show', $jobOffer) }}">
+                                                <a href="{{ route('admin.joboffers.show', $jobOffer) }}">
                                                     <i class="bx bx-detail"></i>
                                                 </a>
                                             </button>

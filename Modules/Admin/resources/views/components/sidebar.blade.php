@@ -9,9 +9,9 @@
             <i class="bx bx-x d-block d-xl-none bx-sm align-middle"></i>
         </a>
     </div>
-@php
-$route = explode('.', Route::currentRouteName())[1];
-@endphp
+    @php
+        $route = explode('.', Route::currentRouteName())[1];
+    @endphp
     <div class="menu-divider mt-0"></div>
 
     <div class="menu-inner-shadow"></div>
@@ -49,6 +49,14 @@ $route = explode('.', Route::currentRouteName())[1];
                 </a>
             </li>
         @endcan
+            @can('view-discounts')
+                <li @class(["menu-item", 'active' => $route == 'discounts'])>
+                    <a href="{{ route("admin.discounts.index") }}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bxs-offer"></i>
+                        <div data-i18n="تخفیف ها">تخفیف ها</div>
+                    </a>
+                </li>
+            @endcan
         @can('view-posts')
             <li @class(["menu-item", 'active' => $route == 'posts'])>
                 <a href="{{ route("admin.posts.index") }}" class="menu-link">
@@ -59,7 +67,7 @@ $route = explode('.', Route::currentRouteName())[1];
         @endcan
         @can('view-daily-reports')
             <li @class(["menu-item", 'active' => $route == 'daily-reports'])>
-                <a href="{{ route("admin.daily-reports.index") }}" class="menu-link">
+                <a href="{{ route("admin.dailyreports.index") }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-chart"></i>
                     <div data-i18n="گزارش روزانه بازار">گزارش روزانه بازار</div>
                 </a>
@@ -67,7 +75,7 @@ $route = explode('.', Route::currentRouteName())[1];
         @endcan
         @can('view-job-offers')
             <li @class(["menu-item", 'active' => $route == 'job-offers'])>
-                <a href="{{ route("admin.job-offers.index") }}" class="menu-link">
+                <a href="{{ route("admin.joboffers.index") }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bxl-linkedin"></i>
                     <div data-i18n="فرصت های شغلی">فرصت های شغلی</div>
                 </a>
@@ -75,7 +83,7 @@ $route = explode('.', Route::currentRouteName())[1];
         @endcan
         @can('view-job-applications')
             <li @class(["menu-item", 'active' => $route == 'job-applications'])>
-                <a href="{{ route("admin.job-applications.index") }}" class="menu-link">
+                <a href="{{ route("admin.jobapplications.index") }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-receipt"></i>
                     <div data-i18n="رزومه های ارسال شده">رزومه های ارسال شده</div>
                 </a>

@@ -40,8 +40,7 @@ return [
     ],
 
     'sms' => [
-        'verify' => env('TS_VERIFY_LOGIN_SMS'),
-        'subscribe' => env('TS_VERIFY_LOGIN_SMS'),
+        'api' => env('SMS_API'),
     ]
 
 ];
