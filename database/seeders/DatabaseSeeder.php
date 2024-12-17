@@ -263,38 +263,6 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => $item['updated_at'],
             ]);
         }
-        $post1 = Post::factory()->create([
-            'author_id' => 1,
-            'title' => "شهسیذل",
-            'content' => "asdkjasdg",
-            'status' => 'public',
-            'comment_status' => 0,
-            'slug' => "asdbniadssasjgasgdfg"
-        ]);
-        $post2 = Post::factory()->create([
-            'author_id' => 2,
-            'title' => "شسهختیذدلهخ",
-            'content' => "asdkjasdg",
-            'status' => 'public',
-            'comment_status' => 1,
-            'slug' => "sdgg"
-        ]);
-        $post3 = Post::factory()->create([
-            'author_id' => 3,
-            'title' => "شهسیذل",
-            'content' => "asdkjasdg",
-            'status' => 'public',
-            'comment_status' => 0,
-            'slug' => "234sfegasofaw4"
-        ]);
-        $post4 = Post::factory()->create([
-            'author_id' => 1,
-            'title' => "شهسیذل",
-            'content' => "asdkjasdg",
-            'status' => 'public',
-            'comment_status' => 0,
-            'slug' => "asdf029340420"
-        ]);
     }
 
     private function seedOrders(): void

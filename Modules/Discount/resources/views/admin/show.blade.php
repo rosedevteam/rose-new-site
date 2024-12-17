@@ -58,6 +58,11 @@
                                 <input type="text" class="date-picker form-control"
                                        name="expires_at" required>
                             </div>
+                            <div class="mb-3 col-md-3">
+                                <label class="form-label" for="limit">محدودیت استفاده</label>
+                                <input type="text" class="date-picker form-control" name="limit" id="limit"
+                                       autocomplete="off">
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-lg mb-4">
