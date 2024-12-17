@@ -24,8 +24,7 @@
                             @if(!is_null(auth()->user()->avatar))
                                 <img src="{{ auth()->user()->avatar }}" alt class="rounded-circle">
                             @else
-                                <span class="avatar-initial rounded-circle bg-label-info fs-tiny"
-                                >{{ auth()->user()->name() }}</span>
+                                <i class="bx bx-user mt-3"></i>
                             @endif
                         </div>
                     </a>
@@ -33,17 +32,6 @@
                         <li>
                             <a class="dropdown-item" href="{{ route("admin.users.show", auth()->user()) }}">
                                 <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0 me-3">
-                                        <div class="avatar avatar-md me-2">
-                                            @if(!is_null(auth()->user()->avatar))
-                                                <img src="{{ auth()->user()->avatar }}" alt class="rounded-circle">
-                                            @else
-                                                <span
-                                                    class="avatar-initial rounded-circle bg-label-info align-content-center fs-tiny"
-                                                >{{ auth()->user()->name() }}</span>
-                                            @endif
-                                        </div>
-                                    </div>
                                     <div class="flex-grow-1">
                                         <span
                                             class="fw-semibold d-block">{{ auth()->user()->name() }}</span>

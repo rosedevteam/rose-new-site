@@ -4,7 +4,6 @@ namespace Modules\User\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Gate;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Modules\User\Models\Billing;
@@ -97,6 +96,9 @@ class UserController extends Controller
             $logs = null;
             $billing = null;
             $roles = Role::all()->select('name', 'id');
+            $canEdit = Gate::allows('update', $user);
+            $canSetRole = Gate::allows('setRole', $user);
+            $canDelete = Gate::allows('delete', $user);
             if (Gate::allows('view-orders')) {
                 $orders = $user->orders()->orderByDesc('created_at')->get();
             }
@@ -106,7 +108,7 @@ class UserController extends Controller
             if (Gate::allows('view-billings')) {
                 $billing = Billing::orderByDesc('created_at')->first();
             }
-            return view('user::admin.show', compact('user', 'orders', 'logs', 'billing', 'roles'));
+            return view('user::admin.show', compact('user', 'orders', 'logs', 'billing', 'roles', 'canEdit', 'canSetRole', 'canDelete'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -115,7 +117,12 @@ class UserController extends Controller
 
     public function update(User $user)
     {
-        Gate::authorize('edit-users');
+        Gate::authorize('update', $user);
+//        Gate::authorize('edit-users');
+//        if($user->hasPermissionTo('admin-panel') &&
+//            (auth()->user()->id != $user->id || !auth()->user()->hasRole('super-admin'))) {
+//            throw new AuthorizationException();
+//        }
         try {
             $userData = request()->validate([
                 'first_name' => 'bail|nullable|string|max:255',
@@ -155,10 +162,12 @@ class UserController extends Controller
 
     public function destroy(User $user): RedirectResponse
     {
-        Gate::authorize('delete-users');
-        if ($user->hasRole('ادمین') || auth()->user()->id == $user->id) {
-            throw new AuthorizationException();
-        }
+        Gate::authorize('delete', $user);
+//        Gate::authorize('delete-users');
+//        if ($user->hasRole('super-admin') || auth()->user()->id == $user->id ||
+//            ($user->hasRole('ادمین') && !auth()->user()->hasRole('super-admin'))) {
+//            throw new AuthorizationException();
+//        }
         try {
             $user->delete();
             activity()
@@ -174,10 +183,12 @@ class UserController extends Controller
     }
     public function setRole(User $user)
     {
-        Gate::authorize('set-role');
-        if (auth()->user()->id == $user->id || $user->hasRole('ادمین')) {
-            throw new AuthorizationException();
-        }
+        Gate::authorize('setRole', $user);
+//        Gate::authorize('set-role');
+//        if ($user->hasRole('super-admin') || auth()->user()->id == $user->id ||
+//            ($user->hasRole('ادمین') && !auth()->user()->hasRole('super-admin'))) {
+//            throw new AuthorizationException();
+//        }
         try {
             $data = request()->validate([
                 'role_id' => 'bail|required|string|exists:roles,id',
@@ -195,8 +206,6 @@ class UserController extends Controller
             return back();
         }
     }
-
-
 
 //    public function deleted()
 //    {

@@ -38,7 +38,6 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'edit-users']);
         Permission::create(['name' => 'create-users']);
         Permission::create(['name' => 'delete-users']);
-        Permission::create(['name' => 'restore-users']);
         //
         Permission::create(['name' => 'view-billings']);
         Permission::create(['name' => 'edit-billings']);
@@ -88,15 +87,17 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'create-discounts']);
         Permission::create(['name' => 'delete-discounts']);
         //
-        Permission::create(['name' => 'set-role']);
+        Permission::create(['name' => 'set-roles']);
         Permission::create(['name' => 'view-logs']);
 
         $customer = Role::create(['name' => 'مشتری']);
         $admin = Role::create(['name' => 'ادمین']);
         $writer = Role::create(['name' => 'نویسنده']);
         $support = Role::create(['name' => 'پشتیبان']);
+        $superAdmin = Role::create(['name' => 'super-admin']);
 
         $admin->givePermissionTo(Permission::all());
+        $superAdmin->givePermissionTo(Permission::all());
 
         $writer->givePermissionTo([
             'admin-panel',
@@ -187,7 +188,7 @@ class DatabaseSeeder extends Seeder
             'password' => null,
         ]);
 
-        $user5->assignRole($admin);
+        $user5->assignRole($superAdmin);
     }
 
     private function seedProducts(): void
