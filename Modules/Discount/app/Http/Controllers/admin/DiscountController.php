@@ -3,6 +3,7 @@
 namespace Modules\Discount\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Modules\Discount\Models\Discount;
 use Modules\Product\Models\Product;
@@ -10,8 +11,10 @@ use Verta;
 
 class DiscountController extends Controller
 {
+    use SEOTools;
     public function index()
     {
+        $this->seo()->setTitle('تخفیف ها');
         Gate::authorize('view-discounts');
         try {
             $sort_direction = request()->input('sort_direction', 'desc');
@@ -87,11 +90,11 @@ class DiscountController extends Controller
         return view('discount::admin.create', compact('products'));
     }
 
-    public function show(Discount $discount)
+    public function edit(Discount $discount)
     {
         Gate::authorize('view-discounts');
         $products = Product::all();
-        return view('discount::admin.show', compact('discount', 'products'));
+        return view('discount::admin.edit', compact('discount', 'products'));
     }
 
     public function update(Discount $discount)
@@ -151,7 +154,7 @@ class DiscountController extends Controller
         }
     }
 
-    static function formatDate(string $d)
+    protected static function formatDate(string $d)
     {
         $expires_at = self::convertNums($d);
         $t = explode(' ', $expires_at);
@@ -160,7 +163,7 @@ class DiscountController extends Controller
         return $verta[0] . '/' . $verta[1] . '/' . $verta[2] . ' ' . $t[1];
     }
 
-    static function convertNums($string)
+    protected static function convertNums($string)
     {
         $persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
         $arabic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];

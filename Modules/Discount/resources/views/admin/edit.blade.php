@@ -1,9 +1,5 @@
 @extends('admin::layouts.main')
 
-@section('title')
-    تخفیف
-@endsection
-
 @push('css')
     <link rel="stylesheet" href="/assets/admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" href="/assets/admin/vendor/libs/typeahead-js/typeahead.css">

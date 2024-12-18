@@ -1,9 +1,5 @@
 @extends('admin::layouts.main')
 
-@section('title')
-    تخفیف ها
-@endsection
-
 @push('css')
     <link rel="stylesheet" href="/assets/admin/js/datepicker/persian-datepicker.min.css">
 @endpush
@@ -105,7 +101,7 @@
                                     style="width: 12%;">تاریخ انقضا
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 2%;">جزییات
+                                    style="width: 2%;">عملیات
                                 </th>
                             </tr>
                             </thead>
@@ -135,12 +131,12 @@
                                         </span>
                                     </td>
                                     <td>
-                                        <div class="d-inline-block text-nowrap">
-                                            <button class="btn btn-sm btn-icon">
-                                                <a href="{{ route('admin.discounts.show', $discount) }}">
-                                                    <i class="bx bx-detail"></i>
-                                                </a>
-                                            </button>
+                                        <div class="d-flex gap-3 text-nowrap">
+                                            <a href="{{ route('admin.discounts.edit', $discount) }}"
+                                               class="btn btn-sm btn-info">
+                                                ویرایش
+                                            </a>
+                                            <x-admin::deletebutton model="discounts" data-id="{{ $discount->id }}"/>
                                         </div>
                                     </td>
                                 </tr>
@@ -171,6 +167,7 @@
                     </div>
                 @endcan
             </div>
+            <x-admin::deletemodal/>
         </div>
         <div class="content-backdrop fade"></div>
     </div>
@@ -188,4 +185,19 @@
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave-phone.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const deleteButtons = document.querySelectorAll('#delete-button');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const discountId = button.getAttribute('data-id');
+                    document.getElementById('discount_id').value = discountId;
+
+                    const deleteForm = document.getElementById('deleteForm');
+                    deleteForm.action = `discounts/${discountId}`;
+                });
+            });
+        });
+    </script>
 @endpush

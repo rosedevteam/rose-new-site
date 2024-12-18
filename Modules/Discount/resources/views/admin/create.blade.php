@@ -1,9 +1,5 @@
 @extends('admin::layouts.main')
 
-@section('title')
-    ساخت تخفیف
-@endsection
-
 @push('css')
     <link rel="stylesheet" href="/assets/admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" href="/assets/admin/vendor/libs/typeahead-js/typeahead.css">
@@ -55,7 +51,7 @@
                             </div>
                             <div class="mb-3 col-md-3">
                                 <label class="form-label" for="limit">محدودیت استفاده</label>
-                                <input type="text" class="date-picker form-control" name="limit" id="limit"
+                                <input type="number" class="form-control" name="limit" id="limit"
                                        autocomplete="off">
                             </div>
                         </div>
