@@ -24,20 +24,9 @@ class Menu extends Model
     protected $table = 'menus';
     protected $guarded = [];
 
-    public function author()
-    {
-        return $this->belongsTo(User::class);
-    }
-
     public function children()
     {
-        return $this->hasMany(Menu::class, 'parent_id');
-    }
-
-    public function parent()
-    {
-        if($this->is_parent) return null;
-        return $this->belongsTo(Menu::class, 'parent_id');
+        return $this->hasMany(Menu::class , 'parent_id' , 'id');
     }
 
     protected static function newFactory()

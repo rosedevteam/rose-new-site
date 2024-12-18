@@ -130,10 +130,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $user1 = User::factory()->create([
-            'first_name' => 'admin',
+            'first_name' => 'فرشاد',
             'password' => bcrypt('admin'),
-            'phone' => '09121111111',
-            'last_name' => 'admin',
+            'phone' => '09125342039',
+            'last_name' => 'رجب زاده',
             'email' => null,
             'birthday' => null,
             'avatar' => null,
@@ -399,134 +399,20 @@ class DatabaseSeeder extends Seeder
     private function seedMenu()
     {
         Menu::factory()->create([
-           'is_active' => true,
-           'author_id' => 1,
+           'title' => 'صفحه نخست',
+           'link' => "#",
            'parent_id' => null,
-           'name' => 'صفحه نخست',
-           'slug' => '#',
-           'icon' => null,
-           'order' => 1,
+           'order' => 0,
+           'icon' => '#',
+           'subtitle' => null,
        ]);
         Menu::factory()->create([
-            'author_id' => 1,
+            'title' => 'دوره ها',
+            'link' => "#",
             'parent_id' => null,
-            'name' => 'دوره ها',
-            'is_active' => true,
-            'has_children' => true,
-            'slug' => '#',
-            'icon' => null,
-            'order' => 2,
-        ]);
-        Menu::factory()->create([
-            'is_active' => true,
-            'author_id' => 1,
-            'parent_id' => null,
-            'name' => 'آموزش ها',
-            'slug' => '#',
-            'has_children' => true,
-            'icon' => null,
-            'order' => 3,
-        ]);
-        Menu::factory()->create([
-            'author_id' => 1,
-            'parent_id' => null,
-            'name' => 'گزارش روزانه بازار',
-            'slug' => 'گزارش-روزانه-بازار',
-            'icon' => null,
-            'is_active' => true,
-            'order' => 4,
-        ]);
-        Menu::factory()->create([
-            'author_id' => 1,
-            'is_active' => true,
-            'parent_id' => null,
-            'name' => 'ارتباط با ما',
-            'has_children' => true,
-            'slug' => '#',
-            'icon' => null,
-            'order' => 5,
-        ]);
-        Menu::factory()->create([
-            'author_id' => 1,
-            'parent_id' => null,
-            'is_active' => true,
-            'name' => 'امتیازدهی',
-            'has_children' => true,
-            'slug' => '#',
-            'icon' => null,
-            'order' => 6,
-        ]);
-        Menu::factory()->create([
-            'author_id' => 1,
-            'is_active' => true,
-            'parent_id' => 2,
-            'name' => 'دوره های آموزشی',
-            'slug' => 'product-category/دوره-ها',
-            'icon' => 'graduate-hat-square.svg',
             'order' => 1,
-        ]);
-        Menu::factory()->create([
-            'author_id' => 1,
-            'parent_id' => 2,
-            'name' => 'بازنشستگی در ۷ سال',
-            'is_active' => true,
-            'slug' => 'بازنشستگی-در-۷سال',
-            'icon' => 'target-goal.svg',
-            'order' => 2,
-        ]);
-        Menu::factory()->create([
-            'author_id' => 1,
-            'is_active' => true,
-            'parent_id' => 3,
-            'name' => 'وبلاگ',
-            'slug' => 'blog',
-            'icon' => 'scroll.svg',
-            'order' => 3,
-        ]);
-        Menu::factory()->create([
-            'author_id' => 1,
-            'parent_id' => 3,
-            'name' => 'پادکست',
-            'is_active' => true,
-            'slug' => 'podcast',
-            'icon' => 'headphones.svg',
-            'order' => 4,
-        ]);
-        Menu::factory()->create([
-            'author_id' => 1,
-            'is_active' => true,
-            'parent_id' => 5,
-            'name' => 'درباره ما',
-            'slug' => 'about',
-            'icon' => 'News-Bookmark-1.svg',
-            'order' => 1,
-        ]);
-        Menu::factory()->create([
-            'author_id' => 1,
-            'parent_id' => 5,
-            'name' => 'همکاری با ما',
-            'slug' => 'همکاری-با-ما',
-            'is_active' => true,
-            'icon' => 'star-review.svg',
-            'order' => 2,
-        ]);
-        Menu::factory()->create([
-            'author_id' => 1,
-            'parent_id' => 5,
-            'name' => 'تماس با ما',
-            'slug' => 'تماس-با-ما',
-            'icon' => 'Headphones-Customer-support.svg',
-            'is_active' => true,
-            'order' => 3,
-        ]);
-        Menu::factory()->create([
-            'author_id' => 1,
-            'parent_id' => 6,
-            'name' => 'هم مسیر',
-            'slug' => 'ham-masir',
-            'icon' => 'crystal.svg',
-            'is_active' => true,
-            'order' => 4,
+            'icon' => '#',
+            'subtitle' => null,
         ]);
     }
 

@@ -12,15 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('menus', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('author_id')->constrained('users');
-            $table->string('name');
-            $table->string('slug');
-            $table->string('icon')->nullable();
-            $table->boolean('has_children')->default(false);
-            $table->foreignId('parent_id')->nullable()->constrained('menus');
+            $table->string('title');
+            $table->string('link');
+            $table->integer('parent_id')->nullable();
             $table->integer('order')->nullable();
-            $table->boolean('is_active')->default(false);
+            $table->string('icon');
+            $table->string('subtitle')->nullable();
             $table->timestamps();
         });
     }
