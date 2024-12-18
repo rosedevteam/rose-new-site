@@ -22,7 +22,7 @@ class MenuController extends Controller
         $menus = Menu::with('children')
             ->whereNull('parent_id')
             ->simplePaginate(50);
-        return view('menu::index' , compact('menus'));
+        return view('menu::admin.index' , compact('menus'));
     }
 
     /**
@@ -35,7 +35,7 @@ class MenuController extends Controller
         $menus = Menu::with('children')
             ->whereNull('parent_id')
             ->simplePaginate(15);
-        return view('menu::backend.create' , compact('menus'));
+        return view('menu::admin.create' , compact('menus'));
     }
 
     /**
@@ -43,7 +43,30 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $validData = $request->validate([
+                'title' => 'required',
+                'parent_id' => 'nullable',
+                'link' => 'required',
+                'order' => 'nullable',
+                'icon' => 'nullable',
+                'subtitle' => 'nullable'
+            ]);
+            auth()->user()->menus()->create([
+                'title' => $validData['title'],
+                'parent_id' => $validData['parent_id'],
+                'link' => $validData['link'],
+                'order' => $validData['order'],
+                'icon' => $validData['icon'],
+                'subtitle' => $validData['subtitle'],
+                'author_id' => auth()->user()->id
+            ]);
+            alert()->success('منوی جدید با موفقیت ایجاد شد.');
+            return back();
+        }catch (\Throwable $th){
+            alert()->error('خطا', $th->getMessage());
+        }
+
     }
 
     /**

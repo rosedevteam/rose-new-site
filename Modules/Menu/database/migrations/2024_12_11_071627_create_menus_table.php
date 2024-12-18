@@ -12,12 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('menus', function (Blueprint $table) {
+            $table->id();
             $table->string('title');
             $table->string('link');
             $table->integer('parent_id')->nullable();
             $table->integer('order')->nullable();
             $table->string('icon');
             $table->string('subtitle')->nullable();
+            $table->unsignedBigInteger('author_id')->after('id');
+            $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

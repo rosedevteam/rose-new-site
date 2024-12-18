@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Modules\Auth\Models\OtpCode;
 use Modules\Comment\Models\Comment;
 use Modules\DailyReport\Models\DailyReport;
+use Modules\Menu\Models\Menu;
 use Modules\Order\Models\Order;
 use Modules\Post\Models\Post;
 use Modules\Product\Models\Product;
@@ -60,6 +61,11 @@ class User extends \Illuminate\Foundation\Auth\User
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function menus()
+    {
+        return $this->hasMany(Menu::class);
     }
 
     protected static function newFactory()

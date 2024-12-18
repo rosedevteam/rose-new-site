@@ -49,39 +49,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($menus as $menu)
-                                <tr>
-                                    <td class="fw-semibold">
-                                        {{ $menu?->order ?: 'غیر فعال'}}
-                                    </td>
-                                    <td class="sorting_1">
-                                        <div class="d-flex justify-content-start align-items-center user-name">
-                                            <div class="d-flex flex-column">
-                                                <span class="fw-semibold">{{ $menu->name }}</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>{{ $menu->slug }}</td>
-                                    <td>
-{{--                                <span class="fw-semibold">--}}
-{{--                                                <a href="{{ route("admin.users.show", $menu->author) }}"--}}
-{{--                                                   class="text-body text-truncate">--}}
-{{--                                    {{ $menu->author->name() }}--}}
-{{--                                                </a>--}}
-{{--                                </span>--}}
-                                    </td>
-                                    <td>{{ verta($menu->created_at)->formatJalaliDateTime() }}</td>
-                                    <td>
-                                        <div class="d-inline-block text-nowrap">
-{{--                                            <button class="btn btn-sm btn-icon">--}}
-{{--                                                <a href="{{ route('admin.menus.show', $menu) }}">--}}
-{{--                                                    <i class="bx bx-detail"></i>--}}
-{{--                                                </a>--}}
-{{--                                            </button>--}}
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
+                            @include('menu::admin.partials.menu-group' ,
+                     ['menus' => $menus ,  'child' => false , 'level' => 0])
+
                             </tbody>
                         </table>
                     </div>
@@ -101,8 +71,8 @@
                                   method="POST">
                                 @csrf
                                 <div class="mb-3">
-                                    <label class="form-label" for="name">نام</label>
-                                    <input type="text" class="form-control" id="name" name="name"
+                                    <label class="form-label" for="title">نام</label>
+                                    <input type="text" class="form-control" id="title" name="title"
                                            required>
                                 </div>
                                 <div class="mb-3">
@@ -114,6 +84,15 @@
                                     <label class="form-label" for="order">ترتیب</label>
                                     <input type="text" class="form-control" id="order" name="order"
                                            required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="parent_id">منوی مادر</label>
+                                    <select name="parent_id" id="parent_id" class="form-select">
+                                        <option value="">انتخاب کنید</option>
+                                        @foreach($menus as $menu)
+                                            <option value="{{$menu->id}}">{{$menu->title}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">ثبت</button>
                                 <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">
@@ -143,32 +122,4 @@
     <script src="/assets/admin/vendor/libs/cleavejs/cleave-phone.js"></script>
     <script src="/assets/admin/vendor/libs/sortablejs/sortable.js"></script>
     <script src="/assets/admin/js/extended-ui-drag-and-drop.js"></script>
-    <script>
-        document.getElementById('edit-order').addEventListener('click', function () {
-            const pendingTasks = [...document.querySelectorAll('#active > li')].map((el, index) => ({
-                id: el.dataset.id,
-                order: index + 1,
-                status: true
-            }));
-
-            const completedTasks = [...document.querySelectorAll('#inactive > li')].map((el, index) => ({
-                id: el.dataset.id,
-                order: index + 1,
-                status: false
-            }));
-
-            const sortedData = [...pendingTasks, ...completedTasks];
-
-            fetch('{{ route('admin.menus.sort') }}', {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify(sortedData)
-            }).then(_ => {
-                location.reload()
-            })
-        });
-    </script>
 @endpush

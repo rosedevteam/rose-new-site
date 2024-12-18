@@ -400,6 +400,7 @@ class DatabaseSeeder extends Seeder
     {
         Menu::factory()->create([
            'title' => 'صفحه نخست',
+           'author_id' => 1,
            'link' => "#",
            'parent_id' => null,
            'order' => 0,
@@ -408,6 +409,7 @@ class DatabaseSeeder extends Seeder
        ]);
         Menu::factory()->create([
             'title' => 'دوره ها',
+            'author_id' => 1,
             'link' => "#",
             'parent_id' => null,
             'order' => 1,

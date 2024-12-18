@@ -2,11 +2,12 @@
 <html lang="fa" class="light-style layout-navbar-fixed layout-menu-fixed" dir="rtl" data-theme="theme-default"
       data-assets-path="/assets/admin/" data-template="vertical-menu-template" xmlns="http://www.w3.org/1999/html">
 <head>
+
+    {!! SEO::generate() !!}
+
     <meta charset="utf-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-
-    <title>@yield('title')</title>
 
     <meta charset="utf-8" name="description" content="">
 

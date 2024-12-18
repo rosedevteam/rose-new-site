@@ -24,6 +24,11 @@ class Menu extends Model
     protected $table = 'menus';
     protected $guarded = [];
 
+    public function author()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function children()
     {
         return $this->hasMany(Menu::class , 'parent_id' , 'id');
