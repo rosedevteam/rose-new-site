@@ -3,13 +3,16 @@
 namespace Modules\Post\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Modules\Post\Models\Post;
 
 class PostController extends Controller
 {
+    use SEOTools;
     public function index()
     {
+        $this->seo()->setTitle('پست ها');
         Gate::authorize('view-posts');
         try {
             $sort_by = request('sort_by', 'created_at');

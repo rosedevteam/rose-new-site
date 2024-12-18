@@ -1,9 +1,5 @@
 @extends("admin::layouts.main")
 
-@section('title')
-    نظر
-@endsection
-
 @section("content")
     <div class="content-wrapper">
         @if($errors->any())

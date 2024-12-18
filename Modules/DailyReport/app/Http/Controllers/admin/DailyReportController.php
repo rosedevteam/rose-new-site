@@ -3,14 +3,17 @@
 namespace Modules\DailyReport\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Illuminate\Validation\Rules\File;
 use Modules\DailyReport\Models\DailyReport;
 
 class DailyReportController extends Controller
 {
+    use SEOTools;
     public function index()
     {
+        $this->seo()->setTitle('گزارش های روزانه بازار');
         Gate::authorize('view-daily-reports');
         try {
             $sort_by = request('sort_by', 'created_at');

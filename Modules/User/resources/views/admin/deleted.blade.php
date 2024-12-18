@@ -1,8 +1,5 @@
 @extends('admin::layouts.main')
 
-@section('title')
-    کاربران حذف شده
-@endsection
 
 @section('content')
     <div class="content-wrapper">

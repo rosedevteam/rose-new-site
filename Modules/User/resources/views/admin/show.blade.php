@@ -1,9 +1,5 @@
 @extends('admin::layouts.main')
 
-@section('title')
-    مشاهده کاربر
-@endsection
-
 @section('content')
     <div class="content-wrapper">
         <!-- Content -->

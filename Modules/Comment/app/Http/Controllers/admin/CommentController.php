@@ -3,14 +3,17 @@
 namespace Modules\Comment\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Modules\Comment\Models\Comment;
 use Throwable;
 
 class CommentController extends Controller
 {
+    use SEOTools;
     public function index()
     {
+        $this->seo()->setTitle('کامنت ها');
         Gate::authorize('view-comments');
         try {
             $sort_direction = request('sort_direction', 'desc');

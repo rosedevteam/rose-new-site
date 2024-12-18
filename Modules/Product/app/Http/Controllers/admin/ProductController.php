@@ -3,13 +3,16 @@
 namespace Modules\Product\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Modules\Product\Models\Product;
 
 class ProductController extends Controller
 {
+    use SEOTools;
     public function index()
     {
+        $this->seo()->setTitle('دوره ها');
         Gate::authorize('view-products');
         try {
             $sort_by = request('sort_by', 'created_at');

@@ -3,14 +3,17 @@
 namespace Modules\JobOffer\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Modules\Category\Models\Category;
 use Modules\JobOffer\Models\JobOffer;
 
 class JobOfferController extends Controller
 {
+    use SEOTools;
     public function index()
     {
+        $this->seo()->setTitle('فرصت های شغلی');
         Gate::authorize('view-job-offers');
         try {
             $sort_direction = request('sort_direction', 'desc');

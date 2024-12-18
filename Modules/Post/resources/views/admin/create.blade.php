@@ -1,8 +1,5 @@
 @extends('admin::layouts.main')
 
-@section('title')
-    ساخت پست جدید
-@endsection
 
 @section('content')
 

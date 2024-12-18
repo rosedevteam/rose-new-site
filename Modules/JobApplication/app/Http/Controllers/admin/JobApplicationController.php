@@ -3,13 +3,16 @@
 namespace Modules\JobApplication\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Modules\JobApplication\Models\JobApplication;
 
 class JobApplicationController extends Controller
 {
+    use SEOTools;
     public function index()
     {
+        $this->seo()->setTitle('رزومه ها');
         Gate::authorize('view-job-applications');
         try {
             $count = request('count', 50);

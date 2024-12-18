@@ -1,8 +1,5 @@
 @extends('admin::layouts.main')
 
-@section('title')
-    دوره ها
-@endsection
 
 @section('content')
     <div class="content-wrapper">

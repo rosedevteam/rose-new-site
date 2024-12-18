@@ -1,6 +1,5 @@
 @extends('admin::layouts.main')
 
-
 @section('content')
     <div class="content-wrapper">
         @if($errors->any())

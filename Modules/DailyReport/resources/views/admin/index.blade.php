@@ -1,9 +1,5 @@
 @extends('admin::layouts.main')
 
-@section('title')
-    گزارش ها روزانه بازار
-@endsection
-
 @section('content')
     <div class="content-wrapper">
         @if($errors->any())

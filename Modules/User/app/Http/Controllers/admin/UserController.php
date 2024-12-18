@@ -3,6 +3,7 @@
 namespace Modules\User\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,8 +14,10 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    use SEOTools;
     public function index()
     {
+        $this->seo()->setTitle('کاربران');
         Gate::authorize('view-users');
         try {
             $roles = Role::all()->select('name', 'id');
