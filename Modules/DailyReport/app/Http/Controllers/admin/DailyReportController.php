@@ -56,6 +56,7 @@ class DailyReportController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($dailyReport)
+                ->withProperties([auth()->user(), $dailyReport, $data])
                 ->log('ساخت گزارش روزانه');
             alert()->success("موفق", "با موفقیت انجام شد");
             return redirect(route('admin.dailyreports.index'));
@@ -73,6 +74,7 @@ class DailyReportController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($dailyreport)
+                ->withProperties([auth()->user(), $dailyreport])
                 ->log('حذف گزارش روزانه');
             alert()->success('موفق', 'گزارش روزانه با موفقیت حذف شد');
             return back();

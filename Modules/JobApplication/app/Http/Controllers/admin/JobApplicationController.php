@@ -65,6 +65,7 @@ class JobApplicationController extends Controller
                 ->causedBy(auth()->user())
                 ->performedOn($jobapplication)
                 ->withProperties($data)
+                ->withProperties([auth()->user(), $jobapplication, $data])
                 ->log('ویرایش رزومه');
             alert()->success('موفق', 'ویرایش رزومه با موفقیت انجام شد');
             return back();
@@ -82,6 +83,7 @@ class JobApplicationController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($jobapplication)
+                ->withProperties([auth()->user(), $jobapplication])
                 ->log('حذف پست');
             alert()->success('موفق', 'پست با موفقیت حذف شد');
             return redirect(route('admin.jobapplications.index'));

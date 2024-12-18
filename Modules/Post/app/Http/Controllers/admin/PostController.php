@@ -87,9 +87,9 @@ class PostController extends Controller
                 'author_id' => auth()->id()
             ]);
             activity()
-                ->causedBy(auth()->id())
+                ->causedBy(auth()->user())
                 ->performedOn($post)
-                ->withProperties($data)
+                ->withProperties([auth()->user(), $post, $data])
                 ->log('ساخت پست');
             alert()->success("موفق", "با موفقیت انجام شد");
             return redirect(route('admin.post.index'));
@@ -131,7 +131,7 @@ class PostController extends Controller
             activity()
                 ->causedBy(auth()->id())
                 ->performedOn($post)
-                ->withProperties($data)
+                ->withProperties([auth()->user(), $post, $data])
                 ->log('ویرایش پست');
             alert()->success("موفق", "ویرایش با موفقیت انجام شد");
             return redirect(route('admin.post.edit', compact('post')));
@@ -150,6 +150,7 @@ class PostController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($post)
+                ->withProperties([auth()->user(), $post])
                 ->log('حذف پست');
             alert()->success('موفق', 'پست با موفقیت حذف شد');
             return redirect(route('admin.post.index'));

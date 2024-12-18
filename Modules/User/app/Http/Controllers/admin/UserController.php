@@ -78,7 +78,7 @@ class UserController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($user)
-                ->withProperties($data)
+                ->withProperties([auth()->user(), $user, $data])
                 ->log('ساخت کاربر');
             alert()->success("موفق", "کاربر با موفقیت ساخته شد");
             return redirect(route('admin.users.index'));
@@ -153,7 +153,7 @@ class UserController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($user)
-                ->withProperties([$userData, $billingData])
+                ->withProperties([auth()->user(), $user, $userData, $billingData])
                 ->log('ویرایش کاربر');
             alert()->success("موفق", "با موفقیت انجام شد");
             return redirect(route('admin.users.show', $user));
@@ -176,6 +176,7 @@ class UserController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($user)
+                ->withProperties([auth()->user(), $user])
                 ->log('حذف کاربر');
             alert()->success("موفق", "کاربر حذف شد");
             return redirect(route('admin.users.index'));
@@ -204,7 +205,7 @@ class UserController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($user)
-                ->withProperties($data)
+                ->withProperties([auth()->user(), $user, $data])
                 ->log('ویرایش نقش');
             alert()->success('موفق', 'ویرایش نقش با موفقیت انجام شد');
             return back();

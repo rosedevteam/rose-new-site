@@ -74,7 +74,8 @@ class DiscountController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($discount)
-                ->withProperties($data);
+                ->withProperties([auth()->user(), $discount, $data])
+                ->log('ساخت تخفیف');
             alert()->success('موفق', 'تخفیف با موفقیت ساخته شد');
             return redirect(route('admin.discounts.index'));
         } catch (\Throwable $th) {
@@ -127,7 +128,8 @@ class DiscountController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($discount)
-                ->withProperties($data);
+                ->withProperties([auth()->user(), $discount, $data])
+                ->log('ویرایش تخفیف');
             alert()->success('موفق', 'تخفیف با موفقیت ویرایش شد');
             return redirect(route('admin.discounts.show', $discount));
         } catch (\Throwable $th) {
@@ -144,11 +146,11 @@ class DiscountController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($discount)
+                ->withProperties([auth()->user(), $discount])
                 ->log('حذف تخفیف');
             alert()->success('موفق', 'تخفیف با موفقیت حذف شد');
             return redirect(route('admin.discounts.index'));
         } catch (\Throwable $th) {
-            dd($th);
             alert()->error("خطا", $th->getMessage());
             return back();
         }

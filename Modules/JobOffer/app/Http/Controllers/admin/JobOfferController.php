@@ -61,7 +61,7 @@ class JobOfferController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($jobOffer)
-                ->withProperties($data)
+                ->withProperties([auth()->user(), $jobOffer, $data])
                 ->log('ساخت فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت ساخته شد');
             return redirect(route("admin.joboffers.edit", $jobOffer));
@@ -109,7 +109,7 @@ class JobOfferController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($joboffer)
-                ->withProperties($data)
+                ->withProperties([auth()->user(), $joboffer, $data])
                 ->log('ویرایش فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت ویرایش شد');
             return redirect(route("admin.joboffers.edit", $joboffer));
@@ -127,6 +127,7 @@ class JobOfferController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($joboffer)
+                ->withProperties([auth()->user(), $joboffer])
                 ->log('حذف فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت حذف شد');
             return redirect(route("admin.joboffers.index"));
