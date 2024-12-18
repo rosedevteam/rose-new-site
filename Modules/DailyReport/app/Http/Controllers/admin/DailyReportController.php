@@ -19,12 +19,12 @@ class DailyReportController extends Controller
             $dailyReports = DailyReport::query();
             $dailyReports = $dailyReports->orderBy($sort_by, $sort_direction);
             $dailyReports = $dailyReports->paginate($count)->withQueryString();
-            return view('dailyreport::admin.index', [
-                'dailyReports' => $dailyReports,
-                'sort_by' => $sort_by,
-                'sort_direction' => $sort_direction,
-                'count' => $count,
-            ]);
+            return view('dailyreport::admin.index', compact(
+                'dailyReports',
+                'sort_by',
+                'sort_direction',
+                'count'
+            ));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -55,7 +55,24 @@ class DailyReportController extends Controller
                 ->performedOn($dailyReport)
                 ->log('ساخت گزارش روزانه');
             alert()->success("موفق", "با موفقیت انجام شد");
-            return redirect()->route('admin.dailyreports.index');
+            return redirect(route('admin.dailyreports.index'));
+        } catch (\Throwable $th) {
+            alert()->error("خطا", $th->getMessage());
+            return back();
+        }
+    }
+
+    public function destroy(DailyReport $dailyreport)
+    {
+        Gate::authorize('delete-daily-reports');
+        try {
+            $dailyreport->delete();
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($dailyreport)
+                ->log('حذف گزارش روزانه');
+            alert()->success('موفق', 'گزارش روزانه با موفقیت حذف شد');
+            return back();
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();

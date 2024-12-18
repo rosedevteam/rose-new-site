@@ -193,7 +193,11 @@ class UserController extends Controller
             $data = request()->validate([
                 'role_id' => 'bail|required|string|exists:roles,id',
             ]);
-            $user->syncRoles(Role::where('id', $data['role_id'])->first()->name);
+            $role = Role::where('id', $data['role_id'])->first()->name;
+            if ($role == 'super-admin') {
+                return back();
+            }
+            $user->syncRoles($role);
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($user)

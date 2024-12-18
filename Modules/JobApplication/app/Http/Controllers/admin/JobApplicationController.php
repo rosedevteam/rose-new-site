@@ -39,34 +39,51 @@ class JobApplicationController extends Controller
         }
     }
 
-    public function show(JobApplication $jobApplication)
+    public function edit(JobApplication $jobapplication)
     {
         Gate::authorize('view-job-applications');
         try {
-            return view('jobapplication::admin.show', compact('jobApplication'));
+            return view('jobapplication::admin.edit', compact('jobapplication'));
         } catch (\Throwable $th) {
             alert()->error('خطا', $th->getMessage());
             return back();
         }
     }
 
-    public function update(JobApplication $jobApplication)
+    public function update(JobApplication $jobapplication)
     {
         Gate::authorize('edit-job-applications');
         try {
             $data = request()->validate([
                 'status' => 'required|string|in:accepted,rejected,pending',
             ]);
-            $jobApplication->update($data);
+            $jobapplication->update($data);
             activity()
                 ->causedBy(auth()->user())
-                ->performedOn($jobApplication)
+                ->performedOn($jobapplication)
                 ->withProperties($data)
                 ->log('ویرایش رزومه');
             alert()->success('موفق', 'ویرایش رزومه با موفقیت انجام شد');
             return back();
         } catch (\Throwable $th) {
             alert()->error('خطا', $th->getMessage());
+            return back();
+        }
+    }
+
+    public function destroy(JobApplication $jobapplication)
+    {
+        Gate::authorize('delete-job-applications');
+        try {
+            $jobapplication->delete();
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($jobapplication)
+                ->log('حذف پست');
+            alert()->success('موفق', 'پست با موفقیت حذف شد');
+            return back();
+        } catch (\Throwable $th) {
+            alert()->error("خطا", $th->getMessage());
             return back();
         }
     }

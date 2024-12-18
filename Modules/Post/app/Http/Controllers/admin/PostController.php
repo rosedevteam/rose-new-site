@@ -137,4 +137,22 @@ class PostController extends Controller
             return back();
         }
     }
+
+
+    public function destroy(Post $post)
+    {
+        Gate::authorize('delete-posts');
+        try {
+            $post->delete();
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($post)
+                ->log('حذف پست');
+            alert()->success('موفق', 'پست با موفقیت حذف شد');
+            return back();
+        } catch (\Throwable $th) {
+            alert()->error("خطا", $th->getMessage());
+            return back();
+        }
+    }
 }

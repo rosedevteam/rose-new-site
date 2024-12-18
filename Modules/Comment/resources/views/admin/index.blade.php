@@ -96,7 +96,7 @@
                                         </a>
                                     </td>
                                     <td><a href="{{
-                                        route("admin." . strtolower(substr(strrchr($comment->commentable_type, '\\'), 1)) . "s.show", $comment->commentable)
+                                        route("admin." . strtolower(substr(strrchr($comment->commentable_type, '\\'), 1)) . "s.edit", $comment->commentable)
                                     }}" class="text-body text-truncate">
                                             <span
                                                 class="fw-semibold">{{ $comment->commentable->title ?: "کامنت " . $comment->author()->first()->name() }}</span></a>

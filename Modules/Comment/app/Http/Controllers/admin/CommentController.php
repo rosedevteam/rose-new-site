@@ -48,7 +48,7 @@ class CommentController extends Controller
     {
         Gate::authorize('view-comments');
         try {
-            return view('comment::admin.show', compact('comment'));
+            return view('comment::admin.edit', compact('comment'));
         } catch (Throwable $th) {
             alert()->error("خطا");
             return back();
@@ -69,7 +69,7 @@ class CommentController extends Controller
                 ->withProperties($data)
                 ->log('ویرایش کامنت');
             alert()->success("موفق", 'ویرایش با موفقیت انجام شد');
-            return view('comment::admin.show', compact('comment'));
+            return view('comment::admin.edit', compact('comment'));
         } catch (Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -96,7 +96,7 @@ class CommentController extends Controller
                 ->withProperties($newComment)
                 ->log('ساخت پست');
             alert()->success("موفق", 'کامنت با موفقیت ثبت شد');
-            return redirect(route('admin.comments.show', $comment));
+            return redirect(route('admin.comments.edit', $comment));
         } catch (Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();

@@ -356,6 +356,9 @@
                                     @method('PATCH')
                                     <select name="role_id" class="form-select">
                                         @foreach($roles as $role)
+                                            @if($role['name'] == 'super-admin')
+                                                @continue
+                                            @endif
                                             <option class="form-control"
                                                     value="{{ $role['id'] }}" {{ $role['name'] == $user->getRoleNames()[0] ? 'selected' : ""}}>{{ $role['name'] }}</option>
                                         @endforeach

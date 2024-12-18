@@ -1,9 +1,5 @@
 @extends('admin::layouts.main')
 
-@section('title')
-    ساخت فرصت شغلی جدید
-@endsection
-
 @section('content')
 
     <div class="content-wrapper">

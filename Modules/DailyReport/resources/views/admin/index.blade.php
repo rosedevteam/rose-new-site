@@ -74,6 +74,9 @@
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 15%;">فایل
                                 </th>
+                                <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                    style="width: 15%;">عملیت
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -101,10 +104,10 @@
                                            download="true">{{ $dailyReport->file }}</a></td>
                                     <td>
                                         <div class="d-flex gap-3 text-nowrap">
-                                            <a href="{{ route('admin.dailyreports.edit', $dailyReport) }}"
-                                               class="btn btn-sm btn-info">
-                                                ویرایش
-                                            </a>
+                                            {{--                                            <a href="{{ route('admin.dailyreports.edit', $dailyReport) }}"--}}
+                                            {{--                                               class="btn btn-sm btn-info">--}}
+                                            {{--                                                ویرایش--}}
+                                            {{--                                            </a>--}}
                                             @can('delete-daily-reports')
                                                 <x-admin::deletebutton data-id="{{ $dailyReport->id }}"/>
                                             @endcan

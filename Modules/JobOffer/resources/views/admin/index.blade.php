@@ -1,8 +1,5 @@
 @extends('admin::layouts.main')
 
-@section('title')
-    فرصت های شغلی
-@endsection
 
 @section('content')
     <div class="content-wrapper">
@@ -111,7 +108,7 @@
                                     <td>{{ verta($jobOffer->created_at)->formatJalaliDateTime() }}</td>
                                     <td>
                                         <div class="d-flex gap-3 text-nowrap">
-                                            <a href="{{ route('admin.joboffers.edit', $jobOffer) }}"
+                                            <a href="{{ route('admin.joboffers.show', $jobOffer) }}"
                                                class="btn btn-sm btn-info">
                                                 ویرایش
                                             </a>

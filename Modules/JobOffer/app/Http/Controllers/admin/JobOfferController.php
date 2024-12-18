@@ -61,26 +61,26 @@ class JobOfferController extends Controller
                 ->withProperties($data)
                 ->log('ساخت فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت ساخته شد');
-            return redirect(route("admin.job-offers.show", $jobOffer));
+            return redirect(route("admin.joboffers.show", $jobOffer));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
         }
     }
 
-    public function show(JobOffer $jobOffer)
+    public function show(JobOffer $joboffer)
     {
         Gate::authorize('view-job-offers');
         try {
             $categories = Category::where('name', 'team')->first()->children;
-            return view('joboffer::admin.show', compact('jobOffer', 'categories'));
+            return view('joboffer::admin.show', compact('joboffer', 'categories'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
         }
     }
 
-    public function update(JobOffer $jobOffer)
+    public function update(JobOffer $joboffer)
     {
         Gate::authorize('edit-job-offers');
         try {
@@ -94,7 +94,7 @@ class JobOfferController extends Controller
             $data = array_filter($data, function ($value) {
                 return !is_null($value);
             });
-            $jobOffer->update([
+            $joboffer->update([
                 'title' => $data['title'],
                 'content' => $data['content'],
                 'type' => $data['type'],
@@ -105,27 +105,28 @@ class JobOfferController extends Controller
             }
             activity()
                 ->causedBy(auth()->user())
-                ->performedOn($jobOffer)
+                ->performedOn($joboffer)
                 ->withProperties($data)
                 ->log('ویرایش فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت ویرایش شد');
-            return redirect(route("admin.joboffers.show", $jobOffer));
+            return redirect(route("admin.joboffers.show", $joboffer));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
         }
     }
-    public function destroy(JobOffer $jobOffer)
+
+    public function destroy(JobOffer $joboffer)
     {
         Gate::authorize('delete-job-offers');
         try {
-            $jobOffer->delete();
+            $joboffer->delete();
             activity()
                 ->causedBy(auth()->user())
-                ->performedOn($jobOffer)
+                ->performedOn($joboffer)
                 ->log('حذف فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت حذف شد');
-            return view('admin.joboffers.index');
+            return back();
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
