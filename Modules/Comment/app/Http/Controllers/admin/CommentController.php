@@ -44,7 +44,7 @@ class CommentController extends Controller
         }
     }
 
-    public function show(Comment $comment)
+    public function edit(Comment $comment)
     {
         Gate::authorize('view-comments');
         try {
@@ -98,6 +98,24 @@ class CommentController extends Controller
             alert()->success("موفق", 'کامنت با موفقیت ثبت شد');
             return redirect(route('admin.comments.show', $comment));
         } catch (Throwable $th) {
+            alert()->error("خطا", $th->getMessage());
+            return back();
+        }
+    }
+
+    public function destroy(Comment $comment)
+    {
+        Gate::authorize('delete-comments');
+        try {
+            $comment->delete();
+            activity()
+                ->causedBy(auth()->id())
+                ->performedOn($comment)
+                ->withProperties($comment)
+                ->log('حذف کامنت');
+            alert()->success('موفق', 'کامنت با موفقیت حذف شد');
+            return back();
+        } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
         }

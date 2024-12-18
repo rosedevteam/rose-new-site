@@ -9,7 +9,6 @@
                     @csrf
                     @method('DELETE')
                     <div class="col-12 text-center mt-4">
-                        <input type="hidden" name="discount_id" id="discount_id">
                         <button type="submit" class="btn btn-danger me-sm-3 me-1">حذف</button>
                         <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
                                 aria-label="Close">

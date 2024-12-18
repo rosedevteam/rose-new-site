@@ -136,7 +136,9 @@
                                                class="btn btn-sm btn-info">
                                                 ویرایش
                                             </a>
-                                            <x-admin::deletebutton model="discounts" data-id="{{ $discount->id }}"/>
+                                            @can('delete-discounts')
+                                                <x-admin::deletebutton data-id="{{ $discount->id }}"/>
+                                            @endcan
                                         </div>
                                     </td>
                                 </tr>
@@ -187,16 +189,13 @@
     <script src="/assets/admin/vendor/libs/cleavejs/cleave-phone.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const deleteButtons = document.querySelectorAll('#delete-button');
-
-            deleteButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const discountId = button.getAttribute('data-id');
-                    document.getElementById('discount_id').value = discountId;
-
+            document.body.addEventListener('click', (event) => {
+                if (event.target.matches('#delete-button')) {
+                    const id = event.target.getAttribute('data-id');
+                    console.log(id)
                     const deleteForm = document.getElementById('deleteForm');
-                    deleteForm.action = `discounts/${discountId}`;
-                });
+                    deleteForm.action = 'discounts/' + id.valueOf();
+                }
             });
         });
     </script>
