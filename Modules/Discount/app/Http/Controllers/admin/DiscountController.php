@@ -145,6 +145,7 @@ class DiscountController extends Controller
             alert()->success('موفق', 'تخفیف با موفقیت حذف شد');
             return redirect(route('admin.discounts.index'));
         } catch (\Throwable $th) {
+            dd($th);
             alert()->error("خطا", $th->getMessage());
             return back();
         }

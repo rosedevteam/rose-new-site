@@ -24,14 +24,14 @@ return new class extends Migration {
 
         Schema::create('discount_product', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('discount_id')->constrained('discounts');
-            $table->foreignId('product_id')->constrained('products');
+            $table->foreignId('discount_id')->constrained('discounts')->cascadeOnDelete();
+            $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
         });
 
         Schema::create('discount_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('discount_id')->constrained('discounts');
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('discount_id')->constrained('discounts')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
         });
     }
 

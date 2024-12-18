@@ -60,7 +60,7 @@
                             </div>
                             <div class="mb-3 col-md-3">
                                 <label class="form-label" for="limit">محدودیت استفاده</label>
-                                <input type="text" class="date-picker form-control" name="limit" id="limit"
+                                <input type="number" class="form-control" name="limit" id="limit"
                                        autocomplete="off">
                             </div>
                         </div>
@@ -81,13 +81,13 @@
                             <button type="submit" class="btn btn-primary me-sm-3 me-1">ثبت تغییرات</button>
                         </div>
                     </form>
-                    {{--                    @can('delete-discounts')--}}
-                    {{--                        <form action="{{ route('admin.discounts.destroy', $discount) }}" method="POST">--}}
-                    {{--                            @csrf--}}
-                    {{--                            @method('DELETE')--}}
-                    {{--                            <button id="delete-discount" class="btn btn-danger mt-3">حذف تخفیف</button>--}}
-                    {{--                        </form>--}}
-                    {{--                    @endcan--}}
+                    @can('delete-discounts')
+                        <form action="{{ route('admin.discounts.destroy', $discount) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button id="delete-discount" class="btn btn-danger mt-3">حذف تخفیف</button>
+                        </form>
+                    @endcan
                 </div>
             </div>
         </div>

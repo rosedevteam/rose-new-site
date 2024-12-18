@@ -13,13 +13,14 @@ class JobApplication extends Model
 
     protected $guarded = [];
 
+    public function jobOffer()
+    {
+        return $this->belongsTo(JobOffer::class);
+    }
+
     protected static function newFactory()
     {
         return JobApplicationFactory::new();
     }
 
-    public function jobOffer()
-    {
-        return $this->belongsTo(JobOffer::class);
-    }
 }

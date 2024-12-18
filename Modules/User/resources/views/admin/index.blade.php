@@ -132,7 +132,7 @@
                                     <td>{{ $user->email }}</td>
                                     <td>
                                         @foreach($user->getRoleNames() as $role)
-                                            <span @class(['badge', 'bg-label-primary' => $role == 'مشتری', 'bg-label-reddit' => $role == 'ادمین', 'bg-label-info' => $role == 'نویسنده', 'bg-label-github' => $role == 'پشتیبان'])>{{ $role }}</span>
+                                            <span @class(['badge', 'bg-label-primary' => $role == 'مشتری', 'bg-label-reddit' => $role == 'ادمین', 'bg-label-info' => $role == 'نویسنده', 'bg-label-github' => $role == 'پشتیبان', 'bg-label-success' => $role == 'super-admin'])>{{ $role }}</span>
                                         @endforeach
                                     </td>
                                     <td>{{ verta($user->created_at)->formatJalaliDateTime() }}</td>
