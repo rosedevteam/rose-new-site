@@ -114,7 +114,7 @@ class CommentController extends Controller
                 ->withProperties($comment)
                 ->log('حذف کامنت');
             alert()->success('موفق', 'کامنت با موفقیت حذف شد');
-            return back();
+            return redirect(route('admin.comments.index'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();

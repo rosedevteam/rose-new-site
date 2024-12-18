@@ -52,7 +52,7 @@ class PostController extends Controller
         try {
             return view('post::admin.show', compact('post'));
         } catch (\Throwable $th) {
-            alert()->error("خطا", "خطایی رخ داد");
+            alert()->error("خطا", $th->getMessage());
             return back();
         }
     }
@@ -102,7 +102,7 @@ class PostController extends Controller
         try {
             return view('post::admin.edit', compact('post'));
         } catch (\Throwable $th) {
-            alert()->error("خطا", "خطایی رخ داد");
+            alert()->error("خطا", $th->getMessage());
             return back();
         }
     }
@@ -131,7 +131,7 @@ class PostController extends Controller
                 ->withProperties($data)
                 ->log('ویرایش پست');
             alert()->success("موفق", "ویرایش با موفقیت انجام شد");
-            return redirect(route('admin.post.show', compact('post')));
+            return redirect(route('admin.post.edit', compact('post')));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -149,7 +149,7 @@ class PostController extends Controller
                 ->performedOn($post)
                 ->log('حذف پست');
             alert()->success('موفق', 'پست با موفقیت حذف شد');
-            return back();
+            return redirect(route('admin.post.index'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();

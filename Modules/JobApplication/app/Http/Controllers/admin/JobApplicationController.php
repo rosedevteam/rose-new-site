@@ -81,7 +81,7 @@ class JobApplicationController extends Controller
                 ->performedOn($jobapplication)
                 ->log('حذف پست');
             alert()->success('موفق', 'پست با موفقیت حذف شد');
-            return back();
+            return redirect(route('admin.jobapplications.index'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();

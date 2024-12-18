@@ -78,12 +78,32 @@
                         </div>
                     </form>
                     @can('delete-discounts')
-                        <form action="{{ route('admin.discounts.destroy', $discount) }}" method="POST">
+                        <div class="mx-2 mt-3">
+                            <x-admin::deletebutton/>
+                        </div>
+                    @endcan
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="delete-modal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="text-center mb-4 mt-0 mt-md-n2">
+                            <h3 class="secondary-font">آیا اطمینان دارید؟</h3>
+                        </div>
+                        <form id="deleteForm" action="{{ route("admin.discounts.destroy", $discount) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button id="delete-discount" class="btn btn-danger mt-3">حذف تخفیف</button>
+                            <div class="col-12 text-center mt-4">
+                                <button type="submit" class="btn btn-danger me-sm-3 me-1">حذف</button>
+                                <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
+                                        aria-label="Close">
+                                    انصراف
+                                </button>
+                            </div>
                         </form>
-                    @endcan
+                    </div>
                 </div>
             </div>
         </div>

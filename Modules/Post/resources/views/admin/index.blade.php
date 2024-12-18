@@ -125,7 +125,7 @@
                                     <td>{{ $post->comment_status ? 'باز' : 'بسته' }}</td>
                                     <td>
                                         <div class="d-flex gap-3 text-nowrap">
-                                            <a href="{{ route('admin.posts.edit', $posts) }}"
+                                            <a href="{{ route('admin.posts.edit', $post) }}"
                                                class="btn btn-sm btn-info">
                                                 ویرایش
                                             </a>

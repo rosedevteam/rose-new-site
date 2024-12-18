@@ -61,19 +61,19 @@ class JobOfferController extends Controller
                 ->withProperties($data)
                 ->log('ساخت فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت ساخته شد');
-            return redirect(route("admin.joboffers.show", $jobOffer));
+            return redirect(route("admin.joboffers.edit", $jobOffer));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
         }
     }
 
-    public function show(JobOffer $joboffer)
+    public function edit(JobOffer $joboffer)
     {
         Gate::authorize('view-job-offers');
         try {
             $categories = Category::where('name', 'team')->first()->children;
-            return view('joboffer::admin.show', compact('joboffer', 'categories'));
+            return view('joboffer::admin.edit', compact('joboffer', 'categories'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -109,7 +109,7 @@ class JobOfferController extends Controller
                 ->withProperties($data)
                 ->log('ویرایش فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت ویرایش شد');
-            return redirect(route("admin.joboffers.show", $joboffer));
+            return redirect(route("admin.joboffers.edit", $joboffer));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -126,7 +126,7 @@ class JobOfferController extends Controller
                 ->performedOn($joboffer)
                 ->log('حذف فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت حذف شد');
-            return back();
+            return redirect(route("admin.joboffers.index"));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();

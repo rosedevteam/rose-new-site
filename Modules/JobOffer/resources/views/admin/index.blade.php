@@ -90,7 +90,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                <span class="fw-semibold"><a href="{{ route('admin.users.show', $jobOffer->author) }}"
+                                <span class="fw-semibold"><a href="{{ route('admin.users.edit', $jobOffer->author) }}"
                                                              class="text-body text-truncate">
                                         {{ $jobOffer->author->name() }}</a>
                                 </span>
@@ -108,7 +108,7 @@
                                     <td>{{ verta($jobOffer->created_at)->formatJalaliDateTime() }}</td>
                                     <td>
                                         <div class="d-flex gap-3 text-nowrap">
-                                            <a href="{{ route('admin.joboffers.show', $jobOffer) }}"
+                                            <a href="{{ route('admin.joboffers.edit', $jobOffer) }}"
                                                class="btn btn-sm btn-info">
                                                 ویرایش
                                             </a>
