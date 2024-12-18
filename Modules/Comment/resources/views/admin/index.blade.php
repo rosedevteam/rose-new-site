@@ -143,15 +143,5 @@
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave-phone.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            document.body.addEventListener('click', (event) => {
-                if (event.target.matches('#delete-button')) {
-                    const id = event.target.getAttribute('data-id');
-                    const deleteForm = document.getElementById('deleteForm');
-                    deleteForm.action = 'comments/' + id.valueOf();
-                }
-            });
-        });
-    </script>
+    <x-admin::deletemodalscript model="comments"/>
 @endpush

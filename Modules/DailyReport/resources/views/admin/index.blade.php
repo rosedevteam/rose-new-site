@@ -99,6 +99,17 @@
                                             class="fw-semibold">{{ $dailyReport->title }}</span></td>
                                     <td><a href="{{ asset('/daily-reports/' . $dailyReport->file) }}"
                                            download="true">{{ $dailyReport->file }}</a></td>
+                                    <td>
+                                        <div class="d-flex gap-3 text-nowrap">
+                                            <a href="{{ route('admin.dailyreports.edit', $dailyReport) }}"
+                                               class="btn btn-sm btn-info">
+                                                ویرایش
+                                            </a>
+                                            @can('delete-daily-reports')
+                                                <x-admin::deletebutton data-id="{{ $dailyReport->id }}"/>
+                                            @endcan
+                                        </div>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -138,6 +149,7 @@
                     </div>
                 @endcan
             </div>
+            <x-admin::deletemodal/>
         </div>
         <div class="content-backdrop fade"></div>
     </div>
@@ -155,4 +167,5 @@
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave-phone.js"></script>
+    <x-admin::deletemodalscript model="dailyreports"/>
 @endpush

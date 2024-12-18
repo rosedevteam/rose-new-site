@@ -3,7 +3,6 @@
 namespace Modules\User\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Modules\Auth\Models\OtpCode;
 use Modules\Comment\Models\Comment;
@@ -18,7 +17,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends \Illuminate\Foundation\Auth\User
 {
-    use HasFactory, HasRoles, Notifiable, SoftDeletes;
+    use HasFactory, HasRoles, Notifiable;
 
     protected $guarded = [];
 

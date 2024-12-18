@@ -88,6 +88,9 @@
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 10%;">تاریخ ساخت
                                 </th>
+                                <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                    style="width: 2%;">جزییات
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -123,6 +126,18 @@
                                         </div>
                                     </td>
                                     <td>{{ verta($product->created_at)->formatJalaliDateTime() }}</td>
+                                    <td>
+                                        <div class="d-flex gap-3 text-nowrap">
+                                            <a href="{{ route('admin.products.edit', $product) }}"
+                                               class="btn btn-sm btn-info">
+                                                ویرایش
+                                            </a>
+                                            @can('delete-products')
+                                                <x-admin::deletebutton data-id="{{ $product->id }}"/>
+                                            @endcan
+                                        </div>
+
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -132,6 +147,7 @@
 
                 </div>
             </div>
+            <x-admin::deletemodal/>
         </div>
         <div class="content-backdrop fade"></div>
     </div>
@@ -149,4 +165,5 @@
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave-phone.js"></script>
+    <x-admin::deletemodalscript model="products"/>
 @endpush

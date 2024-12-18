@@ -124,12 +124,14 @@
                                     </span></td>
                                     <td>{{ $post->comment_status ? 'باز' : 'بسته' }}</td>
                                     <td>
-                                        <div class="d-inline-block text-nowrap">
-                                            <button class="btn btn-sm btn-icon">
-                                                <a href="{{ route('admin.posts.edit', $post) }}">
-                                                    <i class="bx bx-edit"></i>
-                                                </a>
-                                            </button>
+                                        <div class="d-flex gap-3 text-nowrap">
+                                            <a href="{{ route('admin.posts.edit', $posts) }}"
+                                               class="btn btn-sm btn-info">
+                                                ویرایش
+                                            </a>
+                                            @can('delete-posts')
+                                                <x-admin::deletebutton data-id="{{ $post->id }}"/>
+                                            @endcan
                                         </div>
                                     </td>
                                 </tr>
@@ -141,6 +143,7 @@
 
                 </div>
             </div>
+            <x-admin::deletemodal/>
         </div>
         <div class="content-backdrop fade"></div>
     </div>
@@ -158,6 +161,7 @@
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave-phone.js"></script>
+    <x-admin::deletemodalscript model="posts"/>
 @endpush
 
 

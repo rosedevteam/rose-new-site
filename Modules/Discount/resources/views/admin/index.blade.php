@@ -187,16 +187,5 @@
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave-phone.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            document.body.addEventListener('click', (event) => {
-                if (event.target.matches('#delete-button')) {
-                    const id = event.target.getAttribute('data-id');
-                    console.log(id)
-                    const deleteForm = document.getElementById('deleteForm');
-                    deleteForm.action = 'discounts/' + id.valueOf();
-                }
-            });
-        });
-    </script>
+    <x-admin::deletemodalscript model="discounts"/>
 @endpush

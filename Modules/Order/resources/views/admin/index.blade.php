@@ -120,9 +120,9 @@
                                 <tr class="">
                                     <td>
                                 <span class="fw-semibold">
-                                    <a href="{{ route('admin.users.show', $order->user()) }}"
+                                    <a href="{{ route('admin.users.show', $order->user->first()) }}"
                                        class="text-body text-truncate"><span
-                                            class="fw-semibold">{{ $order->user()->name() }}</span> </a>
+                                            class="fw-semibold">{{ $order->user->name() }}</span> </a>
                                 </span>
                                     </td>
                                     <td>
@@ -165,12 +165,14 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="d-inline-block text-nowrap">
-                                            <button class="btn btn-sm btn-icon">
-                                                <a href="{{ route('admin.orders.show', $order) }}">
-                                                    <i class="bx bx-detail"></i>
-                                                </a>
-                                            </button>
+                                        <div class="d-flex gap-3 text-nowrap">
+                                            <a href="{{ route('admin.orders.edit', $orders) }}"
+                                               class="btn btn-sm btn-info">
+                                                ویرایش
+                                            </a>
+                                            @can('delete-orders')
+                                                <x-admin::deletebutton data-id="{{ $order->id }}"/>
+                                            @endcan
                                         </div>
                                     </td>
                                 </tr>
@@ -182,6 +184,7 @@
 
                 </div>
             </div>
+            <x-admin::deletemodal/>
         </div>
         <div class="content-backdrop fade"></div>
     </div>
@@ -199,4 +202,5 @@
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave-phone.js"></script>
+    <x-admin::deletemodalscript model="orders"/>
 @endpush
