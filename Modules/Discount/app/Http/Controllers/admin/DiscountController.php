@@ -55,6 +55,7 @@ class DiscountController extends Controller
                 'amount' => 'bail|required|string',
                 'products.*' => 'bail|required|integer|exists:products,id',
                 'expires_at' => 'bail|required|string',
+                'limit' => 'bail|required|string|numeric',
             ]);
             $expires_at = self::formatDate($data['expires_at']);
             $discount = Discount::create([
@@ -64,6 +65,7 @@ class DiscountController extends Controller
                 'expires_at' => $expires_at,
                 'amount' => $data['amount'],
                 'author_id' => auth()->user()->id,
+                'limit' => $data['limit'],
             ]);
             $discount->products()->attach($data['products']);
             activity()
@@ -107,6 +109,7 @@ class DiscountController extends Controller
                 'amount' => 'bail|required|string',
                 'products.*' => 'bail|required|integer|exists:products,id',
                 'expires_at' => 'bail|required|string',
+                'limit' => 'bail|required|string|numeric',
             ]);
             $data['expires_at'] = self::formatDate($data['expires_at']);
             $discount->update([
@@ -115,6 +118,7 @@ class DiscountController extends Controller
                 'is_active' => $data['is_active'],
                 'expires_at' => $data['expires_at'],
                 'amount' => $data['amount'],
+                'limit' => $data['limit'],
             ]);
             $discount->products()->sync($data['products']);
             activity()
@@ -151,9 +155,8 @@ class DiscountController extends Controller
         $expires_at = self::convertNums($d);
         $t = explode(' ', $expires_at);
         $date = explode('/', $t[0]);
-        $time = explode(':', $t[1]);
         $verta = Verta::jalaliToGregorian($date[0], $date[1], $date[2]);
-        return $verta[0] . '/' . $verta[1] . '/' . $verta[2] . ' ' . $time[0] . ':' . $time[1];
+        return $verta[0] . '/' . $verta[1] . '/' . $verta[2] . ' ' . $t[1];
     }
 
     static function convertNums($string)

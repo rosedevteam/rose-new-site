@@ -93,8 +93,9 @@
                                         </div>
                                     </td>
                                     <td>
-                                <span class="fw-semibold">
-                                    {{ $jobOffer->author->name() }}
+                                <span class="fw-semibold"><a href="{{ route('admin.users.show', $jobOffer->author) }}"
+                                                             class="text-body text-truncate">
+                                        {{ $jobOffer->author->name() }}</a>
                                 </span>
                                     </td>
                                     <td><span class="fw-semibold">{{ $jobOffer->team() }}</span></td>

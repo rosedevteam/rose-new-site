@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->integer('amount')->nullable();
             $table->boolean('is_active')->default(false);
             $table->timestamp('expires_at');
+            $table->integer('limit')->default(1);
             $table->timestamps();
         });
 
@@ -25,6 +26,12 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('discount_id')->constrained('discounts');
             $table->foreignId('product_id')->constrained('products');
+        });
+
+        Schema::create('discount_user', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('discount_id')->constrained('discounts');
+            $table->foreignId('user_id')->constrained('users');
         });
     }
 
