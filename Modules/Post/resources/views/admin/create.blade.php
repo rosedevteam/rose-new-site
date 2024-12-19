@@ -33,8 +33,8 @@
                                     <input type="text" id="title" name="title" class="form-control">
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label" for="url">آدرس</label>
-                                    <input type="text" id="url" name="url" class="form-control">
+                                    <label class="form-label" for="slug">آدرس</label>
+                                    <input type="text" id="slug" name="slug" class="form-control">
                                 </div>
                             </div>
                             <div class="row g-3">

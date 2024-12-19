@@ -76,16 +76,19 @@ class PostController extends Controller
         Gate::authorize('create-posts');
         $data = request()->validate([
             'title' => 'required|string|max:255',
-            'url' => 'required|string|max:255',
+            'slug' => 'required|string|max:255',
             'content' => 'required|string',
         ]);
         try {
             $post = Post::create([
                 'title' => $data['title'],
-                'url' => $data['url'],
+                'slug' => $data['slug'],
                 'content' => $data['content'],
                 'author_id' => auth()->id()
             ]);
+
+            //todo implode slug by "-" character
+
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($post)
@@ -116,17 +119,22 @@ class PostController extends Controller
         try {
             $data = request()->validate([
                 'title' => 'required|string|max:255',
-                'url' => 'required|string|max:255',
+                'slug' => 'required|string|max:255',
                 'content' => 'required|string',
                 'comment_status' => 'required',
                 'status' => 'required',
+                'image' => 'nullable',
             ]);
+
+            //todo implode slug by "-" character
+
             $post->update([
                 'title' => $data['title'],
-                'url' => $data['url'],
+                'slug' => $data['slug'],
                 'content' => $data['content'],
                 'comment_status' => $data['comment_status'] == '1',
                 'status' => $data['status'],
+                'image' => $data['image'],
             ]);
             activity()
                 ->causedBy(auth()->id())
@@ -134,7 +142,7 @@ class PostController extends Controller
                 ->withProperties([auth()->user(), $post, $data])
                 ->log('ویرایش پست');
             alert()->success("موفق", "ویرایش با موفقیت انجام شد");
-            return redirect(route('admin.post.edit', compact('post')));
+            return redirect(route('admin.posts.edit', compact('post')));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
