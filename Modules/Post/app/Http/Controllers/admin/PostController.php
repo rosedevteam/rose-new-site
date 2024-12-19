@@ -5,6 +5,7 @@ namespace Modules\Post\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
+use Illuminate\Http\Request;
 use Modules\Post\Models\Post;
 
 class PostController extends Controller
@@ -71,20 +72,24 @@ class PostController extends Controller
         }
     }
 
-    public function store()
+    public function store(Request $request)
     {
         Gate::authorize('create-posts');
-        $data = request()->validate([
+        $data = $request->validate([
             'title' => 'required|string|max:255',
             'slug' => 'required|string|max:255',
             'content' => 'required|string',
+            'image' => 'nullable'
         ]);
+
+
         try {
             $post = Post::create([
                 'title' => $data['title'],
                 'slug' => $data['slug'],
                 'content' => $data['content'],
-                'author_id' => auth()->id()
+                'author_id' => auth()->id(),
+                'image' => $data['image'],
             ]);
 
             //todo implode slug by "-" character
@@ -95,7 +100,7 @@ class PostController extends Controller
                 ->withProperties([auth()->user(), $post, $data])
                 ->log('ساخت پست');
             alert()->success("موفق", "با موفقیت انجام شد");
-            return redirect(route('admin.post.index'));
+            return redirect(route('admin.posts.index'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();

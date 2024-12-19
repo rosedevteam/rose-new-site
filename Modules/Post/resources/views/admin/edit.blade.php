@@ -12,10 +12,11 @@
             <div class="alert alert-danger" style="padding-right: 80px">{{ $errors->first() }}</div>
         @endif
         <div class="container-xxl flex-grow-1 container-p-y">
-            <h3>افزودن پست جدید</h3>
-            <hr>
+
             <div class="row">
                 <div class="col-md-8">
+                    <h3>ویرایش آیتم "{{$post->title}}"</h3>
+                    <hr>
                     <div class="card mb-3">
                         <div class="card-header border-bottom">
                             <ul class="nav nav-tabs card-header-tabs primary-font" role="tablist">
