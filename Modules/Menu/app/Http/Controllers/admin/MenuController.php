@@ -49,15 +49,15 @@ class MenuController extends Controller
                 'parent_id' => 'nullable',
                 'link' => 'required',
                 'order' => 'nullable',
-                'icon' => 'nullable',
+                'image' => 'nullable',
                 'subtitle' => 'nullable'
             ]);
-            auth()->user()->menus()->create([
+            Menu::create([
                 'title' => $validData['title'],
                 'parent_id' => $validData['parent_id'],
                 'link' => $validData['link'],
                 'order' => $validData['order'],
-                'icon' => $validData['icon'],
+                'icon' => $validData['image'],
                 'subtitle' => $validData['subtitle'],
                 'author_id' => auth()->user()->id
             ]);

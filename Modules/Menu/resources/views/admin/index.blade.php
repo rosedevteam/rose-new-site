@@ -73,24 +73,45 @@
                                 <div class="mb-3">
                                     <label class="form-label" for="title">نام</label>
                                     <input type="text" class="form-control" id="title" name="title"
+                                           value="{{old('title')}}"
                                            required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="title">توضیحات (مخصوص زیر منو)</label>
+                                    <input type="text" class="form-control" id="subtitle" name="subtitle"
+                                           value="{{old('subtitle')}}">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="link">لینک</label>
                                     <input type="text" class="form-control" id="link" name="link"
+                                           {{old('link')}}
                                            required>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="order">ترتیب</label>
                                     <input type="text" class="form-control" id="order" name="order"
+                                           {{old('order')}}
                                            required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="image_label">آیکن</label>
+                                    <div class="input-group">
+                                        <input type="text" id="image_label" class="form-control" name="image"
+                                               aria-label="Image" aria-describedby="button-image"
+                                               value="{{ old('image') }}">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary" type="button" id="button-image">
+                                                انتخاب
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="parent_id">منوی مادر</label>
                                     <select name="parent_id" id="parent_id" class="form-select">
                                         <option value="">انتخاب کنید</option>
                                         @foreach($menus as $menu)
-                                            <option value="{{$menu->id}}">{{$menu->title}}</option>
+                                            <option value="{{$menu->id}}" {{old('parent_id') ? $menu->id : 'selected'}}>{{$menu->title}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -117,9 +138,8 @@
     <script src="/assets/admin/vendor/libs/select2/i18n/fa.js"></script>
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/FormValidation.min.js"></script>
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js"></script>
-    <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
-    <script src="/assets/admin/vendor/libs/cleavejs/cleave.js"></script>
-    <script src="/assets/admin/vendor/libs/cleavejs/cleave-phone.js"></script>
-    <script src="/assets/admin/vendor/libs/sortablejs/sortable.js"></script>
-    <script src="/assets/admin/js/extended-ui-drag-and-drop.js"></script>
+@endpush
+
+@push('script')
+    <x-admin::filemanager-btn/>
 @endpush
