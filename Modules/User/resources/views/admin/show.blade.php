@@ -1,9 +1,5 @@
 @extends('admin::layouts.main')
 
-@section('title')
-    مشاهده کاربر
-@endsection
-
 @section('content')
     <div class="content-wrapper">
         <!-- Content -->
@@ -96,9 +92,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- /User Card -->
                 </div>
-                <!--/ User Sidebar -->
 
                 @if(!is_null($orders))
                     <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
@@ -235,11 +229,9 @@
                     </div>
                 </div>
             @endif
-            <!-- Modal -->
-            <!-- Edit User Modal -->
             @if($canEdit)
                 <div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
                         <div class="modal-content p-3 p-md-5">
                             <div class="modal-body">
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -314,12 +306,9 @@
                     </div>
                 </div>
             @endif
-            <!--/ Edit User Modal -->
-
-            <!-- delete User modal -->
             @if($canDelete)
                 <div class="modal fade" id="deleteUser" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-simple">
+                    <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-body">
                                 <div class="text-center mb-4 mt-0 mt-md-n2">
@@ -344,7 +333,7 @@
             @endif
             @if($canSetRole)
                 <div class="modal fade" id="setRole" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-simple">
+                    <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-body">
                                 <div class="text-center mb-4 mt-0 mt-md-n2">
@@ -356,6 +345,9 @@
                                     @method('PATCH')
                                     <select name="role_id" class="form-select">
                                         @foreach($roles as $role)
+                                            @if($role['name'] == 'super-admin')
+                                                @continue
+                                            @endif
                                             <option class="form-control"
                                                     value="{{ $role['id'] }}" {{ $role['name'] == $user->getRoleNames()[0] ? 'selected' : ""}}>{{ $role['name'] }}</option>
                                         @endforeach
@@ -375,10 +367,7 @@
                     </div>
                 </div>
             @endif
-            <!--/ delete User modal -->
-            <!-- /Modal -->
         </div>
-        <!-- / Content -->
         <div class="content-backdrop fade"></div>
     </div>
 @endsection

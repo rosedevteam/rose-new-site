@@ -3,13 +3,16 @@
 namespace Modules\Post\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Modules\Post\Models\Post;
 
 class PostController extends Controller
 {
+    use SEOTools;
     public function index()
     {
+        $this->seo()->setTitle('پست ها');
         Gate::authorize('view-posts');
         try {
             $sort_by = request('sort_by', 'created_at');
@@ -52,7 +55,7 @@ class PostController extends Controller
         try {
             return view('post::admin.show', compact('post'));
         } catch (\Throwable $th) {
-            alert()->error("خطا", "خطایی رخ داد");
+            alert()->error("خطا", $th->getMessage());
             return back();
         }
     }
@@ -84,9 +87,9 @@ class PostController extends Controller
                 'author_id' => auth()->id()
             ]);
             activity()
-                ->causedBy(auth()->id())
+                ->causedBy(auth()->user())
                 ->performedOn($post)
-                ->withProperties($data)
+                ->withProperties([auth()->user(), $post, $data])
                 ->log('ساخت پست');
             alert()->success("موفق", "با موفقیت انجام شد");
             return redirect(route('admin.post.index'));
@@ -102,7 +105,7 @@ class PostController extends Controller
         try {
             return view('post::admin.edit', compact('post'));
         } catch (\Throwable $th) {
-            alert()->error("خطا", "خطایی رخ داد");
+            alert()->error("خطا", $th->getMessage());
             return back();
         }
     }
@@ -128,10 +131,29 @@ class PostController extends Controller
             activity()
                 ->causedBy(auth()->id())
                 ->performedOn($post)
-                ->withProperties($data)
+                ->withProperties([auth()->user(), $post, $data])
                 ->log('ویرایش پست');
             alert()->success("موفق", "ویرایش با موفقیت انجام شد");
-            return redirect(route('admin.post.show', compact('post')));
+            return redirect(route('admin.post.edit', compact('post')));
+        } catch (\Throwable $th) {
+            alert()->error("خطا", $th->getMessage());
+            return back();
+        }
+    }
+
+
+    public function destroy(Post $post)
+    {
+        Gate::authorize('delete-posts');
+        try {
+            $post->delete();
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($post)
+                ->withProperties([auth()->user(), $post])
+                ->log('حذف پست');
+            alert()->success('موفق', 'پست با موفقیت حذف شد');
+            return redirect(route('admin.post.index'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();

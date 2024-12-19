@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('billings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('province')->nullable();

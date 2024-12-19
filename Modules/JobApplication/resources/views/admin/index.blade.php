@@ -1,9 +1,5 @@
 @extends('admin::layouts.main')
 
-@section('title')
-    رزومه های ارسال شده
-@endsection
-
 @section('content')
     <div class="content-wrapper">
         @if($errors->any())
@@ -99,12 +95,14 @@
                                     @endswitch </td>
                                     <td>{{ verta($jobApplication->created_at)->formatJalaliDateTime() }}</td>
                                     <td>
-                                        <div class="d-inline-block text-nowrap">
-                                            <button class="btn btn-sm btn-icon">
-                                                <a href="{{ route('admin.jobapplications.show', $jobApplication) }}">
-                                                    <i class="bx bx-detail"></i>
-                                                </a>
-                                            </button>
+                                        <div class="d-flex gap-3 text-nowrap">
+                                            <a href="{{ route('admin.jobapplications.edit', $jobApplication) }}"
+                                               class="btn btn-sm btn-info">
+                                                ویرایش
+                                            </a>
+                                            @can('delete-job-applications')
+                                                <x-admin::deletebutton data-id="{{ $jobApplication->id }}"/>
+                                            @endcan
                                         </div>
                                     </td>
                                 </tr>
@@ -116,6 +114,7 @@
 
                 </div>
             </div>
+            <x-admin::deletemodal/>
         </div>
         <div class="content-backdrop fade"></div>
     </div>
@@ -133,4 +132,5 @@
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave-phone.js"></script>
+    <x-admin::deletemodalscript model="jobapplications"/>
 @endpush

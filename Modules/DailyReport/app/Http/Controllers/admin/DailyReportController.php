@@ -3,14 +3,17 @@
 namespace Modules\DailyReport\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Illuminate\Validation\Rules\File;
 use Modules\DailyReport\Models\DailyReport;
 
 class DailyReportController extends Controller
 {
+    use SEOTools;
     public function index()
     {
+        $this->seo()->setTitle('گزارش های روزانه بازار');
         Gate::authorize('view-daily-reports');
         try {
             $sort_by = request('sort_by', 'created_at');
@@ -19,12 +22,12 @@ class DailyReportController extends Controller
             $dailyReports = DailyReport::query();
             $dailyReports = $dailyReports->orderBy($sort_by, $sort_direction);
             $dailyReports = $dailyReports->paginate($count)->withQueryString();
-            return view('dailyreport::admin.index', [
-                'dailyReports' => $dailyReports,
-                'sort_by' => $sort_by,
-                'sort_direction' => $sort_direction,
-                'count' => $count,
-            ]);
+            return view('dailyreport::admin.index', compact(
+                'dailyReports',
+                'sort_by',
+                'sort_direction',
+                'count'
+            ));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -53,9 +56,28 @@ class DailyReportController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($dailyReport)
+                ->withProperties([auth()->user(), $dailyReport, $data])
                 ->log('ساخت گزارش روزانه');
             alert()->success("موفق", "با موفقیت انجام شد");
-            return redirect()->route('admin.dailyreports.index');
+            return redirect(route('admin.dailyreports.index'));
+        } catch (\Throwable $th) {
+            alert()->error("خطا", $th->getMessage());
+            return back();
+        }
+    }
+
+    public function destroy(DailyReport $dailyreport)
+    {
+        Gate::authorize('delete-daily-reports');
+        try {
+            $dailyreport->delete();
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($dailyreport)
+                ->withProperties([auth()->user(), $dailyreport])
+                ->log('حذف گزارش روزانه');
+            alert()->success('موفق', 'گزارش روزانه با موفقیت حذف شد');
+            return back();
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();

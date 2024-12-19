@@ -3,13 +3,16 @@
 namespace Modules\Admin\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Spatie\Activitylog\Models\Activity;
 
 class AdminController extends Controller
 {
+    use SEOTools;
     public function index()
     {
+        $this->seo()->setTitle('داشبورد');
         try {
             return view('admin::index');
         } catch (\Throwable $th) {
@@ -20,6 +23,7 @@ class AdminController extends Controller
 
     public function logIndex()
     {
+        $this->seo()->setTitle('لاگ');
         Gate::authorize('view-logs');
         try {
             $sort_direction = request('sort_direction', 'desc');

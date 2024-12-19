@@ -3,14 +3,17 @@
 namespace Modules\Comment\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Modules\Comment\Models\Comment;
 use Throwable;
 
 class CommentController extends Controller
 {
+    use SEOTools;
     public function index()
     {
+        $this->seo()->setTitle('کامنت ها');
         Gate::authorize('view-comments');
         try {
             $sort_direction = request('sort_direction', 'desc');
@@ -44,11 +47,11 @@ class CommentController extends Controller
         }
     }
 
-    public function show(Comment $comment)
+    public function edit(Comment $comment)
     {
         Gate::authorize('view-comments');
         try {
-            return view('comment::admin.show', compact('comment'));
+            return view('comment::admin.edit', compact('comment'));
         } catch (Throwable $th) {
             alert()->error("خطا");
             return back();
@@ -66,10 +69,10 @@ class CommentController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($comment)
-                ->withProperties($data)
+                ->withProperties([auth()->user(), $comment, $data])
                 ->log('ویرایش کامنت');
             alert()->success("موفق", 'ویرایش با موفقیت انجام شد');
-            return view('comment::admin.show', compact('comment'));
+            return view('comment::admin.edit', compact('comment'));
         } catch (Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -93,11 +96,29 @@ class CommentController extends Controller
             activity()
                 ->causedBy(auth()->id())
                 ->performedOn($comment)
-                ->withProperties($newComment)
-                ->log('ساخت پست');
+                ->withProperties([auth()->user(), $comment, $newComment])
+                ->log('پاشخ کامنت');
             alert()->success("موفق", 'کامنت با موفقیت ثبت شد');
-            return redirect(route('admin.comments.show', $comment));
+            return redirect(route('admin.comments.edit', $comment));
         } catch (Throwable $th) {
+            alert()->error("خطا", $th->getMessage());
+            return back();
+        }
+    }
+
+    public function destroy(Comment $comment)
+    {
+        Gate::authorize('delete-comments');
+        try {
+            $comment->delete();
+            activity()
+                ->causedBy(auth()->id())
+                ->performedOn($comment)
+                ->withProperties([auth()->user(), $comment])
+                ->log('حذف کامنت');
+            alert()->success('موفق', 'کامنت با موفقیت حذف شد');
+            return redirect(route('admin.comments.index'));
+        } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
         }

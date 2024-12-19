@@ -1,9 +1,5 @@
 @extends('admin::layouts.main')
 
-@section('title')
-    فرصت های شغلی
-@endsection
-
 @section('content')
     <div class="content-wrapper">
         @if($errors->any())
@@ -93,7 +89,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                <span class="fw-semibold"><a href="{{ route('admin.users.show', $jobOffer->author) }}"
+                                <span class="fw-semibold"><a href="{{ route('admin.users.edit', $jobOffer->author) }}"
                                                              class="text-body text-truncate">
                                         {{ $jobOffer->author->name() }}</a>
                                 </span>
@@ -110,12 +106,14 @@
                                     </td>
                                     <td>{{ verta($jobOffer->created_at)->formatJalaliDateTime() }}</td>
                                     <td>
-                                        <div class="d-inline-block text-nowrap">
-                                            <button class="btn btn-sm btn-icon">
-                                                <a href="{{ route('admin.joboffers.show', $jobOffer) }}">
-                                                    <i class="bx bx-detail"></i>
-                                                </a>
-                                            </button>
+                                        <div class="d-flex gap-3 text-nowrap">
+                                            <a href="{{ route('admin.joboffers.edit', $jobOffer) }}"
+                                               class="btn btn-sm btn-info">
+                                                ویرایش
+                                            </a>
+                                            @can('delete-job-offers')
+                                                <x-admin::deletebutton data-id="{{ $jobOffer->id }}"/>
+                                            @endcan
                                         </div>
                                     </td>
                                 </tr>
@@ -127,6 +125,7 @@
 
                 </div>
             </div>
+            <x-admin::deletemodal/>
         </div>
         <div class="content-backdrop fade"></div>
     </div>
@@ -144,4 +143,5 @@
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave-phone.js"></script>
+    <x-admin::deletemodalscript model="joboffers"/>
 @endpush

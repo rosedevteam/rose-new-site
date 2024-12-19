@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('author_id')->constrained('users');
+            $table->foreignId('author_id')->constrained('users')->cascadeOnDelete();
             $table->boolean('is_parent')->default(false);
             $table->string('name');
             $table->timestamps();
@@ -21,7 +21,7 @@ return new class extends Migration
 
         Schema::create('categoryables', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained('categories');
+            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->morphs('categoryable');
         });
 

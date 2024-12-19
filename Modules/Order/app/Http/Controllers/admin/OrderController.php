@@ -3,13 +3,16 @@
 namespace Modules\Order\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Modules\Order\Models\Order;
 
 class OrderController extends Controller
 {
+    use SEOTools;
     public function index()
     {
+        $this->seo()->setTitle('سفارش ها');
         Gate::authorize('view-orders');
         try {
             $sort_by = request('sort_by', 'created_at');

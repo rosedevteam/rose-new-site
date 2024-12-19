@@ -3,6 +3,7 @@
 namespace Modules\User\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,8 +14,10 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    use SEOTools;
     public function index()
     {
+        $this->seo()->setTitle('کاربران');
         Gate::authorize('view-users');
         try {
             $roles = Role::all()->select('name', 'id');
@@ -75,7 +78,7 @@ class UserController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($user)
-                ->withProperties($data)
+                ->withProperties([auth()->user(), $user, $data])
                 ->log('ساخت کاربر');
             alert()->success("موفق", "کاربر با موفقیت ساخته شد");
             return redirect(route('admin.users.index'));
@@ -150,7 +153,7 @@ class UserController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($user)
-                ->withProperties([$userData, $billingData])
+                ->withProperties([auth()->user(), $user, $userData, $billingData])
                 ->log('ویرایش کاربر');
             alert()->success("موفق", "با موفقیت انجام شد");
             return redirect(route('admin.users.show', $user));
@@ -173,6 +176,7 @@ class UserController extends Controller
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($user)
+                ->withProperties([auth()->user(), $user])
                 ->log('حذف کاربر');
             alert()->success("موفق", "کاربر حذف شد");
             return redirect(route('admin.users.index'));
@@ -193,11 +197,15 @@ class UserController extends Controller
             $data = request()->validate([
                 'role_id' => 'bail|required|string|exists:roles,id',
             ]);
-            $user->syncRoles(Role::where('id', $data['role_id'])->first()->name);
+            $role = Role::where('id', $data['role_id'])->first()->name;
+            if ($role == 'super-admin') {
+                return back();
+            }
+            $user->syncRoles($role);
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($user)
-                ->withProperties($data)
+                ->withProperties([auth()->user(), $user, $data])
                 ->log('ویرایش نقش');
             alert()->success('موفق', 'ویرایش نقش با موفقیت انجام شد');
             return back();

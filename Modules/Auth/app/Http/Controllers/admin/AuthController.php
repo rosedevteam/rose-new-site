@@ -4,20 +4,15 @@ namespace Modules\Auth\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Artesaos\SEOTools\Traits\SEOTools;
-use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Modules\Auth\Models\OtpCode;
 use Modules\Auth\Notifications\OtpNotification;
 use Modules\User\Models\User;
-use Spatie\Permission\Models\Role;
 
 class AuthController extends Controller
 {
@@ -36,7 +31,7 @@ class AuthController extends Controller
         ]);
         //get user and role from users table
         $user = User::where('phone', $validData['phone'])->first();
-        if (!$user?->hasAnyRole(Role::all())) {
+        if (!$user->hasPermissionTo('admin-panel')) {
             throw new AuthorizationException;
         }
 

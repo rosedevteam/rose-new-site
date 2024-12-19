@@ -1,9 +1,5 @@
 @extends('admin::layouts.main')
 
-@section('title')
-    نظرات
-@endsection
-
 @section('content')
     <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
@@ -96,7 +92,7 @@
                                         </a>
                                     </td>
                                     <td><a href="{{
-                                        route("admin." . strtolower(substr(strrchr($comment->commentable_type, '\\'), 1)) . "s.show", $comment->commentable)
+                                        route("admin." . strtolower(substr(strrchr($comment->commentable_type, '\\'), 1)) . "s.edit", $comment->commentable)
                                     }}" class="text-body text-truncate">
                                             <span
                                                 class="fw-semibold">{{ $comment->commentable->title ?: "کامنت " . $comment->author()->first()->name() }}</span></a>
@@ -107,13 +103,14 @@
                                             @case("pending") در انتظار@break
                                         @endswitch</td>
                                     <td>
-                                        <div class="d-inline-block text-nowrap">
-                                            <button class="btn btn-sm btn-icon">
-                                                <a href="{{ route('admin.comments.show', $comment) }}">
-                                                    <i class="bx bx-detail"></i>
-                                                </a>
-                                            </button>
-                                        </div>
+                                        <div class="d-flex gap-3 text-nowrap">
+                                            <a href="{{ route('admin.comments.edit', $comment) }}"
+                                               class="btn btn-sm btn-info">
+                                                ویرایش
+                                            </a>
+                                            @can('delete-comments')
+                                                <x-admin::deletebutton data-id="{{ $comment->id }}"/>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach
@@ -124,6 +121,7 @@
 
                 </div>
             </div>
+            <x-admin::deletemodal/>
         </div>
         <div class="content-backdrop fade"></div>
     </div>
@@ -141,4 +139,5 @@
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave-phone.js"></script>
+    <x-admin::deletemodalscript model="comments"/>
 @endpush
