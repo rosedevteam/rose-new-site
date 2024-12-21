@@ -94,7 +94,7 @@
                                         {{ $jobOffer->user->name() }}</a>
                                 </span>
                                     </td>
-                                    <td><span class="fw-semibold">{{ $jobOffer->category->name }}</span></td>
+                                    <td><span class="fw-semibold">{{ $jobOffer->category->first()->name }}</span></td>
                                     <td>{{ $jobOffer->type }}</td>
                                     <td>
                                         <span @class(['badge', 'bg-label-success' => $jobOffer->status == 'active', 'bg-label-danger' => $jobOffer->status == 'inactive'])>

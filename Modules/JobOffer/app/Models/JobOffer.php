@@ -32,7 +32,7 @@ class JobOffer extends Model
 
     public function category()
     {
-       return $this->belongsTo(Category::class);
+        return $this->morphToMany(Category::class, 'categoryable');
     }
 
     protected static function newFactory()

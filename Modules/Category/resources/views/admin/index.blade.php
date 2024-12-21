@@ -17,7 +17,7 @@
                                     <option value="all" selected>همه</option>
                                     @foreach($types as $t)
                                         <option
-                                            value="{{ $t }}" {{ $t == $types ? 'selected' : ''}}>{{ $t }}</option>
+                                            value="{{ $t }}" {{ $t == $type ? 'selected' : ''}}>{{ $t }}</option>
                                     @endforeach
                                 </select></div>
                             <div class="col-md-1">

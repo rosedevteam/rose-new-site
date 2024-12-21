@@ -19,6 +19,11 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::create('categoryables', function (Blueprint $table) {
+            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
+            $table->morphs('categoryable');
+        });
+
     }
 
     /**

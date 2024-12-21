@@ -58,14 +58,15 @@ class JobOfferController extends Controller
                 'type' => 'bail|required|string',
                 'category_id' => 'bail|required|string',
             ]);
+
             $jobOffer = JobOffer::create([
                 'title' => $data['title'],
                 'content' => $data['content'],
                 'user_id' => auth()->id(),
                 'status' => $data['status'],
-                'category_id' => $data['category_id'],
                 'type' => $data['type'],
             ]);
+            $jobOffer->category()->sync($data['category_id']);
 
             activity()
                 ->causedBy(auth()->user())
@@ -87,6 +88,7 @@ class JobOfferController extends Controller
         try {
 
             $categories = JobOffer::allCategories();
+
             return view('joboffer::admin.edit', compact('joboffer', 'categories'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
@@ -114,9 +116,9 @@ class JobOfferController extends Controller
                 'title' => $data['title'],
                 'content' => $data['content'],
                 'status' => $data['status'],
-                'category_id' => $data['category_id'],
                 'type' => $data['type'],
             ]);
+            $joboffer->category()->sync($data['category_id']);
 
             activity()
                 ->causedBy(auth()->user())

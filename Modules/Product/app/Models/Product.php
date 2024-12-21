@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Modules\Category\Models\Category;
 use Modules\Comment\Models\Comment;
 use Modules\Discount\Models\Discount;
 use Modules\Order\Models\Order;
@@ -36,6 +37,17 @@ class Product extends Model
     public function discounts()
     {
         return $this->belongsToMany(Discount::class);
+    }
+
+
+    public static function allCategories()
+    {
+        return Category::where('type', 'product')->get();
+    }
+
+    public function categories()
+    {
+        return $this->morphToMany(Category::class,  'categoryable');
     }
 
     protected static function newFactory(): ProductFactory
