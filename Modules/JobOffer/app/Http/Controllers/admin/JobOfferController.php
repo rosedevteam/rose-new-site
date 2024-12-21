@@ -7,6 +7,7 @@ use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Modules\Category\Models\Category;
 use Modules\JobOffer\Models\JobOffer;
+use PHPUnit\Util\PHP\Job;
 
 class JobOfferController extends Controller
 {
@@ -18,11 +19,16 @@ class JobOfferController extends Controller
         try {
 
             $sort_direction = request('sort_direction', 'desc');
+            $category = request('category', 'all');
+            $categories = JobOffer::allCategories();
             $jobOffers = JobOffer::query();
+            if($category != 'all') {
+                $jobOffers = $jobOffers->with('categories')->where('category', $category);
+            }
             $jobOffers = $jobOffers->orderBy('created_at', $sort_direction);
             $jobOffers = $jobOffers->paginate(50);
 
-            return view('joboffer::admin.index', compact('jobOffers', 'sort_direction'));
+            return view('joboffer::admin.index', compact('jobOffers', 'sort_direction', 'categories', 'category'));
         } catch (\Throwable $th) {
             alert()->error('خطا', $th->getMessage());
             return back();
@@ -33,7 +39,7 @@ class JobOfferController extends Controller
     {
         Gate::authorize('create-job-offers');
         try {
-            $categories = Category::where('name', 'team')->first()->children;
+            $categories = JobOffer::allCategories();
             return view('joboffer::admin.create', compact('categories'));
         } catch (\Throwable $th) {
             alert()->error('خطا', $th->getMessage());
@@ -48,18 +54,18 @@ class JobOfferController extends Controller
             $data = request()->validate([
                 'title' => 'bail|required|string|max:255',
                 'content' => 'bail|required',
-                'team' => 'bail|required|string',
-                'type' => 'bail|required|string',
                 'status' => 'bail|required|string',
+                'type' => 'bail|required|string',
+                'category_id' => 'bail|required|string',
             ]);
             $jobOffer = JobOffer::create([
                 'title' => $data['title'],
                 'content' => $data['content'],
-                'type' => $data['type'],
                 'user_id' => auth()->id(),
                 'status' => $data['status'],
+                'category_id' => $data['category_id'],
+                'type' => $data['type'],
             ]);
-            $jobOffer->categories()->attach($data['team']);
 
             activity()
                 ->causedBy(auth()->user())
@@ -79,7 +85,8 @@ class JobOfferController extends Controller
     {
         Gate::authorize('view-job-offers');
         try {
-            $categories = Category::where('name', 'team')->first()->children;
+
+            $categories = JobOffer::allCategories();
             return view('joboffer::admin.edit', compact('joboffer', 'categories'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
@@ -92,11 +99,11 @@ class JobOfferController extends Controller
         Gate::authorize('edit-job-offers');
         try {
             $data = request()->validate([
-                'title' => 'bail|nullable|string|max:255',
-                'content' => 'bail|nullable',
-                'team' => 'bail|nullable|string',
-                'type' => 'bail|nullable|string',
-                'status' => 'bail|nullable|string',
+                'title' => 'bail|required|string|max:255',
+                'content' => 'bail|required',
+                'status' => 'bail|required|string',
+                'category_id' => 'bail|required|integer',
+                'type' => 'bail|required|string',
             ]);
             $data = array_filter($data, function ($value) {
                 return !is_null($value);
@@ -106,12 +113,10 @@ class JobOfferController extends Controller
             $joboffer->update([
                 'title' => $data['title'],
                 'content' => $data['content'],
-                'type' => $data['type'],
                 'status' => $data['status'],
+                'category_id' => $data['category_id'],
+                'type' => $data['type'],
             ]);
-            if (!is_null($data['team'])) {
-                $data['team'] = Category::where('name', $data['team'])->first();
-            }
 
             activity()
                 ->causedBy(auth()->user())

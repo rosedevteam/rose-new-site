@@ -25,14 +25,14 @@ class JobOffer extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function categories()
+    public static function allCategories()
     {
-        return $this->morphToMany(Category::class, 'categoryable');
+        return Category::where('type', 'joboffer')->get();
     }
 
-    public function team()
+    public function category()
     {
-        return $this->categories()->first()->name;
+       return $this->belongsTo(Category::class);
     }
 
     protected static function newFactory()

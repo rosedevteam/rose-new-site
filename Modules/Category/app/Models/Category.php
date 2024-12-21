@@ -14,23 +14,6 @@ class Category extends Model
 
     protected $guarded = [];
 
-    public function children()
-    {
-        if (!$this->is_parent) return null;
-        return $this->morphToMany(Category::class, 'categoryable');
-    }
-
-    public function jobOffers()
-    {
-        return $this->morphedByMany(JobOffer::class, 'categoryable');
-    }
-
-    public function parent()
-    {
-        if($this->is_parent) return null;
-        return $this->morphedByMany(Category::class, 'categoryable');
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -2,9 +2,6 @@
 
 @section('content')
     <div class="content-wrapper">
-        @if($errors->any())
-            <div class="alert alert-danger" style="padding-right: 80px">{{ $errors->first() }}</div>
-        @endif
         <div class="container-xxl flex-grow-1 container-p-y">
             <div class="card">
                 <div class="card-header border-bottom">
@@ -13,9 +10,12 @@
                         <div
                             class="d-flex justify-content-start align-items-center row py-3 gap-1 gap-md-0 primary-font">
                             <div class="col-md-2">
-                                <label for="sort_by" class="form-label">ترتیب بر اساس: </label>
-                                <select id="sort_by" name="sort_by" class="form-select text-capitalize">
-                                    <option value="created_at" selected>تاریخ ساخت</option>
+                                <label for="categories" class="form-label">نوع: </label>
+                                <select id="categories" name="categories" class="form-select text-capitalize">
+                                    <option value="all">همه</option>
+                                    @foreach($categories as $c)
+                                        <option value="{{ $c->id }}" {{ $c->name == $category ? 'selected' : '' }}>{{ $c->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-md-2">
@@ -94,7 +94,7 @@
                                         {{ $jobOffer->user->name() }}</a>
                                 </span>
                                     </td>
-                                    <td><span class="fw-semibold">{{ $jobOffer->team() }}</span></td>
+                                    <td><span class="fw-semibold">{{ $jobOffer->category->name }}</span></td>
                                     <td>{{ $jobOffer->type }}</td>
                                     <td>
                                         <span @class(['badge', 'bg-label-success' => $jobOffer->status == 'active', 'bg-label-danger' => $jobOffer->status == 'inactive'])>

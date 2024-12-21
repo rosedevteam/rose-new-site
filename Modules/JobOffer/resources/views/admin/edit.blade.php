@@ -20,11 +20,11 @@
                                            class="form-control">
                                 </div>
                                 <div class="col-md-3">
-                                    <label class="form-label" for="team">تیم</label>
-                                    <select class="form-select" name="team" id="team">
+                                    <label class="form-label" for="category_id">تیم</label>
+                                    <select class="form-select" name="category_id" id="category_id">
                                         @foreach($categories as $category)
                                             <option
-                                                value="{{ $category->id }}" {{ $category->id == $joboffer->categories()->first()->id ? 'selected' : '' }}>{{ $category->name }}
+                                                value="{{ $category->id }}" {{ $category->id == $joboffer->category->id ? 'selected' : '' }}>{{ $category->name }}
                                             </option>
                                         @endforeach
                                     </select>

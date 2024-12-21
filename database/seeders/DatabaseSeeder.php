@@ -68,6 +68,11 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'create-job-offers']);
         Permission::create(['name' => 'delete-job-offers']);
         //
+        Permission::create(['name' => 'view-categories']);
+        Permission::create(['name' => 'edit-categories']);
+        Permission::create(['name' => 'create-categories']);
+        Permission::create(['name' => 'delete-categories']);
+        //
         Permission::create(['name' => 'view-job-applications']);
         Permission::create(['name' => 'edit-job-applications']);
         Permission::create(['name' => 'delete-job-applications']);
@@ -327,42 +332,6 @@ class DatabaseSeeder extends Seeder
             'content' => "asvdnawn;wgn;iweagbqiugi",
         ]);
 
-        $parent = Category::factory()->create([
-            'user_id' => 1,
-            'name' => 'team',
-            'is_parent' => true,
-        ]);
-
-        $category1 = Category::factory()->create([
-            'user_id' => 1,
-            'name' => 'بازار های مالی',
-        ]);
-        $category1->parent()->attach($parent->id);
-
-        $category2 = Category::factory()->create([
-            'user_id' => 1,
-            'name' => 'مارگتینگ',
-        ]);
-        $category2->parent()->attach($parent->id);
-
-        $c = JobOffer::factory()->create([
-            'user_id' => 1,
-            'title' => 'akjbfipasbug',
-            'content' => 'asjdbg',
-            'type' => 'afbaisdgb',
-            'status' => 'active',
-        ]);
-        $c->categories()->attach($category1->id);
-
-        $resume = JobApplication::factory()->create([
-            'joboffer_id' => 1,
-            'full_name' => "akjnga aoaiog",
-            'email' => 'akjngaaoaiog@gmail.com',
-            'phone' => '12546982365',
-            'resume' => 'adfjka',
-            'description' => null,
-            'status' => 'pending',
-        ]);
     }
 
     private function seedMenu()

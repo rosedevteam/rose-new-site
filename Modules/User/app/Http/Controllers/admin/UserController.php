@@ -107,7 +107,6 @@ class UserController extends Controller
         try {
 
             $orders = null;
-            $logs = null;
             $billing = null;
             $roles = Role::all()->select('name', 'id');
             $canEdit = Gate::allows('update', $user);
@@ -117,14 +116,11 @@ class UserController extends Controller
             if (Gate::allows('view-orders')) {
                 $orders = $user->orders()->orderByDesc('created_at')->get();
             }
-            if (Gate::allows('view-logs')) {
-                $logs = Activity::causedBy($user)->orderByDesc('created_at')->get();
-            }
             if (Gate::allows('view-billings')) {
                 $billing = Billing::orderByDesc('created_at')->first();
             }
 
-            return view('user::admin.show', compact('user', 'orders', 'logs', 'billing', 'roles', 'canEdit', 'canSetRole', 'canDelete'));
+            return view('user::admin.show', compact('user', 'orders', 'billing', 'roles', 'canEdit', 'canSetRole', 'canDelete'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();

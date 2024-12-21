@@ -14,15 +14,9 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->boolean('is_parent')->default(false);
+            $table->string('type');
             $table->string('name');
             $table->timestamps();
-        });
-
-        Schema::create('categoryables', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
-            $table->morphs('categoryable');
         });
 
     }

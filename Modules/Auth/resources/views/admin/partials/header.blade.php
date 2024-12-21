@@ -8,7 +8,7 @@
 
     <meta name="csrf-token" content="{{csrf_token()}}" id="csrf">
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/assets/admin/img/branding/Logo.svg">
+    <link rel="icon" type="image/x-icon" href="/assets/admin/img/branding/logo.svg">
 
     <!-- Icons -->
     <link rel="stylesheet" href="/assets/admin/vendor/fonts/boxicons.css">
