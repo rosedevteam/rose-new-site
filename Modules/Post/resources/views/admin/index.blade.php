@@ -106,9 +106,9 @@
                                     </td>
                                     <td>
                                 <span class="fw-semibold">
-                                    <a href="{{ route('admin.users.show', $post->author) }}"
+                                    <a href="{{ route('admin.users.show', $post->user) }}"
                                        class="text-body text-truncate">
-                                    {{ $post->author()->first()->name() }}</a>
+                                    {{ $post->user->name() }}</a>
                                 </span>
                                     </td>
                                     <td><span class="fw-semibold">

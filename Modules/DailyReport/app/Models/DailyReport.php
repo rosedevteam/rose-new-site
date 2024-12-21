@@ -10,7 +10,7 @@ class DailyReport extends Model
 {
     protected $guarded = [];
 
-    public function author(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

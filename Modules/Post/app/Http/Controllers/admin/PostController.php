@@ -16,6 +16,7 @@ class PostController extends Controller
         $this->seo()->setTitle('پست ها');
         Gate::authorize('view-posts');
         try {
+
             $sort_by = request('sort_by', 'created_at');
             $sort_direction = request('sort_direction', 'desc');
             $search = request('search');
@@ -23,6 +24,7 @@ class PostController extends Controller
             $status = request('status', 'all');
             $comment_status = request('comment_status', 'all');
             $posts = Post::query();
+
             if ($status !== 'all') {
                 $posts = $posts->where('status', $status);
             }
@@ -33,8 +35,10 @@ class PostController extends Controller
                 $posts = $posts->where('title', 'like', '%' . $search . '%')
                     ->orWhere('content', 'like', '%' . $search . '%');
             }
+
             $posts = $posts->orderBy($sort_by, $sort_direction);
             $posts = $posts->paginate($count)->withQueryString();
+
             return view('post::admin.index', [
                 'posts' => $posts,
                 'sort_by' => $sort_by,
@@ -54,6 +58,7 @@ class PostController extends Controller
     {
         Gate::authorize('view-posts');
         try {
+
             return view('post::admin.show', compact('post'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
@@ -65,6 +70,7 @@ class PostController extends Controller
     {
         Gate::authorize('create-posts');
         try {
+
             return view('post::admin.create');
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
@@ -79,20 +85,21 @@ class PostController extends Controller
             'title' => 'required|string|max:255',
             'slug' => 'required|string|max:255',
             'content' => 'required|string',
-            'image' => 'nullable'
+            'image' => 'nullable',
+            'comment_status' => 'required|string',
+            'status' => 'required|string',
         ]);
-
-
         try {
+
+            $data['slug'] = implode('-', explode(' ', $data['slug']));
             $post = Post::create([
                 'title' => $data['title'],
                 'slug' => $data['slug'],
                 'content' => $data['content'],
-                'author_id' => auth()->id(),
-                'image' => $data['image'],
+                'comment_status' => $data['comment_status'] == 1,
+                'user_id' => auth()->user()->id,
+                'status' => $data['status'],
             ]);
-
-            //todo implode slug by "-" character
 
             activity()
                 ->causedBy(auth()->user())
@@ -100,6 +107,7 @@ class PostController extends Controller
                 ->withProperties([auth()->user(), $post, $data])
                 ->log('ساخت پست');
             alert()->success("موفق", "با موفقیت انجام شد");
+
             return redirect(route('admin.posts.index'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
@@ -111,6 +119,7 @@ class PostController extends Controller
     {
         Gate::authorize('edit-posts');
         try {
+
             return view('post::admin.edit', compact('post'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
@@ -131,8 +140,10 @@ class PostController extends Controller
                 'image' => 'nullable',
             ]);
 
-            //todo implode slug by "-" character
+            $data['slug'] = implode('-', $data['slug']);
+            $data['comment_status'] = $data['comment_status'] == 1;
 
+            $old = $post->toArray();
             $post->update([
                 'title' => $data['title'],
                 'slug' => $data['slug'],
@@ -141,12 +152,14 @@ class PostController extends Controller
                 'status' => $data['status'],
                 'image' => $data['image'],
             ]);
+
             activity()
                 ->causedBy(auth()->id())
                 ->performedOn($post)
-                ->withProperties([auth()->user(), $post, $data])
+                ->withProperties([auth()->user(), $post, $old, $data])
                 ->log('ویرایش پست');
             alert()->success("موفق", "ویرایش با موفقیت انجام شد");
+
             return redirect(route('admin.posts.edit', compact('post')));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
@@ -159,14 +172,17 @@ class PostController extends Controller
     {
         Gate::authorize('delete-posts');
         try {
+
             $post->delete();
+
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($post)
                 ->withProperties([auth()->user(), $post])
                 ->log('حذف پست');
             alert()->success('موفق', 'پست با موفقیت حذف شد');
-            return redirect(route('admin.post.index'));
+
+            return redirect(route('admin.posts.index'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();

@@ -7,16 +7,19 @@
             {{ str_repeat('--- ' , $level)  . $menu->title}}
         </td>
         <td>{{ $menu->link }}</td>
-        <td>
-            {{$menu->author->first_name . ' ' . $menu->author->last_name}}
+        <td><a href="{{ route('admin.users.show', $menu->user) }}" class="text-truncate text-body">
+            {{ $menu->user->name() }}</a>
         </td>
         <td>{{ verta($menu->created_at)->formatJalaliDateTime() }}</td>
         <td>
-            <div class="d-inline-block text-nowrap">
-                <a href="" class="btn btn-sm btn-danger">
-                    حذف
-                </a>
-            </div>
+{{--            <div class="d-inline-block text-nowrap">--}}
+{{--                <a href="" class="btn btn-sm btn-danger">--}}
+{{--                    حذف--}}
+{{--                </a>--}}
+{{--            </div>--}}
+            @can('delete-menus')
+            <x-admin::deletebutton data-id="{{ $menu->id }}" />
+                @endcan
         </td>
 
         @if($menu->children->count())

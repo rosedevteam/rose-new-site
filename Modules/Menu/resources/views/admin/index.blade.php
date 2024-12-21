@@ -96,9 +96,9 @@
                                 <div class="mb-3">
                                     <label for="image_label">آیکن</label>
                                     <div class="input-group">
-                                        <input type="text" id="image_label" class="form-control" name="image"
+                                        <input type="text" id="image_label" class="form-control" name="icon"
                                                aria-label="Image" aria-describedby="button-image"
-                                               value="{{ old('image') }}">
+                                               value="{{ old('icon') }}">
                                         <div class="input-group-append">
                                             <button class="btn btn-outline-secondary" type="button" id="button-image">
                                                 انتخاب
@@ -111,7 +111,8 @@
                                     <select name="parent_id" id="parent_id" class="form-select">
                                         <option value="">انتخاب کنید</option>
                                         @foreach($menus as $menu)
-                                            <option value="{{$menu->id}}" {{old('parent_id') ? $menu->id : 'selected'}}>{{$menu->title}}</option>
+                                            <option
+                                                value="{{$menu->id}}" {{old('parent_id') ? $menu->id : 'selected'}}>{{$menu->title}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -124,6 +125,7 @@
                     </div>
                 @endcan
             </div>
+            <x-admin::deletemodal/>
         </div>
         <div class="content-backdrop fade"></div>
     </div>
@@ -142,4 +144,5 @@
 
 @push('script')
     <x-admin::filemanager-btn/>
+    <x-admin::deletemodalscript model="menus"/>
 @endpush

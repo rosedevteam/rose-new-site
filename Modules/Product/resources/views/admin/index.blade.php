@@ -116,9 +116,9 @@
                                     </td>
                                     <td>
                                         <div class="d-inline-block text-nowrap">
-                                            <a href="{{ route('admin.users.show', $product->author) }}"
+                                            <a href="{{ route('admin.users.show', $product->user) }}"
                                                class="text-body text-truncate">
-                                                {{ $product->author->name() }}
+                                                {{ $product->user->name() }}
                                             </a>
                                         </div>
                                     </td>

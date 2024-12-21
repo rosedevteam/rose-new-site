@@ -15,11 +15,13 @@ class JobApplicationController extends Controller
         $this->seo()->setTitle('رزومه ها');
         Gate::authorize('view-job-applications');
         try {
+
             $count = request('count', 50);
             $sort_direction = request('sort_direction', 'desc');
             $search = request('search');
             $status = request('status', 'all');
             $jobApplications = JobApplication::query();
+
             if ($status != 'all') {
                 $jobApplications = $jobApplications->where('status', $status);
             }
@@ -28,6 +30,7 @@ class JobApplicationController extends Controller
                     ->orWhere('email', 'like', '%' . $search . '%')
                     ->orWhere('phone', 'like', '%' . $search . '%');
             }
+
             $jobApplications = $jobApplications->orderBy('created_at', $sort_direction)->paginate($count);
             return view('jobapplication::admin.index', compact(
                 'jobApplications',
@@ -57,17 +60,22 @@ class JobApplicationController extends Controller
     {
         Gate::authorize('edit-job-applications');
         try {
+
             $data = request()->validate([
                 'status' => 'required|string|in:accepted,rejected,pending',
             ]);
+
+            $old = $jobapplication->toArray();
             $jobapplication->update($data);
+
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($jobapplication)
                 ->withProperties($data)
-                ->withProperties([auth()->user(), $jobapplication, $data])
+                ->withProperties([auth()->user(), $jobapplication, $old, $data])
                 ->log('ویرایش رزومه');
             alert()->success('موفق', 'ویرایش رزومه با موفقیت انجام شد');
+
             return back();
         } catch (\Throwable $th) {
             alert()->error('خطا', $th->getMessage());
@@ -79,13 +87,16 @@ class JobApplicationController extends Controller
     {
         Gate::authorize('delete-job-applications');
         try {
+
             $jobapplication->delete();
+
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($jobapplication)
                 ->withProperties([auth()->user(), $jobapplication])
                 ->log('حذف پست');
             alert()->success('موفق', 'پست با موفقیت حذف شد');
+
             return redirect(route('admin.jobapplications.index'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());

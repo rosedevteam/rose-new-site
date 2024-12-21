@@ -89,9 +89,9 @@
                                         </div>
                                     </td>
                                     <td>
-                                <span class="fw-semibold"><a href="{{ route('admin.users.edit', $jobOffer->author) }}"
+                                <span class="fw-semibold"><a href="{{ route('admin.users.edit', $jobOffer->user) }}"
                                                              class="text-body text-truncate">
-                                        {{ $jobOffer->author->name() }}</a>
+                                        {{ $jobOffer->user->name() }}</a>
                                 </span>
                                     </td>
                                     <td><span class="fw-semibold">{{ $jobOffer->team() }}</span></td>

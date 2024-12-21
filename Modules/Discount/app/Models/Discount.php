@@ -19,7 +19,7 @@ class Discount extends Model
         return $this->belongsToMany(Product::class);
     }
 
-    public function author()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

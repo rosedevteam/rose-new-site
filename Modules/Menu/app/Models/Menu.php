@@ -11,10 +11,9 @@ class Menu extends Model
 {
     use HasFactory;
 
-    protected $table = 'menus';
     protected $guarded = [];
 
-    public function author()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

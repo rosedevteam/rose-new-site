@@ -20,7 +20,7 @@ class JobOffer extends Model
         return $this->hasMany(JobApplication::class);
     }
 
-    public function author()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

@@ -15,28 +15,32 @@ class OrderController extends Controller
         $this->seo()->setTitle('سفارش ها');
         Gate::authorize('view-orders');
         try {
+
             $sort_by = request('sort_by', 'created_at');
             $sort_direction = request('sort_direction', 'desc');
             $status = request('status', 'all');
-            $paymentMethod = request('payment_method', 'all');
+            $payment_method = request('payment_method', 'all');
             $count = request('count', 50);
             $orders = Order::query();
+
             if ($status !== 'all') {
                 $orders = $orders->where('status', $status);
             }
-            if ($paymentMethod !== 'all') {
-                $orders = $orders->where('payment_method', $paymentMethod);
+            if ($payment_method !== 'all') {
+                $orders = $orders->where('payment_method', $payment_method);
             }
+
             $orders = $orders->orderBy($sort_by, $sort_direction);
             $orders = $orders->paginate($count)->withQueryString();
-            return view('order::admin.index', [
-                'orders' => $orders,
-                'sort_by' => $sort_by,
-                'payment_method' => $paymentMethod,
-                'status' => $status,
-                'sort_direction' => $sort_direction,
-                'count' => $count,
-            ]);
+
+            return view('order::admin.index', compact(
+                'orders',
+                'sort_by',
+                'sort_direction',
+                'status',
+                'payment_method',
+                'count',
+            ));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -58,19 +62,23 @@ class OrderController extends Controller
     {
         Gate::authorize('create-orders');
         try {
+
             $data = request()->validate([
                 'price' => 'required|numeric',
                 'note' => 'required|nullable|string',
                 'status' => 'required',
                 'payment_method' => 'required',
             ]);
+
             $order = Order::create($data);
+
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($order)
-                ->withProperties($data)
+                ->withProperties([auth()->user(), $order])
                 ->log('ساخت سفارش');
             alert()->success('موفق', 'سفارش با موفقیت ساخته شد');
+
             return redirect(route('admin.orders.show', compact('order')));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
@@ -93,6 +101,7 @@ class OrderController extends Controller
     {
         Gate::authorize('edit-orders');
         try {
+
             $data = request()->validate([
                 'price' => 'nullable|numeric',
                 'note' => 'nullable|string',
@@ -102,13 +111,17 @@ class OrderController extends Controller
             $data = array_filter($data, function ($value) {
                 return !is_null($value);
             });
+
+            $old = $order->toArray();
             $order->update($data);
+
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($order)
-                ->withProperties($data)
+                ->withProperties([auth()->user(), $order, $old])
                 ->log('ویرایش سفارش');
             alert()->success('موفق', 'سفارش با موفقیت ساخته شد');
+
             return redirect(route('admin.orders.show', compact('order')));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
@@ -120,12 +133,16 @@ class OrderController extends Controller
     {
         Gate::authorize('delete-orders');
         try {
+
             $order->delete();
+
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($order)
+                ->withProperties([auth()->user(), $order])
                 ->log('حذف سفارش');
             alert()->success('موفق', 'سفارش با موفقیت حذف شد');
+
             return redirect(route('admin.orders.index'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());

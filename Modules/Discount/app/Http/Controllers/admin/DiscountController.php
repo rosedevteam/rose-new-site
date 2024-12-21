@@ -17,12 +17,14 @@ class DiscountController extends Controller
         $this->seo()->setTitle('تخفیف ها');
         Gate::authorize('view-discounts');
         try {
+
             $sort_direction = request()->input('sort_direction', 'desc');
             $search = request('search');
             $is_active = request('is_active', 'all');
             $type = request('type', 'all');
             $count = request('count', 50);
             $discounts = Discount::query();
+
             if ($is_active != 'all') {
                 $discounts = $discounts->where('is_active', $is_active == '1');
             }
@@ -32,7 +34,9 @@ class DiscountController extends Controller
             if (!is_null($search)) {
                 $discounts = $discounts->where('code', 'like', '%' . $search . '%');
             }
+
             $discounts = $discounts->orderBy('create_at', $sort_direction)->paginate($count);
+
             return view('discount::admin.index', compact(
                 'discounts',
                 'sort_direction',
@@ -51,6 +55,7 @@ class DiscountController extends Controller
     {
         Gate::authorize('create-discounts');
         try {
+
             $data = request()->validate([
                 'code' => 'bail|required|string|unique:discounts,code',
                 'type' => 'bail|required|string|in:amount,percentage',
@@ -60,23 +65,26 @@ class DiscountController extends Controller
                 'expires_at' => 'bail|required|string',
                 'limit' => 'bail|required|string|numeric',
             ]);
-            $expires_at = self::formatDate($data['expires_at']);
+
+            $data['expires_at'] = self::formatDate($data['expires_at']);
             $discount = Discount::create([
                 'code' => $data['code'],
                 'type' => $data['type'],
                 'is_active' => $data['is_active'],
-                'expires_at' => $expires_at,
                 'amount' => $data['amount'],
-                'author_id' => auth()->user()->id,
+                'expires_at' => $data['expires_at'],
                 'limit' => $data['limit'],
+                'user_id' => auth()->user()->id,
             ]);
             $discount->products()->attach($data['products']);
+
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($discount)
                 ->withProperties([auth()->user(), $discount, $data])
                 ->log('ساخت تخفیف');
             alert()->success('موفق', 'تخفیف با موفقیت ساخته شد');
+
             return redirect(route('admin.discounts.index'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
@@ -87,15 +95,25 @@ class DiscountController extends Controller
     public function create()
     {
         Gate::authorize('create-discounts');
-        $products = Product::all();
-        return view('discount::admin.create', compact('products'));
+        try {
+            $products = Product::all();
+            return view('discount::admin.create', compact('products'));
+        } catch (\Throwable $th) {
+            alert()->error("خطا", $th->getMessage());
+            return back();
+        }
     }
 
     public function edit(Discount $discount)
     {
         Gate::authorize('view-discounts');
-        $products = Product::all();
-        return view('discount::admin.edit', compact('discount', 'products'));
+        try {
+            $products = Product::all();
+            return view('discount::admin.edit', compact('discount', 'products'));
+        } catch (\Throwable $th) {
+            alert()->error("خطا", $th->getMessage());
+            return back();
+        }
     }
 
     public function update(Discount $discount)
@@ -116,6 +134,9 @@ class DiscountController extends Controller
                 'limit' => 'bail|required|string|numeric',
             ]);
             $data['expires_at'] = self::formatDate($data['expires_at']);
+
+            $old = $discount->toArray();
+            $old += $discount->products->toArray();
             $discount->update([
                 'code' => $data['code'] ?: $discount->code,
                 'type' => $data['type'],
@@ -125,13 +146,15 @@ class DiscountController extends Controller
                 'limit' => $data['limit'],
             ]);
             $discount->products()->sync($data['products']);
+
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($discount)
-                ->withProperties([auth()->user(), $discount, $data])
+                ->withProperties([auth()->user(), $discount, $old, $data])
                 ->log('ویرایش تخفیف');
             alert()->success('موفق', 'تخفیف با موفقیت ویرایش شد');
-            return redirect(route('admin.discounts.show', $discount));
+
+            return redirect(route('admin.discounts.edit', $discount));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -142,7 +165,9 @@ class DiscountController extends Controller
     {
         Gate::authorize('delete-discounts');
         try {
+
             $discount->delete();
+
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($discount)

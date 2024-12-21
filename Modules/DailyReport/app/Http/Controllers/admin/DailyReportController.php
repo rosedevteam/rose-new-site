@@ -16,12 +16,14 @@ class DailyReportController extends Controller
         $this->seo()->setTitle('گزارش های روزانه بازار');
         Gate::authorize('view-daily-reports');
         try {
+
             $sort_by = request('sort_by', 'created_at');
             $sort_direction = request('sort_direction', 'desc');
             $count = request('count', 50);
             $dailyReports = DailyReport::query();
             $dailyReports = $dailyReports->orderBy($sort_by, $sort_direction);
             $dailyReports = $dailyReports->paginate($count)->withQueryString();
+
             return view('dailyreport::admin.index', compact(
                 'dailyReports',
                 'sort_by',
@@ -51,14 +53,16 @@ class DailyReportController extends Controller
             $dailyReport = DailyReport::create([
                 'title' => $data['date'],
                 'file' => $name,
-                'author_id' => auth()->user()->id,
+                'user_id' => auth()->user()->id,
             ]);
+
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($dailyReport)
                 ->withProperties([auth()->user(), $dailyReport, $data])
                 ->log('ساخت گزارش روزانه');
             alert()->success("موفق", "با موفقیت انجام شد");
+
             return redirect(route('admin.dailyreports.index'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
@@ -70,14 +74,17 @@ class DailyReportController extends Controller
     {
         Gate::authorize('delete-daily-reports');
         try {
+
             $dailyreport->delete();
+
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($dailyreport)
                 ->withProperties([auth()->user(), $dailyreport])
                 ->log('حذف گزارش روزانه');
             alert()->success('موفق', 'گزارش روزانه با موفقیت حذف شد');
-            return back();
+
+            return redirect(route('admin.dailyreports.index'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();

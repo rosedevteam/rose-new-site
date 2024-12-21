@@ -86,16 +86,16 @@
                                 <tr class="">
                                     <td>{{ verta($comment->created_at)->formatJalaliDateTime() }}</td>
                                     <td class="sorting_1">
-                                        <a href="{{ route('admin.users.show', $comment->author()->first()) }}"
+                                        <a href="{{ route('admin.users.show', $comment->user) }}"
                                            class="text-body text-truncate">
-                                            <span class="fw-semibold">{{ $comment->author()->first()->name() }}</span>
+                                            <span class="fw-semibold">{{ $comment->user->name() }}</span>
                                         </a>
                                     </td>
                                     <td><a href="{{
                                         route("admin." . strtolower(substr(strrchr($comment->commentable_type, '\\'), 1)) . "s.edit", $comment->commentable)
                                     }}" class="text-body text-truncate">
                                             <span
-                                                class="fw-semibold">{{ $comment->commentable->title ?: "کامنت " . $comment->author()->first()->name() }}</span></a>
+                                                class="fw-semibold">{{ $comment->commentable->title ?: "کامنت " . $comment->user->name() }}</span></a>
                                     </td>
                                     <td>@switch($comment->status)
                                             @case("approved")تایید شده@break
