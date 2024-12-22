@@ -5,6 +5,7 @@ namespace Modules\Product\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
+use http\Env\Request;
 use Modules\Product\Models\Product;
 
 class ProductController extends Controller
@@ -39,6 +40,33 @@ class ProductController extends Controller
         }
     }
 
+    public function create()
+    {
+        $this->seo('افزودن محصول جدید');
+        Gate::authorize('create-products');
+        return view('product::admin.create');
+    }
+
+    public function store(\Request $request)
+    {
+        Gate::authorize('create-products');
+        try {
+//            dd($request->all());
+        }catch (\Exception $exception){
+
+        }
+    }
+
+    public function edit(Product $product)
+    {
+
+    }
+
+    public function update(Request $request, Product $product)
+    {
+
+    }
+
     public function show(Product $product)
     {
         Gate::authorize('view-products');
@@ -48,5 +76,10 @@ class ProductController extends Controller
             alert()->error("خطا", $th->getMessage());
             return back();
         }
+    }
+
+    public function destroy(Product $product)
+    {
+
     }
 }

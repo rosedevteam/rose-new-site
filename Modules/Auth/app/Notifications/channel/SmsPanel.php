@@ -21,8 +21,7 @@ class SmsPanel
 
             $kavenegar = new KavenegarApi(config('services.sms.api'));
 
-            $kavenegar->VerifyLookup($receptor, $token , '' , '' , $template);
-
+            $res = $kavenegar->VerifyLookup($receptor, $token , '' , '' , $template);
         }
         catch(\Kavenegar\Exceptions\ApiException $e){
             // در صورتی که خروجی وب سرویس 200 نباشد این خطا رخ می دهد

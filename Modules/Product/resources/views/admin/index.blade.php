@@ -9,7 +9,8 @@
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
                     <form action="{{ route('admin.products.index') }}" method="GET">
-                        <div class="d-flex justify-content-start align-items-center row py-3 gap-3 gap-md-0 primary-font">
+                        <div
+                            class="d-flex justify-content-start align-items-center row py-3 gap-3 gap-md-0 primary-font">
                             <div class="col-md-3">
                                 <label for="title" class="form-label">جستجو: </label>
                                 <div id="search" class="search-input">
@@ -51,13 +52,13 @@
                             <div class="row mx-2 my-2">
                                 <div class="col-md-20">
                                     <div
-                                            class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
+                                        class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
                                         <div class="dt-buttons btn-group flex-wrap">
-                                            <button class="btn btn-secondary add-new btn-primary ms-2" tabindex="0"
-                                                    aria-controls="DataTables_Table_0" type="button"><span><i
-                                                            class="bx bx-plus me-0 me-lg-2"></i><span
-                                                            class="d-none d-lg-inline-block">ساخت دوره جدید</span></span>
-                                            </button>
+                                            <a role="button" href="{{route('admin.products.create')}}"
+                                               class="btn text-white btn-secondary add-new btn-primary ms-2"><span><i
+                                                        class="bx bx-plus me-0 me-lg-2"></i><span
+                                                        class="d-none d-lg-inline-block">ساخت دوره جدید</span></span>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -97,7 +98,7 @@
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column"><a
                                                     href="{{ route('admin.products.show', $product) }}"
-                                                        class="text-body text-truncate">
+                                                    class="text-body text-truncate">
                                                     <span class="fw-semibold">{{ $product->title }}</span>
                                                 </a>
                                             </div>

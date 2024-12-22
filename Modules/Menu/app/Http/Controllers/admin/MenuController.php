@@ -18,7 +18,7 @@ class MenuController extends Controller
     public function index()
     {
         $this->seo()->setTitle('همه منو ها');
-
+        \Gate::authorize('view-menus');
         $menus = Menu::with('children')
             ->whereNull('parent_id')
             ->simplePaginate(50);
@@ -31,7 +31,7 @@ class MenuController extends Controller
     public function create()
     {
         $this->seo()->setTitle('ایجاد منوی جدید');
-
+        \Gate::authorize('create-menus');
         $menus = Menu::with('children')
             ->whereNull('parent_id')
             ->simplePaginate(15);
@@ -43,6 +43,7 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
+        \Gate::authorize('create-menus');
         try {
             $validData = $request->validate([
                 'title' => 'required',
