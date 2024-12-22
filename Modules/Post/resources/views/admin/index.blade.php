@@ -80,19 +80,19 @@
                             <thead>
                             <tr>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">تاریخ ساخت
+                                    style="width: 3%;">تاریخ ساخت
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width: 12%" aria-sort="ascending">نام
+                                    colspan="1" style="width: 10%" aria-sort="ascending">نام
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 5%;">نویسنده
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">کتگوری ها
+                                    style="width: 10%;">کتگوری ها
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 10%;">وضعیت
+                                    style="width: 5%;">وضعیت
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 5%;">کامنت
@@ -125,7 +125,7 @@
                                     </td>
                                     <td>
                                         @foreach($post->categories as $c)
-                                            {{ $c->name }}
+                                            {{ ($c->parent?->name . (is_null($c->parent) ? '' : ': ')) . $c->name }}
                                         @endforeach
                                     </td>
                                     <td><span class="fw-semibold">

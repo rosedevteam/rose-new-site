@@ -33,7 +33,8 @@
                                     <div class="select2-primary">
                                         <select id="select2Primary" class="select2 form-select" name="categories[]" multiple>
                                             @foreach($categories as $c)
-                                                <option value="{{ $c->id }}" {{ $joboffer->categories->contains($c) ? 'selected' : '' }}>{{ $c->name }}</option>
+                                                <option
+                                                    value="{{ $c->id }}" {{ $joboffer->categories->contains($c) ? 'selected' : '' }}>{{ ($c->parent?->name . (is_null($c->parent) ? '' : ': ')) . $c->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
