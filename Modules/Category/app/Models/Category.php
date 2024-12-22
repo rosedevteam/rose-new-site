@@ -36,6 +36,16 @@ class Category extends Model
         return $this->hasOne(JobOffer::class);
     }
 
+    public function parent()
+    {
+        return Category::belongsTo(Category::class);
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parent_id');
+    }
+
     protected static function newFactory()
     {
         return CategoryFactory::new();

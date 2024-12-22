@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('type');
             $table->string('name');
+            $table->foreignId('parent_id')->nullable()->constrained('categories')->cascadeOnDelete();
             $table->timestamps();
         });
 

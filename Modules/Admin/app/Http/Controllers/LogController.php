@@ -41,7 +41,7 @@ class LogController extends Controller
         try {
             $log = Activity::query()->findOrFail($id);
             dd($log);
-//            return view('admin::log.show', compact('log'));
+            return view('admin::log.show', compact('log'));
         } catch (\Throwable $th) {
             alert()->error('خطا', $th->getMessage());
             return back();
