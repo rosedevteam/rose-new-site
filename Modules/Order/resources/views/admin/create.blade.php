@@ -2,6 +2,10 @@
 
 @push('css')
     <link rel="stylesheet" href="/assets/admin/js/datepicker/persian-datepicker.min.css">
+    <link rel="stylesheet" href="/assets/admin/vendor/libs/typeahead-js/typeahead.css">
+    <link rel="stylesheet" href="/assets/admin/vendor/libs/select2/select2.css">
+    <link rel="stylesheet" href="/assets/admin/vendor/libs/tagify/tagify.css">
+    <link rel="stylesheet" href="/assets/admin/vendor/libs/bootstrap-select/bootstrap-select.css">
 @endpush
 
 @section('content')
@@ -22,13 +26,6 @@
                                         جزئیات
                                     </button>
                                 </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#form-tabs-price"
-                                            role="tab"
-                                            aria-selected="true">
-                                        موارد سفارش
-                                    </button>
-                                </li>
                             </ul>
                         </div>
 
@@ -44,28 +41,28 @@
                                                    autocomplete="off">
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="phone" class="form-label">موبایل کاربر</label>
-                                            <input type="text" class="form-control" placeholder="موبایل" onchange="findUser()">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="form-tabs-seo" role="tabpanel">
-                                    <div class="row g-3">
-
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="form-tabs-price" role="tabpanel">
-                                    <div class="row g-3">
-                                        <div class="col-md-6">
-                                            <label class="form-label" for="price">قیمت عادی</label>
-                                            <input type="text" id="price" name="price" class="form-control text-start"
-                                                   dir="ltr">
+                                            <label for="select2Basic" class="form-label">موبایل کاربر</label>
+                                            <select name="user_id" id="select2Basic" class="form-select select2" required>
+                                                <option value="">انتخاب کنید</option>
+                                                @foreach(\App\Models\User::all() as $user)
+                                                    <option value="{{$user->id}}">{{$user->phone . ' | ' . $user->first_name . ' ' .$user->last_name}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="col-md-6">
-                                            <label class="form-label" for="sale_price">قیمت فروش ویژه</label>
-                                            <input type="text" id="sale_price" name="sale_price" class="form-control">
+                                            <label for="select2Primary" class="form-label">دوره ها</label>
+                                            <div class="select2-primary">
+                                                <select id="select2Primary" class="select2 form-select" name="products[]" multiple>
+                                                    @foreach(\Modules\Product\Models\Product::all() as $product)
+                                                        <option value="{{ $product->id }}">{{ $product->title }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
-
+                                        <div class="col-md-6">
+                                            <label for="watermark" class="form-label">واتر مارک</label>
+                                            <input type="text" class="form-control" name="watermark" id="watermark" placeholder="مثلا: +۹۸۹۱۲۱۲۳۰۳۷۴">
+                                        </div>
                                     </div>
                                 </div>
 
@@ -79,66 +76,29 @@
                     <div class="card mb-3">
                         <div class="ps-3 p-3 d-flex align-items-center justify-content-between">
                             <h5>جزییات</h5>
-                            <a href="{{route('admin.posts.index')}}">بازگشت</a>
+                            <a href="{{route('admin.orders.index')}}">بازگشت</a>
 
                         </div>
                         <hr>
 
                         <div class="ps-3 p-3">
                             <div class="mb-3">
-                                <label class="form-label" for="comment_status">کامنت</label>
-                                <select class="form-select" name="comment_status" id="comment_status"
+                                <label class="form-label" for="status">وضعیت سفارش</label>
+                                <select class="form-select" name="status" id="status"
                                         form="create-item">
-                                    <option value="1" {{old('comment_status') ? 1 : 'selected'}}>باز</option>
-                                    <option value="0" {{old('comment_status') ? 0 : 'selected'}}>بسته</option>
+                                    <option value="completed" {{old('status') == 'completed' ? 'selected' : ''}}>تکمیل شده</option>
+                                    <option value="pending" {{old('status') == 'pending' ? 'selected' : ''}}>در حال انجام</option>
+                                    <option value="cancelled" {{old('status') == 'cancelled' ? 'selected' : ''}}>لغو شده</option>
+                                    <option value="returned" {{old('status') == 'returned' ? 'selected' : ''}}>عودت داده شده</option>
                                 </select>
                             </div>
-                            <div class="my-3">
-                                <label class="form-label" for="status">وضعیت</label>
-                                <select class="form-select" id="status" name="status" form="create-item">
-                                    <option
-                                        value="public" {{old('status') ? "public" : 'selected'}}>
-                                        منتشر
-                                        شده
-                                    </option>
-                                    <option value="draft" {{old('status') ? "draft" : 'selected'}}>
-                                        پیشنویس
-                                    </option>
-                                    <option value="hidden" {{old('status') ? "hidden" : 'selected'}}>
-                                        پنهان
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="my-3">
-                                <label class="form-label" for="slug">آدرس</label>
-                                <input type="text" id="slug" name="slug" class="form-control" form="create-item"
-                                       value="{{ old('slug')}}">
-                            </div>
 
                             <div class="my-3">
-                                <label class="form-label" for="spot_player_key">کلید اسپات پلیر</label>
-                                <input type="text" id="spot_player_key" name="spot_player_key" class="form-control" form="create-item"
-                                       value="{{ old('spot_player_key')}}" dir="ltr">
+                                <label for="short-description" class="form-label">یادداشت</label>
+                                <textarea class="form-control" rows="8" name="notes" id="notes"
+                                          form="create-item"></textarea>
                             </div>
 
-                            <div class="my-3">
-                                <label for="short-description" class="form-label">توضیح کوتاه</label>
-                                <textarea class="form-control" rows="8" name="short_description" id="short_description" form="create-item"></textarea>
-                            </div>
-
-                            <div class="my-3">
-                                <label for="image_label" class="form-label">تصویر اصلی</label>
-                                <div class="input-group">
-                                    <input type="text" id="image_label" class="form-control" name="image"
-                                           aria-label="Image" aria-describedby="button-image" form="create-item"
-                                           value="{{ old('image') }}">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-outline-secondary" type="button" id="button-image">
-                                            انتخاب
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="pt-4 d-flex align-items-center justify-content-between">
                                 <button type="submit" class="btn btn-sm btn-primary " form="create-item">ایجاد آیتم
                                 </button>
@@ -153,14 +113,18 @@
 @endsection
 
 @push('vendor')
+    <script src="/assets/admin/vendor/libs/select2/select2.js"></script>
+    <script src="/assets/admin/vendor/libs/tagify/tagify.js"></script>
+    <script src="/assets/admin/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
     <script src="/assets/admin/js/datepicker/persian-date.min.js"></script>
     <script src="/assets/admin/js/datepicker/persian-datepicker.min.js"></script>
+    <script src="/assets/admin/js/forms-selects.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $(".date-picker").persianDatepicker({
-                initialValue: false,
+                initialValue: true,
                 format: 'YYYY/MM/DD HH:mm:ss',
-                minDate: new persianDate(),
+                // minDate: new persianDate(),
                 timePicker: {
                     enabled: true,
                     meridian: {
