@@ -11,7 +11,7 @@
                     <div class="d-flex flex-column justify-content-center">
                         <div class="app-brand justify-content-center flex-column">
                             <a href="#" class="app-brand-link gap-2">
-                                <img src="/assets/admin/img/branding/Logo.svg" width="100%">
+                                <img src="/assets/admin/img/branding/logo.svg" width="100%">
                             </a>
                         </div>
 

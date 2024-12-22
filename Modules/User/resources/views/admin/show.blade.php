@@ -180,55 +180,6 @@
                 @endif
             </div>
 
-            @if(!is_null($logs))
-                <div class="card mb-4">
-                    <div class="card-header border-bottom">
-                        <h5 class="card-title">لاگ</h5>
-                    </div>
-                    <div class="table-responsive mb-3">
-
-                        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                            <table class="datatables-users table border-top dataTable no-footer dtr-column"
-                                   id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info"
-                                   style="width: 100%;">
-                                <thead>
-                                <tr>
-                                    <th aria-controls="DataTables_Table_0" rowspan="1"
-                                        colspan="1" style="width: 12%" aria-sort="ascending">توضیحات
-                                    </th>
-                                    <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                        style="width: 10%;">روی
-                                    </th>
-                                    <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                        style="width: 10%;">تغییرات
-                                    </th>
-                                    <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                        style="width: 5%;">تاریخ
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($logs as $log)
-                                    <tr>
-                                        <td>
-                                            <div
-                                                class="d-flex justify-content-start align-items-center user-name">
-                                                <div class="d-flex flex-column">
-                                                    <span class="fw-semibold">{{ $log->description }}</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <x-admin::logsubject :log="$log"/>
-                                        <td>{{ $log->properties }}</td>
-                                        <td>{{ verta($log->created_at)->formatJalaliDateTime() }}</td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            @endif
             @if($canEdit)
                 <div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-centered">

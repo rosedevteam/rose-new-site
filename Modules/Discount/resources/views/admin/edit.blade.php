@@ -56,7 +56,7 @@
                             </div>
                             <div class="mb-3 col-md-3">
                                 <label class="form-label" for="limit">محدودیت استفاده</label>
-                                <input type="number" class="form-control" name="limit" id="limit"
+                                <input type="number" class="form-control" name="limit" id="limit" value="{{ $discount->limit }}"
                                        autocomplete="off">
                             </div>
                         </div>

@@ -68,6 +68,11 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'create-job-offers']);
         Permission::create(['name' => 'delete-job-offers']);
         //
+        Permission::create(['name' => 'view-categories']);
+        Permission::create(['name' => 'edit-categories']);
+        Permission::create(['name' => 'create-categories']);
+        Permission::create(['name' => 'delete-categories']);
+        //
         Permission::create(['name' => 'view-job-applications']);
         Permission::create(['name' => 'edit-job-applications']);
         Permission::create(['name' => 'delete-job-applications']);
@@ -195,7 +200,7 @@ class DatabaseSeeder extends Seeder
     {
         $product1 = Product::factory()->create([
             'title' => "هخشصذدلهخصشلد",
-            'author_id' => 1,
+            'user_id' => 1,
             'price' => 2000000,
             'short_description' => "هشذلحهشذسلشخسلدشسجخیلدشسجخلدشخسهیلجخیشسدخجهدذشسجخدذجشخسیدهذشسدذخهجش",
             'sale_price' => 1500000,
@@ -208,7 +213,7 @@ class DatabaseSeeder extends Seeder
         ]);
         $product2 = Product::factory()->create([
             'title' => "هخشصذدلهخصشلد",
-            'author_id' => 1,
+            'user_id' => 1,
             'price' => 2000000,
             'short_description' => "هشذلحهشذسلشخسلدشسجخیلدشسجخلدشخسهیلجخیشسدخجهدذشسجخدذجشخسیدهذشسدذخهجش",
             'sale_price' => 1900000,
@@ -221,7 +226,7 @@ class DatabaseSeeder extends Seeder
         ]);
         $product3 = Product::factory()->create([
             'title' => "شسیمتهلدشل",
-            'author_id' => 3,
+            'user_id' => 3,
             'price' => 3000000,
             'short_description' => "شسذهل",
             'sale_price' => 1500000,
@@ -234,7 +239,7 @@ class DatabaseSeeder extends Seeder
         ]);
         $product4 = Product::factory()->create([
             'title' => "هخشصذدلهخصشلد",
-            'author_id' => 2,
+            'user_id' => 2,
             'price' => 2000000,
             'short_description' => "هشذلحهشذسلشخسلدشسجخیلدشسجخلدشخسهیلجخیشسدخجهدذشسجخدذجشخسیدهذشسدذخهجش",
             'sale_price' => 1500000,
@@ -254,7 +259,7 @@ class DatabaseSeeder extends Seeder
 
         foreach ($data as $item) {
             Post::create([
-                'author_id' => 1,
+                'user_id' => 1,
                 'title' => $item['title'],
                 'content' => $item['content'],
                 'status' => ($item['status'] == 'publish') ? 'public' : 'draft' ,
@@ -305,14 +310,14 @@ class DatabaseSeeder extends Seeder
     private function seedComments(): void
     {
         $comment1 = Comment::factory()->create([
-            'author_id' => 2,
+            'user_id' => 2,
             'commentable_id' => 1,
             'commentable_type' => '\\Modules\\Product\\Models\\Product',
             'status' => 'approved',
             'content' => "alskgong;qwbegqwbegipbqg",
         ]);
         $comment2 = Comment::factory()->create([
-            'author_id' => 1,
+            'user_id' => 1,
             'commentable_id' => 1,
             'commentable_type' => '\\Modules\\Product\\Models\\Product',
             'status' => 'pending',
@@ -320,56 +325,20 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $comment3 = Comment::factory()->create([
-            'author_id' => 3,
+            'user_id' => 3,
             'commentable_id' => 2,
             'commentable_type' => '\\Modules\\Product\\Models\\Product',
             'status' => 'rejected',
             'content' => "asvdnawn;wgn;iweagbqiugi",
         ]);
 
-        $parent = Category::factory()->create([
-            'author_id' => 1,
-            'name' => 'team',
-            'is_parent' => true,
-        ]);
-
-        $category1 = Category::factory()->create([
-            'author_id' => 1,
-            'name' => 'بازار های مالی',
-        ]);
-        $category1->parent()->attach($parent->id);
-
-        $category2 = Category::factory()->create([
-            'author_id' => 1,
-            'name' => 'مارگتینگ',
-        ]);
-        $category2->parent()->attach($parent->id);
-
-        $c = JobOffer::factory()->create([
-            'author_id' => 1,
-            'title' => 'akjbfipasbug',
-            'content' => 'asjdbg',
-            'type' => 'afbaisdgb',
-            'status' => 'active',
-        ]);
-        $c->categories()->attach($category1->id);
-
-        $resume = JobApplication::factory()->create([
-            'joboffer_id' => 1,
-            'full_name' => "akjnga aoaiog",
-            'email' => 'akjngaaoaiog@gmail.com',
-            'phone' => '12546982365',
-            'resume' => 'adfjka',
-            'description' => null,
-            'status' => 'pending',
-        ]);
     }
 
     private function seedMenu()
     {
         Menu::factory()->create([
            'title' => 'صفحه نخست',
-           'author_id' => 1,
+           'user_id' => 1,
            'link' => "#",
            'parent_id' => null,
            'order' => 0,
@@ -378,7 +347,7 @@ class DatabaseSeeder extends Seeder
        ]);
         Menu::factory()->create([
             'title' => 'دوره ها',
-            'author_id' => 1,
+            'user_id' => 1,
             'link' => "#",
             'parent_id' => null,
             'order' => 1,

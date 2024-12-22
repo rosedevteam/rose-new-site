@@ -7,6 +7,7 @@ use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Modules\Category\Models\Category;
 use Modules\JobOffer\Models\JobOffer;
+use PHPUnit\Util\PHP\Job;
 
 class JobOfferController extends Controller
 {
@@ -16,11 +17,18 @@ class JobOfferController extends Controller
         $this->seo()->setTitle('فرصت های شغلی');
         Gate::authorize('view-job-offers');
         try {
+
             $sort_direction = request('sort_direction', 'desc');
+            $category = request('category', 'all');
+            $categories = JobOffer::allCategories();
             $jobOffers = JobOffer::query();
+            if($category != 'all') {
+                $jobOffers = $jobOffers->whereRelation('categories', 'category_id', $category);
+            }
             $jobOffers = $jobOffers->orderBy('created_at', $sort_direction);
             $jobOffers = $jobOffers->paginate(50);
-            return view('joboffer::admin.index', compact('jobOffers', 'sort_direction'));
+
+            return view('joboffer::admin.index', compact('jobOffers', 'sort_direction', 'categories', 'category'));
         } catch (\Throwable $th) {
             alert()->error('خطا', $th->getMessage());
             return back();
@@ -31,7 +39,7 @@ class JobOfferController extends Controller
     {
         Gate::authorize('create-job-offers');
         try {
-            $categories = Category::where('name', 'team')->first()->children;
+            $categories = JobOffer::allCategories();
             return view('joboffer::admin.create', compact('categories'));
         } catch (\Throwable $th) {
             alert()->error('خطا', $th->getMessage());
@@ -46,24 +54,27 @@ class JobOfferController extends Controller
             $data = request()->validate([
                 'title' => 'bail|required|string|max:255',
                 'content' => 'bail|required',
-                'team' => 'bail|required|string',
-                'type' => 'bail|required|string',
                 'status' => 'bail|required|string',
+                'type' => 'bail|required|string',
+                'category_id' => 'bail|required|string',
             ]);
+
             $jobOffer = JobOffer::create([
                 'title' => $data['title'],
                 'content' => $data['content'],
-                'type' => $data['type'],
-                'author_id' => auth()->id(),
+                'user_id' => auth()->id(),
                 'status' => $data['status'],
+                'type' => $data['type'],
             ]);
-            $jobOffer->categories()->attach($data['team']);
+            $jobOffer->categories()->sync($data['category_id']);
+
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($jobOffer)
                 ->withProperties([auth()->user(), $jobOffer, $data])
                 ->log('ساخت فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت ساخته شد');
+
             return redirect(route("admin.joboffers.edit", $jobOffer));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
@@ -75,7 +86,9 @@ class JobOfferController extends Controller
     {
         Gate::authorize('view-job-offers');
         try {
-            $categories = Category::where('name', 'team')->first()->children;
+
+            $categories = JobOffer::allCategories();
+
             return view('joboffer::admin.edit', compact('joboffer', 'categories'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
@@ -88,30 +101,32 @@ class JobOfferController extends Controller
         Gate::authorize('edit-job-offers');
         try {
             $data = request()->validate([
-                'title' => 'bail|nullable|string|max:255',
-                'content' => 'bail|nullable',
-                'team' => 'bail|nullable|string',
-                'type' => 'bail|nullable|string',
-                'status' => 'bail|nullable|string',
+                'title' => 'bail|required|string|max:255',
+                'content' => 'bail|required',
+                'status' => 'bail|required|string',
+                'category_id' => 'bail|required|integer',
+                'type' => 'bail|required|string',
             ]);
             $data = array_filter($data, function ($value) {
                 return !is_null($value);
             });
+
+            $old = $joboffer->toArray();
             $joboffer->update([
                 'title' => $data['title'],
                 'content' => $data['content'],
-                'type' => $data['type'],
                 'status' => $data['status'],
+                'type' => $data['type'],
             ]);
-            if (!is_null($data['team'])) {
-                $data['team'] = Category::where('name', $data['team'])->first();
-            }
+            $joboffer->categories()->sync($data['category_id']);
+
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($joboffer)
-                ->withProperties([auth()->user(), $joboffer, $data])
+                ->withProperties([auth()->user(), $joboffer, $old, $data])
                 ->log('ویرایش فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت ویرایش شد');
+
             return redirect(route("admin.joboffers.edit", $joboffer));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
@@ -123,13 +138,16 @@ class JobOfferController extends Controller
     {
         Gate::authorize('delete-job-offers');
         try {
+
             $joboffer->delete();
+
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($joboffer)
                 ->withProperties([auth()->user(), $joboffer])
                 ->log('حذف فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت حذف شد');
+
             return redirect(route("admin.joboffers.index"));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());

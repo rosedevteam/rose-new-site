@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Illuminate\Http\Request;
+use Modules\Category\Http\Controllers\CategoryController;
 use Modules\Post\Models\Post;
 
 class PostController extends Controller
@@ -16,13 +17,17 @@ class PostController extends Controller
         $this->seo()->setTitle('پست ها');
         Gate::authorize('view-posts');
         try {
+
             $sort_by = request('sort_by', 'created_at');
             $sort_direction = request('sort_direction', 'desc');
             $search = request('search');
             $count = request('count', 50);
             $status = request('status', 'all');
             $comment_status = request('comment_status', 'all');
+            $category = request('category', 'all');
+            $categories = Post::allCategories();
             $posts = Post::query();
+
             if ($status !== 'all') {
                 $posts = $posts->where('status', $status);
             }
@@ -33,17 +38,22 @@ class PostController extends Controller
                 $posts = $posts->where('title', 'like', '%' . $search . '%')
                     ->orWhere('content', 'like', '%' . $search . '%');
             }
+            if($category !== 'all'){
+                $posts = $posts->whereRelation('categories', 'category_id', $category);
+            }
+
             $posts = $posts->orderBy($sort_by, $sort_direction);
             $posts = $posts->paginate($count)->withQueryString();
-            return view('post::admin.index', [
-                'posts' => $posts,
-                'sort_by' => $sort_by,
-                'sort_direction' => $sort_direction,
-                'status' => $status,
-                'comment_status' => $comment_status,
-                'search' => $search,
-                'count' => $count,
-            ]);
+
+            return view('post::admin.index', compact(
+                'posts',
+                'categories',
+                'sort_by',
+                'sort_direction',
+                'search',
+                'count',
+                'category'
+            ));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -54,6 +64,7 @@ class PostController extends Controller
     {
         Gate::authorize('view-posts');
         try {
+
             return view('post::admin.show', compact('post'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
@@ -65,7 +76,8 @@ class PostController extends Controller
     {
         Gate::authorize('create-posts');
         try {
-            return view('post::admin.create');
+            $categories = Post::allCategories();
+            return view('post::admin.create', compact('categories'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -75,24 +87,27 @@ class PostController extends Controller
     public function store(Request $request)
     {
         Gate::authorize('create-posts');
-        $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'slug' => 'required|string|max:255',
-            'content' => 'required|string',
-            'image' => 'nullable'
-        ]);
-
-
         try {
+            $data = $request->validate([
+                'title' => 'required|string|max:255',
+                'slug' => 'required|string|max:255',
+                'content' => 'required|string',
+                'image' => 'nullable',
+                'comment_status' => 'required|string',
+                'status' => 'required|string',
+                'categories.*' => 'exists:categories,id',
+            ]);
+
+            $data['slug'] = implode('-', explode(' ', $data['slug']));
             $post = Post::create([
                 'title' => $data['title'],
                 'slug' => $data['slug'],
                 'content' => $data['content'],
-                'author_id' => auth()->id(),
-                'image' => $data['image'],
+                'comment_status' => $data['comment_status'] == 1,
+                'user_id' => auth()->user()->id,
+                'status' => $data['status'],
             ]);
-
-            //todo implode slug by "-" character
+            $post->categories()->sync($data['categories']);
 
             activity()
                 ->causedBy(auth()->user())
@@ -100,6 +115,7 @@ class PostController extends Controller
                 ->withProperties([auth()->user(), $post, $data])
                 ->log('ساخت پست');
             alert()->success("موفق", "با موفقیت انجام شد");
+
             return redirect(route('admin.posts.index'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
@@ -111,7 +127,8 @@ class PostController extends Controller
     {
         Gate::authorize('edit-posts');
         try {
-            return view('post::admin.edit', compact('post'));
+            $categories = Post::allCategories();
+            return view('post::admin.edit', compact('post', 'categories'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -129,10 +146,13 @@ class PostController extends Controller
                 'comment_status' => 'required',
                 'status' => 'required',
                 'image' => 'nullable',
+                'categories.*' => 'exists:categories,id',
             ]);
 
-            //todo implode slug by "-" character
+            $data['slug'] = implode('-', explode(' ', $data['slug']));
+            $data['comment_status'] = $data['comment_status'] == 1;
 
+            $old = $post->toArray();
             $post->update([
                 'title' => $data['title'],
                 'slug' => $data['slug'],
@@ -141,12 +161,15 @@ class PostController extends Controller
                 'status' => $data['status'],
                 'image' => $data['image'],
             ]);
+            $post->categories()->sync($data['categories']);
+
             activity()
                 ->causedBy(auth()->id())
                 ->performedOn($post)
-                ->withProperties([auth()->user(), $post, $data])
+                ->withProperties([auth()->user(), $post, $old, $data])
                 ->log('ویرایش پست');
             alert()->success("موفق", "ویرایش با موفقیت انجام شد");
+
             return redirect(route('admin.posts.edit', compact('post')));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
@@ -159,14 +182,17 @@ class PostController extends Controller
     {
         Gate::authorize('delete-posts');
         try {
+
             $post->delete();
+
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($post)
                 ->withProperties([auth()->user(), $post])
                 ->log('حذف پست');
             alert()->success('موفق', 'پست با موفقیت حذف شد');
-            return redirect(route('admin.post.index'));
+
+            return redirect(route('admin.posts.index'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();

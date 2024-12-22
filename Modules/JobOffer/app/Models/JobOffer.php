@@ -20,19 +20,19 @@ class JobOffer extends Model
         return $this->hasMany(JobApplication::class);
     }
 
-    public function author()
+    public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public static function allCategories()
+    {
+        return Category::where('type', 'joboffer')->get();
     }
 
     public function categories()
     {
         return $this->morphToMany(Category::class, 'categoryable');
-    }
-
-    public function team()
-    {
-        return $this->categories()->first()->name;
     }
 
     protected static function newFactory()

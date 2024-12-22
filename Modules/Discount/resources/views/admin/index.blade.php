@@ -122,8 +122,8 @@
                                             class="fw-semibold">{{ $discount->amount }}@if($discount->type ==  'percentage')
                                                 %
                                             @endif</span></td>
-                                    <td><a href="{{ route('admin.users.show', $discount->author) }}"
-                                           class="text-body text-truncate">{{ $discount->author->name() }}</a></td>
+                                    <td><a href="{{ route('admin.users.show', $discount->user) }}"
+                                           class="text-body text-truncate">{{ $discount->user->name() }}</a></td>
                                     <td>{{ $discount->is_active ? 'فعال' : "غیرفعال" }}</td>
                                     <td>
                                         <span class=fw-semibold">

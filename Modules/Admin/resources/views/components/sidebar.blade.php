@@ -97,6 +97,14 @@
                 </a>
             </li>
         @endcan
+            @can('view-categories')
+                <li @class(["menu-item", 'active' => $route == 'categories'])>
+                    <a href="{{ route("admin.categories.index") }}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-category"></i>
+                        <div data-i18n="کتگوری ها">کتگوری ها</div>
+                    </a>
+                </li>
+            @endcan
         @can('view-logs')
             <li @class(["menu-item", 'active' => $route == 'logs'])>
                 <a href="{{ route("admin.logs.index") }}" class="menu-link">

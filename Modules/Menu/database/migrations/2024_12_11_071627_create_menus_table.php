@@ -19,8 +19,9 @@ return new class extends Migration
             $table->integer('order')->nullable();
             $table->string('icon');
             $table->string('subtitle')->nullable();
-            $table->unsignedBigInteger('author_id')->after('id');
-            $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+//            $table->unsignedBigInteger('author_id')->after('id');
+//            $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

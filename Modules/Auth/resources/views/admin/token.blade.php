@@ -11,7 +11,7 @@
                     <div class="app-brand justify-content-center">
                         <a href="#" class="app-brand-link">
                             <div class="app-brand justify-content-center">
-                                <img src="/assets/admin/img/branding/Logo.svg" width="100%">
+                                <img src="/assets/admin/img/branding/logo.svg" width="100%">
                             </div>
                         </a>
                     </div>

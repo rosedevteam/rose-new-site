@@ -25,7 +25,7 @@ class Comment extends Model
         return null;
     }
 
-    public function author()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

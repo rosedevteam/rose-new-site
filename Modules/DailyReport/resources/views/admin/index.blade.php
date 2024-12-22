@@ -88,9 +88,9 @@
                                     </td>
                                     <td>
                                 <span class="fw-semibold">
-                                    <a href="{{ route('admin.users.show', $dailyReport->author) }}"
+                                    <a href="{{ route('admin.users.show', $dailyReport->user) }}"
                                        class="text-body text-truncate">
-                                    {{ $dailyReport->author->name() }}
+                                    {{ $dailyReport->user->name() }}
                                     </a>
                                 </span>
                                     </td>

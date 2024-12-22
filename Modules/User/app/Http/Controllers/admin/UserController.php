@@ -20,6 +20,7 @@ class UserController extends Controller
         $this->seo()->setTitle('کاربران');
         Gate::authorize('view-users');
         try {
+
             $roles = Role::all()->select('name', 'id');
             $role_id = request('role');
             $sort_by = request('sort_by', 'created_at');
@@ -27,6 +28,7 @@ class UserController extends Controller
             $search = request('search');
             $count = request('count', 50);
             $users = User::with('roles');
+
             if ($role_id) {
                 $users = $users->whereHas('roles', function ($query) use ($role_id) {
                     return $query->where('role_id', $role_id);
@@ -38,8 +40,10 @@ class UserController extends Controller
                     ->orWhere('email', 'like', '%' . $search . '%')
                     ->orWhere('phone', 'like', '%' . $search . '%');
             }
+
             $users = $users->orderBy($sort_by, $sort_direction);
             $users = $users->paginate($count)->withQueryString();
+
             return view('user::admin.index', compact(
                 'users',
                 'roles',
@@ -59,6 +63,7 @@ class UserController extends Controller
     {
         Gate::authorize('create-users');
         try {
+
             $data = $request->validate([
                 'first_name' => 'bail|string|max:255',
                 'last_name' => 'bail|string|max:255',
@@ -66,21 +71,26 @@ class UserController extends Controller
                 'role_id' => 'bail|integer|exists:roles,id',
             ]);
             $data['role_id'] = Role::where('id', $data['role_id'])->first()->name;
+
             $user = User::query()->create([
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
                 'phone' => $data['phone'],
             ]);
+
             if (!auth()->user()->hasPermissionTo('promote-users')) {
                 $data['role_id'] = 'مشتری';
             }
+
             $user->assignRole($data['role_id']);
+
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($user)
                 ->withProperties([auth()->user(), $user, $data])
                 ->log('ساخت کاربر');
             alert()->success("موفق", "کاربر با موفقیت ساخته شد");
+
             return redirect(route('admin.users.index'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
@@ -95,23 +105,22 @@ class UserController extends Controller
 //            abort(404);
 //        }
         try {
+
             $orders = null;
-            $logs = null;
             $billing = null;
             $roles = Role::all()->select('name', 'id');
             $canEdit = Gate::allows('update', $user);
             $canSetRole = Gate::allows('setRole', $user);
             $canDelete = Gate::allows('delete', $user);
+
             if (Gate::allows('view-orders')) {
                 $orders = $user->orders()->orderByDesc('created_at')->get();
-            }
-            if (Gate::allows('view-logs')) {
-                $logs = Activity::causedBy($user)->orderByDesc('created_at')->get();
             }
             if (Gate::allows('view-billings')) {
                 $billing = Billing::orderByDesc('created_at')->first();
             }
-            return view('user::admin.show', compact('user', 'orders', 'logs', 'billing', 'roles', 'canEdit', 'canSetRole', 'canDelete'));
+
+            return view('user::admin.show', compact('user', 'orders', 'billing', 'roles', 'canEdit', 'canSetRole', 'canDelete'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -127,6 +136,7 @@ class UserController extends Controller
 //            throw new AuthorizationException();
 //        }
         try {
+
             $userData = request()->validate([
                 'first_name' => 'bail|nullable|string|max:255',
                 'last_name' => 'bail|nullable|string|max:255',
@@ -149,13 +159,16 @@ class UserController extends Controller
                 });
                 $user->billing()->update($billingData);
             }
+            $old = $user->toArray();
             $user->update($userData);
+
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($user)
-                ->withProperties([auth()->user(), $user, $userData, $billingData])
+                ->withProperties([auth()->user(), $user, $old, $userData, $billingData])
                 ->log('ویرایش کاربر');
             alert()->success("موفق", "با موفقیت انجام شد");
+
             return redirect(route('admin.users.show', $user));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
@@ -172,13 +185,16 @@ class UserController extends Controller
 //            throw new AuthorizationException();
 //        }
         try {
+
             $user->delete();
+
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($user)
                 ->withProperties([auth()->user(), $user])
                 ->log('حذف کاربر');
             alert()->success("موفق", "کاربر حذف شد");
+
             return redirect(route('admin.users.index'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
@@ -194,6 +210,7 @@ class UserController extends Controller
 //            throw new AuthorizationException();
 //        }
         try {
+
             $data = request()->validate([
                 'role_id' => 'bail|required|string|exists:roles,id',
             ]);
@@ -201,13 +218,17 @@ class UserController extends Controller
             if ($role == 'super-admin') {
                 return back();
             }
+
+            $old = $user->getRoleNames();
             $user->syncRoles($role);
+
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($user)
-                ->withProperties([auth()->user(), $user, $data])
+                ->withProperties([auth()->user(), $user, $old, $data])
                 ->log('ویرایش نقش');
             alert()->success('موفق', 'ویرایش نقش با موفقیت انجام شد');
+
             return back();
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());

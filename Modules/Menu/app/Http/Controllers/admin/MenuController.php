@@ -4,6 +4,7 @@ namespace Modules\Menu\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Artesaos\SEOTools\Traits\SEOTools;
+use Gate;
 use Illuminate\Http\Request;
 use Modules\Menu\Models\Menu;
 
@@ -17,12 +18,18 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $this->seo()->setTitle('همه منو ها');
-        \Gate::authorize('view-menus');
-        $menus = Menu::with('children')
-            ->whereNull('parent_id')
-            ->simplePaginate(50);
-        return view('menu::admin.index' , compact('menus'));
+        Gate::authorize('create-menus');
+        try {
+            $this->seo()->setTitle('همه منو ها');
+
+            $menus = Menu::with('children')
+                ->whereNull('parent_id')
+                ->simplePaginate(50);
+            return view('menu::admin.index' , compact('menus'));
+        } catch (\Exception $e) {
+            alert()->error('خطا', $th->getMessage());
+            return back();
+        }
     }
 
     /**
@@ -30,12 +37,18 @@ class MenuController extends Controller
      */
     public function create()
     {
-        $this->seo()->setTitle('ایجاد منوی جدید');
-        \Gate::authorize('create-menus');
-        $menus = Menu::with('children')
-            ->whereNull('parent_id')
-            ->simplePaginate(15);
-        return view('menu::admin.create' , compact('menus'));
+        Gate::authorize('create-menus');
+        try {
+            $this->seo()->setTitle('ایجاد منوی جدید');
+
+            $menus = Menu::with('children')
+                ->whereNull('parent_id')
+                ->simplePaginate(15);
+            return view('menu::admin.create' , compact('menus'));
+        } catch (\Exception $exception) {
+            alert()->error('خطا', $th->getMessage());
+            return back();
+        }
     }
 
     /**
@@ -43,29 +56,31 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        \Gate::authorize('create-menus');
+        Gate::authorize('create-menus');
         try {
             $validData = $request->validate([
                 'title' => 'required',
                 'parent_id' => 'nullable',
                 'link' => 'required',
                 'order' => 'nullable',
-                'image' => 'nullable',
+                'icon' => 'nullable',
                 'subtitle' => 'nullable'
             ]);
-            Menu::create([
-                'title' => $validData['title'],
-                'parent_id' => $validData['parent_id'],
-                'link' => $validData['link'],
-                'order' => $validData['order'],
-                'icon' => $validData['image'],
-                'subtitle' => $validData['subtitle'],
-                'author_id' => auth()->user()->id
-            ]);
+            $validData['link'] = implode('-' , $validData['link']);
+
+            $menu = Menu::create($validData);
+
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($menu)
+                ->withProperties([auth()->user(), $menu, $validData])
+                ->log('ساخت منو');
             alert()->success('منوی جدید با موفقیت ایجاد شد.');
+
             return back();
         }catch (\Throwable $th){
             alert()->error('خطا', $th->getMessage());
+            return back();
         }
 
     }
@@ -97,8 +112,24 @@ class MenuController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Menu $menu)
     {
-        //
+        Gate::authorize('delete-menus');
+        try {
+
+            $menu->delete();
+
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($menu)
+                ->withProperties([auth()->user(), $menu])
+                ->log('حذف منو');
+            alert()->success('موفق', 'منو با موفقیت حذف شد');
+
+            return redirect(route('admin.menus.index'));
+        } catch (\Throwable $th) {
+            alert()->error('خطا', $th->getMessage());
+            return back();
+        }
     }
 }
