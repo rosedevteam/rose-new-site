@@ -17,6 +17,15 @@
                                 </div>
                             </div>
                             <div class="col-md-2">
+                                <label for="category" class="form-label">کتگوری: </label>
+                                <select id="category" name="category" class="form-select text-capitalize">
+                                    <option value="all" selected>همه</option>
+                                    @foreach($categories as $c)
+                                        <option value="{{ $c->id }}" {{ $category == $c->id ? 'selected' : '' }}>{{ $c->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-2">
                                 <label for="sort_by" class="form-label">ترتیب بر اساس: </label>
                                 <select id="sort_by" name="sort_by" class="form-select text-capitalize">
                                     <option value="created_at" selected>تاریخ ساخت</option>
@@ -71,13 +80,16 @@
                             <thead>
                             <tr>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 10%;">تاریخ ساخت
+                                    style="width: 5%;">تاریخ ساخت
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width: 15%" aria-sort="ascending">نام
+                                    colspan="1" style="width: 12%" aria-sort="ascending">نام
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 12%;">نویسنده
+                                    style="width: 5%;">نویسنده
+                                </th>
+                                <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                    style="width: 5%;">کتگوری ها
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 10%;">وضعیت
@@ -97,7 +109,7 @@
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column"><a
-                                                    href="{{ route('admin.posts.show', $post) }}"
+                                                    href="{{ route('admin.posts.edit', $post) }}"
                                                     class="text-body text-truncate">
                                                     <span class="fw-semibold">{{ $post->title }}</span>
                                                 </a>
@@ -110,6 +122,11 @@
                                        class="text-body text-truncate">
                                     {{ $post->user->name() }}</a>
                                 </span>
+                                    </td>
+                                    <td>
+                                        @foreach($post->categories as $c)
+                                            {{ $c->name }}
+                                        @endforeach
                                     </td>
                                     <td><span class="fw-semibold">
                                             @switch($post->status)

@@ -1,6 +1,15 @@
 @extends('admin::layouts.main')
 
 
+@push('css')
+    <link rel="stylesheet" href="/assets/admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/admin/vendor/libs/typeahead-js/typeahead.css">
+    <link rel="stylesheet" href="/assets/admin/vendor/libs/select2/select2.css">
+    <link rel="stylesheet" href="/assets/admin/vendor/libs/tagify/tagify.css">
+    <link rel="stylesheet" href="/assets/admin/vendor/libs/bootstrap-select/bootstrap-select.css">
+    <link rel="stylesheet" href="/assets/admin/vendor/libs/typeahead-js/typeahead.css">
+@endpush
+
 @section('content')
 
     <div class="content-wrapper">
@@ -150,6 +159,16 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="my-3">
+                                <label for="select2Primary" class="form-check-label">کتگوری ها</label>
+                                <div class="select2-primary">
+                                    <select id="select2Primary" class="select2 form-select" name="categories[]" form="create-item" multiple>
+                                        @foreach($categories as $c)
+                                            <option value="{{ $c->id }}">{{ $c->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                             <div class="pt-4 d-flex align-items-center justify-content-between">
                                 <button type="submit" class="btn btn-sm btn-primary " form="create-item">ایجاد آیتم
                                 </button>
@@ -163,7 +182,18 @@
     </div>
 @endsection
 
-@push('script')
+@push('vendor')
     <x-admin::tinymce/>
     <x-admin::filemanager-btn/>
+    <script src="/assets/admin/vendor/libs/select2/select2.js"></script>
+    <script src="/assets/admin/vendor/libs/select2/i18n/fa.js"></script>
+    <script src="/assets/admin/vendor/libs/tagify/tagify.js"></script>
+    <script src="/assets/admin/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+    <script src="/assets/admin/vendor/libs/bootstrap-select/i18n/defaults-fa_ir.js"></script>
+    <script src="/assets/admin/vendor/libs/typeahead-js/typeahead.js"></script>
+    <script src="/assets/admin/vendor/libs/bloodhound/bloodhound.js"></script>
+    <script src="/assets/admin/js/main.js"></script>
+    <script src="/assets/admin/js/forms-selects.js"></script>
+    <script src="/assets/admin/js/forms-tagify.js"></script>
+    <script src="/assets/admin/js/forms-typeahead.js"></script>
 @endpush

@@ -23,7 +23,7 @@
                                     <label class="form-label" for="category_id">تیم</label>
                                     <select class="form-select" name="category_id" id="category_id">
                                         @foreach($categories as $c)
-                                            <option value="{{ $c->id }}" {{ $c->name == $joboffer->category->first()->name ? 'selected' : '' }}>{{ $c->name }}</option>
+                                            <option value="{{ $c->id }}" {{ $c->name == $joboffer->categories->first()->name ? 'selected' : '' }}>{{ $c->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>

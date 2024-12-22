@@ -30,7 +30,7 @@ class JobOffer extends Model
         return Category::where('type', 'joboffer')->get();
     }
 
-    public function category()
+    public function categories()
     {
         return $this->morphToMany(Category::class, 'categoryable');
     }

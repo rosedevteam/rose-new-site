@@ -10,11 +10,11 @@
                         <div
                             class="d-flex justify-content-start align-items-center row py-3 gap-1 gap-md-0 primary-font">
                             <div class="col-md-2">
-                                <label for="categories" class="form-label">نوع: </label>
-                                <select id="categories" name="categories" class="form-select text-capitalize">
-                                    <option value="all">همه</option>
+                                <label for="category" class="form-label">نوع: </label>
+                                <select id="category" name="category" class="form-select text-capitalize">
+                                    <option value="all" selected>همه</option>
                                     @foreach($categories as $c)
-                                        <option value="{{ $c->id }}" {{ $c->name == $category ? 'selected' : '' }}>{{ $c->name }}</option>
+                                        <option value="{{ $c->id }}" {{ $c->id == $category ? 'selected' : '' }}>{{ $c->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -94,7 +94,7 @@
                                         {{ $jobOffer->user->name() }}</a>
                                 </span>
                                     </td>
-                                    <td><span class="fw-semibold">{{ $jobOffer->category->first()->name }}</span></td>
+                                    <td><span class="fw-semibold">{{ $jobOffer->categories->first()->name }}</span></td>
                                     <td>{{ $jobOffer->type }}</td>
                                     <td>
                                         <span @class(['badge', 'bg-label-success' => $jobOffer->status == 'active', 'bg-label-danger' => $jobOffer->status == 'inactive'])>

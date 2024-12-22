@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Illuminate\Http\Request;
+use Modules\Category\Http\Controllers\CategoryController;
 use Modules\Post\Models\Post;
 
 class PostController extends Controller
@@ -23,6 +24,8 @@ class PostController extends Controller
             $count = request('count', 50);
             $status = request('status', 'all');
             $comment_status = request('comment_status', 'all');
+            $category = request('category', 'all');
+            $categories = Post::allCategories();
             $posts = Post::query();
 
             if ($status !== 'all') {
@@ -35,19 +38,22 @@ class PostController extends Controller
                 $posts = $posts->where('title', 'like', '%' . $search . '%')
                     ->orWhere('content', 'like', '%' . $search . '%');
             }
+            if($category !== 'all'){
+                $posts = $posts->whereRelation('categories', 'category_id', $category);
+            }
 
             $posts = $posts->orderBy($sort_by, $sort_direction);
             $posts = $posts->paginate($count)->withQueryString();
 
-            return view('post::admin.index', [
-                'posts' => $posts,
-                'sort_by' => $sort_by,
-                'sort_direction' => $sort_direction,
-                'status' => $status,
-                'comment_status' => $comment_status,
-                'search' => $search,
-                'count' => $count,
-            ]);
+            return view('post::admin.index', compact(
+                'posts',
+                'categories',
+                'sort_by',
+                'sort_direction',
+                'search',
+                'count',
+                'category'
+            ));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -70,8 +76,8 @@ class PostController extends Controller
     {
         Gate::authorize('create-posts');
         try {
-
-            return view('post::admin.create');
+            $categories = Post::allCategories();
+            return view('post::admin.create', compact('categories'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -81,15 +87,16 @@ class PostController extends Controller
     public function store(Request $request)
     {
         Gate::authorize('create-posts');
-        $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'slug' => 'required|string|max:255',
-            'content' => 'required|string',
-            'image' => 'nullable',
-            'comment_status' => 'required|string',
-            'status' => 'required|string',
-        ]);
         try {
+            $data = $request->validate([
+                'title' => 'required|string|max:255',
+                'slug' => 'required|string|max:255',
+                'content' => 'required|string',
+                'image' => 'nullable',
+                'comment_status' => 'required|string',
+                'status' => 'required|string',
+                'categories.*' => 'exists:categories,id',
+            ]);
 
             $data['slug'] = implode('-', explode(' ', $data['slug']));
             $post = Post::create([
@@ -100,6 +107,7 @@ class PostController extends Controller
                 'user_id' => auth()->user()->id,
                 'status' => $data['status'],
             ]);
+            $post->categories()->sync($data['categories']);
 
             activity()
                 ->causedBy(auth()->user())
@@ -119,8 +127,8 @@ class PostController extends Controller
     {
         Gate::authorize('edit-posts');
         try {
-
-            return view('post::admin.edit', compact('post'));
+            $categories = Post::allCategories();
+            return view('post::admin.edit', compact('post', 'categories'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -138,9 +146,10 @@ class PostController extends Controller
                 'comment_status' => 'required',
                 'status' => 'required',
                 'image' => 'nullable',
+                'categories.*' => 'exists:categories,id',
             ]);
 
-            $data['slug'] = implode('-', $data['slug']);
+            $data['slug'] = implode('-', explode(' ', $data['slug']));
             $data['comment_status'] = $data['comment_status'] == 1;
 
             $old = $post->toArray();
@@ -152,6 +161,7 @@ class PostController extends Controller
                 'status' => $data['status'],
                 'image' => $data['image'],
             ]);
+            $post->categories()->sync($data['categories']);
 
             activity()
                 ->causedBy(auth()->id())

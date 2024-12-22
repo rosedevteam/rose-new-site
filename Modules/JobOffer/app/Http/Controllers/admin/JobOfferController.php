@@ -23,7 +23,7 @@ class JobOfferController extends Controller
             $categories = JobOffer::allCategories();
             $jobOffers = JobOffer::query();
             if($category != 'all') {
-                $jobOffers = $jobOffers->with('categories')->where('category', $category);
+                $jobOffers = $jobOffers->whereRelation('categories', 'category_id', $category);
             }
             $jobOffers = $jobOffers->orderBy('created_at', $sort_direction);
             $jobOffers = $jobOffers->paginate(50);
@@ -66,7 +66,7 @@ class JobOfferController extends Controller
                 'status' => $data['status'],
                 'type' => $data['type'],
             ]);
-            $jobOffer->category()->sync($data['category_id']);
+            $jobOffer->categories()->sync($data['category_id']);
 
             activity()
                 ->causedBy(auth()->user())
@@ -118,7 +118,7 @@ class JobOfferController extends Controller
                 'status' => $data['status'],
                 'type' => $data['type'],
             ]);
-            $joboffer->category()->sync($data['category_id']);
+            $joboffer->categories()->sync($data['category_id']);
 
             activity()
                 ->causedBy(auth()->user())
