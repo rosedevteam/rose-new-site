@@ -102,7 +102,7 @@
                                     <div class="row g-3">
                                         <div class="col-md-6">
                                             <label class="form-label" for="price">قیمت عادی</label>
-                                            <input type="text" id="price" class="form-control text-start"
+                                            <input type="text" id="price" name="price" class="form-control text-start"
                                                    dir="ltr">
                                         </div>
                                         <div class="col-md-6">
@@ -167,7 +167,7 @@
 
                             <div class="my-3">
                                 <label for="short-description" class="form-label">توضیح کوتاه</label>
-                                <textarea class="form-control" rows="8" name="short_description" id="short_description"></textarea>
+                                <textarea class="form-control" rows="8" name="short_description" id="short_description" form="create-item"></textarea>
                             </div>
 
                             <div class="my-3">

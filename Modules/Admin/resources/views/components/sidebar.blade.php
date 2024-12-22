@@ -101,7 +101,7 @@
                 <li @class(["menu-item", 'active' => $route == 'categories'])>
                     <a href="{{ route("admin.categories.index") }}" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-category"></i>
-                        <div data-i18n="کتگوری ها">کتگوری ها</div>
+                        <div data-i18n="دسته بندی ها">دسته بندی ها</div>
                     </a>
                 </li>
             @endcan

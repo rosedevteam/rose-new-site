@@ -5,12 +5,13 @@ namespace Modules\Product\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
-use http\Env\Request;
+use Illuminate\Http\Request;
 use Modules\Product\Models\Product;
 
 class ProductController extends Controller
 {
     use SEOTools;
+
     public function index()
     {
         $this->seo()->setTitle('دوره ها');
@@ -51,24 +52,87 @@ class ProductController extends Controller
         return view('product::admin.create');
     }
 
-    public function store(\Request $request)
+    public function store(Request $request)
     {
         Gate::authorize('create-products');
         try {
-//            dd($request->all());
-        }catch (\Exception $exception){
+            $validatedData = $request->validate([
+                'title' => 'required',
+                'short_description' => 'required',
+                'content' => 'required',
+                'price' => 'required',
+                'slug' => 'required',
+                'spot_player_key' => 'required',
+                'sale_price' => 'required',
+                'comment_status' => 'required',
+                'status' => 'required',
+                'image' => 'required'
+            ]);
+            $validatedData['slug'] = implode('-', explode(' ', $validatedData['slug']));
 
+            $product = auth()->user()->products()->create($validatedData);
+
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($product)
+                ->withProperties([auth()->user(), $product, $validatedData])
+                ->log('ساخت محصول');
+            alert()->success("موفق", "با موفقیت انجام شد");
+
+            return redirect(route('admin.products.index'));
+        } catch (\Throwable $th) {
+            alert()->error("خطا", $th->getMessage());
+            return back();
         }
     }
 
     public function edit(Product $product)
     {
-
+        Gate::authorize('edit-products');
+        try {
+            return view('product::admin.edit', compact('product'));
+        } catch (\Throwable $th) {
+            alert()->error("خطا", $th->getMessage());
+            return back();
+        }
     }
 
     public function update(Request $request, Product $product)
     {
+        Gate::authorize('edit-products');
+        try {
+            $validatedData = $request->validate([
+                'title' => 'required',
+                'short_description' => 'required',
+                'content' => 'required',
+                'price' => 'required',
+                'slug' => 'required',
+                'spot_player_key' => 'required',
+                'sale_price' => 'required',
+                'comment_status' => 'required',
+                'status' => 'required',
+                'image' => 'required'
+            ]);
+            $validatedData['slug'] = implode('-', explode(' ', $validatedData['slug']));
 
+            $old = $product->toArray();
+            $product->update($validatedData);
+
+
+//            $product->categories()->sync($validatedData['categories']);
+
+            activity()
+                ->causedBy(auth()->id())
+                ->performedOn($product)
+                ->withProperties([auth()->user(), $product, $old, $validatedData])
+                ->log('ویرایش پست');
+            alert()->success("موفق", "ویرایش با موفقیت انجام شد");
+
+            return redirect(route('admin.products.edit', compact('product')));
+        }catch (\Throwable $th) {
+            alert()->error("خطا", $th->getMessage());
+            return back();
+        }
     }
 
     public function show(Product $product)
@@ -84,6 +148,22 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        Gate::authorize('delete-products');
+        try {
 
+            $product->delete();
+
+            activity()
+                ->causedBy(auth()->user())
+                ->performedOn($product)
+                ->withProperties([auth()->user(), $product])
+                ->log('حذف محصول');
+            alert()->success('موفق', 'محصول با موفقیت حذف شد');
+
+            return redirect(route('admin.products.index'));
+        } catch (\Throwable $th) {
+            alert()->error("خطا", $th->getMessage());
+            return back();
+        }
     }
 }
