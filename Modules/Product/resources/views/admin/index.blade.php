@@ -72,10 +72,10 @@
                                     colspan="1" style="width: 15%" aria-sort="ascending">نام
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 7%;">قیمت اصلی
+                                    style="width: 7%;">قیمت عادی
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 7%;">قیمت فروش
+                                    style="width: 7%;">  فروش ویژه
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 5%;">وضعیت
@@ -104,8 +104,12 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td><span class="fw-semibold">{{ $product->price }}</span></td>
-                                    <td>{{ $product->sale_price }}</td>
+                                    <td><span class="fw-semibold">{{ number_format($product->price) }}
+                                        تومان
+                                        </span></td>
+                                    <td>{{ number_format($product->sale_price) }}
+                                    تومان
+                                    </td>
                                     <td>
                                         <span class="fw-semibold">
                                             @switch($product->status)
@@ -123,7 +127,7 @@
                                             </a>
                                         </div>
                                     </td>
-                                    <td>{{ verta($product->created_at)->formatJalaliDateTime() }}</td>
+                                    <td>{{ verta($product->created_at)->formatJalaliDate() }}</td>
                                     <td>
                                         <div class="d-flex gap-3 text-nowrap">
                                             <a href="{{ route('admin.products.edit', $product) }}"

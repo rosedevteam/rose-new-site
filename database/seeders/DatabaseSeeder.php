@@ -201,7 +201,7 @@ class DatabaseSeeder extends Seeder
     private function seedProducts(): void
     {
         $product1 = Product::factory()->create([
-            'title' => "هخشصذدلهخصشلد",
+            'title' => "دوره حسابدار نخبه",
             'user_id' => 1,
             'price' => 2000000,
             'short_description' => "هشذلحهشذسلشخسلدشسجخیلدشسجخلدشخسهیلجخیشسدخجهدذشسجخدذجشخسیدهذشسدذخهجش",
@@ -211,7 +211,7 @@ class DatabaseSeeder extends Seeder
             'comment_status' => 1,
             'image' => "asdijbnag",
             'slug' => "asdbniaskgadsg",
-            'spot_player_key' => null
+            'spot_player_key' => '635faca3dc6fbb9779bf0164'
         ]);
         $product2 = Product::factory()->create([
             'title' => "هخشصذدلهخصشلد",
