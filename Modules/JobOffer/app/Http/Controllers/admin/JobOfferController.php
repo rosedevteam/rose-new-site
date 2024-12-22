@@ -22,9 +22,11 @@ class JobOfferController extends Controller
             $category = request('category', 'all');
             $categories = JobOffer::allCategories();
             $jobOffers = JobOffer::query();
+
             if($category != 'all') {
                 $jobOffers = $jobOffers->whereRelation('categories', 'category_id', $category);
             }
+
             $jobOffers = $jobOffers->orderBy('created_at', $sort_direction);
             $jobOffers = $jobOffers->paginate(50);
 
@@ -56,7 +58,7 @@ class JobOfferController extends Controller
                 'content' => 'bail|required',
                 'status' => 'bail|required|string',
                 'type' => 'bail|required|string',
-                'category_id' => 'bail|required|string',
+                'categories.*' => 'bail|required|exists:categories,id',
             ]);
 
             $jobOffer = JobOffer::create([
@@ -66,7 +68,7 @@ class JobOfferController extends Controller
                 'status' => $data['status'],
                 'type' => $data['type'],
             ]);
-            $jobOffer->categories()->sync($data['category_id']);
+            $jobOffer->categories()->sync($data['categories']);
 
             activity()
                 ->causedBy(auth()->user())
@@ -104,7 +106,7 @@ class JobOfferController extends Controller
                 'title' => 'bail|required|string|max:255',
                 'content' => 'bail|required',
                 'status' => 'bail|required|string',
-                'category_id' => 'bail|required|integer',
+                'categories.*' => 'bail|required|exists:categories,id',
                 'type' => 'bail|required|string',
             ]);
             $data = array_filter($data, function ($value) {
@@ -118,7 +120,7 @@ class JobOfferController extends Controller
                 'status' => $data['status'],
                 'type' => $data['type'],
             ]);
-            $joboffer->categories()->sync($data['category_id']);
+            $joboffer->categories()->sync($data['categories']);
 
             activity()
                 ->causedBy(auth()->user())

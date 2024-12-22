@@ -58,6 +58,9 @@
                                     style="width: 15%;">برای
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                    style="width: 10%;">کتگوری مادر
+                                </th>
+                                <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 10%;">نویسنده
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
@@ -74,12 +77,14 @@
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column">
-                                                    <span class="fw-semibold">{{ $category->name }}</span>
+                                                <span class="fw-semibold">{{ $category->name }}</span>
                                             </div>
                                         </div>
                                     </td>
                                     <td><span class="fw-semibold">{{ $category->type }}</span></td>
-                                    <td><a href="{{ route('admin.users.show', $category->user) }}" class="text-body text-truncate">{{ $category->user->name() }}</a></td>
+                                    <td>{{ $category->parent?->name ?: 'ندارد' }}</td>
+                                    <td><a href="{{ route('admin.users.show', $category->user) }}"
+                                           class="text-body text-truncate">{{ $category->user->name() }}</a></td>
                                     <td>{{ verta($category->created_at)->formatJalaliDateTime() }}</td>
                                     <td>
                                         <div class="d-flex gap-3 text-nowrap">
@@ -116,10 +121,23 @@
                                            required>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label" for="type">برای</label>
-                                    <select id="type" name="type" class="form-select" required>
+                                    <label class="form-label" for="type_create">برای</label>
+                                    <select id="type_create" name="type_create" class="form-select"
+                                            onchange="filterOptions()"
+                                            required>
+                                        <option value="" disabled selected></option>
                                         @foreach($types as $t)
                                             <option value="{{ $t }}">{{ $t }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="parent_id">کتگوری مادر:</label>
+                                    <select id="parent_id" name="parent_id" class="form-select">
+                                        <option value="" selected>ندارد</option>
+                                        @foreach($parents as $c)
+                                            <option value="{{ $c->id }}"
+                                                    data-type="{{ $c->type }}">{{ $c->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -151,4 +169,24 @@
     <script src="/assets/admin/vendor/libs/cleavejs/cleave.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave-phone.js"></script>
     <x-admin::deletemodalscript model="categories"/>
+    <script>
+        function filterOptions() {
+            const selectedType = document.getElementById("type_create").value;
+            const parentSelect = document.getElementById("parent_id");
+            console.log("Selected Type:", selectedType);
+            console.log(parentSelect)
+
+            Array.from(parentSelect.options).forEach(option => {
+                if (option.value === "") {
+                    option.style.display = "";
+                } else if (option.getAttribute("data-type") === selectedType) {
+                    option.style.display = "";
+                } else {
+                    option.style.display = "none";
+                }
+            });
+
+            parentSelect.value = "";
+        }
+    </script>
 @endpush

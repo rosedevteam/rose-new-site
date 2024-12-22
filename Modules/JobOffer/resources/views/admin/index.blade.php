@@ -56,13 +56,13 @@
                             <thead>
                             <tr>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 12%;">عنوان
+                                    style="width: 7%;">عنوان
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 10%;">نویسنده
+                                    style="width: 5%;">نویسنده
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">تیم
+                                    style="width: 10%;">کتگوری
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 5%;">نوع
@@ -94,7 +94,11 @@
                                         {{ $jobOffer->user->name() }}</a>
                                 </span>
                                     </td>
-                                    <td><span class="fw-semibold">{{ $jobOffer->categories->first()->name }}</span></td>
+                                    <td>
+                                        @foreach($jobOffer->categories as $c)
+                                            {{ ($c->parent?->name . (is_null($c->parent) ? '' : ': ')) . $c->name }}
+                                        @endforeach
+                                    </td>
                                     <td>{{ $jobOffer->type }}</td>
                                     <td>
                                         <span @class(['badge', 'bg-label-success' => $jobOffer->status == 'active', 'bg-label-danger' => $jobOffer->status == 'inactive'])>

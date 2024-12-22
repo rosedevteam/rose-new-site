@@ -27,13 +27,14 @@ class CategoryController extends Controller
             ];
             $type = request('type', 'all');
             $categories = Category::query();
+            $parents = Category::all();
 
             if($type != 'all'){
                 $categories = $categories->where('type', $type);
             }
 
             $categories = $categories->orderBy('created_at', 'desc')->paginate(50);
-            return view('category::admin.index', compact('categories', 'type', 'types'));
+            return view('category::admin.index', compact('categories', 'type', 'types', 'parents'));
         } catch (\Throwable $th) {
             alert()->error('خطا', $th->getMessage());
             return back();
@@ -57,13 +58,20 @@ class CategoryController extends Controller
         try {
             $validData = $request->validate([
                 'name' => 'required',
-                'type' => 'required',
+                'type_create' => 'required',
+                'parent_id' => 'nullable|exists:categories,id',
             ]);
+            if(!is_null($validData['parent_id'])) {
+                if (Category::where('id', $validData['parent_id'])->first()->type != $validData['type_create']) {
+                    throw new \Exception();
+                }
+            }
 
             $category = Category::create([
                 'name' => $validData['name'],
-                'type' => $validData['type'],
+                'type' => $validData['type_create'],
                 'user_id' => auth()->user()->id,
+                'parent_id' => $validData['parent_id'],
             ]);
 
             activity()
