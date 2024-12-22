@@ -94,7 +94,11 @@
                                         {{ $jobOffer->user->name() }}</a>
                                 </span>
                                     </td>
-                                    <td><span class="fw-semibold">{{ $jobOffer->categories->first()->name }}</span></td>
+                                    <td>
+                                        @foreach($jobOffer->categories as $c)
+                                            <span class="fw-semibold">{{ $c->name }}</span>
+                                        @endforeach
+                                    </td>
                                     <td>{{ $jobOffer->type }}</td>
                                     <td>
                                         <span @class(['badge', 'bg-label-success' => $jobOffer->status == 'active', 'bg-label-danger' => $jobOffer->status == 'inactive'])>

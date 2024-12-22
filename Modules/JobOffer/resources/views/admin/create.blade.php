@@ -1,5 +1,14 @@
 @extends('admin::layouts.main')
 
+@push('css')
+    <link rel="stylesheet" href="/assets/admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/admin/vendor/libs/typeahead-js/typeahead.css">
+    <link rel="stylesheet" href="/assets/admin/vendor/libs/select2/select2.css">
+    <link rel="stylesheet" href="/assets/admin/vendor/libs/tagify/tagify.css">
+    <link rel="stylesheet" href="/assets/admin/vendor/libs/bootstrap-select/bootstrap-select.css">
+    <link rel="stylesheet" href="/assets/admin/vendor/libs/typeahead-js/typeahead.css">
+@endpush
+
 @section('content')
 
     <div class="content-wrapper">
@@ -17,14 +26,15 @@
                                     <label class="form-label" for="title">عنوان</label>
                                     <input type="text" id="title" name="title" class="form-control">
                                 </div>
-                                <div class="col-md-3">
-                                    <label class="form-label" for="category_id">تیم</label>
-                                    <select class="form-select" name="category_id" id="category_id">
-                                        @foreach($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                <div class="col-md-6">
+                                    <label for="select2Primary" class="form-check-label">کتگوری ها</label>
+                                    <div class="select2-primary">
+                                        <select id="select2Primary" class="select2 form-select" name="categories[]" multiple>
+                                            @foreach($categories as $c)
+                                                <option value="{{ $c->id }}">{{ $c->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label" for="type">نوع</label>
@@ -58,4 +68,15 @@
 
 @push('script')
     <x-admin::tinymce/>
+    <script src="/assets/admin/vendor/libs/select2/select2.js"></script>
+    <script src="/assets/admin/vendor/libs/select2/i18n/fa.js"></script>
+    <script src="/assets/admin/vendor/libs/tagify/tagify.js"></script>
+    <script src="/assets/admin/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+    <script src="/assets/admin/vendor/libs/bootstrap-select/i18n/defaults-fa_ir.js"></script>
+    <script src="/assets/admin/vendor/libs/typeahead-js/typeahead.js"></script>
+    <script src="/assets/admin/vendor/libs/bloodhound/bloodhound.js"></script>
+    <script src="/assets/admin/js/main.js"></script>
+    <script src="/assets/admin/js/forms-selects.js"></script>
+    <script src="/assets/admin/js/forms-tagify.js"></script>
+    <script src="/assets/admin/js/forms-typeahead.js"></script>
 @endpush
