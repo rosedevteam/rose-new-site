@@ -9,6 +9,7 @@ use Modules\JobApplication\Models\JobApplication;
 use Modules\JobOffer\Models\JobOffer;
 use Modules\Menu\Models\Menu;
 use Modules\Order\Models\Order;
+use Modules\Payment\Models\Payment;
 use Modules\Post\Models\Post;
 use Modules\Product\Models\Product;
 use Modules\User\Models\User;
@@ -25,6 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->seedPosts();
         $this->seedProducts();
         $this->seedOrders();
+        $this->seedPayments();
         $this->seedComments();
         $this->seedMenu();
 
@@ -255,14 +257,14 @@ class DatabaseSeeder extends Seeder
     private function seedPosts(): void
     {
         $json = \File::get(database_path() . '/posts.json');
-        $data =  json_decode($json, true);
+        $data = json_decode($json, true);
 
         foreach ($data as $item) {
             Post::create([
                 'user_id' => 1,
                 'title' => $item['title'],
                 'content' => $item['content'],
-                'status' => ($item['status'] == 'publish') ? 'public' : 'draft' ,
+                'status' => ($item['status'] == 'publish') ? 'public' : 'draft',
                 'slug' => $item['slug'],
                 'comment_status' => $item['comment_status'],
                 'created_at' => $item['created_at'],
@@ -307,6 +309,15 @@ class DatabaseSeeder extends Seeder
 
     }
 
+    private function seedPayments()
+    {
+        $payment1 = Payment::factory()->create([
+            'resnumber' => 'dqwfAF',
+            'order_id' => 1,
+            'status' => 1
+        ]);
+    }
+
     private function seedComments(): void
     {
         $comment1 = Comment::factory()->create([
@@ -337,14 +348,14 @@ class DatabaseSeeder extends Seeder
     private function seedMenu()
     {
         Menu::factory()->create([
-           'title' => 'صفحه نخست',
-           'user_id' => 1,
-           'link' => "#",
-           'parent_id' => null,
-           'order' => 0,
-           'icon' => '#',
-           'subtitle' => null,
-       ]);
+            'title' => 'صفحه نخست',
+            'user_id' => 1,
+            'link' => "#",
+            'parent_id' => null,
+            'order' => 0,
+            'icon' => '#',
+            'subtitle' => null,
+        ]);
         Menu::factory()->create([
             'title' => 'دوره ها',
             'user_id' => 1,

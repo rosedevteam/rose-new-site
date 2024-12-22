@@ -12,5 +12,6 @@
     "JobOffer": true,
     "Menu": true,
     "JobApplication": true,
-    "Discount": true
+    "Discount": true,
+    "Payment": true
 }

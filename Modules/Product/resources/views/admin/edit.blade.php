@@ -143,14 +143,14 @@
                                 <label class="form-label" for="status">وضعیت</label>
                                 <select class="form-select" id="status" name="status" form="edit-item">
                                     <option
-                                            value="public" {{$product->status ? "public" : 'selected'}}>
+                                            value="public" {{$product->status == 'public' ?  "selected" : '' }}>
                                         منتشر
                                         شده
                                     </option>
-                                    <option value="draft" {{$product->status ? "draft" : 'selected'}}>
+                                    <option value="draft" {{$product->status == "draft" ? 'selected' : ''}}>
                                         پیشنویس
                                     </option>
-                                    <option value="hidden" {{$product->status ? "hidden" : 'selected'}}>
+                                    <option value="hidden" {{$product->status == "hidden" ? 'selected' : ''}}>
                                         پنهان
                                     </option>
                                 </select>

@@ -134,14 +134,24 @@
                                             @php $i++ @endphp
                                         @endforeach
                                     </td>
-                                    <td>{{ $order->price }}</td>
+                                    <td>{{ number_format($order->price) }}
+                                    تومان
+                                    </td>
                                     <td>
                                         <span class="fw-semibold">
                                             @switch($order->status)
-                                                @case('completed')کامل شده@break
-                                                @case('pending')در حال انجام@break
-                                                @case('returned')پس گرفته@break
-                                                @case('cancelled')لغو شده@break
+                                                @case('completed')
+                                                    <span class="badge bg-success">کامل شده</span>
+                                                    @break
+                                                @case('pending')
+                                                    <span class="badge bg-secondary">در حال انجام</span>
+                                                    @break
+                                                @case('returned')
+                                                    <span class="badge bg-warning">عودت داده شده</span>
+                                                    @break
+                                                @case('cancelled')
+                                                    <span class="badge bg-danger">لغو شده</span>
+                                                    @break
                                             @endswitch
                                         </span>
                                     </td>
