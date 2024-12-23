@@ -205,7 +205,7 @@ class DatabaseSeeder extends Seeder
             'user_id' => 1,
             'price' => 2000000,
             'short_description' => "هشذلحهشذسلشخسلدشسجخیلدشسجخلدشخسهیلجخیشسدخجهدذشسجخدذجشخسیدهذشسدذخهجش",
-            'sale_price' => 1500000,
+            'sale_price' => null,
             'content' => "asdfn;onasgA",
             'status' => 'public',
             'comment_status' => 1,
