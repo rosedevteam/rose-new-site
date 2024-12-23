@@ -75,9 +75,7 @@ class CommentController extends Controller
             $comment->update($data);
 
             activity()
-                ->causedBy(auth()->user())
-                ->performedOn($comment)
-                ->withProperties([auth()->user(), $comment, $old, $data])
+                ->withProperties([auth()->user()->name(), $comment->user->name, $data])
                 ->log('ویرایش کامنت');
             alert()->success("موفق", 'ویرایش با موفقیت انجام شد');
 
@@ -108,8 +106,8 @@ class CommentController extends Controller
             activity()
                 ->causedBy(auth()->id())
                 ->performedOn($comment)
-                ->withProperties([auth()->user(), $comment, $newComment])
-                ->log('پاشخ کامنت');
+                ->withProperties([auth()->user()->name(), $comment->user->name(), $newComment])
+                ->log('پاسخ کامنت');
             alert()->success("موفق", 'کامنت با موفقیت ثبت شد');
 
             return redirect(route('admin.comments.edit', $comment));
@@ -127,9 +125,7 @@ class CommentController extends Controller
             $comment->delete();
 
             activity()
-                ->causedBy(auth()->id())
-                ->performedOn($comment)
-                ->withProperties([auth()->user(), $comment])
+                ->withProperties([auth()->user()->name(), $comment->user->name()])
                 ->log('حذف کامنت');
             alert()->success('موفق', 'کامنت با موفقیت حذف شد');
 

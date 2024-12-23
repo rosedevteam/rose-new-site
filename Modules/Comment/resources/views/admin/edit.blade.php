@@ -19,9 +19,9 @@
                         <div class="row mx-2 my-2">
                             <div class="col mb-2">
                                 نویسنده:
-                                <a href="{{ route("admin.users.show", $comment->author()->first()) }}"
+                                <a href="{{ route("admin.users.show", $comment->user->first()) }}"
                                    class="text-body text-truncate">
-                                    {{ $comment->author()->first()->name() }}
+                                    {{ $comment->user->first()->name() }}
                                 </a>
                             </div>
                         </div>

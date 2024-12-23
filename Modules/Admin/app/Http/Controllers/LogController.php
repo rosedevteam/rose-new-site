@@ -17,7 +17,7 @@ class LogController extends Controller
         Gate::authorize('view-logs');
         try {
             $sort_direction = request('sort_direction', 'desc');
-            $count = request('count', 10);
+            $count = request('count', 50);
             $search = request('search');
             $logs = Activity::query();
 
@@ -34,17 +34,4 @@ class LogController extends Controller
         }
     }
 
-    public function show($id)
-    {
-        $this->seo()->setTitle('لاگ');
-        Gate::authorize('view-logs');
-        try {
-            $log = Activity::query()->findOrFail($id);
-            dd($log);
-            return view('admin::log.show', compact('log'));
-        } catch (\Throwable $th) {
-            alert()->error('خطا', $th->getMessage());
-            return back();
-        }
-    }
 }

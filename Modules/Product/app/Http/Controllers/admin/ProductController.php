@@ -73,9 +73,7 @@ class ProductController extends Controller
             $product = auth()->user()->products()->create($validatedData);
 
             activity()
-                ->causedBy(auth()->user())
-                ->performedOn($product)
-                ->withProperties([auth()->user(), $product, $validatedData])
+                ->withProperties([auth()->user()->name(), $product->title, $validatedData])
                 ->log('ساخت محصول');
             alert()->success("موفق", "با موفقیت انجام شد");
 
@@ -122,9 +120,7 @@ class ProductController extends Controller
 //            $product->categories()->sync($validatedData['categories']);
 
             activity()
-                ->causedBy(auth()->id())
-                ->performedOn($product)
-                ->withProperties([auth()->user(), $product, $old, $validatedData])
+                ->withProperties([auth()->user()->name(), $product->title, $validatedData])
                 ->log('ویرایش پست');
             alert()->success("موفق", "ویرایش با موفقیت انجام شد");
 

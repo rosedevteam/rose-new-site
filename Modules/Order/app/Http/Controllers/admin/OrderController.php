@@ -73,9 +73,7 @@ class OrderController extends Controller
             $order = Order::create($data);
 
             activity()
-                ->causedBy(auth()->user())
-                ->performedOn($order)
-                ->withProperties([auth()->user(), $order])
+                ->withProperties([auth()->user()->name(), $order->id])
                 ->log('ساخت سفارش');
             alert()->success('موفق', 'سفارش با موفقیت ساخته شد');
 
@@ -112,13 +110,10 @@ class OrderController extends Controller
                 return !is_null($value);
             });
 
-            $old = $order->toArray();
             $order->update($data);
 
             activity()
-                ->causedBy(auth()->user())
-                ->performedOn($order)
-                ->withProperties([auth()->user(), $order, $old])
+                ->withProperties([auth()->user()->name(), $order->id, $data])
                 ->log('ویرایش سفارش');
             alert()->success('موفق', 'سفارش با موفقیت ساخته شد');
 
@@ -137,9 +132,7 @@ class OrderController extends Controller
             $order->delete();
 
             activity()
-                ->causedBy(auth()->user())
-                ->performedOn($order)
-                ->withProperties([auth()->user(), $order])
+                ->withProperties([auth()->user()->name(), $order->id])
                 ->log('حذف سفارش');
             alert()->success('موفق', 'سفارش با موفقیت حذف شد');
 

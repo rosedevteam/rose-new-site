@@ -26,7 +26,7 @@ class MenuController extends Controller
                 ->whereNull('parent_id')
                 ->simplePaginate(50);
             return view('menu::admin.index' , compact('menus'));
-        } catch (\Exception $e) {
+        } catch (\Exception $th) {
             alert()->error('خطا', $th->getMessage());
             return back();
         }
@@ -45,7 +45,7 @@ class MenuController extends Controller
                 ->whereNull('parent_id')
                 ->simplePaginate(15);
             return view('menu::admin.create' , compact('menus'));
-        } catch (\Exception $exception) {
+        } catch (\Exception $th) {
             alert()->error('خطا', $th->getMessage());
             return back();
         }
@@ -71,9 +71,7 @@ class MenuController extends Controller
             $menu = Menu::create($validData);
 
             activity()
-                ->causedBy(auth()->user())
-                ->performedOn($menu)
-                ->withProperties([auth()->user(), $menu, $validData])
+                ->withProperties([auth()->user()->name(), $menu->title, $validData])
                 ->log('ساخت منو');
             alert()->success('منوی جدید با موفقیت ایجاد شد.');
 
@@ -120,9 +118,7 @@ class MenuController extends Controller
             $menu->delete();
 
             activity()
-                ->causedBy(auth()->user())
-                ->performedOn($menu)
-                ->withProperties([auth()->user(), $menu])
+                ->withProperties([auth()->user()->name(), $menu->title])
                 ->log('حذف منو');
             alert()->success('موفق', 'منو با موفقیت حذف شد');
 

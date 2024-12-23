@@ -5,9 +5,7 @@ namespace Modules\JobOffer\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
-use Modules\Category\Models\Category;
 use Modules\JobOffer\Models\JobOffer;
-use PHPUnit\Util\PHP\Job;
 
 class JobOfferController extends Controller
 {
@@ -71,9 +69,7 @@ class JobOfferController extends Controller
             $jobOffer->categories()->sync($data['categories']);
 
             activity()
-                ->causedBy(auth()->user())
-                ->performedOn($jobOffer)
-                ->withProperties([auth()->user(), $jobOffer, $data])
+                ->withProperties([auth()->user()->name(), $jobOffer->title, $data])
                 ->log('ساخت فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت ساخته شد');
 
@@ -113,7 +109,6 @@ class JobOfferController extends Controller
                 return !is_null($value);
             });
 
-            $old = $joboffer->toArray();
             $joboffer->update([
                 'title' => $data['title'],
                 'content' => $data['content'],
@@ -123,9 +118,7 @@ class JobOfferController extends Controller
             $joboffer->categories()->sync($data['categories']);
 
             activity()
-                ->causedBy(auth()->user())
-                ->performedOn($joboffer)
-                ->withProperties([auth()->user(), $joboffer, $old, $data])
+                ->withProperties([auth()->user()->name(), $joboffer->title, $data])
                 ->log('ویرایش فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت ویرایش شد');
 
@@ -144,9 +137,7 @@ class JobOfferController extends Controller
             $joboffer->delete();
 
             activity()
-                ->causedBy(auth()->user())
-                ->performedOn($joboffer)
-                ->withProperties([auth()->user(), $joboffer])
+                ->withProperties([auth()->user()->name(), $joboffer->title])
                 ->log('حذف فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت حذف شد');
 

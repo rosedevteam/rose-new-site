@@ -9,7 +9,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Modules\User\Models\Billing;
 use Modules\User\Models\User;
-use Spatie\Activitylog\Models\Activity;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -85,9 +84,7 @@ class UserController extends Controller
             $user->assignRole($data['role_id']);
 
             activity()
-                ->causedBy(auth()->user())
-                ->performedOn($user)
-                ->withProperties([auth()->user(), $user, $data])
+                ->withProperties([auth()->user()->name(), $user->name(), $data])
                 ->log('ساخت کاربر');
             alert()->success("موفق", "کاربر با موفقیت ساخته شد");
 
@@ -159,13 +156,10 @@ class UserController extends Controller
                 });
                 $user->billing()->update($billingData);
             }
-            $old = $user->toArray();
             $user->update($userData);
 
             activity()
-                ->causedBy(auth()->user())
-                ->performedOn($user)
-                ->withProperties([auth()->user(), $user, $old, $userData, $billingData])
+                ->withProperties([auth()->user()->name(), $user->name(), $userData + $billingData])
                 ->log('ویرایش کاربر');
             alert()->success("موفق", "با موفقیت انجام شد");
 
@@ -189,9 +183,7 @@ class UserController extends Controller
             $user->delete();
 
             activity()
-                ->causedBy(auth()->user())
-                ->performedOn($user)
-                ->withProperties([auth()->user(), $user])
+                ->withProperties([auth()->user()->name(), $user->name()])
                 ->log('حذف کاربر');
             alert()->success("موفق", "کاربر حذف شد");
 
@@ -223,9 +215,7 @@ class UserController extends Controller
             $user->syncRoles($role);
 
             activity()
-                ->causedBy(auth()->user())
-                ->performedOn($user)
-                ->withProperties([auth()->user(), $user, $old, $data])
+                ->withProperties([auth()->user()->name(), $user->name(), $data])
                 ->log('ویرایش نقش');
             alert()->success('موفق', 'ویرایش نقش با موفقیت انجام شد');
 

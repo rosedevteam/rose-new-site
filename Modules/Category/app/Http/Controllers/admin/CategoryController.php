@@ -16,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $this->seo()->setTitle('کتکوری ها');
+        $this->seo()->setTitle('دسته بندی ها');
         Gate::authorize('view-categories');
         try {
 
@@ -75,9 +75,7 @@ class CategoryController extends Controller
             ]);
 
             activity()
-                ->causedBy(auth()->user())
-                ->performedOn($category)
-                ->withProperties([auth()->user(), $category])
+                ->withProperties([auth()->user()->name(), $category->name])
                 ->log('ساخت کتگوری');
             alert()->success('موفق', 'کتگوری با موفقیت ساخته شد');
 
@@ -123,9 +121,7 @@ class CategoryController extends Controller
             $category->delete();
 
             activity()
-                ->causedBy(auth()->user())
-                ->performedOn($category)
-                ->withProperties([auth()->user(), $category])
+                ->withProperties([auth()->user()->name(), $category->name])
                 ->log('حذف کتگوری');
             alert()->success('موفق', 'کنگوری با موفقیت حذف شد');
 

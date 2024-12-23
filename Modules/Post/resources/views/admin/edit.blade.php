@@ -172,6 +172,7 @@
                                 <label for="select2Primary" class="form-check-label">کتگوری ها</label>
                                 <div class="select2-primary">
                                     <select id="select2Primary" class="select2 form-select" name="categories[]" form="edit-item" multiple>
+                                        <option value="" type="hidden" selected></option>
                                         @foreach($categories as $c)
                                             <option
                                                 value="{{ $c->id }}" {{ $post->categories->contains($c) ? 'selected' : '' }}>{{ ($c->parent?->name . (is_null($c->parent) ? '' : ': ')) . $c->name }}</option>

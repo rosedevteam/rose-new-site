@@ -79,9 +79,7 @@ class DiscountController extends Controller
             $discount->products()->attach($data['products']);
 
             activity()
-                ->causedBy(auth()->user())
-                ->performedOn($discount)
-                ->withProperties([auth()->user(), $discount, $data])
+                ->withProperties([auth()->user()->name(), $discount->code, $data])
                 ->log('ساخت تخفیف');
             alert()->success('موفق', 'تخفیف با موفقیت ساخته شد');
 
@@ -148,9 +146,7 @@ class DiscountController extends Controller
             $discount->products()->sync($data['products']);
 
             activity()
-                ->causedBy(auth()->user())
-                ->performedOn($discount)
-                ->withProperties([auth()->user(), $discount, $old, $data])
+                ->withProperties([auth()->user()->name(), $discount->code, $data])
                 ->log('ویرایش تخفیف');
             alert()->success('موفق', 'تخفیف با موفقیت ویرایش شد');
 
@@ -169,9 +165,7 @@ class DiscountController extends Controller
             $discount->delete();
 
             activity()
-                ->causedBy(auth()->user())
-                ->performedOn($discount)
-                ->withProperties([auth()->user(), $discount])
+                ->withProperties([auth()->user()->name(), $discount->code])
                 ->log('حذف تخفیف');
             alert()->success('موفق', 'تخفیف با موفقیت حذف شد');
             return redirect(route('admin.discounts.index'));

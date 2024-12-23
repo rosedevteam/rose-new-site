@@ -69,10 +69,7 @@ class JobApplicationController extends Controller
             $jobapplication->update($data);
 
             activity()
-                ->causedBy(auth()->user())
-                ->performedOn($jobapplication)
-                ->withProperties($data)
-                ->withProperties([auth()->user(), $jobapplication, $old, $data])
+                ->withProperties([auth()->user()->name(), $jobapplication->full_name, $data])
                 ->log('ویرایش رزومه');
             alert()->success('موفق', 'ویرایش رزومه با موفقیت انجام شد');
 
@@ -91,9 +88,7 @@ class JobApplicationController extends Controller
             $jobapplication->delete();
 
             activity()
-                ->causedBy(auth()->user())
-                ->performedOn($jobapplication)
-                ->withProperties([auth()->user(), $jobapplication])
+                ->withProperties([auth()->user()->name(), $jobapplication->full_name])
                 ->log('حذف پست');
             alert()->success('موفق', 'پست با موفقیت حذف شد');
 

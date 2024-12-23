@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Illuminate\Http\Request;
-use Modules\Category\Http\Controllers\CategoryController;
 use Modules\Post\Models\Post;
 
 class PostController extends Controller
@@ -95,7 +94,7 @@ class PostController extends Controller
                 'image' => 'nullable',
                 'comment_status' => 'required|string',
                 'status' => 'required|string',
-                'categories.*' => 'exists:categories,id',
+                'categories.*' => 'nullable|exists:categories,id',
             ]);
 
             $data['slug'] = implode('-', explode(' ', $data['slug']));
@@ -107,12 +106,13 @@ class PostController extends Controller
                 'user_id' => auth()->user()->id,
                 'status' => $data['status'],
             ]);
+            $data['categories'] = array_filter($data['categories'], function ($category) {
+                return !is_null($category);
+            });
             $post->categories()->sync($data['categories']);
 
             activity()
-                ->causedBy(auth()->user())
-                ->performedOn($post)
-                ->withProperties([auth()->user(), $post, $data])
+                ->withProperties([auth()->user()->name(), $post->name(), $data])
                 ->log('ساخت پست');
             alert()->success("موفق", "با موفقیت انجام شد");
 
@@ -146,7 +146,7 @@ class PostController extends Controller
                 'comment_status' => 'required',
                 'status' => 'required',
                 'image' => 'nullable',
-                'categories.*' => 'exists:categories,id',
+                'categories.*' => '|nullable|exists:categories,id',
             ]);
 
             $data['slug'] = implode('-', explode(' ', $data['slug']));
@@ -161,12 +161,14 @@ class PostController extends Controller
                 'status' => $data['status'],
                 'image' => $data['image'],
             ]);
+
+            $data['categories'] = array_filter($data['categories'], function ($category) {
+                return !is_null($category);
+            });
             $post->categories()->sync($data['categories']);
 
             activity()
-                ->causedBy(auth()->id())
-                ->performedOn($post)
-                ->withProperties([auth()->user(), $post, $old, $data])
+                ->withProperties([auth()->user()->name(), $post->title, $data])
                 ->log('ویرایش پست');
             alert()->success("موفق", "ویرایش با موفقیت انجام شد");
 
@@ -186,9 +188,7 @@ class PostController extends Controller
             $post->delete();
 
             activity()
-                ->causedBy(auth()->user())
-                ->performedOn($post)
-                ->withProperties([auth()->user(), $post])
+                ->withProperties([auth()->user()->name(), $post->title])
                 ->log('حذف پست');
             alert()->success('موفق', 'پست با موفقیت حذف شد');
 
