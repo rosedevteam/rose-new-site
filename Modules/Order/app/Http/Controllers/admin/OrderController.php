@@ -97,17 +97,26 @@ class OrderController extends Controller
             ]);
             $order->products()->attach($validData['products']);
 
-            //if status was completed then send a request to spot player api for create lice`nse
+            //if status was completed then send a request to spot player api for create license
             if ($order->status == 'completed') {
                 $spot_response = self::createSpotPlayerLicence(
                     $order->user->first_name . ' ' . $order->user->last_name,
                     array_filter($spot_keys, null),
                     $validData['watermark'] ? $validData['watermark'] : $order->user->phone);
+                if ($spot_response->getStatusCode() == 200) {
+                    $order->update([
+                        'spot_player_id' => json_decode($spot_response->getContent(), true)['id'],
+                        'spot_player_licence' => json_decode($spot_response->getContent(), true)['key'],
+                        'spot_player_log' => json_decode($spot_response->getContent(), true)['message']
 
-                if ($spot_response->status() == 200) {
+                    ]);
+                } else {
+                    $order->update(
+                        [
+                            'status' => 'pending',
+                            'spot_player_log' => json_decode($spot_response->getContent() , true)['message'],
+                        ]);
 
-                }else {
-                    $order->update(['status' => 'pending']);
                 }
             }
 
@@ -241,9 +250,10 @@ class OrderController extends Controller
             $L = license($name, $courses, [$watermarks], false);
             return response()->json([
                 'status' => 'success',
-                'id' => 'ID: ' . ($LID = $L['_id']),
-                'key' => 'KEY: ' . $L['key'],
-                'url' => 'URL: https://dl.spotplayer.ir/' . $L['url']
+                'id' => ($LID = $L['_id']),
+                'key' => $L['key'],
+                'url' => 'https://dl.spotplayer.ir/' . $L['url'],
+                'message' => 'لایسنس با موفقیت ایجاد شد'
             ], 200);
         } catch (\Throwable $e) {
             return response()->json([
