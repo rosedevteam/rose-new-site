@@ -50,6 +50,15 @@ class Product extends Model
         return $this->morphToMany(Category::class,  'categoryable');
     }
 
+
+    public function isOnSale()
+    {
+        if (!is_null($this->sale_price)) {
+            return true;
+        }
+        return false;
+    }
+
     protected static function newFactory(): ProductFactory
     {
         return ProductFactory::new();

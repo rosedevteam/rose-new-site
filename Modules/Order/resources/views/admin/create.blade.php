@@ -45,23 +45,27 @@
                                             <select name="user_id" id="select2Basic" class="form-select select2" required>
                                                 <option value="">انتخاب کنید</option>
                                                 @foreach(\App\Models\User::all() as $user)
-                                                    <option value="{{$user->id}}">{{$user->phone . ' | ' . $user->first_name . ' ' .$user->last_name}}</option>
+                                                    <option
+                                                        value="{{$user->id}}" {{old('phone') == $user->id ? 'selected' : ''}}>{{$user->phone . ' | ' . $user->first_name . ' ' .$user->last_name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="select2Primary" class="form-label">دوره ها</label>
                                             <div class="select2-primary">
-                                                <select id="select2Primary" class="select2 form-select" name="products[]" multiple>
+                                                <select id="select2Primary" class="select2 form-select"
+                                                        name="products[]" multiple>
                                                     @foreach(\Modules\Product\Models\Product::all() as $product)
-                                                        <option value="{{ $product->id }}">{{ $product->title }}</option>
+                                                        <option
+                                                            value="{{ $product->id }}" {{old('products') == $product->id ? 'selected' : ''}}>{{ $product->title }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="watermark" class="form-label">واتر مارک</label>
-                                            <input type="text" class="form-control" name="watermark" id="watermark" placeholder="مثلا: +۹۸۹۱۲۱۲۳۰۳۷۴">
+                                            <input type="text" class="form-control" name="watermark" id="watermark"
+                                                   placeholder="مثلا: +۹۸۹۱۲۱۲۳۰۳۷۴" value="{{old('watermark')}}">
                                         </div>
                                     </div>
                                 </div>
@@ -86,17 +90,39 @@
                                 <label class="form-label" for="status">وضعیت سفارش</label>
                                 <select class="form-select" name="status" id="status"
                                         form="create-item">
-                                    <option value="completed" {{old('status') == 'completed' ? 'selected' : ''}}>تکمیل شده</option>
-                                    <option value="pending" {{old('status') == 'pending' ? 'selected' : ''}}>در حال انجام</option>
-                                    <option value="cancelled" {{old('status') == 'cancelled' ? 'selected' : ''}}>لغو شده</option>
-                                    <option value="returned" {{old('status') == 'returned' ? 'selected' : ''}}>عودت داده شده</option>
+                                    <option value="">انتخاب کنید</option>
+                                    <option value="completed" {{old('status') == 'completed' ? 'selected' : ''}}>تکمیل
+                                        شده
+                                    </option>
+                                    <option value="pending" {{old('status') == 'pending' ? 'selected' : ''}}>در حال
+                                        انجام
+                                    </option>
+                                    <option value="cancelled" {{old('status') == 'cancelled' ? 'selected' : ''}}>لغو
+                                        شده
+                                    </option>
+                                    <option value="returned" {{old('status') == 'returned' ? 'selected' : ''}}>عودت داده
+                                        شده
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="payment_method">نوع پرداخت</label>
+                                <select class="form-select" name="payment_method" id="payment_method"
+                                        form="create-item">
+                                    <option value="">انتخاب کنید</option>
+                                    <option value="card" {{old('status') == 'card' ? 'selected' : ''}}>کارت به کارت
+                                    </option>
+                                    <option value="shahparak" {{old('status') == 'shahparak' ? 'selected' : ''}}>پرداخت
+                                        اینترنتی
+                                    </option>
                                 </select>
                             </div>
 
                             <div class="my-3">
                                 <label for="short-description" class="form-label">یادداشت</label>
                                 <textarea class="form-control" rows="8" name="notes" id="notes"
-                                          form="create-item"></textarea>
+                                          form="create-item">{{old('notes')}}</textarea>
                             </div>
 
                             <div class="pt-4 d-flex align-items-center justify-content-between">

@@ -5,7 +5,10 @@ namespace Modules\Order\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
+use Hekmatinasser\Verta\Verta;
+use Illuminate\Http\Request;
 use Modules\Order\Models\Order;
+use Modules\Product\Models\Product;
 
 class OrderController extends Controller
 {
@@ -58,19 +61,41 @@ class OrderController extends Controller
         }
     }
 
-    public function store()
+    public function store(Request $request)
     {
         Gate::authorize('create-orders');
         try {
-
-            $data = request()->validate([
-                'price' => 'required|numeric',
-                'note' => 'required|nullable|string',
+            $validData = request()->validate([
+                'user_id' => 'required',
+                'created_at' => 'required',
+                'products' => 'required',
+                'notes' => 'nullable|string',
                 'status' => 'required',
                 'payment_method' => 'required',
+                'watermark' => 'nullable|string',
             ]);
 
-            $order = Order::create($data);
+            $validData['created_at'] = self::formatDate($validData['created_at']);
+
+            $total = 0;
+
+            foreach ($validData['products'] as $product) {
+                $product = Product::whereId($product)->first();
+                $total = ($product->isOnSale() ? $product->sale_price : $product->price) + $total;
+
+            }
+
+
+            $order = Order::create([
+                'user_id' => $validData['user_id'],
+                'created_at' => $validData['created_at'],
+                'status' => $validData['status'],
+                'payment_method' => $validData['payment_method'],
+                'notes' => $validData['notes'],
+                'price' => $total,
+            ]);
+
+            $order->products()->attach($validData['products']);
 
             activity()
                 ->causedBy(auth()->user())
@@ -79,7 +104,7 @@ class OrderController extends Controller
                 ->log('ساخت سفارش');
             alert()->success('موفق', 'سفارش با موفقیت ساخته شد');
 
-            return redirect(route('admin.orders.show', compact('order')));
+            return redirect(route('admin.orders.index'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -95,6 +120,11 @@ class OrderController extends Controller
             alert()->error("خطا", $th->getMessage());
             return back();
         }
+    }
+
+    public function edit(Order $order)
+    {
+        return view('order::admin.edit', compact('order'));
     }
 
     public function update(Order $order)
@@ -148,5 +178,24 @@ class OrderController extends Controller
             alert()->error("خطا", $th->getMessage());
             return back();
         }
+    }
+
+    protected static function formatDate(string $d)
+    {
+        $expires_at = self::convertNums($d);
+        $t = explode(' ', $expires_at);
+        $date = explode('/', $t[0]);
+        $verta = Verta::jalaliToGregorian($date[0], $date[1], $date[2]);
+        return $verta[0] . '/' . $verta[1] . '/' . $verta[2] . ' ' . $t[1];
+    }
+
+    protected static function convertNums($string)
+    {
+        $persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        $arabic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+
+        $num = range(0, 9);
+        $convertedPersianNums = str_replace($persian, $num, $string);
+        return str_replace($arabic, $num, $convertedPersianNums);
     }
 }
