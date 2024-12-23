@@ -287,7 +287,11 @@ class DatabaseSeeder extends Seeder
             'user_id' => 1,
             'price' => 1000000,
             'status' => "cancelled",
-            'payment_method' => 'shaparak'
+            'payment_method' => 'shaparak',
+            'spot_player_licence' => 'SADFasfsfgaergaer',
+            'spot_player_id' => '234dfgrth',
+            'spot_player_log' => 'لایسنس با موفقیت ساخته شد',
+            'spot_player_watermark' => '09125342039',
         ]);
         $order2->products()->attach([2]);
 

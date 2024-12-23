@@ -103,18 +103,22 @@ class OrderController extends Controller
                     $order->user->first_name . ' ' . $order->user->last_name,
                     array_filter($spot_keys, null),
                     $validData['watermark'] ? $validData['watermark'] : $order->user->phone);
+                $spot = json_decode($spot_response->getContent(), true);
+
                 if ($spot_response->getStatusCode() == 200) {
                     $order->update([
-                        'spot_player_id' => json_decode($spot_response->getContent(), true)['id'],
-                        'spot_player_licence' => json_decode($spot_response->getContent(), true)['key'],
-                        'spot_player_log' => json_decode($spot_response->getContent(), true)['message']
+                        'spot_player_id' => $spot['id'],
+                        'spot_player_licence' => $spot['key'],
+                        'spot_player_log' => $spot['message'],
+                        'spot_player_watermark' => $validData['watermark'] ? $validData['watermark'] : $order->user->phone
 
                     ]);
                 } else {
                     $order->update(
                         [
                             'status' => 'pending',
-                            'spot_player_log' => json_decode($spot_response->getContent() , true)['message'],
+                            'spot_player_log' => $spot['message'],
+                            'spot_player_watermark' => $validData['watermark'] ? $validData['watermark'] : $order->user->phone,
                         ]);
 
                 }
@@ -203,7 +207,7 @@ class OrderController extends Controller
         }
     }
 
-    protected static function createSpotPlayerLicence($name, $courses, $watermarks)
+    public function createSpotPlayerLicence($name, $courses, $watermarks)
     {
 
         $api_key = config('services.spotplayer.api');
@@ -280,5 +284,11 @@ class OrderController extends Controller
         $num = range(0, 9);
         $convertedPersianNums = str_replace($persian, $num, $string);
         return str_replace($arabic, $num, $convertedPersianNums);
+    }
+
+    public function createSpotLicence(Request $request , Order $order)
+    {
+        //todo create licence from admin front
+        dd($request->all() , $order);
     }
 }

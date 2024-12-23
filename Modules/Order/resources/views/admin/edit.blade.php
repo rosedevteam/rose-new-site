@@ -26,23 +26,34 @@
                                         جزئیات
                                     </button>
                                 </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" data-bs-toggle="tab"
+                                            data-bs-target="#form-tabs-licence"
+                                            role="tab" aria-selected="false" tabindex="-1">
+                                        لایسنس
+                                    </button>
+                                </li>
                             </ul>
                         </div>
 
-                        <form action="{{ route('admin.orders.update' , $order) }}" method="post" id="edit-item">
-                            @method('patch')
-                            @csrf
-                            <div class="tab-content">
-                                <div class="tab-pane fade active show" id="form-tabs-post" role="tabpanel">
+
+                        <div class="tab-content">
+
+                            <div class="tab-pane fade active show" id="form-tabs-post" role="tabpanel">
+                                <form action="{{ route('admin.orders.update' , $order) }}" method="post" id="edit-item">
+                                    @method('patch')
+                                    @csrf
                                     <div class="row g-3 mb-4">
                                         <div class="col-md-6">
                                             <label class="form-label" for="created_at">تاریخ سفارش</label>
                                             <input type="text" class="date-picker form-control" name="created_at"
-                                                   autocomplete="off" value="{{$order->created_at ?? old('created_at')}}">
+                                                   autocomplete="off"
+                                                   value="{{$order->created_at ?? old('created_at')}}">
                                         </div>
                                         <div class="col-md-6">
                                             <label for="select2Basic" class="form-label">موبایل کاربر</label>
-                                            <select name="user_id" id="select2Basic" class="form-select select2" required>
+                                            <select name="user_id" id="select2Basic" class="form-select select2"
+                                                    required>
                                                 <option value="">انتخاب کنید</option>
                                                 @foreach(\App\Models\User::all() as $user)
                                                     <option
@@ -62,16 +73,44 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <label for="watermark" class="form-label">واتر مارک</label>
-                                            <input type="text" class="form-control" name="watermark" id="watermark"
-                                                   placeholder="مثلا: +۹۸۹۱۲۱۲۳۰۳۷۴" value="{{old('watermark')}}">
-                                        </div>
                                     </div>
-                                </div>
+                                </form>
 
                             </div>
-                        </form>
+
+
+                            <div class="tab-pane" id="form-tabs-licence" role="tabpanel">
+                                <form action="{{route('order.create.spot.licence' , $order->id)}}" method="post">
+                                    @method('post')
+                                    @csrf
+                                    <div class="g-3 mb-3">
+                                        @if($order->spot_player_log)
+                                            <div class="alert alert-primary my-3" role="alert">
+                                                {{$order->spot_player_log}}
+                                            </div>
+                                        @endif
+                                        <div class="col-12">
+                                            <label for="spot_player_id" class="form-label">شناسه اسپات پلیر</label>
+                                            <input class="form-control" type="text" id="spot_player_id"
+                                                   name="spot_player_id" value="{{$order->spot_player_id}}" disabled>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="watermark" class="form-label">واتر مارک</label>
+                                            <input type="text" class="form-control" name="watermark" id="watermark"
+                                                   placeholder="مثلا: +۹۸۹۱۲۱۲۳۰۳۷۴"
+                                                   value="{{$order->spot_player_watermark ?? old('watermark')}}">
+                                        </div>
+
+                                            <input type="submit" class="my-3 btn btn-success btn-sm w-100" value="ساخت لایسنس">
+                                    </div>
+
+
+                                </form>
+
+                            </div>
+
+
+                        </div>
                     </div>
                 </div>
 
@@ -84,23 +123,34 @@
 
                         </div>
                         <hr>
+                        <div class="ps-3 p-3 ">
 
+                            <div class="alert alert-info d-flex align-items-center justify-content-between"
+                                 role="alert">
+                                <h4 class="mb-0">مجموع:</h4>
+                                <h4 class="mb-0">
+                                    {{number_format($order->price)}}
+                                    تومان
+                                </h4>
+                            </div>
+                        </div>
                         <div class="ps-3 p-3">
                             <div class="mb-3">
                                 <label class="form-label" for="status">وضعیت سفارش</label>
                                 <select class="form-select" name="status" id="status"
                                         form="create-item">
                                     <option value="">انتخاب کنید</option>
-                                    <option value="completed" {{old('status') == 'completed' ? 'selected' : ''}}>تکمیل
+                                    <option value="completed" {{$order->status == 'completed' ? 'selected' : ''}}>تکمیل
                                         شده
                                     </option>
-                                    <option value="pending" {{old('status') == 'pending' ? 'selected' : ''}}>در حال
+                                    <option value="pending" {{$order->status == 'pending' ? 'selected' : ''}}>در حال
                                         انجام
                                     </option>
-                                    <option value="cancelled" {{old('status') == 'cancelled' ? 'selected' : ''}}>لغو
+                                    <option value="cancelled" {{$order->status  == 'cancelled' ? 'selected' : ''}}>لغو
                                         شده
                                     </option>
-                                    <option value="returned" {{old('status') == 'returned' ? 'selected' : ''}}>عودت داده
+                                    <option value="returned" {{$order->status  == 'returned' ? 'selected' : ''}}>عودت
+                                        داده
                                         شده
                                     </option>
                                 </select>
@@ -111,9 +161,12 @@
                                 <select class="form-select" name="payment_method" id="payment_method"
                                         form="create-item">
                                     <option value="">انتخاب کنید</option>
-                                    <option value="card" {{old('status') == 'card' ? 'selected' : ''}}>کارت به کارت
+                                    <option value="card" {{$order->payment_method  == 'card' ? 'selected' : ''}}>کارت به
+                                        کارت
                                     </option>
-                                    <option value="shahparak" {{old('status') == 'shahparak' ? 'selected' : ''}}>پرداخت
+                                    <option
+                                        value="shaparak" {{$order->payment_method  == 'shaparak' ? 'selected' : ''}}>
+                                        پرداخت
                                         اینترنتی
                                     </option>
                                 </select>
@@ -122,11 +175,11 @@
                             <div class="my-3">
                                 <label for="short-description" class="form-label">یادداشت</label>
                                 <textarea class="form-control" rows="8" name="notes" id="notes"
-                                          form="create-item">{{old('notes')}}</textarea>
+                                          form="create-item">{{$order->notes ?? old('notes')}}</textarea>
                             </div>
 
                             <div class="pt-4 d-flex align-items-center justify-content-between">
-                                <button type="submit" class="btn btn-sm btn-primary " form="create-item">ایجاد آیتم
+                                <button type="submit" class="btn btn-sm btn-primary " form="create-item">بروز رسانی
                                 </button>
                             </div>
                         </div>

@@ -12,3 +12,4 @@ use Modules\Order\Http\Controllers\admin\OrderController;
 //});
 
 Route::resource('orders', OrderController::class);
+Route::post('admin/createSpotLicence/{order}' , [\Modules\Order\Http\Controllers\admin\OrderController::class , 'createSpotLicence'])->name('create.spot.licence');
