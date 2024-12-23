@@ -14,7 +14,7 @@
         <div class="container-xxl flex-grow-1 container-p-y">
             <div class="row">
                 <div class="col-md-8">
-                    <h3>افزودن سفارش جدید</h3>
+                    <h3>ویرایش سفارش {{$order->id}}#</h3>
                     <hr>
                     <div class="card mb-3">
                         <div class="card-header border-bottom">
@@ -29,8 +29,8 @@
                             </ul>
                         </div>
 
-                        <form action="{{ route('admin.orders.store') }}" method="post" id="create-item">
-                            @method('post')
+                        <form action="{{ route('admin.orders.update' , $order) }}" method="post" id="edit-item">
+                            @method('patch')
                             @csrf
                             <div class="tab-content">
                                 <div class="tab-pane fade active show" id="form-tabs-post" role="tabpanel">
@@ -38,7 +38,7 @@
                                         <div class="col-md-6">
                                             <label class="form-label" for="created_at">تاریخ سفارش</label>
                                             <input type="text" class="date-picker form-control" name="created_at"
-                                                   autocomplete="off">
+                                                   autocomplete="off" value="{{$order->created_at ?? old('created_at')}}">
                                         </div>
                                         <div class="col-md-6">
                                             <label for="select2Basic" class="form-label">موبایل کاربر</label>
@@ -46,7 +46,7 @@
                                                 <option value="">انتخاب کنید</option>
                                                 @foreach(\App\Models\User::all() as $user)
                                                     <option
-                                                        value="{{$user->id}}" {{old('phone') == $user->id ? 'selected' : ''}}>{{$user->phone . ' | ' . $user->first_name . ' ' .$user->last_name}}</option>
+                                                        value="{{$user->id}}" {{$order->user_id == $user->id ? 'selected' : ''}}>{{$user->phone . ' | ' . $user->first_name . ' ' .$user->last_name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -57,7 +57,7 @@
                                                         name="products[]" multiple>
                                                     @foreach(\Modules\Product\Models\Product::all() as $product)
                                                         <option
-                                                            value="{{ $product->id }}" {{old('products') == $product->id ? 'selected' : ''}}>{{ $product->title }}</option>
+                                                            value="{{ $product->id }}" {{$order->products->contains($product) ? 'selected' : ''}}>{{ $product->title }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -113,7 +113,7 @@
                                     <option value="">انتخاب کنید</option>
                                     <option value="card" {{old('status') == 'card' ? 'selected' : ''}}>کارت به کارت
                                     </option>
-                                    <option value="shaparak" {{old('status') == 'shaparak' ? 'selected' : ''}}>پرداخت
+                                    <option value="shahparak" {{old('status') == 'shahparak' ? 'selected' : ''}}>پرداخت
                                         اینترنتی
                                     </option>
                                 </select>

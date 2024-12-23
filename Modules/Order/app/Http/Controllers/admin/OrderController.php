@@ -13,6 +13,7 @@ use Modules\Product\Models\Product;
 class OrderController extends Controller
 {
     use SEOTools;
+
     public function index()
     {
         $this->seo()->setTitle('سفارش ها');
@@ -81,8 +82,8 @@ class OrderController extends Controller
 
             foreach ($validData['products'] as $product) {
                 $product = Product::whereId($product)->first();
+                $spot_keys[] = $product->spot_player_key;
                 $total = ($product->isOnSale() ? $product->sale_price : $product->price) + $total;
-
             }
 
 
@@ -94,8 +95,21 @@ class OrderController extends Controller
                 'notes' => $validData['notes'],
                 'price' => $total,
             ]);
-
             $order->products()->attach($validData['products']);
+
+            //if status was completed then send a request to spot player api for create lice`nse
+            if ($order->status == 'completed') {
+                $spot_response = self::createSpotPlayerLicence(
+                    $order->user->first_name . ' ' . $order->user->last_name,
+                    array_filter($spot_keys, null),
+                    $validData['watermark'] ? $validData['watermark'] : $order->user->phone);
+
+                if ($spot_response->status() == 200) {
+
+                }else {
+                    $order->update(['status' => 'pending']);
+                }
+            }
 
             activity()
                 ->causedBy(auth()->user())
@@ -177,6 +191,65 @@ class OrderController extends Controller
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
+        }
+    }
+
+    protected static function createSpotPlayerLicence($name, $courses, $watermarks)
+    {
+
+        $api_key = config('services.spotplayer.api');
+
+        function filter($a): array
+        {
+            return array_filter($a, function ($v) {
+                return !is_null($v);
+            });
+        }
+
+        function request($u, $o = null)
+        {
+            $api_key = config('services.spotplayer.api');
+            curl_setopt_array($c = curl_init(), [
+                CURLOPT_URL => $u,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_CUSTOMREQUEST => $o ? 'POST' : 'GET',
+                CURLOPT_SSL_VERIFYHOST => false,
+                CURLOPT_SSL_VERIFYPEER => false,
+                CURLOPT_FOLLOWLOCATION => false,
+                CURLOPT_HTTPHEADER => ['$API: ' . $api_key, '$LEVEL: -1', 'content-type: application/json'],
+            ]);
+            if ($o) curl_setopt($c, CURLOPT_POSTFIELDS, json_encode(filter($o)));
+            $json = json_decode(curl_exec($c), true);
+            curl_close($c);
+            if (is_array($json) && ($ex = @$json['ex'])) throw new \Exception($ex['msg']);
+            return $json;
+        }
+
+        function license($name, $courses, $watermarks, $test = true)
+        {
+            return request('https://panel.spotplayer.ir/license/edit/', [
+                'test' => false,
+                'name' => $name,
+                'course' => $courses,
+                'watermark' => ['texts' => array_map(function ($w) {
+                    return ['text' => $w];
+                }, $watermarks)]
+            ]);
+        }
+
+        try {
+            $L = license($name, $courses, [$watermarks], false);
+            return response()->json([
+                'status' => 'success',
+                'id' => 'ID: ' . ($LID = $L['_id']),
+                'key' => 'KEY: ' . $L['key'],
+                'url' => 'URL: https://dl.spotplayer.ir/' . $L['url']
+            ], 200);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 400);
         }
     }
 
