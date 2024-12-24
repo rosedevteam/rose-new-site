@@ -41,6 +41,10 @@ return [
 
     'sms' => [
         'api' => env('SMS_API'),
+    ],
+
+    'spotplayer' => [
+        'api' => env('SPOT_PLAYER_API'),
     ]
 
 ];
