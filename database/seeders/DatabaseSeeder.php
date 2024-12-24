@@ -201,57 +201,102 @@ class DatabaseSeeder extends Seeder
     private function seedProducts(): void
     {
         $product1 = Product::factory()->create([
-            'title' => "دوره حسابدار نخبه",
+            'title' => "دوره تخصصی FIS",
             'user_id' => 1,
-            'price' => 2000000,
-            'short_description' => "هشذلحهشذسلشخسلدشسجخیلدشسجخلدشخسهیلجخیشسدخجهدذشسجخدذجشخسیدهذشسدذخهجش",
+            'price' => 11000000,
+            'short_description' => "",
+            'sale_price' => 5460000,
+            'content' => "test",
+            'status' => 'draft',
+            'comment_status' => 1,
+            'image' => "",
+            'slug' => "dore-fis",
+            'spot_player_key' => '619636a27ff03979c37fc360'
+        ]);
+        $product2 = Product::factory()->create([
+            'title' => "مسیر ثروت ساز با آموزش طلا و نقره",
+            'user_id' => 1,
+            'price' => 3000000,
+            'short_description' => "",
+            'sale_price' => 1299000,
+            'content' => "",
+            'status' => 'draft',
+            'comment_status' => 0,
+            'image' => "",
+            'slug' => "masir-servat-saz",
+            'spot_player_key' => '6210b0b5637d0950ee5ea2bb'
+        ]);
+        $product3 = Product::factory()->create([
+            'title' => "مینی دوره مدیریت بحران مالی",
+            'user_id' => 1,
+            'price' => 0,
+            'short_description' => "شسذهل",
             'sale_price' => null,
-            'content' => "asdfn;onasgA",
+            'content' => "",
             'status' => 'public',
             'comment_status' => 1,
             'image' => "asdijbnag",
-            'slug' => "asdbniaskgadsg",
-            'spot_player_key' => '635faca3dc6fbb9779bf0164'
-        ]);
-        $product2 = Product::factory()->create([
-            'title' => "هخشصذدلهخصشلد",
-            'user_id' => 1,
-            'price' => 2000000,
-            'short_description' => "هشذلحهشذسلشخسلدشسجخیلدشسجخلدشخسهیلجخیشسدخجهدذشسجخدذجشخسیدهذشسدذخهجش",
-            'sale_price' => 1900000,
-            'content' => "asdfn;onasgA",
-            'status' => 'draft',
-            'comment_status' => 0,
-            'image' => "asdijbnag",
-            'slug' => "asdbniadsg",
-            'spot_player_key' => null
-        ]);
-        $product3 = Product::factory()->create([
-            'title' => "شسیمتهلدشل",
-            'user_id' => 3,
-            'price' => 3000000,
-            'short_description' => "شسذهل",
-            'sale_price' => 1500000,
-            'content' => "asdfn;onasgA",
-            'status' => 'hidden',
-            'comment_status' => 1,
-            'image' => "asdijbnag",
-            'slug' => "aognasdgnasdbniadsg",
+            'slug' => "modirat-mali",
             'spot_player_key' => null
         ]);
         $product4 = Product::factory()->create([
-            'title' => "هخشصذدلهخصشلد",
-            'user_id' => 2,
-            'price' => 2000000,
-            'short_description' => "هشذلحهشذسلشخسلدشسجخیلدشسجخلدشخسهیلجخیشسدخجهدذشسجخدذجشخسیدهذشسدذخهجش",
-            'sale_price' => 1500000,
-            'content' => "asdfn;onasgA",
+            'title' => "دوره حسابدار نخبه",
+            'user_id' => 1,
+            'price' => 13000000,
+            'short_description' => "نه تنها در کشور ما بلکه در تمامی کشورهای دنیا ، افرادی  که اگاهی و دانش در مسائل مالی دارند از درآمد بالایی برخوردارند و  مجموعه آموزشی رز مفتخر است به صورت کامل و جامع …",
+            'sale_price' => 4599000,
+            'content' => "",
             'status' => 'public',
-            'comment_status' => 0,
-            'image' => "asdijbnag",
-            'slug' => "asdbni234234adsg",
+            'comment_status' => 1,
+            'image' => "",
+            'slug' => "hesabdar-nokhbe",
+            'spot_player_key' => '635faca3dc6fbb9779bf0164'
+        ]);
+
+        $product5 = Product::factory()->create([
+            'title' => "دوره تخصصی FAC ( بنیادی ارز دیجیتال )",
+            'user_id' => 1,
+            'price' => 13000000,
+            'short_description' => "نه تنها در کشور ما بلکه در تمامی کشورهای دنیا ، افرادی  که اگاهی و دانش در مسائل مالی دارند از درآمد بالایی برخوردارند و  مجموعه آموزشی رز مفتخر است به صورت کامل و جامع …",
+            'sale_price' => 4360000,
+            'content' => "",
+            'status' => 'draft',
+            'comment_status' => 1,
+            'image' => "",
+            'slug' => "fac-course",
             'spot_player_key' => null
         ]);
+
+        $product6 = Product::factory()->create([
+            'title' => "دوره جامع بنیادی بورس (FIS + افزایش سرمایه)",
+            'user_id' => 1,
+            'price' => 17950000,
+            'short_description' => "نه تنها در کشور ما بلکه در تمامی کشورهای دنیا ، افرادی  که اگاهی و دانش در مسائل مالی دارند از درآمد بالایی برخوردارند و  مجموعه آموزشی رز مفتخر است به صورت کامل و جامع …",
+            'sale_price' => 9498000,
+            'content' => "",
+            'status' => 'draft',
+            'comment_status' => 1,
+            'image' => "",
+            'slug' => "dore-jame",
+            'spot_player_key' => null
+        ]);
+
+        $product7 = Product::factory()->create([
+            'title' => "مدیریت زندگی مالی (FLM)",
+            'user_id' => 1,
+            'price' => 8000000,
+            'short_description' => "در دنیای پرشتاب و پیچیده بازارهای مالی، معامله‌گری صرفاً به دانش و علم مالی محدود نمی‌شود، قدرت ذهن و هوش روانشناختی نقشی اساسی در کسب سود و پرهیز از ضرر و همچنین موفقیت …",
+            'sale_price' => 2990000,
+            'content' => "",
+            'status' => 'public',
+            'comment_status' => 1,
+            'image' => "",
+            'slug' => "flm-course",
+            'spot_player_key' => '65e56b64f0db10220b5b8758'
+        ]);
+
+
+
     }
 
     private function seedPosts(): void
@@ -286,14 +331,14 @@ class DatabaseSeeder extends Seeder
         $order2 = Order::factory()->create([
             'user_id' => 1,
             'price' => 1000000,
-            'status' => "cancelled",
+            'status' => "completed",
             'payment_method' => 'shaparak',
             'spot_player_licence' => 'SADFasfsfgaergaer',
             'spot_player_id' => '234dfgrth',
             'spot_player_log' => 'لایسنس با موفقیت ساخته شد',
             'spot_player_watermark' => '09125342039',
         ]);
-        $order2->products()->attach([2]);
+        $order2->products()->attach([1]);
 
         $order3 = Order::factory()->create([
             'user_id' => 1,

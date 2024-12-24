@@ -100,8 +100,10 @@
                                                    placeholder="مثلا: +۹۸۹۱۲۱۲۳۰۳۷۴"
                                                    value="{{$order->spot_player_watermark ?? old('watermark')}}">
                                         </div>
+                                            @if(!$order->spot_player_id)
+                                                <input type="submit" class="my-3 btn btn-success btn-sm w-100" value="ساخت لایسنس">
 
-                                            <input type="submit" class="my-3 btn btn-success btn-sm w-100" value="ساخت لایسنس">
+                                            @endif
                                     </div>
 
 
@@ -138,7 +140,7 @@
                             <div class="mb-3">
                                 <label class="form-label" for="status">وضعیت سفارش</label>
                                 <select class="form-select" name="status" id="status"
-                                        form="create-item">
+                                        form="edit-item">
                                     <option value="">انتخاب کنید</option>
                                     <option value="completed" {{$order->status == 'completed' ? 'selected' : ''}}>تکمیل
                                         شده
@@ -159,7 +161,7 @@
                             <div class="mb-3">
                                 <label class="form-label" for="payment_method">نوع پرداخت</label>
                                 <select class="form-select" name="payment_method" id="payment_method"
-                                        form="create-item">
+                                        form="edit-item">
                                     <option value="">انتخاب کنید</option>
                                     <option value="card" {{$order->payment_method  == 'card' ? 'selected' : ''}}>کارت به
                                         کارت
@@ -175,11 +177,11 @@
                             <div class="my-3">
                                 <label for="short-description" class="form-label">یادداشت</label>
                                 <textarea class="form-control" rows="8" name="notes" id="notes"
-                                          form="create-item">{{$order->notes ?? old('notes')}}</textarea>
+                                          form="edit-item">{{$order->notes ?? old('notes')}}</textarea>
                             </div>
 
                             <div class="pt-4 d-flex align-items-center justify-content-between">
-                                <button type="submit" class="btn btn-sm btn-primary " form="create-item">بروز رسانی
+                                <button type="submit" class="btn btn-sm btn-primary " form="edit-item">بروز رسانی
                                 </button>
                             </div>
                         </div>
