@@ -53,6 +53,7 @@ class StudentReportController extends Controller
                 'description' => 'nullable',
             ]);
 
+            $validData['date'] = $this->convertNums($validData['date']);
             $name = 'student-report-' . now()->timestamp . "." . request()->file('analysis')->extension();
             request()->file('analysis')->storeAs('student-reports', $name);
 
@@ -110,25 +111,78 @@ class StudentReportController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(StudentReport $studentreport)
     {
-        return view('studentreport::edit');
+        Gate::authorize('edit-student-reports');
+        try {
+            return view('studentreport::admin.edit', compact('studentreport'));
+        } catch (\Throwable $th) {
+            alert()->error($th->getMessage());
+            return back();
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(StudentReport $studentreport)
     {
-        //
+        Gate::authorize('edit-student-reports');
+        try {
+            $validData = request()->validate([
+                'company' => 'required',
+                'date' => 'required',
+                'analysis' => 'bail|nullable|file',
+                'description' => 'nullable',
+            ]);
+
+            $validData['date'] = $this->convertNums($validData['date']);
+            if (!is_null(request()->file('analysis'))) {
+                $name = 'student-report-' . now()->timestamp . "." . request()->file('analysis')->extension();
+                request()->file('analysis')->storeAs('student-reports', $name);
+            } else {
+                $name = $studentreport->analysis;
+            }
+
+            $studentreport->update([
+                'company' => $validData['company'],
+                'date' => $this->convertNums($validData['date']),
+                'analysis' => $name,
+                'description' => $validData['description'],
+            ]);
+
+            activity()
+                ->withProperties([auth()->user()->name(), $studentreport, $validData])
+                ->log('ویرایش تحلیل');
+            alert()->success('موفق', 'تحلیل با موفقیت ویرایش شد');
+
+            return redirect(route('admin.studentreports.edit', $studentreport));
+        } catch (\Throwable $th) {
+            alert()->error($th->getMessage());
+            return back();
+
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(StudentReport $studentreport)
     {
-        //
+        Gate::authorize('delete-student-reports');
+        try {
+            $studentreport->delete();
+
+            activity()
+                ->withProperties([auth()->user()->name(), $studentreport])
+                ->log('حذف تحلیل');
+            alert()->success('موفق', 'تحلیل با موفقیت حذف شد');
+
+            return redirect(route('admin.studentreports.index'));
+        } catch (\Throwable $th) {
+            alert()->error($th->getMessage());
+            return back();
+        }
     }
 
     public function analysis(StudentReport $studentReport)

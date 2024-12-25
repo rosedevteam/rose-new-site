@@ -17,18 +17,20 @@
         <div class="container-xxl flex-grow-1 container-p-y">
             <div class="row">
                 <div class="col-md-8">
-                    <h3>ساخت تحلیل جدید</h3>
+                    <h3>ویرایش تحلیل</h3>
                     <hr>
                     <div class="card mb-3">
                         <div class="tab-content">
-                            <form action="{{ route('admin.studentreports.store') }}" method="post" id="create-item"
+                            <form action="{{ route('admin.studentreports.update', $studentreport) }}" method="post"
+                                  id="edit-item"
                                   enctype="multipart/form-data">
-                                @method('post')
+                                @method('PATCH')
                                 @csrf
                                 <div class="row">
                                     <div class="row g-3">
                                         <label for="adminEditor" class="form-label">توضیحات</label>
-                                        <textarea id="adminEditor" name="description">{{old('description')}}</textarea>
+                                        <textarea id="adminEditor"
+                                                  name="description">{{ $studentreport->description }}</textarea>
                                     </div>
                                 </div>
                             </form>
@@ -47,29 +49,38 @@
                         <div class="ps-3 p-3">
                             <div class="mb-3">
                                 <label class="form-label" for="analysis">تحلیل</label>
-                                <input id="analysis" type="file" name="analysis" class="form-control" form="create-item"
-                                       value="{{ old('analysis') }}">
+                                <input id="analysis" type="file" name="analysis" class="form-control" form="edit-item"
+                                       value="">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="date">تاریخ تحلیل</label>
                                 <input type="text" class="form-control date-picker" id="date" name="date"
-                                       form="create-item"
-                                       value="{{ old('date') }}"
-                                       autocomplete="off"
+                                       value="{{ $studentreport->date }}"
+                                       autocomplete="off" form="edit-item"
                                        required>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="company">شرکت</label>
-                                <input type="text" class="form-control" id="company" name="company" form="create-item"
-                                       value="{{ old('company') }}"
+                                <input type="text" class="form-control" form="edit-item" id="company" name="company"
+                                       value="{{ $studentreport->company }}"
                                        required>
                             </div>
                             <div class="row">
                                 <div class="col mt-2">
-                                    <button type="submit" class="btn btn-primary" form="create-item">ثبت</button>
+                                    <button type="submit" class="btn btn-primary" form="edit-item">ثبت</button>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="card">
+                        <div class="ps-3 p-3 d-flex align-items-center justify-content-between">
+                            <h5>فایل فعلی</h5>
+                        </div>
+                        <hr>
+                        <div class="ps-3 pe-3 mb-3">
+                            <a href="{{ route('admin.studentreports.analysis', $studentreport) }}">{{ $studentreport->analysis }}</a>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -97,8 +108,9 @@
         $(document).ready(function () {
             $(".date-picker").persianDatepicker({
                 initialValue: false,
-                format: 'YYYY/MM/DD',
+                initialValueType: "persian",
                 autoClose: true,
+                format: 'YYYY/MM/DD',
                 maxDate: new persianDate(),
             });
         });

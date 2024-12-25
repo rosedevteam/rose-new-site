@@ -95,11 +95,15 @@
         $(document).ready(function () {
             $(".date-picker").persianDatepicker({
                 initialValue: false,
-                format: 'YYYY/MM/DD HH:mm:ss',
+                format: 'YYYY/MM/DD HH:mm',
+                autoClose: true,
                 minDate: new persianDate(),
                 timePicker: {
                     enabled: true,
                     meridian: {
+                        enabled: false,
+                    },
+                    second: {
                         enabled: false,
                     },
                 },

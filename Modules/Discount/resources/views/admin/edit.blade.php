@@ -52,6 +52,7 @@
                             <div class="mb-3 col-md-3">
                                 <label class="form-label" for="expires_at">تاریخ انقضا</label>
                                 <input type="text" class="date-picker form-control"
+                                       value="{{ verta($discount->expires_at)->format('Y/m/d H:i') }}"
                                        name="expires_at" required>
                             </div>
                             <div class="mb-3 col-md-3">
@@ -127,9 +128,11 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $(".date-picker").persianDatepicker({
-                initialValue: '{{ verta($discount->expires_at)->format('Y/m/d-H:i') }}',
-                format: 'YYYY/MM/DD HH:mm:ss',
+                initialValue: false,
+                initialValueType: "persian",
+                format: 'YYYY/MM/DD HH:mm',
                 minDate: new persianDate(),
+                autoClose: true,
                 timePicker: {
                     enabled: true,
                     meridian: {

@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->string('analysis');
-            $table->date('date');
+            $table->string('date');
             $table->string('company');
             $table->longText('description')->nullable();
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
