@@ -83,13 +83,13 @@
                                     style="width: 10%;">تحلیل
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 10%;">تاریخ تحلیل
+                                    style="width: 5%;">تاریخ تحلیل
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 15%;">شرکت
+                                    style="width: 10%;">شرکت
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 15%;">وضعیت
+                                    style="width: 10%;">وضعیت
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 12%;">تاریخ ثبت
@@ -105,7 +105,9 @@
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column">
-                                                <span class="fw-semibold">{{ $report->user->name() }}</span>
+                                                <a class="text-truncate text-body"
+                                                   href="{{ route('admin.users.show', $report->user) }}"><span
+                                                        class="fw-semibold">{{ $report->user->name() }}</span></a>
                                             </div>
                                         </div>
                                     </td>
