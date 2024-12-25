@@ -125,9 +125,7 @@ class OrderController extends Controller
             }
 
             activity()
-                ->causedBy(auth()->user())
-                ->performedOn($order)
-                ->withProperties([auth()->user(), $order])
+                ->withProperties([auth()->user()->name(), $order, $validData])
                 ->log('ساخت سفارش');
             alert()->success('موفق', 'سفارش با موفقیت ساخته شد');
 
@@ -193,9 +191,7 @@ class OrderController extends Controller
             $order->products()->sync($validData['products']);
 
             activity()
-                ->causedBy(auth()->user())
-                ->performedOn($order)
-                ->withProperties([auth()->user(), $order, $old])
+                ->withProperties([auth()->user()->name(), $order, $old])
                 ->log('ویرایش سفارش');
 
             alert()->success('موفق', 'سفارش با موفقیت ,یرایش شد');
@@ -215,9 +211,7 @@ class OrderController extends Controller
             $order->delete();
 
             activity()
-                ->causedBy(auth()->user())
-                ->performedOn($order)
-                ->withProperties([auth()->user(), $order])
+                ->withProperties([auth()->user()->name(), $order])
                 ->log('حذف سفارش');
             alert()->success('موفق', 'سفارش با موفقیت حذف شد');
 
