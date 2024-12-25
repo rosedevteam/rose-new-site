@@ -26,6 +26,7 @@ const editor = grapesjs.init({
         'grapesjs-parser-postcss',
         'gjs-plugin-ckeditor' ,
     ],
+
     pluginsOpts: {
         'gjs-plugin-ckeditor': {
             position: 'right',
