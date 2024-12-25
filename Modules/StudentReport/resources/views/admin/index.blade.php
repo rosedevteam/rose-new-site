@@ -117,9 +117,15 @@
                                     <td>{{ $report->date }}</td>
                                     <td><span class="fw-semibold">{{ $report->company }}</span></td>
                                     <td>@switch($report->status)
-                                            @case("approved")تایید شده@break
-                                            @case("rejected") رد شده@break
-                                            @case("pending") در انتظار@break
+                                            @case("approved")
+                                                <span class="badge bg-success">تایید شده</span>
+                                                @break
+                                            @case("rejected")
+                                                <span class="badge bg-danger"> رد شده</span>
+                                               @break
+                                            @case("pending")
+                                                <span class="badge bg-secondary">در انتظار</span>
+                                                @break
                                         @endswitch</td>
                                     <td>{{ verta($report->created_at)->formatJalaliDateTime() }}</td>
                                     <td>
