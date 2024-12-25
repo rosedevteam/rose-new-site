@@ -38,7 +38,6 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::middleware('web')
             ->namespace($this->moduleNamespace)
-            ->name('order.')
             ->group(module_path('Post', 'routes/web.php'));
     }
 

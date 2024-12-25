@@ -106,4 +106,6 @@
             });
         });
     </script>
+    <x-admin::tinymce/>
+    <x-admin::filemanager-btn/>
 @endpush

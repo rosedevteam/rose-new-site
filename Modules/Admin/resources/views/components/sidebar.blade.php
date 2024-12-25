@@ -73,6 +73,14 @@
                 </a>
             </li>
         @endcan
+            @can('view-student-reports')
+                <li @class(["menu-item", 'active' => $route == 'studentreports'])>
+                    <a href="{{ route("admin.studentreports.index") }}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-abacus"></i>
+                        <div data-i18n="تحلیل ها">تحلیل ها</div>
+                    </a>
+                </li>
+            @endcan
         @can('view-job-offers')
                 <li @class(["menu-item", 'active' => $route == 'joboffers'])>
                 <a href="{{ route("admin.joboffers.index") }}" class="menu-link">

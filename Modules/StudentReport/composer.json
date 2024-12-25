@@ -1,0 +1,29 @@
+{
+    "name": "nwidart/studentreport",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\StudentReport\\": "app/",
+            "Modules\\StudentReport\\Database\\Factories\\": "database/factories/",
+            "Modules\\StudentReport\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\StudentReport\\Tests\\": "tests/"
+        }
+    }
+}

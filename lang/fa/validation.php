@@ -240,5 +240,6 @@ return [
 		"accountـnumber" => "شماره حساب",
         'start_date' => 'تاریخ شروع',
         'expires_at' => 'تاریخ انقضا',
+        'analysis' => 'تحلیل',
     ],
 ];

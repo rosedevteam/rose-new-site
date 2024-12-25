@@ -11,6 +11,7 @@ use Modules\Menu\Models\Menu;
 use Modules\Order\Models\Order;
 use Modules\Post\Models\Post;
 use Modules\Product\Models\Product;
+use Modules\StudentReport\Models\StudentReport;
 use Modules\User\Database\Factories\UserFactory;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -40,6 +41,11 @@ class User extends \Illuminate\Foundation\Auth\User
 
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function studentReports()
+    {
+        return $this->hasMany(StudentReport::class);
     }
 
     public function comments()

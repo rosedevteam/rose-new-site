@@ -13,5 +13,6 @@
     "Menu": true,
     "JobApplication": true,
     "Discount": true,
-    "Payment": true
+    "Payment": true,
+    "StudentReport": true
 }

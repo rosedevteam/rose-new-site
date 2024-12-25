@@ -3,10 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Modules\Category\Models\Category;
 use Modules\Comment\Models\Comment;
-use Modules\JobApplication\Models\JobApplication;
-use Modules\JobOffer\Models\JobOffer;
 use Modules\Menu\Models\Menu;
 use Modules\Order\Models\Order;
 use Modules\Payment\Models\Payment;
@@ -93,6 +90,11 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'edit-discounts']);
         Permission::create(['name' => 'create-discounts']);
         Permission::create(['name' => 'delete-discounts']);
+        //
+        Permission::create(['name' => 'view-student-reports']);
+        Permission::create(['name' => 'edit-student-reports']);
+        Permission::create(['name' => 'create-student-reports']);
+        Permission::create(['name' => 'delete-student-reports']);
         //
         Permission::create(['name' => 'set-roles']);
         Permission::create(['name' => 'view-logs']);

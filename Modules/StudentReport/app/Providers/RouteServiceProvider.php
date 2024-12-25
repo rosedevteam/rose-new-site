@@ -1,14 +1,14 @@
 <?php
 
-namespace Modules\User\Providers;
+namespace Modules\StudentReport\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
-    protected string $name = 'User';
-    protected string $moduleNamespace = 'Modules\User\Http\Controllers';
+    protected string $name = 'StudentReport';
+    protected string $moduleNamespace = 'Modules\StudentReport\Http\Controllers';
 
     /**
      * Called before routes are registered.
@@ -30,18 +30,6 @@ class RouteServiceProvider extends ServiceProvider
     }
 
     /**
-     * Define the "web" routes for the application.
-     *
-     * These routes all receive session state, CSRF protection, etc.
-     */
-    protected function mapWebRoutes(): void
-    {
-        Route::middleware('web')
-            ->namespace($this->moduleNamespace)
-            ->group(module_path('User', 'routes/web.php'));
-    }
-
-    /**
      * Define the "api" routes for the application.
      *
      * These routes are typically stateless.
@@ -52,6 +40,19 @@ class RouteServiceProvider extends ServiceProvider
             ->namespace($this->moduleNamespace . '\admin')
             ->prefix(config('services.admin.prefix'))
             ->name('admin.')
-            ->group(module_path('User', 'routes/admin.php'));
+            ->group(module_path('StudentReport', 'routes/admin.php'));
+    }
+
+    /**
+     * Define the "web" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     */
+    protected function mapWebRoutes(): void
+    {
+        Route::middleware('web')
+            ->namespace($this->moduleNamespace)
+            ->name('studentreport.')
+            ->group(module_path('StudentReport', 'routes/web.php'));
     }
 }
