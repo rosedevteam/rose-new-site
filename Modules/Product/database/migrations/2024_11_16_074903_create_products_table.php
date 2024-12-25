@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('short_description');
             $table->integer('price');
-            $table->integer('sale_price');
+            $table->integer('sale_price')->nullable();
             $table->integer('content');
             $table->enum('status', ['public', 'draft', 'hidden'])->default('draft');
             $table->boolean('comment_status')->default(true);

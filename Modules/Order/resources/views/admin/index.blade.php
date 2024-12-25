@@ -173,7 +173,7 @@
                                     </td>
                                     <td>
                                         <div class="d-flex gap-3 text-nowrap">
-                                            <a href="{{ route('admin.orders.edit', $orders) }}"
+                                            <a href="{{ route('admin.orders.edit', $order) }}"
                                                class="btn btn-sm btn-info">
                                                 ویرایش
                                             </a>

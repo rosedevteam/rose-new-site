@@ -106,7 +106,7 @@ class ProductController extends Controller
                 'price' => 'required',
                 'slug' => 'required',
                 'spot_player_key' => 'required',
-                'sale_price' => 'required',
+                'sale_price' => 'nullable',
                 'comment_status' => 'required',
                 'status' => 'required',
                 'image' => 'required'
