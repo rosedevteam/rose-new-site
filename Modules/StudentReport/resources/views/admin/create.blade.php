@@ -19,23 +19,27 @@
             <hr>
             <div class="card mb-3">
                 <div class="tab-content">
-                    <form action="{{ route('admin.studentreports.store') }}" method="post" id="create-item">
+                    <form action="{{ route('admin.studentreports.store') }}" method="post" id="create-item"
+                          enctype="multipart/form-data">
                         @method('post')
                         @csrf
                         <div class="row">
                             <div class="mb-3 col-4">
                                 <label class="form-label" for="analysis">تحلیل</label>
-                                <input id="analysis" type="file" name="analysis" class="form-control">
+                                <input id="analysis" type="file" name="analysis" class="form-control"
+                                       value="{{ old('analysis') }}">
                             </div>
                             <div class="mb-3 col-4">
                                 <label class="form-label" for="date">تاریخ تحلیل</label>
                                 <input type="text" class="form-control date-picker" id="date" name="date"
+                                       value="{{ old('date') }}"
                                        autocomplete="off"
                                        required>
                             </div>
                             <div class="mb-3 col-4">
                                 <label class="form-label" for="company">شرکت</label>
                                 <input type="text" class="form-control" id="company" name="company"
+                                       value="{{ old('company') }}"
                                        required>
                             </div>
                             <div class="row g-3">
@@ -43,7 +47,7 @@
                                 <textarea id="adminEditor" name="description">{{old('description')}}</textarea>
                             </div>
                             <div class="row">
-                                <div class="col">
+                                <div class="col mt-2">
                                     <button type="submit" class="btn btn-primary">ثبت</button>
                                 </div>
                             </div>

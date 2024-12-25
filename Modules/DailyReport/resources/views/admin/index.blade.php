@@ -71,7 +71,7 @@
                                     style="width: 15%;">فایل
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 15%;">عملیت
+                                    style="width: 5%;">عملیت
                                 </th>
                             </tr>
                             </thead>
@@ -96,8 +96,9 @@
                                     </td>
                                     <td><span
                                             class="fw-semibold">{{ $dailyReport->title }}</span></td>
-                                    <td><a href="{{ asset('/daily-reports/' . $dailyReport->file) }}"
-                                           download="true">{{ $dailyReport->file }}</a></td>
+                                    <td>
+                                        <a href="{{ route('admin.dailyreports.file', $dailyReport) }}">{{ $dailyReport->file }}</a>
+                                    </td>
                                     <td>
                                         <div class="d-flex gap-3 text-nowrap">
                                             {{--                                            <a href="{{ route('admin.dailyreports.edit', $dailyReport) }}"--}}

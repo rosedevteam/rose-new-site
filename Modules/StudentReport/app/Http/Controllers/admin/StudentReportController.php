@@ -49,18 +49,18 @@ class StudentReportController extends Controller
             $validData = $request->validate([
                 'company' => 'required',
                 'date' => 'required',
-                'analysis' => 'required|file',
+                'analysis' => 'bail|required|file',
                 'description' => 'nullable',
             ]);
 
-            dd(request()->file('analysis'));
-            $name = 'student-report-' . now()->timestamp . request()->file('analysis')->extension();
-            request()->file('analysis')->storeAs('student-reports', $name, 'public');
+            $name = 'student-report-' . now()->timestamp . "." . request()->file('analysis')->extension();
+            request()->file('analysis')->storeAs('student-reports', $name);
 
             $analysis = auth()->user()->studentReports()->create([
                 'company' => $validData['company'],
                 'date' => $this->convertNums($validData['date']),
                 'analysis' => $name,
+                'description' => $validData['description'],
             ]);
 
             activity()
@@ -129,5 +129,20 @@ class StudentReportController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function analysis(StudentReport $studentReport)
+    {
+        Gate::authorize('view-student-reports');
+        try {
+            $filePath = storage_path('app/private/student-reports/' . $studentReport->analysis);
+            if (file_exists($filePath)) {
+                return response()->download($filePath);
+            }
+            return redirect(route('admin.studentreports.index'));
+        } catch (\Throwable $th) {
+            alert()->error($th->getMessage());
+            return redirect(route('admin.studentreports.index'));
+        }
     }
 }

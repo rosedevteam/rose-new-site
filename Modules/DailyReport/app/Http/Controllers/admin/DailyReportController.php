@@ -50,7 +50,8 @@ class DailyReportController extends Controller
             ]);
 
             $name = 'daily-report-' . now()->timestamp . '.pdf';
-            request()->file('file')->storeAs('daily-reports', $name, 'public');
+            request()->file('file')->storeAs('daily-reports', $name);
+
             $dailyReport = DailyReport::create([
                 'title' => $data['date'],
                 'file' => $name,
@@ -85,6 +86,21 @@ class DailyReportController extends Controller
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
+        }
+    }
+
+    public function file(DailyReport $dailyReport)
+    {
+        Gate::authorize('view-daily-reports');
+        try {
+            $filePath = storage_path('app/private/daily-reports/' . $dailyReport->file);
+            if (file_exists($filePath)) {
+                return response()->download($filePath);
+            }
+            return route('admin.dailyreports.index');
+        } catch (\Throwable $th) {
+            alert()->error($th->getMessage());
+            return route('admin.dailyreports.index');
         }
     }
 }

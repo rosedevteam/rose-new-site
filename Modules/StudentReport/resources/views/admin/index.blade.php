@@ -89,6 +89,9 @@
                                     style="width: 15%;">شرکت
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                    style="width: 15%;">وضعیت
+                                </th>
+                                <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 12%;">تاریخ ثبت
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
@@ -106,13 +109,20 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td><span class="fw-semibold">{{ $report->analysis }}</span></td>
+                                    <td>
+                                        <a href="{{ route('admin.studentreports.analysis', $report) }}">{{ $report->analysis }}</a>
+                                    </td>
                                     <td>{{ $report->date }}</td>
                                     <td><span class="fw-semibold">{{ $report->company }}</span></td>
-                                    <td>{{ verta($user->created_at)->formatJalaliDateTime() }}</td>
+                                    <td>@switch($report->status)
+                                            @case("approved")تایید شده@break
+                                            @case("rejected") رد شده@break
+                                            @case("pending") در انتظار@break
+                                        @endswitch</td>
+                                    <td>{{ verta($report->created_at)->formatJalaliDateTime() }}</td>
                                     <td>
                                         <div class="d-flex gap-3 text-nowrap">
-                                            <a href="{{ route('admin.studentreports.show', $report) }}"
+                                            <a href="{{ route('admin.studentreports.edit', $report) }}"
                                                class="btn btn-sm btn-info">
                                                 ویرایش
                                             </a>
