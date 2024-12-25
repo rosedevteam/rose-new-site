@@ -14,5 +14,6 @@
     "JobApplication": true,
     "Discount": true,
     "Payment": true,
-    "StudentReport": true
+    "StudentReport": true,
+    "PageBuilder": true
 }
