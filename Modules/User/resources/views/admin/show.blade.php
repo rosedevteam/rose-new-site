@@ -2,10 +2,6 @@
 
 @section('content')
     <div class="content-wrapper">
-        <!-- Content -->
-        @if($errors->any())
-            <div class="alert alert-danger" style="padding-right: 80px">{{ $errors->first() }}</div>
-        @endif
         <div class="container-xxl flex-grow-1 container-p-y">
             <div class="row gy-4">
                 <!-- User Sidebar -->
@@ -204,11 +200,6 @@
                                         <label class="form-label" for="last_name">نام خانوادگی</label>
                                         <input type="text" id="last_name" name="last_name"
                                                class="form-control" placeholder="{{ $user->last_name }}">
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <label class="form-label" for="phone">شماره موبایل</label>
-                                        <input type="text" id="phone" name="phone"
-                                               class="form-control" placeholder="{{ $user->phone }}">
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <label class="form-label" for="email">ایمیل</label>

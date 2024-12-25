@@ -137,7 +137,6 @@ class UserController extends Controller
             $userData = request()->validate([
                 'first_name' => 'bail|nullable|string|max:255',
                 'last_name' => 'bail|nullable|string|max:255',
-                'phone' => 'bail|nullable|string|digits:11|unique:users,phone',
                 'email' => 'bail|nullable|string|email|unique:users,email',
             ]);
             $billingData = null;
