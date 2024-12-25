@@ -134,6 +134,7 @@ class StudentReportController extends Controller
                 'date' => 'required',
                 'analysis' => 'bail|nullable|file',
                 'description' => 'nullable',
+                'status' => 'required|in:approved,rejected,pending',
             ]);
 
             $validData['date'] = $this->convertNums($validData['date']);
@@ -149,6 +150,7 @@ class StudentReportController extends Controller
                 'date' => $this->convertNums($validData['date']),
                 'analysis' => $name,
                 'description' => $validData['description'],
+                'status' => $validData['status'],
             ]);
 
             activity()

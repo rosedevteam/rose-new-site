@@ -65,6 +65,22 @@
                                        value="{{ $studentreport->company }}"
                                        required>
                             </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="status">وضعیت</label>
+                                <select class="form-select" name="status" id="status" form="edit-item">
+                                    <option
+                                        value="approved" {{ $studentreport->status == 'approved' ? 'selected' : '' }}>
+                                        تایید شده
+                                    </option>
+                                    <option
+                                        value="rejected" {{ $studentreport->status == 'rejected' ? 'selected' : '' }}>رد
+                                        شده
+                                    </option>
+                                    <option value="pending" {{ $studentreport->status == 'pending' ? 'selected' : '' }}>
+                                        در انتظار
+                                    </option>
+                                </select>
+                            </div>
                             <div class="row">
                                 <div class="col mt-2">
                                     <button type="submit" class="btn btn-primary" form="edit-item">ثبت</button>
