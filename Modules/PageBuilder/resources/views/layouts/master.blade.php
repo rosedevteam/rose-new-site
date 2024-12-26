@@ -13,8 +13,8 @@
     <!-- Style -->
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script  src="{{asset('assets/admin/grapesjs/grapes.min.js')}}"></script>
-    <link rel="stylesheet" href="{{asset('assets/admin/grapesjs/css/grapes.min.css')}}">
+    <script  src="https://unpkg.com/grapesjs"></script>
+    <link rel="stylesheet" href="https://unpkg.com/grapesjs/dist/css/grapes.min.css">
 
     <script src="https://unpkg.com/grapesjs-typed"></script>
     <script src="https://unpkg.com/grapesjs-parser-postcss"></script>
@@ -59,7 +59,7 @@
 
 
 
-<script src="{{asset('assets/front/js/app.js')}}"></script>
+{{--<script src="{{asset('assets/front/js/app.js')}}"></script>--}}
 <script type="module" src="{{asset('assets/admin/js/pagebuilder.js')}}"></script>
 
 @yield('footer')

@@ -1,5 +1,5 @@
 
-import fa from '/assets/admin/grapesjs/locale/fa.js';
+import fa from '/assets/admin/js/grapesjs/fa.js';
 
 const editor = grapesjs.init({
     storageManager:false,
