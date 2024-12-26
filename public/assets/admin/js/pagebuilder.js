@@ -188,6 +188,52 @@ editor.BlockManager.add('rose-2-columns', {
         </div>`
 });
 
+editor.BlockManager.add('rose-3-columns', {
+    label: 'ردیف ۳ ستونه',
+    content:`
+        <div class="row">
+        <div class="col-md-4">
+        <p>ردیف اول</p>
+</div>
+        <div class="col-md-4">
+        <p>
+        ردیف دوم
+</p>
+</div>
+<div class="col-md-4">
+        <p>
+        ردیف سوم
+</p>
+</div>
+        </div>`
+});
+
+editor.BlockManager.add('rose-4-columns', {
+    label: 'ردیف ۴ ستونه',
+    content:`
+        <div class="row">
+        <div class="col-md-3">
+        <p>ردیف اول</p>
+</div>
+        <div class="col-md-3">
+        <p>
+        ردیف دوم
+</p>
+</div>
+<div class="col-md-3">
+        <p>
+        ردیف سوم
+</p>
+</div>
+<div class="col-md-3">
+        <p>
+        ردیف چهارم
+</p>
+</div>
+        </div>`
+});
+
+
 editor.BlockManager.add('rose-space', {
     label: 'فاصله',
     activate: true,
@@ -220,6 +266,56 @@ editor.BlockManager.add('rose-title', {
                 </h3>
             </div>
         </div>
+        `
+});
+
+editor.BlockManager.add('rose-7-years-road', {
+    label: 'مسیر ۷ ساله',
+    content:`
+   <div class="hex-container">
+        <div class="hex-row">
+            <a href="#daramad" id="daramad-item">
+                <div class="hexagon">کسب درآمد بیشتر</div>
+            </a>
+            <a href="#barname" id="barname-item">
+                <div class="hexagon">برنامه ریزی و اولویت بندی</div>
+            </a>
+        </div>
+        <div class="hex-row">
+            <a href="#varzesh" id="varzesh-item">
+                <div class="hexagon">ورزش جسم و ذهن</div>
+            </a>
+            <a href="#amoozesh" id="amoozesh-item">
+                <div class="hexagon hex-center">آموزش</div>
+            </a>
+            <a href="#moshavere" id="moshavere-item">
+                <div class="hexagon">مشاوره و راهنما</div>
+            </a>
+        </div>
+        <div class="hex-row">
+            <a href="#ijad" id="ijad-item">
+                <div class="hexagon">ایجاد درآمد غیرفعال</div>
+            </a>
+            <a href="#hazine" id="hazine-item">
+                <div class="hexagon">کنترل هزینه و مخارج</div>
+            </a>
+        </div>
+    </div>
+        `
+});
+
+editor.BlockManager.add('rose-icon-box-1', {
+    label: 'آیکون باکس ۱',
+    content:`
+    <div class="icon-box-about">
+                    <img src="/uploads/teacher.svg" alt="">
+
+                    <div class="content p-3 mt-3 br-default">
+                        <p>
+                            بیش از 15 هزار دانش پذیر در طول مسیر خدمت رسانی
+                        </p>
+                    </div>
+                </div>
         `
 });
 
