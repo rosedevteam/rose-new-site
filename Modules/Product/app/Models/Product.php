@@ -50,6 +50,11 @@ class Product extends Model
         return $this->morphToMany(Category::class,  'categoryable');
     }
 
+    public function attributes()
+    {
+        return $this->hasMany(Attribute::class);
+    }
+
 
     public function isOnSale()
     {
