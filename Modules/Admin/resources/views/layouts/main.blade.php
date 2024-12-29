@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-
+    <meta name="csrf-token" content="{{csrf_token()}}" id="csrf">
     <meta charset="utf-8" name="description" content="">
 
     <!-- Favicon -->
@@ -81,6 +81,7 @@
 
 <script src="/assets/admin/vendor/libs/i18n/i18n.js"></script>
 <script src="/assets/admin/vendor/libs/typeahead-js/typeahead.js"></script>
+<script src="/assets/vendor/axios/axios.min.js"></script>
 
 <script src="/assets/admin/vendor/js/menu.js"></script>
 <!-- endbuild -->
