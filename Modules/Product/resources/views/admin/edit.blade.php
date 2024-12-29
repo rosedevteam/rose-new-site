@@ -1,5 +1,8 @@
 @extends('admin::layouts.main')
 
+@push('css')
+    <link rel="stylesheet" href="/assets/vendor/sweetalert/sweetalert2.css">
+@endpush
 
 @section('content')
 
@@ -36,7 +39,8 @@
                             </ul>
                         </div>
 
-                        <form action="{{ route('admin.products.update' , $product) }}" method="post" id="edit-item">
+                        <form action="{{ route('admin.products.update' , $product) }}" method="post" id="edit-item"
+                              enctype="multipart/form-data">
                             @method('patch')
                             @csrf
                             <div class="tab-content">
@@ -79,7 +83,7 @@
                                                            dir="ltr" aria-describedby="formtabs-password2">
                                                     <span class="input-group-text cursor-pointer"
                                                           id="formtabs-password2"><i
-                                                                class="bx bx-hide"></i></span>
+                                                            class="bx bx-hide"></i></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -93,7 +97,7 @@
                                                            dir="ltr" aria-describedby="formtabs-confirm-password2">
                                                     <span class="input-group-text cursor-pointer"
                                                           id="formtabs-confirm-password2"><i
-                                                                class="bx bx-hide"></i></span>
+                                                            class="bx bx-hide"></i></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -117,6 +121,88 @@
 
                             </div>
                         </form>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="mt-5 current-attrs">ویژگی های فعلی</h4>
+                            <form action="{{route('admin.attributes.update')}}" method="post" enctype="multipart/form-data">
+                                @method('patch')
+                                @csrf
+                            @foreach($product->attributes as $attr)
+
+                                <div class="row">
+                                    <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                                        <label class="form-label">عنوان</label>
+                                        <input type="text" name="attributes[{{$attr->id}}][attr_title]"
+                                               class="form-control text-start" value="{{$attr->title}}"
+                                               placeholder="">
+                                    </div>
+                                    <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                                        <label class="form-label">توضیحات</label>
+                                        <input type="text" name="attributes[{{$attr->id}}][attr_subtitle]"
+                                               class="form-control text-start" value="{{$attr->subtitle}}"
+                                               placeholder="">
+                                    </div>
+                                    <div class="mb-3 col-lg-3 col-12 mb-0">
+                                        <label for="image_label" class="form-label"> آیکون</label>
+                                        <input type="file" name="attributes[{{$attr->id}}][icon]" value="{{$attr->icon}}"
+                                               class="form-control">
+                                    </div>
+                                    <div
+                                        class="mb-3 col-lg-12 col-xl-2 col-12 d-flex align-items-center mb-0">
+                                        <button class="btn btn-label-danger mt-4" onclick="removeProductAttr({{$attr->id}} , $(this))">
+                                            <i class="bx bx-x me-1"></i>
+                                            <span class="align-middle">حذف</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <hr>
+
+                            @endforeach
+                                <button type="submit" class="btn btn-success">
+                                    <span class="align-middle">بروزرسانی</span>
+                                </button>
+                            </form>
+                            <form class="form-repeater">
+                                <h4 class="mt-5 current-attrs">ویژگی جدید</h4>
+
+                                <div data-repeater-list="attributes" class="new-attrs">
+                                    <div data-repeater-item>
+                                        <div class="row">
+                                            <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                                                <label class="form-label">عنوان</label>
+                                                <input type="text" name="attr_title"
+                                                       class="form-control text-start" placeholder="" form="edit-item">
+                                            </div>
+                                            <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                                                <label class="form-label">توضیحات</label>
+                                                <input type="text" name="attr_subtitle"
+                                                       class="form-control text-start" placeholder="" form="edit-item">
+                                            </div>
+                                            <div class="mb-3 col-lg-3 col-12 mb-0">
+                                                <label for="image_label" class="form-label"> آیکون</label>
+                                                <input type="file" name="icon" id="icon" class="form-control" form="edit-item">
+                                            </div>
+                                            <div class="mb-3 col-lg-12 col-xl-2 col-12 d-flex align-items-center mb-0">
+                                                <button class="btn btn-label-danger mt-4" data-repeater-delete>
+                                                    <i class="bx bx-x me-1"></i>
+                                                    <span class="align-middle">حذف</span>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="mb-0">
+
+                                    <button class="btn btn-primary" data-repeater-create>
+                                        <i class="bx bx-plus me-1"></i>
+                                        <span class="align-middle">افزودن</span>
+                                    </button>
+
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
 
@@ -143,7 +229,7 @@
                                 <label class="form-label" for="status">وضعیت</label>
                                 <select class="form-select" id="status" name="status" form="edit-item">
                                     <option
-                                            value="public" {{$product->status == 'public' ?  "selected" : '' }}>
+                                        value="public" {{$product->status == 'public' ?  "selected" : '' }}>
                                         منتشر
                                         شده
                                     </option>
@@ -160,7 +246,6 @@
                                 <input type="text" id="slug" name="slug" class="form-control" form="edit-item"
                                        value="{{$product->slug}}">
                             </div>
-
 
 
                             <div class="my-3">
@@ -205,4 +290,8 @@
 @push('script')
     <x-admin::tinymce/>
     <x-admin::filemanager-btn/>
+    <script src="/assets/admin/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
+    <script src="/assets/vendor/sweetalert/sweetalert2.js"></script>
+    <script src="/assets/admin/js/products/edit.js"></script>
+
 @endpush

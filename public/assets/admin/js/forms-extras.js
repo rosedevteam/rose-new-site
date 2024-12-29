@@ -5,16 +5,7 @@
 'use strict';
 
 (function () {
-  const textarea = document.querySelector('#autosize-demo'),
-    creditCard = document.querySelector('.credit-card-mask'),
-    phoneMask = document.querySelector('.phone-number-mask'),
-    dateMask = document.querySelector('.date-mask'),
-    timeMask = document.querySelector('.time-mask'),
-    numeralMask = document.querySelector('.numeral-mask'),
-    blockMask = document.querySelector('.block-mask'),
-    delimiterMask = document.querySelector('.delimiter-mask'),
-    customDelimiter = document.querySelector('.custom-delimiter-mask'),
-    prefixMask = document.querySelector('.prefix-mask');
+
 
   // Autosize
   // --------------------------------------------------------------------

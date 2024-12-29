@@ -1,6 +1,8 @@
 @extends('admin::layouts.main')
 
-
+@push('css')
+    <link rel="stylesheet" href="/assets/vendor/sweetalert/sweetalert2.css">
+@endpush
 @section('content')
 
     <div class="content-wrapper">
@@ -36,7 +38,7 @@
                             </ul>
                         </div>
 
-                        <form action="{{ route('admin.products.store') }}" method="post" id="create-item">
+                        <form action="{{ route('admin.products.store') }}" method="post" id="create-item" enctype="multipart/form-data">
                             @method('post')
                             @csrf
                             <div class="tab-content">
@@ -44,7 +46,8 @@
                                     <div class="row g-3 mb-4">
                                         <div class="col-md-12">
                                             <label class="form-label" for="title">نام</label>
-                                            <input type="text" id="title" name="title" class="form-control" value="{{old('title')}}">
+                                            <input type="text" id="title" name="title" class="form-control"
+                                                   value="{{old('title')}}">
                                         </div>
                                     </div>
                                     <div class="row g-3">
@@ -116,6 +119,47 @@
                             </div>
                         </form>
                     </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="mt-5">ویژگی های محصول</h4>
+                            <form class="form-repeater">
+                                <div data-repeater-list="attributes">
+                                    <div data-repeater-item>
+                                        <div class="row">
+                                            <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                                                <label class="form-label">عنوان</label>
+                                                <input type="text" name="attr_title"
+                                                       class="form-control text-start" placeholder="" form="create-item">
+                                            </div>
+                                            <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                                                <label class="form-label">توضیحات</label>
+                                                <input type="text" name="attr_subtitle"
+                                                       class="form-control text-start" placeholder="" form="create-item">
+                                            </div>
+                                            <div class="mb-3 col-lg-3 col-12 mb-0">
+                                                <label for="image_label" class="form-label"> آیکون</label>
+                                                <input type="file" name="icon" id="icon" class="form-control" form="create-item">
+                                            </div>
+                                            <div class="mb-3 col-lg-12 col-xl-2 col-12 d-flex align-items-center mb-0">
+                                                <button class="btn btn-label-danger mt-4" data-repeater-delete>
+                                                    <i class="bx bx-x me-1"></i>
+                                                    <span class="align-middle">حذف</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                </div>
+                                <div class="mb-0">
+                                    <button class="btn btn-primary" data-repeater-create>
+                                        <i class="bx bx-plus me-1"></i>
+                                        <span class="align-middle">افزودن</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="col-md-4">
@@ -161,13 +205,15 @@
 
                             <div class="my-3">
                                 <label class="form-label" for="spot_player_key">کلید اسپات پلیر</label>
-                                <input type="text" id="spot_player_key" name="spot_player_key" class="form-control" form="create-item"
+                                <input type="text" id="spot_player_key" name="spot_player_key" class="form-control"
+                                       form="create-item"
                                        value="{{ old('spot_player_key')}}" dir="ltr">
                             </div>
 
                             <div class="my-3">
                                 <label for="short-description" class="form-label">توضیح کوتاه</label>
-                                <textarea class="form-control" rows="8" name="short_description" id="short_description" form="create-item"></textarea>
+                                <textarea class="form-control" rows="8" name="short_description" id="short_description"
+                                          form="create-item"></textarea>
                             </div>
 
                             <div class="my-3">
@@ -199,4 +245,7 @@
 @push('script')
     <x-admin::tinymce/>
     <x-admin::filemanager-btn/>
+    <script src="/assets/admin/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
+    <script src="/assets/admin/js/products/create.js"></script>
+    <script src="/assets/vendor/sweetalert/sweetalert2.js"></script>
 @endpush

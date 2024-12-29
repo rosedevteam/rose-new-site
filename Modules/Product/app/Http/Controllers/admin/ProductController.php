@@ -3,14 +3,17 @@
 namespace Modules\Product\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Upload;
 use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 use Modules\Product\Models\Product;
 
 class ProductController extends Controller
 {
-    use SEOTools;
+    use SEOTools, Upload;
 
     public function index()
     {
@@ -66,11 +69,25 @@ class ProductController extends Controller
                 'sale_price' => 'required',
                 'comment_status' => 'required',
                 'status' => 'required',
-                'image' => 'required'
+                'image' => 'required',
+                'attributes' => 'nullable'
             ]);
             $validatedData['slug'] = implode('-', explode(' ', $validatedData['slug']));
 
-            $product = auth()->user()->products()->create($validatedData);
+            $product = auth()->user()->products()->create(Arr::except($validatedData, ['attributes']));
+
+            //TODO add categories to products
+
+            if ($validatedData['attributes']) {
+                foreach ($validatedData['attributes'] as $attribute) {
+                    $path = $this->uploadFile($attribute['icon'] , "/products/attrs");
+                    $product->attributes()->create([
+                        'title' => $attribute['attr_title'],
+                        'subtitle' => $attribute['attr_subtitle'],
+                        'icon' =>   '/uploads/' . $path,
+                    ]);
+                }
+            }
 
             activity()
                 ->withProperties([auth()->user()->name(), $product->title, $validatedData])
@@ -109,14 +126,25 @@ class ProductController extends Controller
                 'sale_price' => 'nullable',
                 'comment_status' => 'required',
                 'status' => 'required',
-                'image' => 'required'
+                'image' => 'required',
+                'attributes' => 'nullable'
             ]);
             $validatedData['slug'] = implode('-', explode(' ', $validatedData['slug']));
 
             $old = $product->toArray();
-            $product->update($validatedData);
-
-
+            $product->update(Arr::except($validatedData , 'attributes'));
+            dd($validatedData['attributes']);
+            if ($validatedData['attributes']) {
+                foreach ($validatedData['attributes'] as $attribute) {
+                    $path = $this->uploadFile($attribute['icon'] , "/products/attrs");
+                    $product->attributes()->create([
+                        'title' => $attribute['attr_title'],
+                        'subtitle' => $attribute['attr_subtitle'],
+                        'icon' =>   '/uploads/' . $path,
+                    ]);
+                }
+            }
+            //TODO add categories to products
 //            $product->categories()->sync($validatedData['categories']);
 
             activity()
@@ -125,7 +153,7 @@ class ProductController extends Controller
             alert()->success("موفق", "ویرایش با موفقیت انجام شد");
 
             return redirect(route('admin.products.edit', compact('product')));
-        }catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
         }
