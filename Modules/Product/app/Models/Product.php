@@ -55,6 +55,11 @@ class Product extends Model
         return $this->hasMany(Attribute::class);
     }
 
+    public function lessons()
+    {
+        return $this->hasMany(Lesson::class);
+    }
+
 
     public function isOnSale()
     {

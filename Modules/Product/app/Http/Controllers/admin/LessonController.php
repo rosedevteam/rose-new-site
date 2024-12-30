@@ -3,63 +3,61 @@
 namespace Modules\Product\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Upload;
 use Illuminate\Http\Request;
+use Modules\Product\Models\Lesson;
+use Modules\Product\Models\Product;
 
 class LessonController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    use Upload;
+    public function update(Request $request , Product $product)
     {
-        return view('product::index');
-    }
+        try {
+            $validData = $request->validate([
+                'lessons' => 'required'
+            ]);
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('product::create');
-    }
+            foreach ($validData['lessons'] as $index => $lesson) {
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+                $item = Lesson::whereId($index)->first();
+                $item->update($lesson);
+                if (isset($item['file'])) {
+                    $item->update([
+                        'file' => $validData['file']
+                    ]);
+                }
+            }
 
-    /**
-     * Show the specified resource.
-     */
-    public function show($id)
-    {
-        return view('product::show');
-    }
+            alert()->success('ویرایش ویژگی ها با موفقیت انجام شد');
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
-    {
-        return view('product::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id)
-    {
-        //
+            return back();
+        }catch(\Throwable $th) {
+            alert()->error("خطا", $th->getMessage());
+            return back();
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Lesson $lesson)
     {
-        //
+        try {
+
+            $lesson->delete();
+            activity()
+                ->withProperties([auth()->user()->name(), $lesson])
+                ->log('حذف درس از محصول');
+            return response()->json([
+                'success' => true,
+                'message' => 'درس با موفقیت حذف شد'
+            ] , 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => $th->getMessage()
+            ] , 400);
+        }
     }
 }

@@ -70,11 +70,14 @@ class ProductController extends Controller
                 'comment_status' => 'required',
                 'status' => 'required',
                 'image' => 'required',
-                'attributes' => 'nullable'
+                'attributes' => 'nullable',
+                'lessons' => 'nullable',
+                'is_free' => 'required',
             ]);
+
             $validatedData['slug'] = implode('-', explode(' ', $validatedData['slug']));
 
-            $product = auth()->user()->products()->create(Arr::except($validatedData, ['attributes']));
+            $product = auth()->user()->products()->create(Arr::except($validatedData, ['attributes' , 'lessons']));
 
             //TODO add categories to products
 
@@ -85,6 +88,16 @@ class ProductController extends Controller
                         'title' => $attribute['attr_title'],
                         'subtitle' => $attribute['attr_subtitle'],
                         'icon' =>   '/uploads/' . $path,
+                    ]);
+                }
+            }
+
+            if ($validatedData['lessons']) {
+                foreach ($validatedData['lessons'] as $lesson) {
+                    $product->lessons()->create([
+                        'title' => $lesson['lesson_title'],
+                        'duration' => $lesson['lesson_duration'],
+                        'file' =>   $lesson['file'],
                     ]);
                 }
             }
@@ -127,7 +140,9 @@ class ProductController extends Controller
                 'comment_status' => 'required',
                 'status' => 'required',
                 'image' => 'required',
-                'attributes' => 'nullable'
+                'attributes' => 'nullable',
+                'is_free' => 'required',
+                'lessons' => 'nullable'
             ]);
             $validatedData['slug'] = implode('-', explode(' ', $validatedData['slug']));
 

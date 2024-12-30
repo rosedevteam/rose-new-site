@@ -38,7 +38,8 @@
                             </ul>
                         </div>
 
-                        <form action="{{ route('admin.products.store') }}" method="post" id="create-item" enctype="multipart/form-data">
+                        <form action="{{ route('admin.products.store') }}" method="post" id="create-item"
+                              enctype="multipart/form-data">
                             @method('post')
                             @csrf
                             <div class="tab-content">
@@ -81,7 +82,6 @@
 
                                     </div>
                                 </div>
-
                             </div>
                         </form>
                     </div>
@@ -96,16 +96,66 @@
                                             <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
                                                 <label class="form-label">عنوان</label>
                                                 <input type="text" name="attr_title"
-                                                       class="form-control text-start" placeholder="" form="create-item">
+                                                       class="form-control text-start" placeholder=""
+                                                       form="create-item">
                                             </div>
                                             <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
                                                 <label class="form-label">توضیحات</label>
                                                 <input type="text" name="attr_subtitle"
-                                                       class="form-control text-start" placeholder="" form="create-item">
+                                                       class="form-control text-start" placeholder=""
+                                                       form="create-item">
                                             </div>
                                             <div class="mb-3 col-lg-3 col-12 mb-0">
                                                 <label for="image_label" class="form-label"> آیکون</label>
-                                                <input type="file" name="icon" id="icon" class="form-control" form="create-item">
+                                                <input type="file" name="icon" id="icon" class="form-control"
+                                                       form="create-item">
+                                            </div>
+                                            <div class="mb-3 col-lg-12 col-xl-2 col-12 d-flex align-items-center mb-0">
+                                                <button class="btn btn-label-danger mt-4" data-repeater-delete>
+                                                    <i class="bx bx-x me-1"></i>
+                                                    <span class="align-middle">حذف</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                </div>
+                                <div class="mb-0">
+                                    <button class="btn btn-primary" data-repeater-create>
+                                        <i class="bx bx-plus me-1"></i>
+                                        <span class="align-middle">افزودن</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card mt-3" id="lessons-wrapper" style="display: none">
+                        <div class="card-body">
+                            <div class="alert alert-primary" role="alert">
+                                <h6 class="alert-heading mb-1">راهنما</h6>
+                                <span>برای آپلود فایل میبایست از طریق فایل منیجر فایل مورد نظر را آپلود و آدرس را داخل فیلد آدرس فایل کپی نمایید</span>
+                            </div>
+                            <h4 class="mt-5">لیست دروس</h4>
+                            <form class="form-repeater-lessons">
+                                <div data-repeater-list="lessons">
+                                    <div data-repeater-item>
+                                        <div class="row">
+                                            <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                                                <label class="form-label">عنوان</label>
+                                                <input type="text" name="lesson_title"
+                                                       class="form-control text-start" placeholder=""
+                                                       form="create-item">
+                                            </div>
+                                            <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                                                <label class="form-label">طول ویدیو</label>
+                                                <input type="text" name="lesson_duration"
+                                                       class="form-control text-start" placeholder=""
+                                                       form="create-item">
+                                            </div>
+                                            <div class="mb-3 col-lg-3 col-12 mb-0">
+                                                <label for="image_label" class="form-label"> آدرس فایل ویدیو</label>
+                                                <input type="text" name="file" class="form-control" form="create-item">
                                             </div>
                                             <div class="mb-3 col-lg-12 col-xl-2 col-12 d-flex align-items-center mb-0">
                                                 <button class="btn btn-label-danger mt-4" data-repeater-delete>
@@ -195,6 +245,18 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="my-3">
+                                <label for="image_label_1">فایل منیجر</label>
+                                <div class="mb-3">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary w-100 mt-3" type="button"
+                                                id="button-image-1">
+                                            فایل منیجر
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="pt-4 d-flex align-items-center justify-content-between">
                                 <button type="submit" class="btn btn-sm btn-primary " form="create-item">ایجاد آیتم
                                 </button>
@@ -211,6 +273,7 @@
 @push('script')
     <x-admin::tinymce/>
     <x-admin::filemanager-btn/>
+    <x-admin::filemanager-btn-1/>
     <script src="/assets/admin/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
     <script src="/assets/admin/js/products/create.js"></script>
     <script src="/assets/vendor/sweetalert/sweetalert2.js"></script>

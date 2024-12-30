@@ -10,6 +10,9 @@ use Modules\Product\Http\Controllers\admin\ProductController;
 //});
 
 Route::resource('products', ProductController::class);
+//attributes
 Route::delete('attributes/{attribute}' , [AttributeController::class , 'destroy'])->name('attributes.destroy');
 Route::patch('attributes/' , [AttributeController::class , 'update'])->name('attributes.update');
-
+//lessons
+Route::delete('lessons/{lesson}' , [\Modules\Product\Http\Controllers\Admin\LessonController::class , 'destroy'])->name('lessons.destroy');
+Route::patch('lessons/' , [\Modules\Product\Http\Controllers\Admin\LessonController::class , 'update'])->name('lessons.update');
