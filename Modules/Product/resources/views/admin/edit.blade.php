@@ -180,7 +180,7 @@
                         </div>
                     </div>
 
-                    <div class="card mt-3">
+                    <div class="card mt-3" @if($product->lessons->count() == 0) style="display: none" @endif>
                         <div class="card-body">
                             <h4 class="mt-5 current-attrs">دروس فعلی</h4>
                             <form action="{{route('admin.lessons.update')}}" method="post"
@@ -204,7 +204,7 @@
                                         </div>
                                         <div class="mb-3 col-lg-3 col-12 mb-0">
                                             <label for="image_label" class="form-label"> فایل</label>
-                                            <input type="file" name="lessons[{{$lesson->id}}][file]"
+                                            <input type="text" name="lessons[{{$lesson->id}}][file]"
                                                    value="{{$lesson->file}}"
                                                    class="form-control">
                                         </div>

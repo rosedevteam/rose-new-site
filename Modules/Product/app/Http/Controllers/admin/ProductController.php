@@ -144,18 +144,33 @@ class ProductController extends Controller
                 'is_free' => 'required',
                 'lessons' => 'nullable'
             ]);
+//            dd($validatedData);
             $validatedData['slug'] = implode('-', explode(' ', $validatedData['slug']));
 
             $old = $product->toArray();
-            $product->update(Arr::except($validatedData , 'attributes'));
+            $product->update(Arr::except($validatedData , ['attributes' , 'lessons']));
 
             if ($validatedData['attributes']) {
                 foreach ($validatedData['attributes'] as $attribute) {
-                    $path = $this->uploadFile($attribute['icon'] , "/products/attrs");
-                    $product->attributes()->create([
-                        'title' => $attribute['attr_title'],
-                        'subtitle' => $attribute['attr_subtitle'],
-                        'icon' =>   '/uploads/' . $path,
+                    //todo make a better condition for this section
+                    if ($attribute['icon']){
+                        $path = $this->uploadFile($attribute['icon'] , "/products/attrs");
+                        $product->attributes()->create([
+                            'title' => $attribute['attr_title'],
+                            'subtitle' => $attribute['attr_subtitle'],
+                            'icon' =>   '/uploads/' . $path,
+                        ]);
+                    }
+
+                }
+            }
+
+            if ($validatedData['lessons']) {
+                foreach ($validatedData['lessons'] as $lesson) {
+                    $product->lessons()->create([
+                        'title' => $lesson['lesson_title'],
+                        'duration' => $lesson['lesson_duration'],
+                        'file' =>   $lesson['lesson_file'],
                     ]);
                 }
             }
