@@ -3,13 +3,14 @@
 namespace Modules\Product\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Upload;
 use Illuminate\Http\Request;
 use Modules\Product\Models\Attribute;
 use Modules\Product\Models\Product;
 
 class AttributeController extends Controller
 {
-
+    use Upload;
     public function update(Request $request , Product $product)
     {
         try {
@@ -17,11 +18,24 @@ class AttributeController extends Controller
                 'attributes' => 'required'
             ]);
 
-            foreach ($product->attributes as $attribute) {
+            foreach ($validData['attributes'] as $index => $attribute) {
 
+                $attr = Attribute::whereId($index)->first();
+                $attr->update($attribute);
+                if (isset($attribute['icon'])) {
+                    $path = $this->uploadFile($attribute['icon'] , "/products/attrs");
+                    $attr->update([
+                        'icon' => '/upload/' . $path
+                    ]);
+                }
             }
-        }catch(\Throwable $th) {
 
+            alert()->success('ویرایش ویژگی ها با موفقیت انجام شد');
+
+            return back();
+        }catch(\Throwable $th) {
+            alert()->error("خطا", $th->getMessage());
+            return back();
         }
     }
 

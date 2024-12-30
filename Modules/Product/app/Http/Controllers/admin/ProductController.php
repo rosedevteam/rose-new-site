@@ -133,7 +133,7 @@ class ProductController extends Controller
 
             $old = $product->toArray();
             $product->update(Arr::except($validatedData , 'attributes'));
-            dd($validatedData['attributes']);
+
             if ($validatedData['attributes']) {
                 foreach ($validatedData['attributes'] as $attribute) {
                     $path = $this->uploadFile($attribute['icon'] , "/products/attrs");
@@ -149,7 +149,7 @@ class ProductController extends Controller
 
             activity()
                 ->withProperties([auth()->user()->name(), $product->title, $validatedData])
-                ->log('ویرایش پست');
+                ->log('ویرایش محصول');
             alert()->success("موفق", "ویرایش با موفقیت انجام شد");
 
             return redirect(route('admin.products.edit', compact('product')));

@@ -125,43 +125,51 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="mt-5 current-attrs">ویژگی های فعلی</h4>
-                            <form action="{{route('admin.attributes.update')}}" method="post" enctype="multipart/form-data">
+                            <form action="{{route('admin.attributes.update')}}" method="post"
+                                  enctype="multipart/form-data">
                                 @method('patch')
                                 @csrf
-                            @foreach($product->attributes as $attr)
+                                @foreach($product->attributes as $attr)
 
-                                <div class="row">
-                                    <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
-                                        <label class="form-label">عنوان</label>
-                                        <input type="text" name="attributes[{{$attr->id}}][attr_title]"
-                                               class="form-control text-start" value="{{$attr->title}}"
-                                               placeholder="">
+                                    <div class="row">
+                                        <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                                            <label class="form-label">عنوان</label>
+                                            <input type="text" name="attributes[{{$attr->id}}][title]"
+                                                   class="form-control text-start" value="{{$attr->title}}"
+                                                   placeholder="">
+                                        </div>
+                                        <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+                                            <label class="form-label">توضیحات</label>
+                                            <input type="text" name="attributes[{{$attr->id}}][subtitle]"
+                                                   class="form-control text-start" value="{{$attr->subtitle}}"
+                                                   placeholder="">
+                                        </div>
+                                        <div class="mb-3 col-lg-3 col-12 mb-0">
+                                            <label for="image_label" class="form-label"> آیکون</label>
+                                            <input type="file" name="attributes[{{$attr->id}}][icon]"
+                                                   value="{{$attr->icon}}"
+                                                   class="form-control">
+                                        </div>
+                                        <div
+                                            class="mb-3 col-lg-12 col-xl-2 col-12 d-flex align-items-center mb-0">
+                                            <a class="btn btn-label-danger mt-4"
+                                                    onclick="removeProductAttr({{$attr->id}} , $(this));">
+                                                <i class="bx bx-x me-1"></i>
+                                                <span class="align-middle">حذف</span>
+                                            </a>
+                                        </div>
                                     </div>
-                                    <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
-                                        <label class="form-label">توضیحات</label>
-                                        <input type="text" name="attributes[{{$attr->id}}][attr_subtitle]"
-                                               class="form-control text-start" value="{{$attr->subtitle}}"
-                                               placeholder="">
-                                    </div>
-                                    <div class="mb-3 col-lg-3 col-12 mb-0">
-                                        <label for="image_label" class="form-label"> آیکون</label>
-                                        <input type="file" name="attributes[{{$attr->id}}][icon]" value="{{$attr->icon}}"
-                                               class="form-control">
-                                    </div>
-                                    <div
-                                        class="mb-3 col-lg-12 col-xl-2 col-12 d-flex align-items-center mb-0">
-                                        <button class="btn btn-label-danger mt-4" onclick="removeProductAttr({{$attr->id}} , $(this))">
-                                            <i class="bx bx-x me-1"></i>
-                                            <span class="align-middle">حذف</span>
-                                        </button>
-                                    </div>
-                                </div>
-                                <hr>
+                                    <hr>
 
-                            @endforeach
-                                <button type="submit" class="btn btn-success">
-                                    <span class="align-middle">بروزرسانی</span>
-                                </button>
+                                @endforeach
+                                @if($product->attributes->count())
+                                    <button type="submit" class="btn btn-success">
+                                        <span class="align-middle">بروزرسانی</span>
+                                    </button>
+                                @else
+                                    <p>ویژگی ای وجود ندارد</p>
+                                @endif
+
                             </form>
                             <form class="form-repeater">
                                 <h4 class="mt-5 current-attrs">ویژگی جدید</h4>
@@ -181,7 +189,8 @@
                                             </div>
                                             <div class="mb-3 col-lg-3 col-12 mb-0">
                                                 <label for="image_label" class="form-label"> آیکون</label>
-                                                <input type="file" name="icon" id="icon" class="form-control" form="edit-item">
+                                                <input type="file" name="icon" id="icon" class="form-control"
+                                                       form="edit-item">
                                             </div>
                                             <div class="mb-3 col-lg-12 col-xl-2 col-12 d-flex align-items-center mb-0">
                                                 <button class="btn btn-label-danger mt-4" data-repeater-delete>

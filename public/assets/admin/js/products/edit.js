@@ -67,6 +67,7 @@ $(function () {
 });
 
 function removeProductAttr(attrId , e) {
+    // console.log()
     Swal.fire({
         title: "پاک کردن آیتم",
         text: "آیا از پاک کردن این آیتم مطمئین هستید؟",
@@ -94,7 +95,7 @@ function removeProductAttr(attrId , e) {
                     Swal.fire({
                         position: "center",
                         icon: "error",
-                        title: err.data.message,
+                        title: 'مشکلی در حذف به وجود آمده است',
                         showConfirmButton: false,
                         timer: 1500
                     });
