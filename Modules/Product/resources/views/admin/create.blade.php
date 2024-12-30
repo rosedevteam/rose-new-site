@@ -57,52 +57,18 @@
                                 </div>
                                 <div class="tab-pane fade" id="form-tabs-seo" role="tabpanel">
                                     <div class="row g-3">
-                                        <div class="col-md-6">
-                                            <label class="form-label" for="formtabs-username">نام کاربری</label>
-                                            <input type="text" id="formtabs-username" class="form-control text-start"
-                                                   placeholder="john.doe" dir="ltr">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label" for="formtabs-email">ایمیل</label>
-                                            <div class="input-group input-group-merge">
-                                            <span class="input-group-text" id="formtabs-email2"
-                                                  dir="ltr">@example.com</span>
-                                                <input type="text" id="formtabs-email" class="form-control text-start"
-                                                       placeholder="john.doe" aria-label="john.doe"
-                                                       aria-describedby="formtabs-email2" dir="ltr">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-password-toggle">
-                                                <label class="form-label" for="formtabs-password">رمز عبور</label>
-                                                <div class="input-group input-group-merge">
-                                                    <input type="password" id="formtabs-password"
-                                                           class="form-control text-start" placeholder="············"
-                                                           dir="ltr" aria-describedby="formtabs-password2">
-                                                    <span class="input-group-text cursor-pointer"
-                                                          id="formtabs-password2"><i
-                                                            class="bx bx-hide"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-password-toggle">
-                                                <label class="form-label" for="formtabs-confirm-password">تایید رمز
-                                                    عبور</label>
-                                                <div class="input-group input-group-merge">
-                                                    <input type="password" id="formtabs-confirm-password"
-                                                           class="form-control text-start" placeholder="············"
-                                                           dir="ltr" aria-describedby="formtabs-confirm-password2">
-                                                    <span class="input-group-text cursor-pointer"
-                                                          id="formtabs-confirm-password2"><i
-                                                            class="bx bx-hide"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="form-tabs-price" role="tabpanel">
                                     <div class="row g-3">
+                                        <div class="col-md-12">
+                                            <label class="form-label" for="is_free">محصول رایگان است؟</label>
+                                            <select name="is_free" id="is_free" class="form-select">
+                                                <option value="0" selected>خیر</option>
+                                                <option value="1">بله</option>
+                                            </select>
+                                        </div>
                                         <div class="col-md-6">
                                             <label class="form-label" for="price">قیمت عادی</label>
                                             <input type="text" id="price" name="price" class="form-control text-start"
