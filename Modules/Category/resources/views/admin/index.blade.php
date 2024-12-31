@@ -192,9 +192,9 @@
                                 <div class="mb-3">
                                     <label class="form-label" for="parent_id_edit">دسنه بندی مادر</label>
                                     <select id="parent_id_edit" name="parent_id_edit" class="form-select">
-                                        <option value="" selected>ندارد</option>
+                                        <option value="">ندارد</option>
                                         @foreach($parents as $c)
-                                            <option value="{{ $c->id }}"
+                                            <option value="{{ $c->id }}" class="form-control"
                                                     data-type="{{ $c->type }}">{{ $c->name }}</option>
                                         @endforeach
                                     </select>
@@ -272,17 +272,15 @@
                     Array.from(p.options).forEach(option => {
                         if (option.value === "") {
                             option.style.display = "";
-                        } else if (option.getAttribute("data-type") === type) {
+                        } else if (option.getAttribute("data-type") === type && option.value !== id) {
                             option.style.display = "";
                         } else {
                             option.style.display = "none";
                         }
-                        if (parentId === option.value) {
-                            // todo auto select default value
-                            option.selected = true;
-                        }
+                        option.selected = String(option.value) === String(parentId);
                     });
-                    p.value = "";
+
+                    p.value = parentId || "";
                 }
             });
         });
