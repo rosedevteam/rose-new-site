@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Menu\Http\Controllers\Admin;
+namespace Modules\Menu\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Slug;
