@@ -130,9 +130,10 @@
                                     </td>
                                     <td><span class="fw-semibold">
                                             @switch($post->status)
-                                                @case('public')منتشر شده@break
-                                                @case('draft')پیشنویس@break
-                                                @case('hidden')پنهان@break
+                                                @case('public')<span
+                                                    class="badge bg-label-success">منتشر شده</span>@break
+                                                @case('draft')<span class="badge bg-label-warning">پیشنویس</span>@break
+                                                @case('hidden')<span class="badge bg-label-secondary">پنهان</span>@break
                                             @endswitch
                                     </span></td>
                                     <td>{{ $post->comment_status ? 'باز' : 'بسته' }}</td>

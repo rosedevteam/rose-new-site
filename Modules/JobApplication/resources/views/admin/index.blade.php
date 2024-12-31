@@ -89,9 +89,9 @@
                                     <td><span class="fw-semibold">{{ $jobApplication->phone }}</span></td>
                                     <td>
                                         @switch($jobApplication->status)
-                                    @case('accepted')تایید شده@break
-                                    @case('pending')در حال بررسی@break
-                                    @case('rejected')رد شده@break
+                                            @case('accepted')<span class="badge bg-label-success">تایید شده</span>@break
+                                            @case('pending')<span class="badge bg-label-warning">حال بررسی</span>@break
+                                            @case('rejected')<span class="badge bg-label-danger">رد شده</span>@break
                                     @endswitch </td>
                                     <td>{{ verta($jobApplication->created_at)->formatJalaliDateTime() }}</td>
                                     <td>

@@ -124,7 +124,11 @@
                                             @endif</span></td>
                                     <td><a href="{{ route('admin.users.show', $discount->user) }}"
                                            class="text-body text-truncate">{{ $discount->user->name() }}</a></td>
-                                    <td>{{ $discount->is_active ? 'فعال' : "غیرفعال" }}</td>
+                                    <td>@if($discount->is_active)
+                                            <span class="badge bg-label-success">فعال</span>
+                                        @else
+                                            <span class="badge bg-label-danger">فیر فعال</span>
+                                        @endif</td>
                                     <td>
                                         <span class=fw-semibold">
                                             {{ verta($discount->expires_at)->formatJalaliDatetime() }}
