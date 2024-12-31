@@ -3,6 +3,7 @@
 namespace Modules\Post\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Slug;
 use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Illuminate\Http\Request;
@@ -10,7 +11,7 @@ use Modules\Post\Models\Post;
 
 class PostController extends Controller
 {
-    use SEOTools;
+    use SEOTools, Slug;
     public function index()
     {
         $this->seo()->setTitle('پست ها');
@@ -97,7 +98,7 @@ class PostController extends Controller
                 'categories.*' => 'nullable|exists:categories,id',
             ]);
 
-            $data['slug'] = implode('-', explode(' ', $data['slug']));
+            $data['slug'] = self::getSlug($data['slug']);
             $post = Post::create([
                 'title' => $data['title'],
                 'slug' => $data['slug'],
@@ -149,10 +150,9 @@ class PostController extends Controller
                 'categories.*' => '|nullable|exists:categories,id',
             ]);
 
-            $data['slug'] = implode('-', explode(' ', $data['slug']));
+            $data['slug'] = self::getSlug($data['slug']);
             $data['comment_status'] = $data['comment_status'] == 1;
 
-            $old = $post->toArray();
             $post->update([
                 'title' => $data['title'],
                 'slug' => $data['slug'],

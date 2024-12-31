@@ -166,7 +166,7 @@
                                 </div>
                             </div>
                             <div class="my-3">
-                                <label for="select2Primary" class="form-check-label">کتگوری ها</label>
+                                <label for="select2Primary" class="form-check-label">دسته بندی</label>
                                 <div class="select2-primary">
                                     <select id="select2Primary" class="select2 form-select" name="categories[]" form="edit-item" multiple>
                                         <option value="" type="hidden" selected></option>

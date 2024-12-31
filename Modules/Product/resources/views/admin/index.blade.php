@@ -97,7 +97,7 @@
                                     <td>
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column"><a
-                                                    href="{{ route('admin.products.show', $product) }}"
+                                                    href="{{ route('admin.products.edit', $product) }}"
                                                     class="text-body text-truncate">
                                                     <span class="fw-semibold">{{ $product->title }}</span>
                                                 </a>
@@ -113,9 +113,10 @@
                                     <td>
                                         <span class="fw-semibold">
                                             @switch($product->status)
-                                                @case('public')منتشر شده@break
-                                                @case('draft')پیشنویس@break
-                                                @case('hidden')پنهان@break
+                                                @case('public')<span
+                                                    class="badge bg-label-success">منتشر شده</span>@break
+                                                @case('draft')<span class="badge bg-label-warning">پیشنویس</span>@break
+                                                @case('hidden')<span class="badge bg-label-gray">پنهان</span>@break
                                             @endswitch
                                         </span>
                                     </td>

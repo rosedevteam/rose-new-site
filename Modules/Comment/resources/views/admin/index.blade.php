@@ -98,9 +98,10 @@
                                                 class="fw-semibold">{{ $comment->commentable->title ?: "کامنت " . $comment->user->name() }}</span></a>
                                     </td>
                                     <td>@switch($comment->status)
-                                            @case("approved")تایید شده@break
-                                            @case("rejected") رد شده@break
-                                            @case("pending") در انتظار@break
+                                            @case("approved")<span class="badge bg-label-success">تایید شده</span>@break
+                                            @case("rejected")<span class="badge bg-label-danger">رد شده</span>@break
+                                            @case("pending")<span
+                                                class="badge bg-label-secondary">در انتظار</span>@break
                                         @endswitch</td>
                                     <td>
                                         <div class="d-flex gap-3 text-nowrap">

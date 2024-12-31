@@ -401,7 +401,7 @@ class DatabaseSeeder extends Seeder
         Menu::factory()->create([
             'title' => 'صفحه نخست',
             'user_id' => 1,
-            'link' => "#",
+            'slug' => "#",
             'parent_id' => null,
             'order' => 0,
             'icon' => '#',
@@ -410,7 +410,7 @@ class DatabaseSeeder extends Seeder
         Menu::factory()->create([
             'title' => 'دوره ها',
             'user_id' => 1,
-            'link' => "#",
+            'slug' => "#",
             'parent_id' => null,
             'order' => 1,
             'icon' => '#',

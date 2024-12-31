@@ -1,8 +1,9 @@
 <?php
 
-namespace Modules\Menu\Http\Controllers\Admin;
+namespace Modules\Menu\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Slug;
 use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Illuminate\Http\Request;
@@ -11,7 +12,7 @@ use Modules\Menu\Models\Menu;
 class MenuController extends Controller
 {
 
-    use SEOTools;
+    use SEOTools, Slug;
 
     /**
      * Display a listing of the resource.
@@ -61,12 +62,12 @@ class MenuController extends Controller
             $validData = $request->validate([
                 'title' => 'required',
                 'parent_id' => 'nullable',
-                'link' => 'required',
+                'slug' => 'required',
                 'order' => 'nullable',
                 'icon' => 'nullable',
                 'subtitle' => 'nullable'
             ]);
-            $validData['link'] = implode('-' , $validData['link']);
+            $validData['slug'] = self::getSlug($validData['slug']);
 
             $menu = Menu::create($validData);
 

@@ -201,3 +201,5 @@ $('#is_free').on('change',function () {
         $('#lessons-wrapper').hide();
     }
 })
+
+// todo fix remove button logic

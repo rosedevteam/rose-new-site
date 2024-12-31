@@ -71,7 +71,6 @@ class CommentController extends Controller
                 'status' => 'required|string|in:pending,approved,rejected',
             ]);
 
-            $old = $comment->toArray();
             $comment->update($data);
 
             activity()
@@ -99,7 +98,7 @@ class CommentController extends Controller
                 'content' => $data['content'],
                 'commentable_id' => $comment->id,
                 'commentable_type' => "\\Modules\\Comment\\Models\\Comment",
-                'user-id' => auth()->id(),
+                'user_id' => auth()->id(),
                 'status' => 'approved',
             ]);
 

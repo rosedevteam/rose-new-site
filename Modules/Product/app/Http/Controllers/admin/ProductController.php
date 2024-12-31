@@ -3,17 +3,17 @@
 namespace Modules\Product\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Slug;
 use App\Upload;
 use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Storage;
 use Modules\Product\Models\Product;
 
 class ProductController extends Controller
 {
-    use SEOTools, Upload;
+    use SEOTools, Upload, Slug;
 
     public function index()
     {
@@ -52,7 +52,8 @@ class ProductController extends Controller
     {
         $this->seo('افزودن محصول جدید');
         Gate::authorize('create-products');
-        return view('product::admin.create');
+        $categories = Product::allCategories();
+        return view('product::admin.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -63,23 +64,27 @@ class ProductController extends Controller
                 'title' => 'required',
                 'short_description' => 'required',
                 'content' => 'required',
-                'price' => 'required',
-                'slug' => 'required',
+                'price' => 'required|numeric',
+                'slug' => 'required|unique:products,slug',
                 'spot_player_key' => 'required',
-                'sale_price' => 'required',
+                'sale_price' => 'nullable',
                 'comment_status' => 'required',
                 'status' => 'required',
                 'image' => 'required',
                 'attributes' => 'nullable',
                 'lessons' => 'nullable',
                 'is_free' => 'required',
+                'categories.*' => 'nullable|exists:categories,id',
             ]);
 
-            $validatedData['slug'] = implode('-', explode(' ', $validatedData['slug']));
+            $validatedData['slug'] = self::getSlug($validatedData['slug']);
 
-            $product = auth()->user()->products()->create(Arr::except($validatedData, ['attributes' , 'lessons']));
+            $product = auth()->user()->products()->create(Arr::except($validatedData, ['attributes' , 'lessons', 'categories']));
 
-            //TODO add categories to products
+            $validatedData['categories'] = array_filter($validatedData['categories'], function ($category) {
+                return !is_null($category);
+            });
+            $product->categories()->sync($validatedData['categories']);
 
             if ($validatedData['attributes']) {
                 foreach ($validatedData['attributes'] as $attribute) {
@@ -118,7 +123,8 @@ class ProductController extends Controller
     {
         Gate::authorize('edit-products');
         try {
-            return view('product::admin.edit', compact('product'));
+            $categories = Product::allCategories();
+            return view('product::admin.edit', compact('product', 'categories'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -140,15 +146,14 @@ class ProductController extends Controller
                 'comment_status' => 'required',
                 'status' => 'required',
                 'image' => 'required',
-                'attributes' => 'nullable',
                 'is_free' => 'required',
-                'lessons' => 'nullable'
+                'lessons' => 'nullable',
+                'attributes' => 'nullable',
+                'categories.*' => '|nullable|exists:categories,id',
             ]);
-//            dd($validatedData);
-            $validatedData['slug'] = implode('-', explode(' ', $validatedData['slug']));
+            $validatedData['slug'] = self::getSlug($validatedData['slug']);
 
-            $old = $product->toArray();
-            $product->update(Arr::except($validatedData , ['attributes' , 'lessons']));
+            $product->update(Arr::except($validatedData , ['attributes' , 'lessons', 'categories']));
 
             if ($validatedData['attributes']) {
                 foreach ($validatedData['attributes'] as $attribute) {
@@ -165,6 +170,11 @@ class ProductController extends Controller
                 }
             }
 
+            $validatedData['categories'] = array_filter($validatedData['categories'], function ($category) {
+                return !is_null($category);
+            });
+            $product->categories()->sync($validatedData['categories']);
+
             if ($validatedData['lessons']) {
                 foreach ($validatedData['lessons'] as $lesson) {
                     $product->lessons()->create([
@@ -174,8 +184,6 @@ class ProductController extends Controller
                     ]);
                 }
             }
-            //TODO add categories to products
-//            $product->categories()->sync($validatedData['categories']);
 
             activity()
                 ->withProperties([auth()->user()->name(), $product->title, $validatedData])
@@ -204,7 +212,6 @@ class ProductController extends Controller
     {
         Gate::authorize('delete-products');
         try {
-
             $product->delete();
 
             activity()

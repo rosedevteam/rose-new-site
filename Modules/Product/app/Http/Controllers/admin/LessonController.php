@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Product\Http\Controllers\Admin;
+namespace Modules\Product\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Upload;
@@ -52,7 +52,7 @@ class LessonController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'درس با موفقیت حذف شد'
-            ] , 200);
+            ]);
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,

@@ -29,7 +29,7 @@
                                            class="form-control">
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="select2Primary" class="form-check-label">کتگوری ها</label>
+                                    <label for="select2Primary" class="form-check-label">دسته بندی</label>
                                     <div class="select2-primary">
                                         <select id="select2Primary" class="select2 form-select" name="categories[]" multiple>
                                             @foreach($categories as $c)
