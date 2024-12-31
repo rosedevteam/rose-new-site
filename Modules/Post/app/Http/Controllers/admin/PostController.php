@@ -152,7 +152,6 @@ class PostController extends Controller
             $data['slug'] = implode('-', explode(' ', $data['slug']));
             $data['comment_status'] = $data['comment_status'] == 1;
 
-            $old = $post->toArray();
             $post->update([
                 'title' => $data['title'],
                 'slug' => $data['slug'],

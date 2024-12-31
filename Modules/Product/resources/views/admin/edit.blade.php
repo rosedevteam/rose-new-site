@@ -2,6 +2,12 @@
 
 @push('css')
     <link rel="stylesheet" href="/assets/vendor/sweetalert/sweetalert2.css">
+    <link rel="stylesheet" href="/assets/admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/admin/vendor/libs/typeahead-js/typeahead.css">
+    <link rel="stylesheet" href="/assets/admin/vendor/libs/select2/select2.css">
+    <link rel="stylesheet" href="/assets/admin/vendor/libs/tagify/tagify.css">
+    <link rel="stylesheet" href="/assets/admin/vendor/libs/bootstrap-select/bootstrap-select.css">
+    <link rel="stylesheet" href="/assets/admin/vendor/libs/typeahead-js/typeahead.css">
 @endpush
 
 @section('content')
@@ -256,6 +262,19 @@
                                        value="{{$product->slug}}">
                             </div>
 
+                            <div class="my-3">
+                                <label for="select2Primary" class="form-check-label">دسته بندی</label>
+                                <div class="select2-primary">
+                                    <select id="select2Primary" class="select2 form-select" name="categories[]"
+                                            form="create-item" multiple>
+                                        <option value="" type="hidden" selected></option>
+                                        @foreach($categories as $c)
+                                            <option
+                                                value="{{ $c->id }}">{{ ($c->parent?->name . (is_null($c->parent) ? '' : ': ')) . $c->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
 
                             <div class="my-3">
                                 <label class="form-label" for="spot_player_key">کلید اسپات پلیر</label>
@@ -303,4 +322,16 @@
     <script src="/assets/vendor/sweetalert/sweetalert2.js"></script>
     <script src="/assets/admin/js/products/edit.js"></script>
 
+    <script src="/assets/admin/js/products/create.js"></script>
+    <script src="/assets/admin/vendor/libs/select2/select2.js"></script>
+    <script src="/assets/admin/vendor/libs/select2/i18n/fa.js"></script>
+    <script src="/assets/admin/vendor/libs/tagify/tagify.js"></script>
+    <script src="/assets/admin/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+    <script src="/assets/admin/vendor/libs/bootstrap-select/i18n/defaults-fa_ir.js"></script>
+    <script src="/assets/admin/vendor/libs/typeahead-js/typeahead.js"></script>
+    <script src="/assets/admin/vendor/libs/bloodhound/bloodhound.js"></script>
+    <script src="/assets/admin/js/main.js"></script>
+    <script src="/assets/admin/js/forms-selects.js"></script>
+    <script src="/assets/admin/js/forms-tagify.js"></script>
+    <script src="/assets/admin/js/forms-typeahead.js"></script>
 @endpush
