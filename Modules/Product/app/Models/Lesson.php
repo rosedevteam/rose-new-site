@@ -2,11 +2,9 @@
 
 namespace Modules\Product\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Modules\Product\Database\Factories\LessonFactory;
-
-// use Modules\Product\Database\Factories\LessonFactory;
 
 class Lesson extends Model
 {

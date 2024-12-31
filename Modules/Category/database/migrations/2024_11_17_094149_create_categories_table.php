@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('type');
             $table->string('name');
             $table->foreignId('parent_id')->nullable()->constrained('categories')->cascadeOnDelete();
+            $table->string('archive_slug')->nullable();
             $table->timestamps();
         });
 

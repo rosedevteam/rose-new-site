@@ -3,6 +3,7 @@
 namespace Modules\Product\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Slug;
 use App\Upload;
 use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
@@ -12,7 +13,7 @@ use Modules\Product\Models\Product;
 
 class ProductController extends Controller
 {
-    use SEOTools, Upload;
+    use SEOTools, Upload, Slug;
 
     public function index()
     {
@@ -64,19 +65,19 @@ class ProductController extends Controller
                 'short_description' => 'required',
                 'content' => 'required',
                 'price' => 'required|numeric',
-                'slug' => 'required',
+                'slug' => 'required|unique:products,slug',
                 'spot_player_key' => 'required',
                 'sale_price' => 'nullable',
                 'comment_status' => 'required',
                 'status' => 'required',
-                'image' => 'required|image',
+                'image' => 'required',
                 'attributes' => 'nullable',
                 'lessons' => 'nullable',
                 'is_free' => 'required',
                 'categories.*' => 'nullable|exists:categories,id',
             ]);
 
-            $validatedData['slug'] = implode('-', explode(' ', $validatedData['slug']));
+            $validatedData['slug'] = self::getSlug($validatedData['slug']);
 
             $product = auth()->user()->products()->create(Arr::except($validatedData, ['attributes' , 'lessons', 'categories']));
 
@@ -150,7 +151,7 @@ class ProductController extends Controller
                 'attributes' => 'nullable',
                 'categories.*' => '|nullable|exists:categories,id',
             ]);
-            $validatedData['slug'] = implode('-', explode(' ', $validatedData['slug']));
+            $validatedData['slug'] = self::getSlug($validatedData['slug']);
 
             $product->update(Arr::except($validatedData , ['attributes' , 'lessons', 'categories']));
 
@@ -211,7 +212,6 @@ class ProductController extends Controller
     {
         Gate::authorize('delete-products');
         try {
-
             $product->delete();
 
             activity()

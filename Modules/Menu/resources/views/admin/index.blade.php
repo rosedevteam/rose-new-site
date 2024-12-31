@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="link">لینک</label>
-                                    <input type="text" class="form-control" id="link" name="link"
+                                    <input type="text" class="form-control" id="link" name="slug"
                                            {{old('link')}}
                                            required>
                                 </div>
