@@ -71,11 +71,14 @@ class ProductController extends Controller
                 'status' => 'required',
                 'image' => 'required',
                 'attributes' => 'nullable',
+                'lessons' => 'nullable',
+                'is_free' => 'required',
                 'categories.*' => 'nullable|exists:categories,id',
             ]);
+
             $validatedData['slug'] = implode('-', explode(' ', $validatedData['slug']));
 
-            $product = auth()->user()->products()->create(Arr::except($validatedData, ['attributes', 'categories']));
+            $product = auth()->user()->products()->create(Arr::except($validatedData, ['attributes' , 'lessons', 'categories']));
 
             $validatedData['categories'] = array_filter($validatedData['categories'], function ($category) {
                 return !is_null($category);
@@ -89,6 +92,16 @@ class ProductController extends Controller
                         'title' => $attribute['attr_title'],
                         'subtitle' => $attribute['attr_subtitle'],
                         'icon' =>   '/uploads/' . $path,
+                    ]);
+                }
+            }
+
+            if ($validatedData['lessons']) {
+                foreach ($validatedData['lessons'] as $lesson) {
+                    $product->lessons()->create([
+                        'title' => $lesson['lesson_title'],
+                        'duration' => $lesson['lesson_duration'],
+                        'file' =>   $lesson['file'],
                     ]);
                 }
             }
@@ -132,22 +145,28 @@ class ProductController extends Controller
                 'comment_status' => 'required',
                 'status' => 'required',
                 'image' => 'required',
+                'is_free' => 'required',
+                'lessons' => 'nullable',
                 'attributes' => 'nullable',
                 'categories.*' => '|nullable|exists:categories,id',
             ]);
             $validatedData['slug'] = implode('-', explode(' ', $validatedData['slug']));
 
             $old = $product->toArray();
-            $product->update(Arr::except($validatedData, ['attributes', 'categories']));
+            $product->update(Arr::except($validatedData , ['attributes' , 'lessons', 'categories']));
 
             if ($validatedData['attributes']) {
                 foreach ($validatedData['attributes'] as $attribute) {
-                    $path = $this->uploadFile($attribute['icon'] , "/products/attrs");
-                    $product->attributes()->create([
-                        'title' => $attribute['attr_title'],
-                        'subtitle' => $attribute['attr_subtitle'],
-                        'icon' =>   '/uploads/' . $path,
-                    ]);
+                    //todo make a better condition for this section
+                    if ($attribute['icon']){
+                        $path = $this->uploadFile($attribute['icon'] , "/products/attrs");
+                        $product->attributes()->create([
+                            'title' => $attribute['attr_title'],
+                            'subtitle' => $attribute['attr_subtitle'],
+                            'icon' =>   '/uploads/' . $path,
+                        ]);
+                    }
+
                 }
             }
 
@@ -155,6 +174,16 @@ class ProductController extends Controller
                 return !is_null($category);
             });
             $product->categories()->sync($validatedData['categories']);
+
+            if ($validatedData['lessons']) {
+                foreach ($validatedData['lessons'] as $lesson) {
+                    $product->lessons()->create([
+                        'title' => $lesson['lesson_title'],
+                        'duration' => $lesson['lesson_duration'],
+                        'file' =>   $lesson['lesson_file'],
+                    ]);
+                }
+            }
 
             activity()
                 ->withProperties([auth()->user()->name(), $product->title, $validatedData])
