@@ -90,7 +90,7 @@
                     </div>
                 </div>
 
-                @if(!is_null($orders))
+                @if(!is_null($orders) && !$orders->isEmpty())
                     <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
                         <div class="card mb-4">
                             <div class="card-header border-bottom">
@@ -109,29 +109,24 @@
                                             </th>
                                             <th class="sorting" tabindex="0" aria-controls="DataTables_Table_1"
                                                 rowspan="1"
-                                                colspan="1" style="width: 15%;"
-                                                aria-label=": فعال سازی نمایش به صورت صعودی">وضعیت
+                                                colspan="1" style="width: 15%;">وضعیت
                                             </th>
                                             <th class="sorting sorting_desc" tabindex="0"
                                                 aria-controls="DataTables_Table_1"
-                                                rowspan="1" colspan="1" style="width: 15%;"
-                                                aria-label=": فعال سازی نمایش به صورت صعودی" aria-sort="descending">روش
+                                                rowspan="1" colspan="1" style="width: 15%;">روش
                                                 پرداخت
                                             </th>
                                             <th class="sorting" tabindex="0" aria-controls="DataTables_Table_1"
                                                 rowspan="1"
-                                                colspan="1" style="width: 15%;"
-                                                aria-label="جمع: فعال سازی نمایش به صورت صعودی">قیمت خرید
+                                                colspan="1" style="width: 15%;">قیمت خرید
                                             </th>
                                             <th class="control sorting dtr-hidden" tabindex="0"
                                                 aria-controls="DataTables_Table_1" rowspan="1" colspan="1"
-                                                style="width: 15%;"
-                                                aria-label=": فعال سازی نمایش به صورت صعودی">تاریخ سفارش
+                                                style="width: 15%;">تاریخ سفارش
                                             </th>
                                             <th class="control sorting dtr-hidden" tabindex="0"
                                                 aria-controls="DataTables_Table_1" rowspan="1" colspan="1"
-                                                style="width: 15%;"
-                                                aria-label=": فعال سازی نمایش به صورت صعودی">آخرین تغییر
+                                                style="width: 15%;">ویرایش
                                             </th>
                                         </tr>
                                         </thead>
@@ -164,7 +159,14 @@
                                                     @endswitch</td>
                                                 <td>{{ $order->price }}</td>
                                                 <td>{{ verta($order->created_at)->formatJalaliDatetime() }}</td>
-                                                <td>{{ verta($order->updated_at)->formatJalaliDatetime() }}</td>
+                                                <td>
+                                                    <div class="d-flex gap-3 text-nowrap">
+                                                        <a href="{{ route('admin.orders.edit', $order) }}"
+                                                           class="btn btn-sm btn-info">
+                                                            ویرایش
+                                                        </a>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         @endforeach
                                         </tbody>

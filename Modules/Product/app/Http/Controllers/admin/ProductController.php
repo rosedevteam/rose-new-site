@@ -63,13 +63,13 @@ class ProductController extends Controller
                 'title' => 'required',
                 'short_description' => 'required',
                 'content' => 'required',
-                'price' => 'required',
+                'price' => 'required|numeric',
                 'slug' => 'required',
                 'spot_player_key' => 'required',
-                'sale_price' => 'required',
+                'sale_price' => 'nullable',
                 'comment_status' => 'required',
                 'status' => 'required',
-                'image' => 'required',
+                'image' => 'required|image',
                 'attributes' => 'nullable',
                 'lessons' => 'nullable',
                 'is_free' => 'required',
@@ -152,7 +152,6 @@ class ProductController extends Controller
             ]);
             $validatedData['slug'] = implode('-', explode(' ', $validatedData['slug']));
 
-            $old = $product->toArray();
             $product->update(Arr::except($validatedData , ['attributes' , 'lessons', 'categories']));
 
             if ($validatedData['attributes']) {

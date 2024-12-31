@@ -293,7 +293,6 @@
 @push('script')
     <x-admin::tinymce/>
     <x-admin::filemanager-btn/>
-    <x-admin::filemanager-btn-1/>
     <script src="/assets/admin/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
     <script src="/assets/admin/js/products/create.js"></script>
     <script src="/assets/vendor/sweetalert/sweetalert2.js"></script>
