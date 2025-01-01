@@ -49,12 +49,6 @@ class UserPolicy
         if ($user->hasRole('super-admin')) {
             return true;
         }
-        if ($model->hasRole('ادمین')) {
-            return false;
-        }
-        if ($user->hasRole('ادمین')) {
-            return true;
-        }
         if ($model->hasPermissionTo('admin-panel')) {
             return false;
         }

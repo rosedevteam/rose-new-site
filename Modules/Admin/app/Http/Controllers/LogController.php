@@ -34,4 +34,9 @@ class LogController extends Controller
         }
     }
 
+    public function show($id)
+    {
+        dd(Activity::whereId($id)->first());
+    }
+
 }

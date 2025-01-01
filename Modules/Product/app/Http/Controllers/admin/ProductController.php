@@ -3,11 +3,10 @@
 namespace Modules\Product\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Slug;
-use App\Upload;
+use App\traits\Slug;
+use App\traits\Upload;
 use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Modules\Product\Models\Product;
 
@@ -50,17 +49,22 @@ class ProductController extends Controller
 
     public function create()
     {
-        $this->seo('افزودن محصول جدید');
+        $this->seo()->setTitle('افزودن محصول جدید');
         Gate::authorize('create-products');
-        $categories = Product::allCategories();
-        return view('product::admin.create', compact('categories'));
+        try {
+            $categories = Product::allCategories();
+            return view('product::admin.create', compact('categories'));
+        } catch (\Throwable $th) {
+            alert()->error($th->getMessage());
+            return back();
+        }
     }
 
-    public function store(Request $request)
+    public function store()
     {
         Gate::authorize('create-products');
         try {
-            $validatedData = $request->validate([
+            $validatedData = request()->validate([
                 'title' => 'required',
                 'short_description' => 'required',
                 'content' => 'required',
@@ -131,11 +135,11 @@ class ProductController extends Controller
         }
     }
 
-    public function update(Request $request, Product $product)
+    public function update(Product $product)
     {
         Gate::authorize('edit-products');
         try {
-            $validatedData = $request->validate([
+            $validatedData = request()->validate([
                 'title' => 'required',
                 'short_description' => 'required',
                 'content' => 'required',
@@ -147,18 +151,17 @@ class ProductController extends Controller
                 'status' => 'required',
                 'image' => 'required',
                 'is_free' => 'required',
-                'lessons' => 'nullable',
-                'attributes' => 'nullable',
-                'categories.*' => '|nullable|exists:categories,id',
+                'lessons' => 'sometimes|nullable',
+                'lessons.*' => 'required',
+                'attributes' => 'sometimes|nullable',
+                'attributes.*' => 'required',
+                'categories.*' => 'nullable|exists:categories,id',
             ]);
             $validatedData['slug'] = self::getSlug($validatedData['slug']);
 
-            $product->update(Arr::except($validatedData , ['attributes' , 'lessons', 'categories']));
-
-            if ($validatedData['attributes']) {
+            if ($validatedData['attributes'] ?? false) {
                 foreach ($validatedData['attributes'] as $attribute) {
-                    //todo make a better condition for this section
-                    if ($attribute['icon']){
+                    if ($attribute['attr_title']) {
                         $path = $this->uploadFile($attribute['icon'] , "/products/attrs");
                         $product->attributes()->create([
                             'title' => $attribute['attr_title'],
@@ -170,20 +173,24 @@ class ProductController extends Controller
                 }
             }
 
+            if ($validatedData['lessons']) {
+                foreach ($validatedData['lessons'] as $lesson) {
+                    if ($lesson['lesson_title']) {
+                        $product->lessons()->create([
+                            'title' => $lesson['lesson_title'],
+                            'duration' => $lesson['lesson_duration'],
+                            'file' => $lesson['lesson_file'],
+                        ]);
+                    }
+                }
+            }
+
+            $product->update(Arr::except($validatedData, ['attributes', 'lessons', 'categories']));
+
             $validatedData['categories'] = array_filter($validatedData['categories'], function ($category) {
                 return !is_null($category);
             });
             $product->categories()->sync($validatedData['categories']);
-
-            if ($validatedData['lessons']) {
-                foreach ($validatedData['lessons'] as $lesson) {
-                    $product->lessons()->create([
-                        'title' => $lesson['lesson_title'],
-                        'duration' => $lesson['lesson_duration'],
-                        'file' =>   $lesson['lesson_file'],
-                    ]);
-                }
-            }
 
             activity()
                 ->withProperties([auth()->user()->name(), $product->title, $validatedData])

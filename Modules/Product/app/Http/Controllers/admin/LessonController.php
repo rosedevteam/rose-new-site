@@ -3,18 +3,17 @@
 namespace Modules\Product\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Upload;
-use Illuminate\Http\Request;
+use App\traits\Upload;
 use Modules\Product\Models\Lesson;
-use Modules\Product\Models\Product;
 
 class LessonController extends Controller
 {
     use Upload;
-    public function update(Request $request , Product $product)
+
+    public function update()
     {
         try {
-            $validData = $request->validate([
+            $validData = request()->validate([
                 'lessons' => 'required'
             ]);
 
@@ -24,7 +23,7 @@ class LessonController extends Controller
                 $item->update($lesson);
                 if (isset($item['file'])) {
                     $item->update([
-                        'file' => $validData['file']
+                        'file' => $lesson['file']
                     ]);
                 }
             }

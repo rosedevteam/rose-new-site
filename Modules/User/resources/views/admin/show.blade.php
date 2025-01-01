@@ -11,19 +11,10 @@
                         <div class="card-body">
                             <div class="user-avatar-section">
                                 <div class="d-flex align-items-center flex-column">
-                                    @if($user->avatar != null)
-                                        <img class="img-fluid rounded my-4" src="{{ $user->avatar }}"
-                                             height="110" width="110" alt="User avatar">
-                                    @else
-                                        <div class="avatar avatar-xl">
-                                        <span class="avatar-initial rounded-circle bg-label-info fs-5">
-                                            {{ substr($user->last_name, 0, 2) . ' ' . substr($user->first_name, 0, 2) }}</span>
-                                        </div>
-                                    @endif
                                     <div class="user-info text-center">
                                         <h5 class="mb-2">{{ $user->first_name . ' ' . $user->last_name }}</h5>
                                         @foreach($user->getRoleNames() as $role)
-                                            <span @class(['badge', 'bg-label-primary' => $role == 'مشتری', 'bg-label-reddit' => $role == 'ادمین', 'bg-label-info' => $role == 'نویسنده', 'bg-label-github' => $role == 'پشتیبان'])>{{ $role }}</span>
+                                            <span @class(['badge', 'bg-label-primary' => $role == 'مشتری', 'bg-label-reddit' => $role == 'ادمین', 'bg-label-info' => $role == 'نویسنده', 'bg-label-github' => $role == 'پشتیبان', 'bg-label-success' => $role == 'super-admin'])>{{ $role }}</span>
                                         @endforeach
                                     </div>
                                 </div>

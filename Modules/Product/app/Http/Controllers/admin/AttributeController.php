@@ -3,18 +3,17 @@
 namespace Modules\Product\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Upload;
-use Illuminate\Http\Request;
+use App\traits\Upload;
 use Modules\Product\Models\Attribute;
-use Modules\Product\Models\Product;
 
 class AttributeController extends Controller
 {
     use Upload;
-    public function update(Request $request , Product $product)
+
+    public function update()
     {
         try {
-            $validData = $request->validate([
+            $validData = request()->validate([
                 'attributes' => 'required'
             ]);
 

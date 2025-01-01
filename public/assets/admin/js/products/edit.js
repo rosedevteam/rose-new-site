@@ -133,7 +133,10 @@ function removeProductAttr(attrId , e) {
             axios.delete(
                 `/admin/attributes/${attrId}`
             ).then(function (res) {
-                    e.parent().parent().parent().slideUp()
+                const container = e.closest('.attribute-container');
+                container.slideUp(() => container.remove());
+                container.next('hr').remove();
+
                     Swal.fire({
                         position: "center",
                         icon: "success",
@@ -171,7 +174,10 @@ function removeProductLesson(lessonId , e) {
             axios.delete(
                 `/admin/lessons/${lessonId}`
             ).then(function (res) {
-                e.parent().parent().parent().slideUp()
+                const container = e.closest('.lesson-container');
+                container.slideUp(() => container.remove());
+                container.next('hr').remove();
+
                 Swal.fire({
                     position: "center",
                     icon: "success",
@@ -193,6 +199,11 @@ function removeProductLesson(lessonId , e) {
     });
 }
 
+if ($('#is_free').val() == '1') {
+    $('#lessons-wrapper').show();
+} else {
+    $('#lessons-wrapper').hide();
+}
 
 $('#is_free').on('change',function () {
     if ($(this).val() == 1){
@@ -201,5 +212,3 @@ $('#is_free').on('change',function () {
         $('#lessons-wrapper').hide();
     }
 })
-
-// todo fix remove button logic
