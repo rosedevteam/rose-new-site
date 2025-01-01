@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Modules\Category\Models\Category;
 use Modules\Comment\Models\Comment;
 use Modules\Discount\Models\Discount;
+use Modules\Metadata\Models\Metadata;
 use Modules\Order\Models\Order;
 use Modules\Product\Database\Factories\ProductFactory;
 use Modules\User\Models\User;
@@ -60,6 +61,10 @@ class Product extends Model
         return $this->hasMany(Lesson::class);
     }
 
+    public function metadata()
+    {
+        return $this->morphOne(Metadata::class, 'metadataable');
+    }
 
     public function isOnSale()
     {

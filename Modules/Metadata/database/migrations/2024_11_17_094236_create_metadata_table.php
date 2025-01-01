@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('metadata', function (Blueprint $table) {
             $table->id();
-            
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->string('title');
+            $table->string('description');
+            $table->string('keywords');
+            $table->morphs('metadataable');
             $table->timestamps();
         });
     }
