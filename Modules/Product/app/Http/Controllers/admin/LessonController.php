@@ -23,7 +23,7 @@ class LessonController extends Controller
                 $item->update($lesson);
                 if (isset($item['file'])) {
                     $item->update([
-                        'file' => $validData['file']
+                        'file' => $lesson['file']
                     ]);
                 }
             }

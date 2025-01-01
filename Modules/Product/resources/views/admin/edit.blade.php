@@ -103,7 +103,7 @@
                                 @csrf
                                 @foreach($product->attributes as $attr)
 
-                                    <div class="row">
+                                    <div class="row attribute-container">
                                         <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
                                             <label class="form-label">عنوان</label>
                                             <input type="text" name="attributes[{{$attr->id}}][title]"
@@ -186,7 +186,8 @@
                         </div>
                     </div>
 
-                    <div class="card mt-3" @if($product->lessons->count() == 0) style="display: none" @endif>
+                    <div class="card mt-3" @if($product->lessons->count() == 0) style="display: none"
+                         @endif id="lessons-wrapper">
                         <div class="card-body">
                             <h4 class="mt-5 current-attrs">دروس فعلی</h4>
                             <form action="{{route('admin.lessons.update')}}" method="post"
@@ -195,7 +196,7 @@
                                 @csrf
                                 @foreach($product->lessons as $lesson)
 
-                                    <div class="row">
+                                    <div class="row lesson-container">
                                         <div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
                                             <label class="form-label">عنوان</label>
                                             <input type="text" name="lessons[{{$lesson->id}}][title]"
@@ -324,11 +325,10 @@
                                 <label for="select2Primary" class="form-check-label">دسته بندی</label>
                                 <div class="select2-primary">
                                     <select id="select2Primary" class="select2 form-select" name="categories[]"
-                                            form="create-item" multiple>
-                                        <option value="" type="hidden" selected></option>
+                                            form="edit-item" multiple>
                                         @foreach($categories as $c)
                                             <option
-                                                value="{{ $c->id }}">{{ ($c->parent?->name . (is_null($c->parent) ? '' : ': ')) . $c->name }}</option>
+                                                value="{{ $c->id }}" {{ $product->categories->contains($c) ? 'selected' : '' }}>{{ ($c->parent?->name . (is_null($c->parent) ? '' : ': ')) . $c->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -393,8 +393,6 @@
     <script src="/assets/admin/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
     <script src="/assets/vendor/sweetalert/sweetalert2.js"></script>
     <script src="/assets/admin/js/products/edit.js"></script>
-
-    <script src="/assets/admin/js/products/create.js"></script>
     <script src="/assets/admin/vendor/libs/select2/select2.js"></script>
     <script src="/assets/admin/vendor/libs/select2/i18n/fa.js"></script>
     <script src="/assets/admin/vendor/libs/tagify/tagify.js"></script>

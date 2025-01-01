@@ -46,24 +46,21 @@ $(function () {
                 $(this).slideDown();
             },
             hide: function (e) {
-                // Swal.fire({
-                //     title: "Are you sure?",
-                //     text: "You won't be able to revert this!",
-                //     icon: "warning",
-                //     showCancelButton: true,
-                //     confirmButtonColor: "#3085d6",
-                //     cancelButtonColor: "#d33",
-                //     confirmButtonText: "Yes, delete it!"
-                // }).then((result) => {
-                //     if (result.isConfirmed) {
-                //         Swal.fire({
-                //             title: "Deleted!",
-                //             text: "Your file has been deleted.",
-                //             icon: "success"
-                //         });
-                //     }
-                // });
-                confirm('آیا از حذف این المان اطمینان دارید؟') && $(this).slideUp(e);
+                Swal.fire({
+                    title: "پاک کردن آیتم",
+                    text: "آیا از پاک کردن این آیتم مطمئین هستید؟",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "حذف",
+                    cancelButtonText: "لغو"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $(this).slideUp(e)
+                    }
+                });
+                // confirm('آیا از حذف این المان اطمینان دارید؟') && $(this).slideUp(e);
             }
         });
     }

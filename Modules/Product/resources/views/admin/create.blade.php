@@ -238,7 +238,6 @@
                                 <div class="select2-primary">
                                     <select id="select2Primary" class="select2 form-select" name="categories[]"
                                             form="create-item" multiple>
-                                        <option value="" type="hidden" selected></option>
                                         @foreach($categories as $c)
                                             <option
                                                 value="{{ $c->id }}">{{ ($c->parent?->name . (is_null($c->parent) ? '' : ': ')) . $c->name }}</option>
