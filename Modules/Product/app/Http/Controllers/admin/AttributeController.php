@@ -28,7 +28,12 @@ class AttributeController extends Controller
                     ]);
                 }
             }
+            $after = json_encode($validData, JSON_UNESCAPED_UNICODE);
 
+            activity()
+                ->causedBy(auth()->user())
+                ->withProperties(compact('after'))
+                ->log('ویرایش ویژگی');
             alert()->success('ویرایش ویژگی ها با موفقیت انجام شد');
 
             return back();
@@ -45,9 +50,11 @@ class AttributeController extends Controller
     {
         try {
 
+            $before = json_encode($attribute, JSON_UNESCAPED_UNICODE);
             $attribute->delete();
             activity()
-                ->withProperties([auth()->user()->name(), $attribute])
+                ->causedBy(auth()->user())
+                ->withProperties(compact('before'))
                 ->log('حذف ویژگی محصول');
             return response()->json([
                'success' => true,

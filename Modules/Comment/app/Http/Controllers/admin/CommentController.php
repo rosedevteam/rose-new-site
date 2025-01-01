@@ -71,10 +71,14 @@ class CommentController extends Controller
                 'status' => 'required|string|in:pending,approved,rejected',
             ]);
 
+            $before = json_encode($comment, JSON_UNESCAPED_UNICODE);
             $comment->update($data);
+            $after = json_encode($comment, JSON_UNESCAPED_UNICODE);
 
             activity()
-                ->withProperties([auth()->user()->name(), $comment->user->name, $data])
+                ->causedBy(auth()->user())
+                ->performedOn($comment)
+                ->withProperties(compact('before', 'after'))
                 ->log('ویرایش کامنت');
             alert()->success("موفق", 'ویرایش با موفقیت انجام شد');
 
@@ -101,11 +105,12 @@ class CommentController extends Controller
                 'user_id' => auth()->id(),
                 'status' => 'approved',
             ]);
+            $after = json_encode($newComment, JSON_UNESCAPED_UNICODE);
 
             activity()
                 ->causedBy(auth()->id())
-                ->performedOn($comment)
-                ->withProperties([auth()->user()->name(), $comment->user->name(), $newComment])
+                ->performedOn($newComment)
+                ->withProperties(compact('after'))
                 ->log('پاسخ کامنت');
             alert()->success("موفق", 'کامنت با موفقیت ثبت شد');
 
@@ -121,10 +126,12 @@ class CommentController extends Controller
         Gate::authorize('delete-comments');
         try {
 
+            $before = json_encode($comment, JSON_UNESCAPED_UNICODE);
             $comment->delete();
 
             activity()
-                ->withProperties([auth()->user()->name(), $comment->user->name()])
+                ->causedBy(auth()->id())
+                ->withProperties(compact('before'))
                 ->log('حذف کامنت');
             alert()->success('موفق', 'کامنت با موفقیت حذف شد');
 

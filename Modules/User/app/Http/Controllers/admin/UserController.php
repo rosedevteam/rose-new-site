@@ -227,7 +227,6 @@ class UserController extends Controller
 
             activity()
                 ->causedBy(auth()->user())
-                ->performedOn($user)
                 ->withProperties(compact('before', 'after'))
                 ->log('ویرایش نقش');
             alert()->success('موفق', 'ویرایش نقش با موفقیت انجام شد');

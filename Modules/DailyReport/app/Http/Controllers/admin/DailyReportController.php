@@ -57,9 +57,12 @@ class DailyReportController extends Controller
                 'file' => $name,
                 'user_id' => auth()->user()->id,
             ]);
+            $after = json_encode($dailyReport, JSON_UNESCAPED_UNICODE);
 
             activity()
-                ->withProperties([auth()->user()->name(), $dailyReport->title, $data])
+                ->causedBy(auth()->user())
+                ->performedOn($dailyReport)
+                ->withProperties(compact('after'))
                 ->log('ساخت گزارش روزانه');
             alert()->success("موفق", "با موفقیت انجام شد");
 
@@ -74,11 +77,12 @@ class DailyReportController extends Controller
     {
         Gate::authorize('delete-daily-reports');
         try {
-
+            $before = json_encode($dailyreport, JSON_UNESCAPED_UNICODE);
             $dailyreport->delete();
 
             activity()
-                ->withProperties([auth()->user()->name(), $dailyreport->title])
+                ->causedBy(auth()->user())
+                ->withProperties(compact('before'))
                 ->log('حذف گزارش روزانه');
             alert()->success('موفق', 'گزارش روزانه با موفقیت حذف شد');
 

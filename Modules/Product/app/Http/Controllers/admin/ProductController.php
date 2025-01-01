@@ -89,6 +89,7 @@ class ProductController extends Controller
                 return !is_null($category);
             });
             $product->categories()->sync($validatedData['categories']);
+            $after = json_encode($validatedData, JSON_UNESCAPED_UNICODE);
 
             if ($validatedData['attributes']) {
                 foreach ($validatedData['attributes'] as $attribute) {
@@ -112,7 +113,9 @@ class ProductController extends Controller
             }
 
             activity()
-                ->withProperties([auth()->user()->name(), $product->title, $validatedData])
+                ->causedBy(auth()->user())
+                ->performedOn($product)
+                ->withProperties(compact('after'))
                 ->log('ساخت محصول');
             alert()->success("موفق", "با موفقیت انجام شد");
 
@@ -185,7 +188,9 @@ class ProductController extends Controller
                 }
             }
 
+            $before = json_encode($product, JSON_UNESCAPED_UNICODE);
             $product->update(Arr::except($validatedData, ['attributes', 'lessons', 'categories']));
+            $after = json_encode($product, JSON_UNESCAPED_UNICODE);
 
             $validatedData['categories'] = array_filter($validatedData['categories'], function ($category) {
                 return !is_null($category);
@@ -193,7 +198,9 @@ class ProductController extends Controller
             $product->categories()->sync($validatedData['categories']);
 
             activity()
-                ->withProperties([auth()->user()->name(), $product->title, $validatedData])
+                ->causedBy(auth()->user())
+                ->performedOn($product)
+                ->withProperties(compact('before', 'after'))
                 ->log('ویرایش محصول');
             alert()->success("موفق", "ویرایش با موفقیت انجام شد");
 
@@ -219,12 +226,12 @@ class ProductController extends Controller
     {
         Gate::authorize('delete-products');
         try {
+            $before = json_encode($product, JSON_UNESCAPED_UNICODE);
             $product->delete();
 
             activity()
                 ->causedBy(auth()->user())
-                ->performedOn($product)
-                ->withProperties([auth()->user(), $product])
+                ->withProperties(compact('before'))
                 ->log('حذف محصول');
             alert()->success('موفق', 'محصول با موفقیت حذف شد');
 

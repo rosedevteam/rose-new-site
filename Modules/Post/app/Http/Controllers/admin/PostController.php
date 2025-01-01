@@ -111,9 +111,12 @@ class PostController extends Controller
                 return !is_null($category);
             });
             $post->categories()->sync($data['categories']);
+            $after = json_encode($data, JSON_UNESCAPED_UNICODE);
 
             activity()
-                ->withProperties([auth()->user()->name(), $post->name(), $data])
+                ->causedBy(auth()->user())
+                ->performedOn($post)
+                ->withProperties(compact('after'))
                 ->log('ساخت پست');
             alert()->success("موفق", "با موفقیت انجام شد");
 
@@ -153,6 +156,7 @@ class PostController extends Controller
             $data['slug'] = self::getSlug($data['slug']);
             $data['comment_status'] = $data['comment_status'] == 1;
 
+            $before = json_encode($data, JSON_UNESCAPED_UNICODE);
             $post->update([
                 'title' => $data['title'],
                 'slug' => $data['slug'],
@@ -161,6 +165,7 @@ class PostController extends Controller
                 'status' => $data['status'],
                 'image' => $data['image'],
             ]);
+            $after = json_encode($data, JSON_UNESCAPED_UNICODE);
 
             $data['categories'] = array_filter($data['categories'], function ($category) {
                 return !is_null($category);
@@ -168,7 +173,9 @@ class PostController extends Controller
             $post->categories()->sync($data['categories']);
 
             activity()
-                ->withProperties([auth()->user()->name(), $post->title, $data])
+                ->causedBy(auth()->user())
+                ->performedOn($post)
+                ->withProperties(compact('before', 'after'))
                 ->log('ویرایش پست');
             alert()->success("موفق", "ویرایش با موفقیت انجام شد");
 
@@ -185,10 +192,12 @@ class PostController extends Controller
         Gate::authorize('delete-posts');
         try {
 
+            $before = json_encode($post, JSON_UNESCAPED_UNICODE);
             $post->delete();
 
             activity()
-                ->withProperties([auth()->user()->name(), $post->title])
+                ->causedBy(auth()->user())
+                ->withProperties(compact('before'))
                 ->log('حذف پست');
             alert()->success('موفق', 'پست با موفقیت حذف شد');
 

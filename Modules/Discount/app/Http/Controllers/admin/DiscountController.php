@@ -77,9 +77,12 @@ class DiscountController extends Controller
                 'user_id' => auth()->user()->id,
             ]);
             $discount->products()->attach($data['products']);
+            $after = json_encode($data, JSON_UNESCAPED_UNICODE);
 
             activity()
-                ->withProperties([auth()->user()->name(), $discount->code, $data])
+                ->causedBy(auth()->user())
+                ->performedOn($discount)
+                ->withProperties(compact('after'))
                 ->log('ساخت تخفیف');
             alert()->success('موفق', 'تخفیف با موفقیت ساخته شد');
 
@@ -133,8 +136,7 @@ class DiscountController extends Controller
             ]);
             $data['expires_at'] = self::formatDate($data['expires_at']);
 
-            $old = $discount->toArray();
-            $old += $discount->products->toArray();
+            $before = json_encode($discount, JSON_UNESCAPED_UNICODE);
             $discount->update([
                 'code' => $data['code'] ?: $discount->code,
                 'type' => $data['type'],
@@ -144,9 +146,12 @@ class DiscountController extends Controller
                 'limit' => $data['limit'],
             ]);
             $discount->products()->sync($data['products']);
+            $after = json_encode($discount, JSON_UNESCAPED_UNICODE);
 
             activity()
-                ->withProperties([auth()->user()->name(), $discount->code, $data])
+                ->causedBy(auth()->user())
+                ->performedOn($discount)
+                ->withProperties(compact('before', 'after'))
                 ->log('ویرایش تخفیف');
             alert()->success('موفق', 'تخفیف با موفقیت ویرایش شد');
 
@@ -161,11 +166,12 @@ class DiscountController extends Controller
     {
         Gate::authorize('delete-discounts');
         try {
-
+            $before = json_encode($discount, JSON_UNESCAPED_UNICODE);
             $discount->delete();
 
             activity()
-                ->withProperties([auth()->user()->name(), $discount->code])
+                ->causedBy(auth()->user())
+                ->withProperties(compact('before'))
                 ->log('حذف تخفیف');
             alert()->success('موفق', 'تخفیف با موفقیت حذف شد');
             return redirect(route('admin.discounts.index'));

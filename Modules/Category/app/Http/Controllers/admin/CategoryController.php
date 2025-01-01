@@ -76,9 +76,12 @@ class CategoryController extends Controller
                 'parent_id' => $validData['parent_id'],
                 'archive_slug' => $validData['archive_slug'],
             ]);
+            $after = json_encode($category, JSON_UNESCAPED_UNICODE);
 
             activity()
-                ->withProperties([auth()->user()->name(), $category->name])
+                ->causedBy(auth()->user())
+                ->performedOn($category)
+                ->withProperties(compact('after'))
                 ->log('ساخت کتگوری');
             alert()->success('موفق', 'کتگوری با موفقیت ساخته شد');
 
@@ -124,15 +127,19 @@ class CategoryController extends Controller
                 }
             }
 
+            $before = json_encode($category, JSON_UNESCAPED_UNICODE);
             $category->update([
                 'name' => $validData['name_edit'],
                 'archive_slug' => $validData['archive_slug_edit'],
                 'parent_id' => $validData['parent_id_edit'],
             ]);
+            $after = json_encode($category, JSON_UNESCAPED_UNICODE);
 
             activity()
-                ->withProperties([auth()->user()->name(), $category->name])
-                ->log('ساخت کتگوری');
+                ->causedBy(auth()->user())
+                ->performedOn($category)
+                ->withProperties(compact('before', 'after'))
+                ->log('ویرایش کتگوری');
             alert()->success('موفق', 'کتگوری با موفقیت ساخته شد');
 
             return redirect(route('admin.categories.index'));
@@ -149,11 +156,12 @@ class CategoryController extends Controller
     {
         Gate::authorize('delete-categories');
         try {
-
+            $before = json_encode($category, JSON_UNESCAPED_UNICODE);
             $category->delete();
 
             activity()
-                ->withProperties([auth()->user()->name(), $category->name])
+                ->causedBy(auth()->user())
+                ->withProperties(compact('before'))
                 ->log('حذف کتگوری');
             alert()->success('موفق', 'کنگوری با موفقیت حذف شد');
 

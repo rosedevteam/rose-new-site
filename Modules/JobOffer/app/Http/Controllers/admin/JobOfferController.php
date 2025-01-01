@@ -67,9 +67,12 @@ class JobOfferController extends Controller
                 'type' => $data['type'],
             ]);
             $jobOffer->categories()->sync($data['categories']);
+            $after = json_encode($jobOffer, JSON_UNESCAPED_UNICODE);
 
             activity()
-                ->withProperties([auth()->user()->name(), $jobOffer->title, $data])
+                ->causedBy(auth()->user())
+                ->performedOn($jobOffer)
+                ->withProperties(compact('after'))
                 ->log('ساخت فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت ساخته شد');
 
@@ -109,6 +112,7 @@ class JobOfferController extends Controller
                 return !is_null($value);
             });
 
+            $before = json_encode($data, JSON_UNESCAPED_UNICODE);
             $joboffer->update([
                 'title' => $data['title'],
                 'content' => $data['content'],
@@ -116,9 +120,12 @@ class JobOfferController extends Controller
                 'type' => $data['type'],
             ]);
             $joboffer->categories()->sync($data['categories']);
+            $after = json_encode($data, JSON_UNESCAPED_UNICODE);
 
             activity()
-                ->withProperties([auth()->user()->name(), $joboffer->title, $data])
+                ->causedBy(auth()->user())
+                ->performedOn($joboffer)
+                ->withProperties(compact('before', 'after'))
                 ->log('ویرایش فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت ویرایش شد');
 
@@ -134,10 +141,12 @@ class JobOfferController extends Controller
         Gate::authorize('delete-job-offers');
         try {
 
+            $before = json_encode($joboffer, JSON_UNESCAPED_UNICODE);
             $joboffer->delete();
 
             activity()
-                ->withProperties([auth()->user()->name(), $joboffer->title])
+                ->causedBy(auth()->user())
+                ->withProperties(compact('before'))
                 ->log('حذف فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت حذف شد');
 
