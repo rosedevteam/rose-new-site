@@ -49,9 +49,6 @@
                                     style="width: 12%;">توسط
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 12%;">روی
-                                </th>
-                                <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 5%;">تاریخ
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
@@ -61,11 +58,6 @@
                             </thead>
                             <tbody>
                             @foreach($logs as $log)
-                                @php
-                                    $name = $log->properties[0];
-                                    $model = $log->properties[1];
-                                    $data = $log->properties[2] ?? "";
-                                @endphp
                                 <tr>
                                     <td>
                                         <div class="d-flex justify-content-start align-items-center user-name">
@@ -76,19 +68,24 @@
                                     </td>
                                     <td>
                                 <span class="fw-semibold">
-                                    {{ $name }}
+                                    <a href="{{ route('admin.users.show', $log->causer) }}"
+                                       class="text-truncate text-body">
+                                    {{ $log->causer->name() }}</a>
                                 </span>
                                     </td>
-                                    <td>{{ $model }}</td>
                                     <td>{{ verta($log->created_at)->formatJalaliDateTime() }}</td>
                                     <td>
                                         <div class="d-flex gap-3 text-nowrap">
+                                            {{--                                            <a href="{{ route('admin.logs.show', $log->id) }}">--}}
                                             <button class="btn btn-sm btn-primary" id="details-button"
                                                     data-bs-target="#details" data-bs-toggle="modal"
-                                                    data-description="{{ $log->description }}" data-name="{{ $name }}"
-                                                    data-model="{{ $model }}"
+                                                    data-description="{{ $log->description }}"
+                                                    data-type="{{ array_reverse(explode('\\', $log->subject_type))[0] }}"
+                                                    data-id="{{ $log->subject_id }}"
+                                                    data-causer-id="{{ $log->causer_id }}"
+                                                    data-causer-name="{{ $log->causer->name() }}"
+                                                    data-properties="{{ json_encode($log->properties, JSON_PRETTY_PRINT) }}"
                                                     data-created-at="{{ verta($log->created_at)->formatJalaliDatetime() }}"
-                                                    data-data="{{ json_encode($data) }}"
                                             >جزییات
                                             </button>
                                         </div>
@@ -117,20 +114,14 @@
                                     <span id="causer"></span>
                                 </div>
                                 <div class="col mb-3">
-                                    <label for="model">روی: </label>
-                                    <span id="model"></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col mb-3">
                                     <label for="created_at">تاریخ: </label>
                                     <span id="created_at"></span>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <label for="data">جزییات: </label>
-                                    <span id="data"></span>
+                                    <label for="properties">جزییات: </label>
+                                    <span id="properties"></span>
                                 </div>
                             </div>
                         </div>
@@ -159,15 +150,14 @@
             document.body.addEventListener('click', (event) => {
                 if (event.target.matches('#details-button')) {
                     const description = event.target.getAttribute('data-description');
-                    const causer = event.target.getAttribute('data-name');
-                    const model = event.target.getAttribute('data-model');
+                    const causerName = event.target.getAttribute('data-causer-name');
                     const createdAt = event.target.getAttribute('data-created-at');
-                    const data = event.target.getAttribute('data-data');
+                    const properties = event.target.getAttribute('data-properties');
+                    console.log(properties);
                     document.getElementById('title').textContent = description;
-                    document.getElementById('causer').textContent = causer;
-                    document.getElementById('model').textContent = model;
+                    document.getElementById('causer').textContent = causerName;
                     document.getElementById('created_at').textContent = createdAt;
-                    document.getElementById('data').textContent = data;
+                    document.getElementById('properties').textContent = JSON.parse(properties);
                 }
             });
         });

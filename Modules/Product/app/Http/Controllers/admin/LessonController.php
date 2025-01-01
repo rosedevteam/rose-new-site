@@ -3,7 +3,7 @@
 namespace Modules\Product\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Upload;
+use App\traits\Upload;
 use Modules\Product\Models\Lesson;
 
 class LessonController extends Controller

@@ -3,8 +3,8 @@
 namespace Modules\Product\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Slug;
-use App\Upload;
+use App\traits\Slug;
+use App\traits\Upload;
 use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Illuminate\Support\Arr;

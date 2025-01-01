@@ -3,7 +3,7 @@
 namespace Modules\Category\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Slug;
+use App\traits\Slug;
 use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Illuminate\Http\Request;
