@@ -127,7 +127,7 @@
                                     <td>@if($discount->is_active)
                                             <span class="badge bg-label-success">فعال</span>
                                         @else
-                                            <span class="badge bg-label-danger">فیر فعال</span>
+                                            <span class="badge bg-label-danger">غیر فعال</span>
                                         @endif</td>
                                     <td>
                                         <span class=fw-semibold">
