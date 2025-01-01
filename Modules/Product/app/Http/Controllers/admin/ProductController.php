@@ -67,7 +67,7 @@ class ProductController extends Controller
             $validatedData = request()->validate([
                 'title' => 'required',
                 'short_description' => 'required',
-                'content' => 'required',
+                'content' => 'nullable',
                 'price' => 'required|numeric',
                 'slug' => 'required|unique:products,slug',
                 'spot_player_key' => 'required',

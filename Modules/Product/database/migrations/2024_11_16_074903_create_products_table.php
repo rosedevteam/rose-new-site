@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('short_description');
             $table->integer('price');
             $table->integer('sale_price')->nullable();
-            $table->integer('content');
+            $table->integer('content')->nullable();
             $table->enum('status', ['public', 'draft', 'hidden'])->default('draft');
             $table->boolean('comment_status')->default(true);
             $table->string('image');
