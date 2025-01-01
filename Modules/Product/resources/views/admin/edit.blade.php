@@ -292,6 +292,11 @@
 
                         <div class="ps-3 p-3">
                             <div class="mb-3">
+                                <a role="button" type="button" class="btn btn-primary w-100">
+                                    <span class="tf-icons bx bx-edit-alt me-1"></span>صفحه ساز زنده
+                                </a>
+                            </div>
+                            <div class="mb-3">
                                 <label class="form-label" for="comment_status">کامنت</label>
                                 <select class="form-select" name="comment_status" id="comment_status"
                                         form="edit-item">
@@ -309,6 +314,9 @@
                                     </option>
                                     <option value="draft" {{$product->status == "draft" ? 'selected' : ''}}>
                                         پیشنویس
+                                    </option>
+                                    <option value="outofstock" {{$product->status == "outofstock" ? 'selected' : ''}}>
+                                        ناموجود
                                     </option>
                                     <option value="hidden" {{$product->status == "hidden" ? 'selected' : ''}}>
                                         پنهان

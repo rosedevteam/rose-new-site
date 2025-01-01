@@ -215,6 +215,9 @@
                                     <option value="draft" {{old('status') ? "draft" : 'selected'}}>
                                         پیشنویس
                                     </option>
+                                    <option value="outofstock" {{old('status') ? "outofstock" : 'selected'}}>
+                                        ناموجود
+                                    </option>
                                     <option value="hidden" {{old('status') ? "hidden" : 'selected'}}>
                                         پنهان
                                     </option>

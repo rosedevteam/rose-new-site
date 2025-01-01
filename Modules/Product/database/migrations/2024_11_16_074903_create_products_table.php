@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('price');
             $table->integer('sale_price')->nullable();
             $table->integer('content')->nullable();
-            $table->enum('status', ['public', 'draft', 'hidden'])->default('draft');
+            $table->enum('status', ['public', 'draft', 'hidden' , 'outofstock'])->default('draft');
             $table->boolean('comment_status')->default(true);
             $table->string('image');
             $table->string('slug')->unique();
