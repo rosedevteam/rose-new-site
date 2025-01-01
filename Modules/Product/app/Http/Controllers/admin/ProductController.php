@@ -50,10 +50,15 @@ class ProductController extends Controller
 
     public function create()
     {
-        $this->seo('افزودن محصول جدید');
+        $this->seo()->setTitle('افزودن محصول جدید');
         Gate::authorize('create-products');
-        $categories = Product::allCategories();
-        return view('product::admin.create', compact('categories'));
+        try {
+            $categories = Product::allCategories();
+            return view('product::admin.create', compact('categories'));
+        } catch (\Throwable $th) {
+            alert()->error($th->getMessage());
+            return back();
+        }
     }
 
     public function store(Request $request)
