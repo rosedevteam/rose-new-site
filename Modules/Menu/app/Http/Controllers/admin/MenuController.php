@@ -69,7 +69,7 @@ class MenuController extends Controller
             ]);
             $validData['slug'] = self::getSlug($validData['slug']);
 
-            $menu = Menu::create($validData);
+            $menu = auth()->user()->menus()->create($validData);
 
             activity()
                 ->withProperties([auth()->user()->name(), $menu->title, $validData])

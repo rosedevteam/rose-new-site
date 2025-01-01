@@ -24,169 +24,29 @@
                     </div>
                     <div class="menu">
                         <ul class="rose-menu p-0">
-                            <!--Simple menu-->
-                            <li>
-                                <a href="/">
-                                    صفحه اصلی
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/">
-                                    دوره ها
-                                    <i class="bi bi-chevron-down"></i>
-                                </a>
+                            @foreach($menus as $menu)
+                                @if(!$menu->children->count())
+                                    <!--Simple menu-->
+                                    <li>
+                                        <a href="{{$menu->slug}}">
+                                            {{$menu->title}}
+                                        </a>
+                                    </li>
+                                @else
+                                    <li>
+                                        <a href="/">
+                                             {{$menu->title}}
+                                            <i class="bi bi-chevron-down"></i>
+                                        </a>
 
-                                <!--Submenu menu-->
-                                <ul class="submenu p-0 m-0">
-                                    <li>
-                                        <a class="sub-menu-item" href="#">
-                                            <div class="sub-menu-icon">
-                                                <img src="assets/front/images/submenu.svg" alt="">
-                                            </div>
-                                            <div class="sub-menu-title">
-                                                <h3>دوره های آموزشی</h3>
-                                                <p class="subtitle">
-                                                    لیست دوره های آموزشی ویدیویی رز
-                                                </p>
-                                            </div>
-                                        </a>
+                                        <!--Submenu menu-->
+                                        <ul class="submenu p-0 m-0">
+                                            @include('front.partials.submenu' , ['menus' => $menu->children])
+                                        </ul>
                                     </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="/">
-                                    دوره ها
-                                    <i class="bi bi-chevron-down"></i>
-                                </a>
+                                @endif
 
-                                <!--Submenu menu-->
-                                <ul class="submenu p-0 m-0">
-                                    <li>
-                                        <a class="sub-menu-item" href="#">
-                                            <div class="sub-menu-icon">
-                                                <img src="assets/front/images/submenu.svg" alt="">
-                                            </div>
-                                            <div class="sub-menu-title">
-                                                <h3>دوره های آموزشی</h3>
-                                                <p class="subtitle">
-                                                    لیست دوره های آموزشی ویدیویی رز
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="/">
-                                    دوره ها
-                                    <i class="bi bi-chevron-down"></i>
-                                </a>
-
-                                <!--Submenu menu-->
-                                <ul class="submenu p-0 m-0">
-                                    <li>
-                                        <a class="sub-menu-item" href="#">
-                                            <div class="sub-menu-icon">
-                                                <img src="assets/front/images/submenu.svg" alt="">
-                                            </div>
-                                            <div class="sub-menu-title">
-                                                <h3>دوره های آموزشی</h3>
-                                                <p class="subtitle">
-                                                    لیست دوره های آموزشی ویدیویی رز
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="/">
-                                    دوره ها
-                                    <i class="bi bi-chevron-down"></i>
-                                </a>
-
-                                <!--Submenu menu-->
-                                <ul class="submenu p-0 m-0">
-                                    <li>
-                                        <a class="sub-menu-item" href="#">
-                                            <div class="sub-menu-icon">
-                                                <img src="assets/front/images/submenu.svg" alt="">
-                                            </div>
-                                            <div class="sub-menu-title">
-                                                <h3>دوره های آموزشی</h3>
-                                                <p class="subtitle">
-                                                    لیست دوره های آموزشی ویدیویی رز
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="/">
-                                    آموزش ها
-                                    <i class="bi bi-chevron-down"></i>
-                                </a>
-                                <!--Submenu menu-->
-                                <ul class="submenu p-0 m-0">
-                                    <li>
-                                        <a class="sub-menu-item" href="#">
-                                            <div class="sub-menu-icon">
-                                                <img src="assets/front/images/submenu.svg" alt="">
-                                            </div>
-                                            <div class="sub-menu-title">
-                                                <h3>دوره های آموزشی</h3>
-                                                <p class="subtitle">
-                                                    لیست دوره های آموزشی ویدیویی رز
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="/">
-                                    گزارش روزانه
-                                </a>
-                                <!--Submenu menu-->
-                                <ul class="submenu p-0 m-0">
-                                    <li>
-                                        <a class="sub-menu-item" href="#">
-                                            <div class="sub-menu-icon">
-                                                <img src="assets/front/images/submenu.svg" alt="">
-                                            </div>
-                                            <div class="sub-menu-title">
-                                                <h3>دوره های آموزشی</h3>
-                                                <p class="subtitle">
-                                                    لیست دوره های آموزشی ویدیویی رز
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="/">
-                                    ارتباط با ما
-                                    <i class="bi bi-chevron-down"></i>
-                                </a>
-                                <!--Submenu menu-->
-                                <ul class="submenu p-0 m-0">
-                                    <li>
-                                        <a class="sub-menu-item" href="#">
-                                            <div class="sub-menu-icon">
-                                                <img src="assets/front/images/submenu.svg" alt="">
-                                            </div>
-                                            <div class="sub-menu-title">
-                                                <h3>دوره های آموزشی</h3>
-                                                <p class="subtitle">
-                                                    لیست دوره های آموزشی ویدیویی رز
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+                            @endforeach
                         </ul>
                     </div>
 
