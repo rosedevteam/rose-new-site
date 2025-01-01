@@ -49,14 +49,6 @@
                 </a>
             </li>
         @endcan
-            @can('view-discounts')
-                <li @class(["menu-item", 'active' => $route == 'discounts'])>
-                    <a href="{{ route("admin.discounts.index") }}" class="menu-link">
-                        <i class="menu-icon tf-icons bx bxs-offer"></i>
-                        <div data-i18n="تخفیف ها">تخفیف ها</div>
-                    </a>
-                </li>
-            @endcan
         @can('view-posts')
             <li @class(["menu-item", 'active' => $route == 'posts'])>
                 <a href="{{ route("admin.posts.index") }}" class="menu-link">
@@ -65,6 +57,14 @@
                 </a>
             </li>
         @endcan
+            @can('view-discounts')
+                <li @class(["menu-item", 'active' => $route == 'discounts'])>
+                    <a href="{{ route("admin.discounts.index") }}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bxs-offer"></i>
+                        <div data-i18n="تخفیف ها">تخفیف ها</div>
+                    </a>
+                </li>
+            @endcan
         @can('view-daily-reports')
                 <li @class(["menu-item", 'active' => $route == 'dailyreports'])>
                 <a href="{{ route("admin.dailyreports.index") }}" class="menu-link">
