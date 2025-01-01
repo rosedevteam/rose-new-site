@@ -11,6 +11,7 @@ use Modules\Category\Models\Category;
 use Modules\Comment\Models\Comment;
 use Modules\Discount\Models\Discount;
 use Modules\Order\Models\Order;
+use Modules\PageBuilder\Models\PageBuilder;
 use Modules\Product\Database\Factories\ProductFactory;
 use Modules\User\Models\User;
 
@@ -58,6 +59,11 @@ class Product extends Model
     public function lessons()
     {
         return $this->hasMany(Lesson::class);
+    }
+
+    public function pagebuilder()
+    {
+        return $this->morphOne(Pagebuilder::class, 'pagebuilder');
     }
 
 

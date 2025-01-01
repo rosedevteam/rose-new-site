@@ -101,7 +101,15 @@ editor.getWrapper().addClass("gjs-wrapper");
 editor.Css.setRule('.gjs-wrapper', {
     direction: "rtl"
 });
-
+editor.Panels.addButton
+('options',
+    [{
+        id: 'save-db',
+        className: 'fa fa-floppy-o',
+        command: 'save-db',
+        attributes: {title: 'Save DB'}
+    }]
+);
 editor.Panels.addButton
 ('options',
     [{
@@ -124,15 +132,26 @@ editor.Commands.add
             var htmldata = editor.getHtml();
             var cssdata = editor.getCss();
             var page_id = document.getElementById('page-id');
-            axios.post(`/kara-lux/pages/${page_id.value}/update` , {
-                body: htmldata
+            axios.post(`pagebuilder/store` , {
+                content: htmldata,
+                pagebuilder_type: $('#pagebuilder_type').val(),
+                pagebuilder_id: $('#pagebuilder_id').val(),
             })
-                .then(res => success())
-            function success() {
+                .then(res => success(res))
+                .catch(err => failed(err))
+            function success(res) {
                 Swal.fire({
                     icon: 'success',
-                    title: 'به روز رسانی موفق',
-                    text: 'به روز رسانی با موفقیت انجام شد',
+                    title: 'موفق',
+                    text: res.data.message,
+                    confirmButtonText: 'باشه'
+                })
+            }
+            function failed(err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'خطا',
+                    text: err.data.message,
                     confirmButtonText: 'باشه'
                 })
             }

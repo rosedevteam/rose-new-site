@@ -10,10 +10,20 @@ class PageBuilderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        try {
+            $validData = $request->validate([
+               'pagebuilder_type' => 'required',
+               'pagebuilder_id' => 'required',
+            ]);
 
-        return view('pagebuilder::index');
+            return view('pagebuilder::index');
+
+        }catch (\Exception $exception){
+            alert()->error($exception->getMessage());
+            return back();
+        }
     }
 
     /**
@@ -29,7 +39,25 @@ class PageBuilderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $validData = $request->validate([
+                'pagebuilder_type' => 'required',
+                'pagebuilder_id' => 'required',
+                'content' => 'required'
+            ]);
+
+            $item = $validData['pagebuilder_type']::where('id', $validData['pagebuilder_id'])->with('pagebuilder')->first();
+            $item->pagebuilder()->create($validData);
+            return response()->json([
+               'success' => true,
+               'message' => 'صفحه با موفقیت ذخیره شد'
+            ],200);
+        }catch (\Exception $exception){
+            return response()->json([
+                'success' => false,
+                'message' => $exception->getMessage()
+            ],400);
+        }
     }
 
     /**

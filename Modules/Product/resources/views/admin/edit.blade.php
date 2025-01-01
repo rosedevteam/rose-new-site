@@ -292,9 +292,12 @@
 
                         <div class="ps-3 p-3">
                             <div class="mb-3">
-                                <a role="button" type="button" class="btn btn-primary w-100">
-                                    <span class="tf-icons bx bx-edit-alt me-1"></span>صفحه ساز زنده
-                                </a>
+                                <form action="{{route('admin.pagebuilder.show')}}" method="get">
+                                    @method('get')
+                                    <input type="hidden" name="pagebuilder_type" value="{{get_class($product)}}">
+                                    <input type="hidden" name="pagebuilder_id" value="{{$product->id}}">
+                                    <input type="submit" class="btn btn-primary w-100" value="ویرایشگر زنده">
+                                </form>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="comment_status">کامنت</label>
