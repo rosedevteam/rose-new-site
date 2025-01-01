@@ -3,7 +3,7 @@
 namespace Modules\User\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\traits\ModelJson;
+use Arr;
 use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Illuminate\Http\RedirectResponse;
@@ -14,7 +14,7 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    use SEOTools, ModelJson;
+    use SEOTools;
     public function index()
     {
         $this->seo()->setTitle('کاربران');
@@ -77,11 +77,12 @@ class UserController extends Controller
             ]);
 
             $user->assignRole('مشتری');
+            $after = json_encode(Arr::except($user->toArray(), 'password'), JSON_UNESCAPED_UNICODE);
 
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($user)
-                ->withProperties(['after' => self::toJson($user)])
+                ->withProperties(compact('after'))
                 ->log('ساخت کاربر');
             alert()->success("موفق", "کاربر با موفقیت ساخته شد");
 
@@ -150,21 +151,23 @@ class UserController extends Controller
                 $billingData = array_filter($billingData, function ($value) {
                     return !is_null($value);
                 });
-                $old = $this->toJson($user->billing()->first());
+                $before = json_encode($user->billing()->first(), JSON_UNESCAPED_UNICODE);
                 $user->billing()->update($billingData);
+                $after = json_encode($user->billing()->first(), JSON_UNESCAPED_UNICODE);
                 activity()
                     ->causedBy(auth()->user())
                     ->performedOn($user->billing()->first())
-                    ->withProperties(['before' => $old, 'after' => $this->toJson($user)])
+                    ->withProperties(compact('before', 'after'))
                     ->log('ویرایش اطلاعات صورتحساب کاربر');
             }
-            $old = $this->toJson($user);
+            $before = json_encode(Arr::except($user->toArray(), 'password'), JSON_UNESCAPED_UNICODE);
             $user->update($userData);
+            $after = json_encode(Arr::except($user->toArray(), 'password'), JSON_UNESCAPED_UNICODE);
 
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($user)
-                ->withProperties(['before' => $old, 'after' => $this->toJson($user)])
+                ->withProperties(compact('before', 'after'))
                 ->log('ویرایش کاربر');
             alert()->success("موفق", "با موفقیت انجام شد");
 
@@ -185,12 +188,12 @@ class UserController extends Controller
 //        }
         try {
 
-            $old = $this->toJson($user);
+            $before = json_encode(Arr::except($user->toArray(), 'password'), JSON_UNESCAPED_UNICODE);
             $user->delete();
 
             activity()
                 ->causedBy(auth()->user())
-                ->withProperties(['before' => $old])
+                ->withProperties(compact('before'))
                 ->log('حذف کاربر');
             alert()->success("موفق", "کاربر حذف شد");
 
@@ -218,13 +221,14 @@ class UserController extends Controller
                 return back();
             }
 
-            $old = $this->toJson($user->getRoleNames());
+            $before = json_encode($user->getRoleNames(), JSON_UNESCAPED_UNICODE);
             $user->syncRoles($role);
+            $after = json_encode($user->getRoleNames(), JSON_UNESCAPED_UNICODE);
 
             activity()
                 ->causedBy(auth()->user())
                 ->performedOn($user)
-                ->withProperties(['before' => $old, 'after' => $this->toJson($user->getRoleNames())])
+                ->withProperties(compact('before', 'after'))
                 ->log('ویرایش نقش');
             alert()->success('موفق', 'ویرایش نقش با موفقیت انجام شد');
 
