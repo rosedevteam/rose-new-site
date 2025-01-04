@@ -62,13 +62,14 @@ class UserController extends Controller
     public function store(Request $request)
     {
         Gate::authorize('create-users');
-        try {
 
-            $data = $request->validate([
-                'first_name' => 'bail|string|max:255',
-                'last_name' => 'bail|string|max:255',
-                "phone" => ['bail', 'required', 'string', 'unique:users,phone', 'regex:/^09[0|1|2|3][0-9]{8}$/'],
-            ]);
+        $data = $request->validate([
+            'first_name' => 'bail|string|max:255',
+            'last_name' => 'bail|string|max:255',
+            "phone" => ['bail', 'required', 'string', 'unique:users,phone', 'regex:/^09[0|1|2|3][0-9]{8}$/'],
+        ]);
+
+        try {
 
             $user = User::query()->create([
                 'first_name' => $data['first_name'],
@@ -130,13 +131,13 @@ class UserController extends Controller
 //            (auth()->user()->id != $user->id || !auth()->user()->hasRole('super-admin'))) {
 //            throw new AuthorizationException();
 //        }
+        $userData = request()->validate([
+            'first_name' => 'bail|nullable|string|max:255',
+            'last_name' => 'bail|nullable|string|max:255',
+            'email' => 'bail|nullable|string|email|unique:users,email',
+        ]);
         try {
 
-            $userData = request()->validate([
-                'first_name' => 'bail|nullable|string|max:255',
-                'last_name' => 'bail|nullable|string|max:255',
-                'email' => 'bail|nullable|string|email|unique:users,email',
-            ]);
             $billingData = null;
             $userData = array_filter($userData, function ($value) {
                 return !is_null($value);

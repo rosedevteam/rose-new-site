@@ -22,13 +22,14 @@
                             <div class="mb-3 col-md-4">
                                 <label class="form-label" for="code">کد</label>
                                 <input type="text" class="form-control" id="code" name="code" autocomplete="off"
+                                       value="{{ old('code') }}"
                                        required>
                             </div>
                             <div class="mb-3 col-md-3">
                                 <label class="form-label" for="is_active">وضعیت</label>
                                 <select class="form-select" id="is_active" name="is_active">
-                                    <option value="1" selected>فعال</option>
-                                    <option value="0">غیرفعال</option>
+                                    <option value="1" {{ old('is_active') == 1 ? 'selected' : '' }}>فعال</option>
+                                    <option value="0" {{ old('id_active') ==0 ? 'selected' : '' }}>غیرفعال</option>
                                 </select>
                             </div>
                             <div class="mb-3 col-md-3">
@@ -42,16 +43,19 @@
                         <div class="row">
                             <div class="mb-3 col-md-4">
                                 <label class="form-label" for="amount">مقدار</label>
-                                <input class="form-control" id="amount" name="amount" autocomplete="off">
+                                <input class="form-control" id="amount" name="amount" autocomplete="off"
+                                       value="{{ old('amount') }}">
                             </div>
                             <div class="mb-3 col-md-3">
                                 <label class="form-label" for="expires_at">تاریخ انقضا</label>
                                 <input type="text" class="date-picker form-control" name="expires_at"
+                                       value="{{ old("expires_at") }}"
                                        autocomplete="off">
                             </div>
                             <div class="mb-3 col-md-3">
                                 <label class="form-label" for="limit">محدودیت استفاده</label>
                                 <input type="number" class="form-control" name="limit" id="limit"
+                                       value="{{ old('limit') }}"
                                        autocomplete="off">
                             </div>
                         </div>
@@ -61,7 +65,8 @@
                                 <div class="select2-primary">
                                     <select id="select2Primary" class="select2 form-select" name="products[]" multiple>
                                         @foreach($products as $product)
-                                            <option value="{{ $product->id }}">{{ $product->title }}</option>
+                                            <option
+                                                value="{{ $product->id }}" {{ in_array($product->id, old('products') ?: []) ? 'selected' : '' }}>{{ $product->title }}</option>
                                         @endforeach
                                     </select>
                                 </div>

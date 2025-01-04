@@ -45,14 +45,14 @@ class StudentReportController extends Controller
     public function store(Request $request)
     {
         Gate::authorize('create-student-reports');
+        $validData = $request->validate([
+            'company' => 'required',
+            'date' => 'required',
+            'analysis' => 'bail|required|file',
+            'description' => 'nullable',
+            'status' => 'required|in:approved,rejected,pending',
+        ]);
         try {
-            $validData = $request->validate([
-                'company' => 'required',
-                'date' => 'required',
-                'analysis' => 'bail|required|file',
-                'description' => 'nullable',
-                'status' => 'required|in:approved,rejected,pending',
-            ]);
 
             $validData['date'] = $this->convertNums($validData['date']);
             $name = 'student-report-' . now()->timestamp . "." . request()->file('analysis')->extension();
@@ -134,14 +134,14 @@ class StudentReportController extends Controller
     public function update(StudentReport $studentreport)
     {
         Gate::authorize('edit-student-reports');
+        $validData = request()->validate([
+            'company' => 'required',
+            'date' => 'required',
+            'analysis' => 'bail|nullable|file',
+            'description' => 'nullable',
+            'status' => 'required|in:approved,rejected,pending',
+        ]);
         try {
-            $validData = request()->validate([
-                'company' => 'required',
-                'date' => 'required',
-                'analysis' => 'bail|nullable|file',
-                'description' => 'nullable',
-                'status' => 'required|in:approved,rejected,pending',
-            ]);
 
             $validData['date'] = $this->convertNums($validData['date']);
             if (!is_null(request()->file('analysis'))) {

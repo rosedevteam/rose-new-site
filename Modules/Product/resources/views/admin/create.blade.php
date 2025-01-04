@@ -89,18 +89,19 @@
                                         <div class="col-md-6">
                                             <label class="form-label" for="title">عنوان</label>
                                             <input type="text" id="title" name="meta_title"
-                                                   class="form-control text-start"
+                                                   class="form-control text-start" value="{{ old('meta_title') }}"
                                                    dir="ltr">
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label" for="keywords">کلمات کلیدی</label>
-                                            <input type="text" id="keywords" name="meta_keywords" class="form-control">
+                                            <input type="text" id="keywords" name="meta_keywords" class="form-control"
+                                                   value="{{ old('meta_keywords') }}">
                                         </div>
                                     </div>
                                     <div class="col-md-12 mt-3">
                                         <label class="form-label" for="description">توضیحات</label>
                                         <textarea id="description" class="form-control"
-                                                  name="meta_description"></textarea>
+                                                  name="meta_description">{{ old('meta_description') }}</textarea>
                                     </div>
                                 </div>
                             </div>

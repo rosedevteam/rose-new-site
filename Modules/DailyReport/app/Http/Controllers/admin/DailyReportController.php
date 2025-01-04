@@ -39,15 +39,15 @@ class DailyReportController extends Controller
     public function store()
     {
         Gate::authorize('create-daily-reports');
+        $data = request()->validate([
+            'date' => 'bail|required|string',
+            'file' => [
+                'bail',
+                'required',
+                File::types(['pdf'])
+            ],
+        ]);
         try {
-            $data = request()->validate([
-                'date' => 'bail|required|string',
-                'file' => [
-                    'bail',
-                    'required',
-                    File::types(['pdf'])
-                ],
-            ]);
 
             $name = 'daily-report-' . now()->timestamp . '.pdf';
             request()->file('file')->storeAs('daily-reports', $name);

@@ -65,7 +65,7 @@
                                             <label for="select2Primary" class="form-label">دوره ها</label>
                                             <div class="select2-primary">
                                                 <select id="select2Primary" class="select2 form-select"
-                                                        name="products[]" multiple>
+                                                        name="products[]" multiple required>
                                                     @foreach(\Modules\Product\Models\Product::all() as $product)
                                                         <option
                                                             value="{{ $product->id }}" {{$order->products->contains($product) ? 'selected' : ''}}>{{ $product->title }}</option>
@@ -140,7 +140,7 @@
                             <div class="mb-3">
                                 <label class="form-label" for="status">وضعیت سفارش</label>
                                 <select class="form-select" name="status" id="status"
-                                        form="edit-item">
+                                        form="edit-item" required>
                                     <option value="">انتخاب کنید</option>
                                     <option value="completed" {{$order->status == 'completed' ? 'selected' : ''}}>تکمیل
                                         شده
@@ -161,7 +161,7 @@
                             <div class="mb-3">
                                 <label class="form-label" for="payment_method">نوع پرداخت</label>
                                 <select class="form-select" name="payment_method" id="payment_method"
-                                        form="edit-item">
+                                        form="edit-item" required>
                                     <option value="">انتخاب کنید</option>
                                     <option value="card" {{$order->payment_method  == 'card' ? 'selected' : ''}}>کارت به
                                         کارت

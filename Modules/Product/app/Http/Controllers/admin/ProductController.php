@@ -63,27 +63,27 @@ class ProductController extends Controller
     public function store()
     {
         Gate::authorize('create-products');
-        try {
-            $validatedData = request()->validate([
-                'title' => 'required',
-                'short_description' => 'required',
-                'content' => 'required',
-                'price' => 'required|numeric',
-                'slug' => 'required|unique:products,slug',
-                'spot_player_key' => 'required',
-                'sale_price' => 'nullable',
-                'comment_status' => 'required',
-                'status' => 'required',
-                'image' => 'required',
-                'attributes' => 'nullable',
-                'lessons' => 'nullable',
-                'is_free' => 'required',
-                'categories.*' => 'required|exists:categories,id',
-                'meta_title' => 'nullable',
-                'meta_description' => 'nullable',
-                'meta_keywords' => 'nullable',
-            ]);
+        $validatedData = request()->validate([
+            'title' => 'required',
+            'short_description' => 'required',
+            'content' => 'required',
+            'price' => 'required|numeric',
+            'slug' => 'required|unique:products,slug',
+            'spot_player_key' => 'required',
+            'sale_price' => 'nullable',
+            'comment_status' => 'required',
+            'status' => 'required',
+            'image' => 'required',
+            'attributes' => 'nullable',
+            'lessons' => 'nullable',
+            'is_free' => 'required',
+            'categories.*' => 'required|exists:categories,id',
+            'meta_title' => 'nullable',
+            'meta_description' => 'nullable',
+            'meta_keywords' => 'nullable',
+        ]);
 
+        try {
             $validatedData['slug'] = self::getSlug($validatedData['slug']);
 
             $product = auth()->user()->products()->create(Arr::except($validatedData, ['attributes', 'lessons', 'categories', 'meta_title', 'meta_description', 'meta_keywords']));
@@ -155,26 +155,26 @@ class ProductController extends Controller
     public function update(Product $product)
     {
         Gate::authorize('edit-products');
+        $validatedData = request()->validate([
+            'title' => 'required',
+            'short_description' => 'required',
+            'content' => 'required',
+            'price' => 'required',
+            'slug' => 'required',
+            'spot_player_key' => 'required',
+            'sale_price' => 'nullable',
+            'comment_status' => 'required',
+            'status' => 'required',
+            'image' => 'required',
+            'is_free' => 'required',
+            'lessons' => 'sometimes|nullable',
+            'attributes' => 'nullable',
+            'categories.*' => 'required|exists:categories,id',
+            'meta_title' => 'nullable',
+            'meta_description' => 'nullable',
+            'meta_keywords' => 'nullable',
+        ]);
         try {
-            $validatedData = request()->validate([
-                'title' => 'required',
-                'short_description' => 'required',
-                'content' => 'required',
-                'price' => 'required',
-                'slug' => 'required',
-                'spot_player_key' => 'required',
-                'sale_price' => 'nullable',
-                'comment_status' => 'required',
-                'status' => 'required',
-                'image' => 'required',
-                'is_free' => 'required',
-                'lessons' => 'sometimes|nullable',
-                'attributes' => 'nullable',
-                'categories.*' => 'required|exists:categories,id',
-                'meta_title' => 'nullable',
-                'meta_description' => 'nullable',
-                'meta_keywords' => 'nullable',
-            ]);
             $validatedData['slug'] = self::getSlug($validatedData['slug']);
 
             if ($validatedData['attributes'] ?? false) {
