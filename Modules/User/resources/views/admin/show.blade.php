@@ -14,7 +14,7 @@
                                     <div class="user-info text-center">
                                         <h5 class="mb-2">{{ $user->first_name . ' ' . $user->last_name }}</h5>
                                         @foreach($user->getRoleNames() as $role)
-                                            <span @class(['badge', 'bg-label-primary' => $role == 'مشتری', 'bg-label-reddit' => $role == 'ادمین', 'bg-label-info' => $role == 'نویسنده', 'bg-label-github' => $role == 'پشتیبان', 'bg-label-success' => $role == 'super-admin'])>{{ $role }}</span>
+                                            <span @class(['badge', 'bg-primary' => $role == 'مشتری', 'bg-reddit' => $role == 'ادمین', 'bg-info' => $role == 'نویسنده', 'bg-github' => $role == 'پشتیبان', 'bg-success' => $role == 'super-admin'])>{{ $role }}</span>
                                         @endforeach
                                     </div>
                                 </div>
