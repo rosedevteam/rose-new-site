@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\PageBuilder\Http\Controllers\PageBuilderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +13,3 @@ use Modules\PageBuilder\Http\Controllers\PageBuilderController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('pagebuilder', PageBuilderController::class)->names('pagebuilder');
-});

@@ -12,7 +12,7 @@ class AdminServiceProvider extends ServiceProvider
 {
     use PathNamespace;
 
-    protected string $name = 'Admin';
+    protected string $name = 'admin';
 
     protected string $nameLower = 'admin';
 

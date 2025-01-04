@@ -73,8 +73,10 @@
                                         <div class="col-md-12">
                                             <label class="form-label" for="is_free">محصول رایگان است؟</label>
                                             <select name="is_free" id="is_free" class="form-select">
-                                                <option value="0" @if($product->is_free == 0) selected @endif>خیر</option>
-                                                <option value="1" @if($product->is_free == 1) selected @endif>بله</option>
+                                                <option value="0" @if($product->is_free == 0) selected @endif>خیر
+                                                </option>
+                                                <option value="1" @if($product->is_free == 1) selected @endif>بله
+                                                </option>
                                             </select>
                                         </div>
                                         <div class="col-md-6">
@@ -125,7 +127,7 @@
                                         <div
                                             class="mb-3 col-lg-12 col-xl-2 col-12 d-flex align-items-center mb-0">
                                             <a class="btn btn-label-danger mt-4"
-                                                    onclick="removeProductAttr({{$attr->id}} , $(this));">
+                                               onclick="removeProductAttr({{$attr->id}} , $(this));">
                                                 <i class="bx bx-x me-1"></i>
                                                 <span class="align-middle">حذف</span>
                                             </a>
@@ -254,7 +256,8 @@
                                             </div>
                                             <div class="mb-3 col-lg-3 col-12 mb-0">
                                                 <label for="image_label" class="form-label"> فایل</label>
-                                                <input type="text" name="lesson_file" id="lesson_file" class="form-control"
+                                                <input type="text" name="lesson_file" id="lesson_file"
+                                                       class="form-control"
                                                        form="edit-item">
                                             </div>
                                             <div class="mb-3 col-lg-12 col-xl-2 col-12 d-flex align-items-center mb-0">
@@ -292,12 +295,21 @@
 
                         <div class="ps-3 p-3">
                             <div class="mb-3">
-                                <form action="{{route('admin.pagebuilder.show')}}" method="get">
-                                    @method('get')
-                                    <input type="hidden" name="pagebuilder_type" value="{{get_class($product)}}">
-                                    <input type="hidden" name="pagebuilder_id" value="{{$product->id}}">
-                                    <input type="submit" class="btn btn-primary w-100" value="ویرایشگر زنده">
-                                </form>
+
+                                @if(!$product->pagebuilder)
+                                    <form action="{{route('admin.pagebuilder.create')}}" method="get">
+                                        @method('get')
+                                        <input type="hidden" name="pagebuilder_type" value="{{get_class($product)}}">
+                                        <input type="hidden" name="pagebuilder_id" value="{{$product->id}}">
+                                        <input type="submit" class="btn btn-primary w-100" value="ساخت صفحه با ویرایشگر زنده">
+                                    </form>
+                                @else
+                                    <a href="{{route('admin.pagebuilder.edit' , $product->pagebuilder)}}"
+                                       class="btn btn-primary w-100">ویرایشگر زنده</a>
+                                @endif
+
+                                {{--                                @dd($product->pagebuilder)--}}
+
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="comment_status">کامنت</label>

@@ -20,7 +20,12 @@ const editor = grapesjs.init({
     },
     container : '#gjs',
     fromElement: true,
-
+    i18n: {
+        locale: 'fa', // default locale
+        // detectLocale: true, // by default, the editor will detect the language
+        // localeFallback: 'en', // default fallback
+        // messages: { it, tr },
+    },
     plugins: [
         'grapesjs-parser-postcss',
         'gjs-plugin-ckeditor' ,
@@ -132,7 +137,7 @@ editor.Commands.add
             var htmldata = editor.getHtml();
             var cssdata = editor.getCss();
             var page_id = document.getElementById('page-id');
-            axios.post(`pagebuilder/store` , {
+            axios.post(`/kara-fa/pagebuilder` , {
                 content: htmldata,
                 pagebuilder_type: $('#pagebuilder_type').val(),
                 pagebuilder_id: $('#pagebuilder_id').val(),
@@ -146,6 +151,7 @@ editor.Commands.add
                     text: res.data.message,
                     confirmButtonText: 'باشه'
                 })
+                window.location.replace(res.data.redirect)
             }
             function failed(err) {
                 Swal.fire({

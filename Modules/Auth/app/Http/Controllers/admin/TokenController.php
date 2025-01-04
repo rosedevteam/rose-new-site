@@ -17,7 +17,7 @@ class TokenController extends Controller
         $this->seo()
             ->settitle('کد تایید موبایل');
 
-        //check auth session exists : this session created in Modules/Http/Controllers/Admin/LoginController.php Line:48
+        //check auth session exists : this session created in Modules/Http/Controllers/admin/LoginController.php Line:48
         if (!$request->session()->has('auth')) {
             return view('auth::admin.login');
         }

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
-    protected string $name = 'Admin';
+    protected string $name = 'admin';
     protected string $moduleNamespace = "Modules\Admin\Http\Controllers";
 
     /**
@@ -39,6 +39,6 @@ class RouteServiceProvider extends ServiceProvider
             ->namespace($this->moduleNamespace)
             ->prefix(config('services.admin.prefix'))
             ->name('admin.')
-            ->group(module_path('Admin', 'routes/admin.php'));
+            ->group(module_path('admin', 'routes/admin.php'));
     }
 }

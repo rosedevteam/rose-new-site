@@ -98,6 +98,9 @@ class DatabaseSeeder extends Seeder
         //
         Permission::create(['name' => 'set-roles']);
         Permission::create(['name' => 'view-logs']);
+        //
+        Permission::create(['name' => 'edit-page']);
+        Permission::create(['name' => 'create-page']);
 
         $customer = Role::create(['name' => 'مشتری']);
         $admin = Role::create(['name' => 'ادمین']);

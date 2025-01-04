@@ -131,7 +131,7 @@ function removeProductAttr(attrId , e) {
     }).then((result) => {
         if (result.isConfirmed) {
             axios.delete(
-                `/admin/attributes/${attrId}`
+                `/kar-fa/attributes/${attrId}`
             ).then(function (res) {
                 const container = e.closest('.attribute-container');
                 container.slideUp(() => container.remove());
@@ -172,7 +172,7 @@ function removeProductLesson(lessonId , e) {
     }).then((result) => {
         if (result.isConfirmed) {
             axios.delete(
-                `/admin/lessons/${lessonId}`
+                `/kar-fa/lessons/${lessonId}`
             ).then(function (res) {
                 const container = e.closest('.lesson-container');
                 container.slideUp(() => container.remove());

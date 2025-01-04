@@ -29,7 +29,7 @@ export default defineConfig({
 //            const filePath = join(currentPath, file);
 //            const stats = statSync(filePath);
 //            if (stats.isFile() && !file.startsWith('.')) {
-//                const relativePath = 'Modules/Admin/'+relative(__dirname, filePath);
+//                const relativePath = 'Modules/admin/'+relative(__dirname, filePath);
 //                filePaths.push(relativePath);
 //            } else if (stats.isDirectory()) {
 //                walkDirectory(filePath);
@@ -49,6 +49,6 @@ export default defineConfig({
 
 
 //export const paths = [
-//    'Modules/Admin/resources/assets/sass/app.scss',
-//    'Modules/Admin/resources/assets/js/app.js',
+//    'Modules/admin/resources/assets/sass/app.scss',
+//    'Modules/admin/resources/assets/js/app.js',
 //];

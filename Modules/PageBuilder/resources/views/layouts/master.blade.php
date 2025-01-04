@@ -31,37 +31,14 @@
 </head>
 <body class="body-bg-default">
 
-{{--Nav Menu--}}
-{{--@include('front.partials.nav')--}}
-{{--Nav Menu End--}}
-
     {{--Main Content--}}
     @yield('content')
     {{--Main Content End--}}
-
-
-
-{{--Footer--}}
-{{--@include('front.partials.footer')--}}
-{{--Footer End--}}
 
 <!--script-->
 
 <script src="{{asset('assets/front/js/jquery.js')}}"></script>
 
-{{--<script src="{{asset('assets/front/js/jquery-ui.min.js')}}"></script>--}}
-
-{{--<script src="{{asset('assets/front/js/bootstrap/popper.min.js')}}"></script>--}}
-
-{{--<script src="{{asset('assets/front/js/bootstrap/bootstrap.min.js')}}"></script>--}}
-
-{{--<script src="{{asset('assets/front/vendor/owl-carousel/owl.carousel.js')}}"></script>--}}
-
-
-
-
-{{--<script src="{{asset('assets/front/js/app.js')}}"></script>--}}
-<script type="module" src="{{asset('assets/admin/js/pagebuilder.js')}}"></script>
 
 @yield('footer')
 
