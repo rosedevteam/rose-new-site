@@ -1,5 +1,18 @@
 @extends('admin::layouts.main')
 
+@push('css')
+    <style>
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+    </style>
+@endpush
 
 @section('content')
     <div class="content-wrapper">

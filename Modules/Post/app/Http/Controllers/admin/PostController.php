@@ -95,7 +95,10 @@ class PostController extends Controller
                 'image' => 'nullable',
                 'comment_status' => 'required|string',
                 'status' => 'required|string',
-                'categories.*' => 'nullable|exists:categories,id',
+                'categories.*' => 'required|nullable|exists:categories,id',
+                'meta_title' => 'nullable',
+                'meta_description' => 'nullable',
+                'meta_keywords' => 'nullable',
             ]);
 
             $data['slug'] = self::getSlug($data['slug']);
@@ -111,6 +114,12 @@ class PostController extends Controller
                 return !is_null($category);
             });
             $post->categories()->sync($data['categories']);
+            $post->metadata()->create([
+                'title' => $data['meta_title'],
+                'description' => $data['meta_description'],
+                'keywords' => $data['meta_keywords'],
+                'user_id' => auth()->user()->id,
+            ]);
             $after = json_encode($data, JSON_UNESCAPED_UNICODE);
 
             activity()
@@ -150,7 +159,10 @@ class PostController extends Controller
                 'comment_status' => 'required',
                 'status' => 'required',
                 'image' => 'nullable',
-                'categories.*' => '|nullable|exists:categories,id',
+                'categories.*' => 'required|nullable|exists:categories,id',
+                'meta_title' => 'nullable',
+                'meta_description' => 'nullable',
+                'meta_keywords' => 'nullable',
             ]);
 
             $data['slug'] = self::getSlug($data['slug']);
@@ -171,6 +183,12 @@ class PostController extends Controller
                 return !is_null($category);
             });
             $post->categories()->sync($data['categories']);
+            $post->metadata()->updateOrCreate([
+                'title' => $data['meta_title'],
+                'description' => $data['meta_description'],
+                'keywords' => $data['meta_keywords'],
+                'user_id' => auth()->user()->id,
+            ]);
 
             activity()
                 ->causedBy(auth()->user())
