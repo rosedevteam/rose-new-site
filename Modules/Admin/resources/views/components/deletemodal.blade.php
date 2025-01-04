@@ -1,5 +1,5 @@
 <div class="modal fade" id="delete-modal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="text-center mb-4 mt-0 mt-md-n2">

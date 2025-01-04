@@ -171,7 +171,7 @@
 
             @if($canEdit)
                 <div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content p-3 p-md-5">
                             <div class="modal-body">
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -243,7 +243,7 @@
             @endif
             @if($canDelete)
                 <div class="modal fade" id="deleteUser" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-dialog modal-dialog-centered modal-sm">
                         <div class="modal-content">
                             <div class="modal-body">
                                 <div class="text-center mb-4 mt-0 mt-md-n2">
@@ -268,7 +268,7 @@
             @endif
             @if($canSetRole)
                 <div class="modal fade" id="setRole" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-dialog modal-dialog-centered modal-sm">
                         <div class="modal-content">
                             <div class="modal-body">
                                 <div class="text-center mb-4 mt-0 mt-md-n2">

@@ -51,16 +51,14 @@
                                             </option>
                                         </select>
                                     </div>
-                                    <div class="col-md-2 mt-4">
+                                    <div class="col-md-5 mt-4 gap-3 d-flex">
                                         <button type="submit" class="btn btn-primary">تغییر</button>
+                                        @can('delete-comments')
+                                            <x-admin::deletebutton/>
+                                        @endcan
                                     </div>
                                 </div>
                             </form>
-                            @can('delete-comments')
-                                <div class="mt-4">
-                                    <x-admin::deletebutton/>
-                                </div>
-                            @endcan
                             <form action="{{ route("admin.comments.reply", $comment) }}" method="POST">
                                 @csrf
                                 <div class="row mt-5">
@@ -77,7 +75,7 @@
             </div>
         </div>
             <div class="modal fade" id="delete-modal" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-dialog modal-dialog-centered modal-sm">
                     <div class="modal-content">
                         <div class="modal-body">
                             <div class="text-center mb-4 mt-0 mt-md-n2">
@@ -99,4 +97,5 @@
                     </div>
                 </div>
             </div>
+    </div>
 @endsection
