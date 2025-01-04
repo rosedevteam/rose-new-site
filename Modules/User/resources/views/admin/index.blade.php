@@ -1,5 +1,18 @@
 @extends('admin::layouts.main')
 
+@push('css')
+    <style>
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+    </style>
+@endpush
 
 @section('content')
     <div class="content-wrapper">
@@ -129,7 +142,7 @@
                                     <td>{{ $user->email }}</td>
                                     <td>
                                         @foreach($user->getRoleNames() as $role)
-                                            <span @class(['badge', 'bg-label-primary' => $role == 'مشتری', 'bg-label-reddit' => $role == 'ادمین', 'bg-label-info' => $role == 'نویسنده', 'bg-label-github' => $role == 'پشتیبان', 'bg-label-success' => $role == 'super-admin'])>{{ $role }}</span>
+                                            <span @class(['badge', 'bg-primary' => $role == 'مشتری', 'bg-reddit' => $role == 'ادمین', 'bg-info' => $role == 'نویسنده', 'bg-github' => $role == 'پشتیبان', 'bg-success' => $role == 'super-admin'])>{{ $role }}</span>
                                         @endforeach
                                     </td>
                                     <td>{{ verta($user->created_at)->formatJalaliDateTime() }}</td>
@@ -169,34 +182,21 @@
                                 <div class="mb-3">
                                     <label class="form-label" for="first_name">نام</label>
                                     <input type="text" class="form-control" id="first_name" name="first_name"
+                                           value="{{old('first_name')}}"
                                            required>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="last_name">نام خانوادگی</label>
                                     <input type="text" class="form-control" id="last_name" name="last_name"
+                                           value="{{ old('last_name') }}"
                                            required>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="phone">شماره موبایل</label>
                                     <input type="number" class="form-control" id="phone" name="phone" maxlength="11"
+                                           value="{{ old('phone') }}"
                                            required>
                                 </div>
-                                @can('promote-users')
-                                    <div class="mb-3">
-                                        <label class="form-label" for="role_id">نقش</label>
-                                        <select id="role_id" class="form-select" name="role_id">
-                                            @foreach($roles as $role)
-                                                <option value="{{ $role['id'] }}">{{ $role['name'] }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                @else
-                                    <div class="mb-3">
-                                        <select id="role_id" class="form-select" name="role_id" hidden>
-                                            <option value="1"></option>
-                                        </select>
-                                    </div>
-                                @endcan
                                 <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">ثبت</button>
                                 <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">
                                     انصراف

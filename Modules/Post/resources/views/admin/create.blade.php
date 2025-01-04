@@ -32,7 +32,7 @@
                                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#form-tabs-seo"
                                             role="tab"
                                             aria-selected="true">
-                                        seo
+                                        سئو
                                     </button>
                                 </li>
                             </ul>
@@ -57,47 +57,21 @@
                                 <div class="tab-pane fade" id="form-tabs-seo" role="tabpanel">
                                     <div class="row g-3">
                                         <div class="col-md-6">
-                                            <label class="form-label" for="formtabs-username">نام کاربری</label>
-                                            <input type="text" id="formtabs-username" class="form-control text-start"
-                                                   placeholder="john.doe" dir="ltr">
+                                            <label class="form-label" for="title">عنوان</label>
+                                            <input type="text" id="title" name="meta_title"
+                                                   class="form-control text-start"
+                                                   value="" dir="ltr">
                                         </div>
                                         <div class="col-md-6">
-                                            <label class="form-label" for="formtabs-email">ایمیل</label>
-                                            <div class="input-group input-group-merge">
-                                            <span class="input-group-text" id="formtabs-email2"
-                                                  dir="ltr">@example.com</span>
-                                                <input type="text" id="formtabs-email" class="form-control text-start"
-                                                       placeholder="john.doe" aria-label="john.doe"
-                                                       aria-describedby="formtabs-email2" dir="ltr">
-                                            </div>
+                                            <label class="form-label" for="keywords">کلمات کلیدی</label>
+                                            <input type="text" id="keywords" name="meta_keywords" class="form-control"
+                                                   value="">
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-password-toggle">
-                                                <label class="form-label" for="formtabs-password">رمز عبور</label>
-                                                <div class="input-group input-group-merge">
-                                                    <input type="password" id="formtabs-password"
-                                                           class="form-control text-start" placeholder="············"
-                                                           dir="ltr" aria-describedby="formtabs-password2">
-                                                    <span class="input-group-text cursor-pointer"
-                                                          id="formtabs-password2"><i
-                                                            class="bx bx-hide"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-password-toggle">
-                                                <label class="form-label" for="formtabs-confirm-password">تایید رمز
-                                                    عبور</label>
-                                                <div class="input-group input-group-merge">
-                                                    <input type="password" id="formtabs-confirm-password"
-                                                           class="form-control text-start" placeholder="············"
-                                                           dir="ltr" aria-describedby="formtabs-confirm-password2">
-                                                    <span class="input-group-text cursor-pointer"
-                                                          id="formtabs-confirm-password2"><i
-                                                            class="bx bx-hide"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mt-3">
+                                        <label class="form-label" for="description">توضیحات</label>
+                                        <textarea id="description" class="form-control"
+                                                  name="meta_description"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -163,7 +137,6 @@
                                 <label for="select2Primary" class="form-check-label">دسته بندی</label>
                                 <div class="select2-primary">
                                     <select id="select2Primary" class="select2 form-select" name="categories[]" form="create-item" multiple>
-                                        <option value="" type="hidden" selected></option>
                                         @foreach($categories as $c)
                                             <option
                                                 value="{{ $c->id }}">{{ ($c->parent?->name . (is_null($c->parent) ? '' : ': ')) . $c->name }}</option>

@@ -78,41 +78,58 @@ class ProductController extends Controller
                 'attributes' => 'nullable',
                 'lessons' => 'nullable',
                 'is_free' => 'required',
-                'categories.*' => 'nullable|exists:categories,id',
+                'categories.*' => 'required|exists:categories,id',
+                'meta_title' => 'nullable',
+                'meta_description' => 'nullable',
+                'meta_keywords' => 'nullable',
             ]);
 
             $validatedData['slug'] = self::getSlug($validatedData['slug']);
 
-            $product = auth()->user()->products()->create(Arr::except($validatedData, ['attributes' , 'lessons', 'categories']));
+            $product = auth()->user()->products()->create(Arr::except($validatedData, ['attributes', 'lessons', 'categories', 'meta_title', 'meta_description', 'meta_keywords']));
 
             $validatedData['categories'] = array_filter($validatedData['categories'], function ($category) {
                 return !is_null($category);
             });
-            $product->categories()->sync($validatedData['categories']);
+            $product->categories()->sync(Arr::except($validatedData['categories'], ['0']));
+            $after = json_encode($validatedData, JSON_UNESCAPED_UNICODE);
 
             if ($validatedData['attributes']) {
                 foreach ($validatedData['attributes'] as $attribute) {
-                    $path = $this->uploadFile($attribute['icon'] , "/products/attrs");
-                    $product->attributes()->create([
-                        'title' => $attribute['attr_title'],
-                        'subtitle' => $attribute['attr_subtitle'],
-                        'icon' =>   '/uploads/' . $path,
-                    ]);
+                    if ($attribute['attr_title']) {
+                        $path = $this->uploadFile($attribute['icon'], "/products/attrs");
+                        $product->attributes()->create([
+                            'title' => $attribute['attr_title'],
+                            'subtitle' => $attribute['attr_subtitle'],
+                            'icon' => '/uploads/' . $path,
+                        ]);
+                    }
                 }
             }
 
             if ($validatedData['lessons']) {
                 foreach ($validatedData['lessons'] as $lesson) {
-                    $product->lessons()->create([
-                        'title' => $lesson['lesson_title'],
-                        'duration' => $lesson['lesson_duration'],
-                        'file' =>   $lesson['file'],
-                    ]);
+                    if ($lesson['lesson_title']) {
+                        $product->lessons()->create([
+                            'title' => $lesson['lesson_title'],
+                            'duration' => $lesson['lesson_duration'],
+                            'file' => $lesson['file'],
+                        ]);
+                    }
                 }
             }
 
+            $product->metadata()->create([
+                'title' => $validatedData['meta_title'],
+                'description' => $validatedData['meta_description'],
+                'keywords' => $validatedData['meta_keywords'],
+                'user_id' => auth()->user()->id,
+            ]);
+
             activity()
-                ->withProperties([auth()->user()->name(), $product->title, $validatedData])
+                ->causedBy(auth()->user())
+                ->performedOn($product)
+                ->withProperties(compact('after'))
                 ->log('ساخت محصول');
             alert()->success("موفق", "با موفقیت انجام شد");
 
@@ -152,10 +169,11 @@ class ProductController extends Controller
                 'image' => 'required',
                 'is_free' => 'required',
                 'lessons' => 'sometimes|nullable',
-                'lessons.*' => 'required',
-                'attributes' => 'sometimes|nullable',
-                'attributes.*' => 'required',
-                'categories.*' => 'nullable|exists:categories,id',
+                'attributes' => 'nullable',
+                'categories.*' => 'required|exists:categories,id',
+                'meta_title' => 'nullable',
+                'meta_description' => 'nullable',
+                'meta_keywords' => 'nullable',
             ]);
             $validatedData['slug'] = self::getSlug($validatedData['slug']);
 
@@ -185,7 +203,16 @@ class ProductController extends Controller
                 }
             }
 
-            $product->update(Arr::except($validatedData, ['attributes', 'lessons', 'categories']));
+            $product->metadata()->updateOrCreate([
+                'title' => $validatedData['meta_title'],
+                'description' => $validatedData['meta_description'],
+                'keywords' => $validatedData['meta_keywords'],
+                'user_id' => auth()->user()->id,
+            ]);
+
+            $before = json_encode($product, JSON_UNESCAPED_UNICODE);
+            $product->update(Arr::except($validatedData, ['attributes', 'lessons', 'categories', 'meta_title', 'meta_description', 'meta_keywords']));
+            $after = json_encode($product, JSON_UNESCAPED_UNICODE);
 
             $validatedData['categories'] = array_filter($validatedData['categories'], function ($category) {
                 return !is_null($category);
@@ -193,7 +220,9 @@ class ProductController extends Controller
             $product->categories()->sync($validatedData['categories']);
 
             activity()
-                ->withProperties([auth()->user()->name(), $product->title, $validatedData])
+                ->causedBy(auth()->user())
+                ->performedOn($product)
+                ->withProperties(compact('before', 'after'))
                 ->log('ویرایش محصول');
             alert()->success("موفق", "ویرایش با موفقیت انجام شد");
 
@@ -219,12 +248,12 @@ class ProductController extends Controller
     {
         Gate::authorize('delete-products');
         try {
+            $before = json_encode($product, JSON_UNESCAPED_UNICODE);
             $product->delete();
 
             activity()
                 ->causedBy(auth()->user())
-                ->performedOn($product)
-                ->withProperties([auth()->user(), $product])
+                ->withProperties(compact('before'))
                 ->log('حذف محصول');
             alert()->success('موفق', 'محصول با موفقیت حذف شد');
 

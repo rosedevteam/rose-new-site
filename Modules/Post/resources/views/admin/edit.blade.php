@@ -34,7 +34,7 @@
                                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#form-tabs-seo"
                                             role="tab"
                                             aria-selected="true">
-                                        SEO
+                                        سئو
                                     </button>
                                 </li>
                             </ul>
@@ -64,50 +64,23 @@
                                 <div class="tab-pane fade" id="form-tabs-seo" role="tabpanel">
                                     <div class="row g-3">
                                         <div class="col-md-6">
-                                            <label class="form-label" for="formtabs-username">نام کاربری</label>
-                                            <input type="text" id="formtabs-username" class="form-control text-start"
-                                                   placeholder="john.doe" dir="ltr">
+                                            <label class="form-label" for="title">عنوان</label>
+                                            <input type="text" id="title" name="meta_title"
+                                                   class="form-control text-start"
+                                                   value="{{ $post->metadata?->title }}" dir="ltr">
                                         </div>
                                         <div class="col-md-6">
-                                            <label class="form-label" for="formtabs-email">ایمیل</label>
-                                            <div class="input-group input-group-merge">
-                                            <span class="input-group-text" id="formtabs-email2"
-                                                  dir="ltr">@example.com</span>
-                                                <input type="text" id="formtabs-email" class="form-control text-start"
-                                                       placeholder="john.doe" aria-label="john.doe"
-                                                       aria-describedby="formtabs-email2" dir="ltr">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-password-toggle">
-                                                <label class="form-label" for="formtabs-password">رمز عبور</label>
-                                                <div class="input-group input-group-merge">
-                                                    <input type="password" id="formtabs-password"
-                                                           class="form-control text-start" placeholder="············"
-                                                           dir="ltr" aria-describedby="formtabs-password2">
-                                                    <span class="input-group-text cursor-pointer"
-                                                          id="formtabs-password2"><i
-                                                            class="bx bx-hide"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-password-toggle">
-                                                <label class="form-label" for="formtabs-confirm-password">تایید رمز
-                                                    عبور</label>
-                                                <div class="input-group input-group-merge">
-                                                    <input type="password" id="formtabs-confirm-password"
-                                                           class="form-control text-start" placeholder="············"
-                                                           dir="ltr" aria-describedby="formtabs-confirm-password2">
-                                                    <span class="input-group-text cursor-pointer"
-                                                          id="formtabs-confirm-password2"><i
-                                                            class="bx bx-hide"></i></span>
-                                                </div>
-                                            </div>
+                                            <label class="form-label" for="keywords">کلمات کلیدی</label>
+                                            <input type="text" id="keywords" name="meta_keywords" class="form-control"
+                                                   value="{{ $post->metadata?->keywords }}">
                                         </div>
                                     </div>
+                                    <div class="col-md-12 mt-3">
+                                        <label class="form-label" for="description">توضیحات</label>
+                                        <textarea id="description" class="form-control"
+                                                  name="meta_description">{{ $post->metadata?->description }}</textarea>
+                                    </div>
                                 </div>
-
                             </div>
                         </form>
 
@@ -159,17 +132,20 @@
                                 <label for="image_label">تصویر اصلی</label>
                                 <div class="input-group">
                                     <input type="text" id="image_label" class="form-control" name="image"
-                                           aria-label="Image" aria-describedby="button-image" form="edit-item" value="{{$post->image}}">
+                                           aria-label="Image" aria-describedby="button-image" form="edit-item"
+                                           value="{{$post->image}}">
                                     <div class="input-group-append">
-                                        <button class="btn btn-outline-secondary" type="button" id="button-image">انتخاب</button>
+                                        <button class="btn btn-outline-secondary" type="button" id="button-image">
+                                            انتخاب
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                             <div class="my-3">
                                 <label for="select2Primary" class="form-check-label">دسته بندی</label>
                                 <div class="select2-primary">
-                                    <select id="select2Primary" class="select2 form-select" name="categories[]" form="edit-item" multiple>
-                                        <option value="" type="hidden" selected></option>
+                                    <select id="select2Primary" class="select2 form-select" name="categories[]"
+                                            form="edit-item" multiple>
                                         @foreach($categories as $c)
                                             <option
                                                 value="{{ $c->id }}" {{ $post->categories->contains($c) ? 'selected' : '' }}>{{ ($c->parent?->name . (is_null($c->parent) ? '' : ': ')) . $c->name }}</option>
@@ -178,10 +154,12 @@
                                 </div>
                             </div>
                             <div class="pt-4 d-flex align-items-center justify-content-between">
-                                <button type="submit" class="btn btn-sm btn-primary " form="edit-item">بروز رسانی</button>
-                                <a class="btn btn-sm btn-info " href="{{url('/') . '/posts/' . $post->slug}}">مشاهده آیتم</a>
+                                <button type="submit" class="btn btn-sm btn-primary " form="edit-item">بروز رسانی
+                                </button>
+                                <a class="btn btn-sm btn-info " href="{{url('/') . '/posts/' . $post->slug}}">مشاهده
+                                    آیتم</a>
                                 @can('delete-posts')
-                                        <x-admin::deletebutton/>
+                                    <x-admin::deletebutton/>
                                 @endcan
                             </div>
                         </div>

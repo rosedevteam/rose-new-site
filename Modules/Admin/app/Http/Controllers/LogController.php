@@ -36,6 +36,7 @@ class LogController extends Controller
 
     public function show($id)
     {
+        Gate::authorize('view-logs');
         dd(Activity::whereId($id)->first());
     }
 

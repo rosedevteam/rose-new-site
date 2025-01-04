@@ -66,9 +66,12 @@ class StudentReportController extends Controller
                 'status' => $validData['status'],
 
             ]);
+            $after = json_encode($analysis, JSON_UNESCAPED_UNICODE);
 
             activity()
-                ->withProperties([auth()->user()->name(), $analysis, $validData])
+                ->causedBy(auth()->user())
+                ->performedOn($analysis)
+                ->withProperties(compact('after'))
                 ->log('ساخت تحلیل');
             alert()->success('موفق', 'تحلیل با موفقیت ساخته شد');
 
@@ -148,6 +151,7 @@ class StudentReportController extends Controller
                 $name = $studentreport->analysis;
             }
 
+            $before = json_encode($studentreport, JSON_UNESCAPED_UNICODE);
             $studentreport->update([
                 'company' => $validData['company'],
                 'date' => $this->convertNums($validData['date']),
@@ -155,9 +159,12 @@ class StudentReportController extends Controller
                 'description' => $validData['description'],
                 'status' => $validData['status'],
             ]);
+            $after = json_encode($studentreport, JSON_UNESCAPED_UNICODE);
 
             activity()
-                ->withProperties([auth()->user()->name(), $studentreport, $validData])
+                ->causedBy(auth()->user())
+                ->performedOn($studentreport)
+                ->withProperties(compact('before', 'after'))
                 ->log('ویرایش تحلیل');
             alert()->success('موفق', 'تحلیل با موفقیت ویرایش شد');
 
@@ -176,10 +183,13 @@ class StudentReportController extends Controller
     {
         Gate::authorize('delete-student-reports');
         try {
+            $before = json_encode($studentreport, JSON_UNESCAPED_UNICODE);
             $studentreport->delete();
 
             activity()
-                ->withProperties([auth()->user()->name(), $studentreport])
+                ->causedBy(auth()->user())
+                ->performedOn($studentreport)
+                ->withProperties(compact('before'))
                 ->log('حذف تحلیل');
             alert()->success('موفق', 'تحلیل با موفقیت حذف شد');
 

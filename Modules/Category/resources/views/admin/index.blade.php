@@ -17,7 +17,11 @@
                                     <option value="all" selected>همه</option>
                                     @foreach($types as $t)
                                         <option
-                                            value="{{ $t }}" {{ $t == $type ? 'selected' : ''}}>{{ $t }}</option>
+                                            value="{{ $t }}" {{ $t == $type ? 'selected' : ''}}>@switch($t)
+                                                @case('post')پست@break
+                                                @case('joboffer')فرصت شغلی@break
+                                                @case('product')دوره@break
+                                            @endswitch</option>
                                     @endforeach
                                 </select></div>
                             <div class="col-md-1">
@@ -84,7 +88,11 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td><span class="fw-semibold">{{ $category->type }}</span></td>
+                                    <td><span class="fw-semibold">@switch($category->type)
+                                                @case('post')پست@break
+                                                @case('joboffer')فرصت شغلی@break
+                                                @case('product')دوره@break
+                                            @endswitch</span></td>
                                     <td>{{ $category->parent?->name ?: 'ندارد' }}</td>
                                     <td>{{ $category->archive_slug ?: 'ندارد' }}</td>
                                     <td><a href="{{ route('admin.users.show', $category->user) }}"
@@ -143,7 +151,11 @@
                                             required>
                                         <option value="" disabled selected></option>
                                         @foreach($types as $t)
-                                            <option value="{{ $t }}">{{ $t }}</option>
+                                            <option value="{{ $t }}">@switch($t)
+                                                    @case('post')پست@break
+                                                    @case('joboffer')فرصت شغلی@break
+                                                    @case('product')دوره@break
+                                                @endswitch</option>
                                         @endforeach
                                     </select>
                                 </div>

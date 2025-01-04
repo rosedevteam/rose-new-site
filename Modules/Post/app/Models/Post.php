@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Modules\Category\Models\Category;
 use Modules\Comment\Models\Comment;
+use Modules\Metadata\Models\Metadata;
 use Modules\Post\Database\Factories\PostFactory;
 use Modules\User\Models\User;
 
 class Post extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
     public function user()
@@ -33,6 +35,11 @@ class Post extends Model
     public function categories()
     {
         return $this->morphToMany(Category::class, 'categoryable');
+    }
+
+    public function metadata()
+    {
+        return $this->morphOne(Metadata::class, 'metadataable');
     }
 
     public static function newFactory(): PostFactory

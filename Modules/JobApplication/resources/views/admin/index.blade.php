@@ -52,6 +52,9 @@
                             <thead>
                             <tr>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                    style="width: 8%;">فرصت شغلی
+                                </th>
+                                <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 8%;">نام
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
@@ -74,6 +77,9 @@
                             <tbody>
                             @foreach($jobApplications as $jobApplication)
                                 <tr>
+                                    <td><a href="{{ route('admin.joboffers.edit', $jobApplication->jobOffer->id) }}"
+                                           class="text-body text-truncate">{{ $jobApplication->jobOffer->title }}</a>
+                                    </td>
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column">
@@ -89,9 +95,9 @@
                                     <td><span class="fw-semibold">{{ $jobApplication->phone }}</span></td>
                                     <td>
                                         @switch($jobApplication->status)
-                                            @case('accepted')<span class="badge bg-label-success">تایید شده</span>@break
-                                            @case('pending')<span class="badge bg-label-warning">حال بررسی</span>@break
-                                            @case('rejected')<span class="badge bg-label-danger">رد شده</span>@break
+                                            @case('accepted')<span class="badge bg-success">تایید شده</span>@break
+                                            @case('pending')<span class="badge bg-warning">حال بررسی</span>@break
+                                            @case('rejected')<span class="badge bg-danger">رد شده</span>@break
                                     @endswitch </td>
                                     <td>{{ verta($jobApplication->created_at)->formatJalaliDateTime() }}</td>
                                     <td>

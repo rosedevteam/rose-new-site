@@ -101,7 +101,7 @@
                                     </td>
                                     <td>{{ $jobOffer->type }}</td>
                                     <td>
-                                        <span @class(['badge', 'bg-label-success' => $jobOffer->status == 'active', 'bg-label-danger' => $jobOffer->status == 'inactive'])>
+                                        <span @class(['badge', 'bg-success' => $jobOffer->status == 'active', 'bg-danger' => $jobOffer->status == 'inactive'])>
                                         @switch($jobOffer->status)
                                             @case('active')فعال@break
                                             @case('inactive')غیر فعال@break

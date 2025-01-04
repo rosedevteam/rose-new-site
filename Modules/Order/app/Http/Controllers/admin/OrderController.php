@@ -96,6 +96,7 @@ class OrderController extends Controller
                 'price' => $total,
             ]);
             $order->products()->attach($validData['products']);
+            $after = json_encode($order, JSON_UNESCAPED_UNICODE);
 
             //if status was completed then send a request to spot player api for create license
             if ($order->status == 'completed') {
@@ -125,7 +126,9 @@ class OrderController extends Controller
             }
 
             activity()
-                ->withProperties([auth()->user()->name(), $order, $validData])
+                ->causedBy(auth()->user())
+                ->performedOn($order)
+                ->withProperties(compact('after'))
                 ->log('ساخت سفارش');
             alert()->success('موفق', 'سفارش با موفقیت ساخته شد');
 
@@ -177,9 +180,7 @@ class OrderController extends Controller
                 $total = ($product->isOnSale() ? $product->sale_price : $product->price) + $total;
             }
 
-
-            $old = $order->toArray();
-
+            $before = json_encode($order, JSON_UNESCAPED_UNICODE);
             $order->update([
                 'user_id' => $validData['user_id'],
                 'created_at' => $validData['created_at'],
@@ -189,9 +190,12 @@ class OrderController extends Controller
                 'price' => $total,
             ]);
             $order->products()->sync($validData['products']);
+            $after = json_encode($order, JSON_UNESCAPED_UNICODE);
 
             activity()
-                ->withProperties([auth()->user()->name(), $order, $old])
+                ->causedBy(auth()->user())
+                ->performedOn($order)
+                ->withProperties(compact('before', 'after'))
                 ->log('ویرایش سفارش');
 
             alert()->success('موفق', 'سفارش با موفقیت ,یرایش شد');
@@ -208,10 +212,12 @@ class OrderController extends Controller
         Gate::authorize('delete-orders');
         try {
 
+            $before = json_encode($order, JSON_UNESCAPED_UNICODE);
             $order->delete();
 
             activity()
-                ->withProperties([auth()->user()->name(), $order])
+                ->causedBy(auth()->user())
+                ->withProperties(compact('before'))
                 ->log('حذف سفارش');
             alert()->success('موفق', 'سفارش با موفقیت حذف شد');
 

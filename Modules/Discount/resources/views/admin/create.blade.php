@@ -32,7 +32,7 @@
                                 </select>
                             </div>
                             <div class="mb-3 col-md-3">
-                                <label class="form-label" for="type">وضعیت</label>
+                                <label class="form-label" for="type">نوع</label>
                                 <select class="form-select" id="type" name="type">
                                     <option value="amount">مقدار</option>
                                     <option value="percentage">درصد</option>

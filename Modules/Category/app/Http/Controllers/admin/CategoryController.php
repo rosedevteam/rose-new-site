@@ -63,6 +63,7 @@ class CategoryController extends Controller
                 'parent_id' => 'nullable|exists:categories,id',
                 'archive_slug' => "nullable|unique:categories,archive_slug",
             ]);
+            $validData['archive_slug'] = self::getSlug($validData['archive_slug']);
             if(!is_null($validData['parent_id'])) {
                 if (Category::where('id', $validData['parent_id'])->first()->type != $validData['type_create']) {
                     throw new \Exception();
@@ -76,9 +77,12 @@ class CategoryController extends Controller
                 'parent_id' => $validData['parent_id'],
                 'archive_slug' => $validData['archive_slug'],
             ]);
+            $after = json_encode($category, JSON_UNESCAPED_UNICODE);
 
             activity()
-                ->withProperties([auth()->user()->name(), $category->name])
+                ->causedBy(auth()->user())
+                ->performedOn($category)
+                ->withProperties(compact('after'))
                 ->log('ساخت کتگوری');
             alert()->success('موفق', 'کتگوری با موفقیت ساخته شد');
 
@@ -118,21 +122,26 @@ class CategoryController extends Controller
                 'archive_slug_edit' => "nullable",
                 'type_edit' => 'required',
             ]);
+            $validData['archive_slug_edit'] = self::getSlug($validData['archive_slug_edit']);
             if (!is_null($validData['parent_id_edit'])) {
                 if (Category::where('id', $validData['parent_id_edit'])->first()->type != $validData['type_edit']) {
                     throw new \Exception();
                 }
             }
 
+            $before = json_encode($category, JSON_UNESCAPED_UNICODE);
             $category->update([
                 'name' => $validData['name_edit'],
                 'archive_slug' => $validData['archive_slug_edit'],
                 'parent_id' => $validData['parent_id_edit'],
             ]);
+            $after = json_encode($category, JSON_UNESCAPED_UNICODE);
 
             activity()
-                ->withProperties([auth()->user()->name(), $category->name])
-                ->log('ساخت کتگوری');
+                ->causedBy(auth()->user())
+                ->performedOn($category)
+                ->withProperties(compact('before', 'after'))
+                ->log('ویرایش کتگوری');
             alert()->success('موفق', 'کتگوری با موفقیت ساخته شد');
 
             return redirect(route('admin.categories.index'));
@@ -149,11 +158,12 @@ class CategoryController extends Controller
     {
         Gate::authorize('delete-categories');
         try {
-
+            $before = json_encode($category, JSON_UNESCAPED_UNICODE);
             $category->delete();
 
             activity()
-                ->withProperties([auth()->user()->name(), $category->name])
+                ->causedBy(auth()->user())
+                ->withProperties(compact('before'))
                 ->log('حذف کتگوری');
             alert()->success('موفق', 'کنگوری با موفقیت حذف شد');
 

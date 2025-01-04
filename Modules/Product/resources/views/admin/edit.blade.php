@@ -63,11 +63,6 @@
                                         <textarea id="adminEditor" name="content">{{$product->content}}</textarea>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="form-tabs-seo" role="tabpanel">
-                                    <div class="row g-3">
-
-                                    </div>
-                                </div>
                                 <div class="tab-pane fade" id="form-tabs-price" role="tabpanel">
                                     <div class="row g-3">
                                         <div class="col-md-12">
@@ -93,6 +88,26 @@
                                     </div>
                                 </div>
 
+                                <div class="tab-pane fade" id="form-tabs-seo" role="tabpanel">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="title">عنوان</label>
+                                            <input type="text" id="title" name="meta_title"
+                                                   class="form-control text-start"
+                                                   value="{{ $product->metadata?->title }}" dir="ltr">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="keywords">کلمات کلیدی</label>
+                                            <input type="text" id="keywords" name="meta_keywords" class="form-control"
+                                                   value="{{ $product->metadata?->keywords }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mt-3">
+                                        <label class="form-label" for="description">توضیحات</label>
+                                        <textarea id="description" class="form-control"
+                                                  name="meta_description">{{ $product->metadata?->description }}</textarea>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>

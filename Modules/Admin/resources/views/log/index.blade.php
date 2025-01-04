@@ -76,15 +76,15 @@
                                     <td>{{ verta($log->created_at)->formatJalaliDateTime() }}</td>
                                     <td>
                                         <div class="d-flex gap-3 text-nowrap">
-                                            {{--                                            <a href="{{ route('admin.logs.show', $log->id) }}">--}}
                                             <button class="btn btn-sm btn-primary" id="details-button"
                                                     data-bs-target="#details" data-bs-toggle="modal"
+                                                    data-log-id="{{ $log->id }}"
                                                     data-description="{{ $log->description }}"
                                                     data-type="{{ array_reverse(explode('\\', $log->subject_type))[0] }}"
                                                     data-id="{{ $log->subject_id }}"
                                                     data-causer-id="{{ $log->causer_id }}"
                                                     data-causer-name="{{ $log->causer->name() }}"
-                                                    data-properties="{{ json_encode($log->properties, JSON_PRETTY_PRINT) }}"
+                                                    data-properties="{{ $log->properties }}"
                                                     data-created-at="{{ verta($log->created_at)->formatJalaliDatetime() }}"
                                             >جزییات
                                             </button>
@@ -100,7 +100,7 @@
                 </div>
             </div>
             <div class="modal fade" id="details" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-dialog modal-dialog-scrollable" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 id="title"></h5>
@@ -152,12 +152,13 @@
                     const description = event.target.getAttribute('data-description');
                     const causerName = event.target.getAttribute('data-causer-name');
                     const createdAt = event.target.getAttribute('data-created-at');
-                    const properties = event.target.getAttribute('data-properties');
-                    console.log(properties);
-                    document.getElementById('title').textContent = description;
+                    const logId = event.target.getAttribute('data-log-id');
+                    let properties = event.target.getAttribute('data-properties');
+                    properties = properties.replace(/&quot;/g, '"');
+                    document.getElementById('title').textContent = logId + " : " + description;
                     document.getElementById('causer').textContent = causerName;
                     document.getElementById('created_at').textContent = createdAt;
-                    document.getElementById('properties').textContent = JSON.parse(properties);
+                    document.getElementById('properties').textContent = JSON.stringify(JSON.parse(properties), null, 4);
                 }
             });
         });

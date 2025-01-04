@@ -65,11 +65,14 @@ class JobApplicationController extends Controller
                 'status' => 'required|string|in:accepted,rejected,pending',
             ]);
 
-            $old = $jobapplication->toArray();
+            $before = json_encode($jobapplication, JSON_UNESCAPED_UNICODE);
             $jobapplication->update($data);
+            $after = json_encode($jobapplication, JSON_UNESCAPED_UNICODE);
 
             activity()
-                ->withProperties([auth()->user()->name(), $jobapplication->full_name, $data])
+                ->causedBy(auth()->user())
+                ->performedOn($jobapplication)
+                ->withProperties(compact('before', 'after'))
                 ->log('ویرایش رزومه');
             alert()->success('موفق', 'ویرایش رزومه با موفقیت انجام شد');
 
@@ -84,11 +87,12 @@ class JobApplicationController extends Controller
     {
         Gate::authorize('delete-job-applications');
         try {
-
+            $before = json_encode($jobapplication, JSON_UNESCAPED_UNICODE);
             $jobapplication->delete();
 
             activity()
-                ->withProperties([auth()->user()->name(), $jobapplication->full_name])
+                ->causedBy(auth()->user())
+                ->withProperties(compact('before'))
                 ->log('حذف پست');
             alert()->success('موفق', 'پست با موفقیت حذف شد');
 

@@ -69,10 +69,13 @@ class MenuController extends Controller
             ]);
             $validData['slug'] = self::getSlug($validData['slug']);
 
-            $menu = auth()->user()->menus()->create($validData);
+            $menu = Menu::create($validData);
+            $after = json_encode($menu, JSON_UNESCAPED_UNICODE);
 
             activity()
-                ->withProperties([auth()->user()->name(), $menu->title, $validData])
+                ->causedBy(auth()->user())
+                ->performedOn($menu)
+                ->withProperties(compact('after'))
                 ->log('ساخت منو');
             alert()->success('منوی جدید با موفقیت ایجاد شد.');
 
@@ -116,10 +119,12 @@ class MenuController extends Controller
         Gate::authorize('delete-menus');
         try {
 
+            $before = json_encode($menu, JSON_UNESCAPED_UNICODE);
             $menu->delete();
 
             activity()
-                ->withProperties([auth()->user()->name(), $menu->title])
+                ->causedBy(auth()->user())
+                ->withProperties(compact('before'))
                 ->log('حذف منو');
             alert()->success('موفق', 'منو با موفقیت حذف شد');
 

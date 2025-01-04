@@ -125,9 +125,9 @@
                                     <td><a href="{{ route('admin.users.show', $discount->user) }}"
                                            class="text-body text-truncate">{{ $discount->user->name() }}</a></td>
                                     <td>@if($discount->is_active)
-                                            <span class="badge bg-label-success">فعال</span>
+                                            <span class="badge bg-success">فعال</span>
                                         @else
-                                            <span class="badge bg-label-danger">فیر فعال</span>
+                                            <span class="badge bg-danger">غیر فعال</span>
                                         @endif</td>
                                     <td>
                                         <span class=fw-semibold">

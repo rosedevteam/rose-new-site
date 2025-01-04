@@ -73,14 +73,6 @@ class User extends \Illuminate\Foundation\Auth\User
         return $this->hasMany(Menu::class);
     }
 
-//    public function toJson()
-//    {
-//        $data = [
-//            'first_name' => $this->first_name,
-//            'last_name'
-//        ];
-//    }
-
     protected static function newFactory()
     {
         return UserFactory::new();
