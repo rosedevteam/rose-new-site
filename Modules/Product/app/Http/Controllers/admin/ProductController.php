@@ -180,11 +180,11 @@ class ProductController extends Controller
             if ($validatedData['attributes'] ?? false) {
                 foreach ($validatedData['attributes'] as $attribute) {
                     if ($attribute['attr_title']) {
-                        $path = $this->uploadFile($attribute['icon'] , "/products/attrs");
+                        $path = $this->uploadFile($attribute['icon'], "/products/attrs");
                         $product->attributes()->create([
                             'title' => $attribute['attr_title'],
                             'subtitle' => $attribute['attr_subtitle'],
-                            'icon' =>   '/uploads/' . $path,
+                            'icon' => '/uploads/' . $path,
                         ]);
                     }
 
@@ -203,12 +203,21 @@ class ProductController extends Controller
                 }
             }
 
-            $product->metadata()->updateOrCreate([
-                'title' => $validatedData['meta_title'],
-                'description' => $validatedData['meta_description'],
-                'keywords' => $validatedData['meta_keywords'],
-                'user_id' => auth()->user()->id,
-            ]);
+            if ($product->metadata()->exists()) {
+                $product->metadata()->update([
+                    'title' => $validatedData['meta_title'],
+                    'description' => $validatedData['meta_description'],
+                    'keywords' => $validatedData['meta_keywords'],
+                    'user_id' => auth()->user()->id,
+                ]);
+            } else {
+                $product->metadata()->create([
+                    'title' => $validatedData['meta_title'],
+                    'description' => $validatedData['meta_description'],
+                    'keywords' => $validatedData['meta_keywords'],
+                    'user_id' => auth()->user()->id,
+                ]);
+            }
 
             $before = json_encode($product, JSON_UNESCAPED_UNICODE);
             $product->update(Arr::except($validatedData, ['attributes', 'lessons', 'categories', 'meta_title', 'meta_description', 'meta_keywords']));

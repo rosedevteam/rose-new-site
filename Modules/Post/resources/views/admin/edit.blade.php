@@ -145,7 +145,7 @@
                                 <label for="select2Primary" class="form-check-label">دسته بندی</label>
                                 <div class="select2-primary">
                                     <select id="select2Primary" class="select2 form-select" name="categories[]"
-                                            form="edit-item" multiple>
+                                            form="edit-item" multiple required>
                                         @foreach($categories as $c)
                                             <option
                                                 value="{{ $c->id }}" {{ $post->categories->contains($c) ? 'selected' : '' }}>{{ ($c->parent?->name . (is_null($c->parent) ? '' : ': ')) . $c->name }}</option>

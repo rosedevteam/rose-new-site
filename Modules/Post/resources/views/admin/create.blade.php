@@ -136,7 +136,8 @@
                             <div class="my-3">
                                 <label for="select2Primary" class="form-check-label">دسته بندی</label>
                                 <div class="select2-primary">
-                                    <select id="select2Primary" class="select2 form-select" name="categories[]" form="create-item" multiple>
+                                    <select id="select2Primary" class="select2 form-select" name="categories[]"
+                                            form="create-item" multiple required>
                                         @foreach($categories as $c)
                                             <option
                                                 value="{{ $c->id }}">{{ ($c->parent?->name . (is_null($c->parent) ? '' : ': ')) . $c->name }}</option>

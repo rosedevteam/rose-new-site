@@ -183,12 +183,22 @@ class PostController extends Controller
                 return !is_null($category);
             });
             $post->categories()->sync($data['categories']);
-            $post->metadata()->updateOrCreate([
-                'title' => $data['meta_title'],
-                'description' => $data['meta_description'],
-                'keywords' => $data['meta_keywords'],
-                'user_id' => auth()->user()->id,
-            ]);
+
+            if ($post->metadata()->exists()) {
+                $post->metadata()->update([
+                    'title' => $data['meta_title'],
+                    'description' => $data['meta_description'],
+                    'keywords' => $data['meta_keywords'],
+                    'user_id' => auth()->user()->id,
+                ]);
+            } else {
+                $post->metadata()->create([
+                    'title' => $data['meta_title'],
+                    'description' => $data['meta_description'],
+                    'keywords' => $data['meta_keywords'],
+                    'user_id' => auth()->user()->id,
+                ]);
+            }
 
             activity()
                 ->causedBy(auth()->user())

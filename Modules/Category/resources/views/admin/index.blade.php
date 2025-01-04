@@ -162,7 +162,7 @@
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label" for="parent_id">کتگوری مادر:</label>
+                                    <label class="form-label" for="parent_id">دسته بندی مادر:</label>
                                     <select id="parent_id" name="parent_id" class="form-select">
                                         <option value="">ندارد</option>
                                         @foreach($parents as $c)
@@ -204,7 +204,7 @@
                                            required>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label" for="parent_id_edit">دسنه بندی مادر</label>
+                                    <label class="form-label" for="parent_id_edit">دسته بندی مادر</label>
                                     <select id="parent_id_edit" name="parent_id_edit" class="form-select">
                                         <option value="">ندارد</option>
                                         @foreach($parents as $c)
