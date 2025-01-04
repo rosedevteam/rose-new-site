@@ -89,10 +89,14 @@
                                         </div>
                                     </td>
                                     <td>
+                                        @can('view-users')
                                 <span class="fw-semibold"><a href="{{ route('admin.users.edit', $jobOffer->user) }}"
                                                              class="text-body text-truncate">
                                         {{ $jobOffer->user->name() }}</a>
                                 </span>
+                                        @else
+                                            {{ $jobOffer->user->name() }}
+                                        @endcan
                                     </td>
                                     <td>
                                         @foreach($jobOffer->categories as $c)

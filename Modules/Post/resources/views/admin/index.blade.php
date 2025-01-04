@@ -21,7 +21,8 @@
                                 <select id="category" name="category" class="form-select text-capitalize">
                                     <option value="all" selected>همه</option>
                                     @foreach($categories as $c)
-                                        <option value="{{ $c->id }}" {{ $category == $c->id ? 'selected' : '' }}>{{ $c->name }}</option>
+                                        <option
+                                            value="{{ $c->id }}" {{ $category == $c->id ? 'selected' : '' }}>{{ $c->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -117,11 +118,18 @@
                                         </div>
                                     </td>
                                     <td>
-                                <span class="fw-semibold">
-                                    <a href="{{ route('admin.users.show', $post->user) }}"
-                                       class="text-body text-truncate">
-                                    {{ $post->user->name() }}</a>
+                                        @can('view-users')
+                                            <a href="{{ route('admin.users.show', $post->user) }}"
+                                               class="text-body text-truncate">
+                                            <span class="fw-semibold">
+                                    {{ $post->user->name() }}
                                 </span>
+                                            </a>
+                                        @else
+                                            <span class="fw-semibold">
+                                    {{ $post->user->name() }}
+                                </span>
+                                        @endcan
                                     </td>
                                     <td>
                                         @foreach($post->categories as $c)
