@@ -12,6 +12,7 @@ use Modules\Comment\Models\Comment;
 use Modules\Discount\Models\Discount;
 use Modules\Metadata\Models\Metadata;
 use Modules\Order\Models\Order;
+use Modules\PageBuilder\Models\PageBuilder;
 use Modules\Product\Database\Factories\ProductFactory;
 use Modules\User\Models\User;
 
@@ -65,6 +66,13 @@ class Product extends Model
     {
         return $this->morphOne(Metadata::class, 'metadataable');
     }
+
+
+    public function pagebuilder()
+    {
+        return $this->morphOne(PageBuilder::class, 'pagebuilder');
+    }
+
 
     public function isOnSale()
     {
