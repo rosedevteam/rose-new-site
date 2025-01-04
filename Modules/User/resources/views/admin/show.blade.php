@@ -2,6 +2,9 @@
 
 @section('content')
     <div class="content-wrapper">
+        @if($errors->any())
+            <div class="alert alert-danger" style="padding-right: 80px">{{ $errors->first() }}</div>
+        @endif
         <div class="container-xxl flex-grow-1 container-p-y">
             <div class="row gy-4">
                 <!-- User Sidebar -->
@@ -130,7 +133,7 @@
                                                         $i = 0
                                                     @endphp
                                                     @foreach($order->products()->get() as $product)
-                                                        <a href="{{ route('admin.products.show', $product) }}"
+                                                        <a href="{{ route('admin.products.edit', $product) }}"
                                                            class="text-body text-truncate"><span
                                                                 class="fw-semibold">{{ $product->title . ($i != $len ? "، " : "") }}</span></a>
                                                         @php $i++ @endphp
@@ -171,7 +174,7 @@
 
             @if($canEdit)
                 <div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content p-3 p-md-5">
                             <div class="modal-body">
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -187,17 +190,17 @@
                                     <div class="col-12 col-md-6">
                                         <label class="form-label" for="first_name">نام</label>
                                         <input type="text" id="first_name" name="first_name"
-                                               class="form-control" placeholder="{{ $user->first_name }}">
+                                               class="form-control" value="{{ $user->first_name }}">
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <label class="form-label" for="last_name">نام خانوادگی</label>
                                         <input type="text" id="last_name" name="last_name"
-                                               class="form-control" placeholder="{{ $user->last_name }}">
+                                               class="form-control" value="{{ $user->last_name }}">
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <label class="form-label" for="email">ایمیل</label>
                                         <input type="text" id="email" name="email"
-                                               class="form-control text-start" placeholder="{{ $user->email }}"
+                                               class="form-control text-start" value="{{ $user->email }}"
                                                dir="ltr">
                                     </div>
                                     @can('edit-billings')
@@ -206,25 +209,25 @@
                                                 <label class="form-label" for="address">آدرس</label>
                                                 <input type="text" id="address" name="address"
                                                        class="form-control text-start"
-                                                       placeholder="{{ $billing->address }}">
+                                                       value="{{ $billing->address }}">
                                             </div>
                                             <div class="col-12 col-md-6">
                                                 <label class="form-label" for="city">شهر</label>
                                                 <input type="text" id="city" name="city"
                                                        class="form-control text-start"
-                                                       placeholder="{{ $billing->city }}">
+                                                       value="{{ $billing->city }}">
                                             </div>
                                             <div class="col-12 col-md-6">
                                                 <label class="form-label" for="province">استان</label>
                                                 <input type="text" id="province" name="province"
                                                        class="form-control text-start"
-                                                       placeholder="{{ $billing->province }}">
+                                                       value="{{ $billing->province }}">
                                             </div>
                                             <div class="col-12 col-md-6">
                                                 <label class="form-label" for="postal_code">کد پستی</label>
                                                 <input type="text" id="postal_code" name="postal_code"
                                                        class="form-control text-start"
-                                                       placeholder="{{ $billing->postal_code }}">
+                                                       value="{{ $billing->postal_code }}">
                                             </div>
                                         @endif
                                     @endcan
@@ -243,7 +246,7 @@
             @endif
             @if($canDelete)
                 <div class="modal fade" id="deleteUser" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-dialog modal-dialog-centered modal-sm">
                         <div class="modal-content">
                             <div class="modal-body">
                                 <div class="text-center mb-4 mt-0 mt-md-n2">
@@ -268,7 +271,7 @@
             @endif
             @if($canSetRole)
                 <div class="modal fade" id="setRole" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-dialog modal-dialog-centered modal-sm">
                         <div class="modal-content">
                             <div class="modal-body">
                                 <div class="text-center mb-4 mt-0 mt-md-n2">

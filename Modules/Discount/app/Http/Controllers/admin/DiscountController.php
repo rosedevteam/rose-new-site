@@ -54,17 +54,17 @@ class DiscountController extends Controller
     public function store()
     {
         Gate::authorize('create-discounts');
-        try {
 
-            $data = request()->validate([
-                'code' => 'bail|required|string|unique:discounts,code',
-                'type' => 'bail|required|string|in:amount,percentage',
-                'is_active' => 'bail|required|integer|in:0,1',
-                'amount' => 'bail|required|string',
-                'products.*' => 'bail|required|integer|exists:products,id',
-                'expires_at' => 'bail|required|string',
-                'limit' => 'bail|required|string|numeric',
-            ]);
+        $data = request()->validate([
+            'code' => 'bail|required|string|unique:discounts,code',
+            'type' => 'bail|required|string|in:amount,percentage',
+            'is_active' => 'bail|required|integer|in:0,1',
+            'amount' => 'bail|required|string',
+            'products.*' => 'bail|required|integer|exists:products,id',
+            'expires_at' => 'bail|required|string',
+            'limit' => 'bail|required|string|numeric',
+        ]);
+        try {
 
             $data['expires_at'] = self::formatDate($data['expires_at']);
             $discount = Discount::create([
@@ -120,20 +120,20 @@ class DiscountController extends Controller
     public function update(Discount $discount)
     {
         Gate::authorize('edit-discounts');
+        $data = request();
+        if ($data['code'] == $discount->code) {
+            $data['code'] = null;
+        }
+        $data = $data->validate([
+            'code' => 'bail|nullable|string|unique:discounts,code',
+            'type' => 'bail|required|string|in:amount,percentage',
+            'is_active' => 'bail|required|integer|in:0,1',
+            'amount' => 'bail|required|string',
+            'products.*' => 'bail|required|integer|exists:products,id',
+            'expires_at' => 'bail|required|string',
+            'limit' => 'bail|required|string|numeric',
+        ]);
         try {
-            $data = request();
-            if ($data['code'] == $discount->code) {
-                $data['code'] = null;
-            }
-            $data = $data->validate([
-                'code' => 'bail|nullable|string|unique:discounts,code',
-                'type' => 'bail|required|string|in:amount,percentage',
-                'is_active' => 'bail|required|integer|in:0,1',
-                'amount' => 'bail|required|string',
-                'products.*' => 'bail|required|integer|exists:products,id',
-                'expires_at' => 'bail|required|string',
-                'limit' => 'bail|required|string|numeric',
-            ]);
             $data['expires_at'] = self::formatDate($data['expires_at']);
 
             $before = json_encode($discount, JSON_UNESCAPED_UNICODE);

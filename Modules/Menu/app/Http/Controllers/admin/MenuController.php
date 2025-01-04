@@ -58,15 +58,15 @@ class MenuController extends Controller
     public function store(Request $request)
     {
         Gate::authorize('create-menus');
+        $validData = $request->validate([
+            'title' => 'required',
+            'parent_id' => 'nullable',
+            'slug' => 'required',
+            'order' => 'nullable',
+            'icon' => 'nullable',
+            'subtitle' => 'nullable'
+        ]);
         try {
-            $validData = $request->validate([
-                'title' => 'required',
-                'parent_id' => 'nullable',
-                'slug' => 'required',
-                'order' => 'nullable',
-                'icon' => 'nullable',
-                'subtitle' => 'nullable'
-            ]);
             $validData['slug'] = self::getSlug($validData['slug']);
 
             $menu = Menu::create($validData);

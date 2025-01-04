@@ -134,6 +134,7 @@
                                 <div class="mb-3">
                                     <label for="flatpickr-date" class="form-label">روز</label>
                                     <input type="text" class="form-control" id="flatpickr-date" name="date"
+                                           value="{{ old('date') }}"
                                            placeholder="YYYY/MM/DD">
                                 </div>
                                 <div class="mb-3">

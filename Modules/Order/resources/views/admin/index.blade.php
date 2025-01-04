@@ -1,10 +1,8 @@
 @extends('admin::layouts.main')
 
-
 @section('content')
     <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
-            <!-- Users List Table -->
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
@@ -116,11 +114,13 @@
                             @foreach($orders as $order)
                                 <tr class="">
                                     <td>
-                                <span class="fw-semibold">
+                                        @can('view-users')
                                     <a href="{{ route('admin.users.show', $order->user->first()) }}"
                                        class="text-body text-truncate"><span
                                             class="fw-semibold">{{ $order->user->name() }}</span> </a>
-                                </span>
+                                        @else
+                                            {{ $order->user->name() }}
+                                        @endcan
                                     </td>
                                     <td>
                                         @php
@@ -128,14 +128,19 @@
                                             $i = 0
                                         @endphp
                                         @foreach($order->products()->get() as $product)
+                                            @can('view-products')
                                             <a href="{{ route('admin.products.show', $product) }}"
                                                class="text-body text-truncate"><span
                                                     class="fw-semibold">{{ $product->title . ($i != $len ? "، " : "") }}</span></a>
+                                            @else
+                                                <span
+                                                    class="fw-semibold">{{ $product->title . ($i != $len ? "، " : "") }}</span>
+                                            @endcan
                                             @php $i++ @endphp
                                         @endforeach
                                     </td>
                                     <td>{{ number_format($order->price) }}
-                                    تومان
+                                        تومان
                                     </td>
                                     <td>
                                         <span class="fw-semibold">
@@ -188,14 +193,12 @@
                         </table>
                         {{ $orders->links() }}
                     </div>
-
                 </div>
             </div>
             <x-admin::deletemodal/>
         </div>
         <div class="content-backdrop fade"></div>
     </div>
-
 @endsection
 
 @push('vendor')

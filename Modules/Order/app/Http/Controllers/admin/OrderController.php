@@ -62,20 +62,20 @@ class OrderController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store()
     {
         Gate::authorize('create-orders');
-        try {
-            $validData = request()->validate([
-                'user_id' => 'required',
-                'created_at' => 'required',
-                'products' => 'required',
-                'notes' => 'nullable|string',
-                'status' => 'required',
-                'payment_method' => 'required',
-                'watermark' => 'nullable|string',
-            ]);
+        $validData = request()->validate([
+            'user_id' => 'required',
+            'created_at' => 'required',
+            'products' => 'required',
+            'notes' => 'nullable|string',
+            'status' => 'required',
+            'payment_method' => 'required',
+            'watermark' => 'nullable|string',
+        ]);
 
+        try {
             $validData['created_at'] = self::formatDate($validData['created_at']);
 
             $total = 0;
@@ -155,20 +155,20 @@ class OrderController extends Controller
         return view('order::admin.edit', compact('order'));
     }
 
-    public function update(Request $request , Order $order)
+    public function update(Order $order)
     {
         Gate::authorize('edit-orders');
-        try {
+        $validData = request()->validate([
+            'user_id' => 'required',
+            'created_at' => 'required',
+            'products' => 'required',
+            'notes' => 'nullable|string',
+            'status' => 'required',
+            'payment_method' => 'required',
+            'watermark' => 'nullable|string',
+        ]);
 
-            $validData = $request->validate([
-                'user_id' => 'required',
-                'created_at' => 'required',
-                'products' => 'required',
-                'notes' => 'nullable|string',
-                'status' => 'required',
-                'payment_method' => 'required',
-                'watermark' => 'nullable|string',
-            ]);
+        try {
 
             $validData['created_at'] = self::formatDate($validData['created_at']);
 

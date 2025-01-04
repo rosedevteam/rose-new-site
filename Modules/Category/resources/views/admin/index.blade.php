@@ -3,8 +3,10 @@
 
 @section('content')
     <div class="content-wrapper">
+        @if($errors->any())
+            <div class="alert alert-danger" style="padding-right: 80px">{{ $errors->first() }}</div>
+        @endif
         <div class="container-xxl flex-grow-1 container-p-y">
-            <!-- Users List Table -->
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
@@ -95,8 +97,12 @@
                                             @endswitch</span></td>
                                     <td>{{ $category->parent?->name ?: 'ندارد' }}</td>
                                     <td>{{ $category->archive_slug ?: 'ندارد' }}</td>
-                                    <td><a href="{{ route('admin.users.show', $category->user) }}"
-                                           class="text-body text-truncate">{{ $category->user->name() }}</a></td>
+                                    <td>@can('view-users')
+                                            <a href="{{ route('admin.users.show', $category->user) }}"
+                                               class="text-body text-truncate">{{ $category->user->name() }}</a>
+                                        @else
+                                            {{ $category->user->name() }}
+                                        @endcan</td>
                                     <td>{{ verta($category->created_at)->formatJalaliDateTime() }}</td>
                                     <td>
                                         <div class="d-flex gap-3 text-nowrap">
@@ -125,7 +131,6 @@
                     </div>
 
                 </div>
-                <!-- Offcanvas to add new user -->
                 @can('create-categories')
                     <div class="offcanvas offcanvas-end" id="offcanvasAddUser"
                          aria-labelledby="offcanvasAddUserLabel">
@@ -160,7 +165,7 @@
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label" for="parent_id">کتگوری مادر:</label>
+                                    <label class="form-label" for="parent_id">دسته بندی مادر:</label>
                                     <select id="parent_id" name="parent_id" class="form-select">
                                         <option value="">ندارد</option>
                                         @foreach($parents as $c)
@@ -202,7 +207,7 @@
                                            required>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label" for="parent_id_edit">دسنه بندی مادر</label>
+                                    <label class="form-label" for="parent_id_edit">دسته بندی مادر</label>
                                     <select id="parent_id_edit" name="parent_id_edit" class="form-select">
                                         <option value="">ندارد</option>
                                         @foreach($parents as $c)

@@ -60,18 +60,18 @@
                                             <label class="form-label" for="title">عنوان</label>
                                             <input type="text" id="title" name="meta_title"
                                                    class="form-control text-start"
-                                                   value="" dir="ltr">
+                                                   value="{{ old('meta_title') }}" dir="ltr">
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label" for="keywords">کلمات کلیدی</label>
                                             <input type="text" id="keywords" name="meta_keywords" class="form-control"
-                                                   value="">
+                                                   value="{{ old('meta_keywords') }}">
                                         </div>
                                     </div>
                                     <div class="col-md-12 mt-3">
                                         <label class="form-label" for="description">توضیحات</label>
                                         <textarea id="description" class="form-control"
-                                                  name="meta_description"></textarea>
+                                                  name="meta_description">{{ old('meta_description') }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -136,7 +136,8 @@
                             <div class="my-3">
                                 <label for="select2Primary" class="form-check-label">دسته بندی</label>
                                 <div class="select2-primary">
-                                    <select id="select2Primary" class="select2 form-select" name="categories[]" form="create-item" multiple>
+                                    <select id="select2Primary" class="select2 form-select" name="categories[]"
+                                            form="create-item" multiple required>
                                         @foreach($categories as $c)
                                             <option
                                                 value="{{ $c->id }}">{{ ($c->parent?->name . (is_null($c->parent) ? '' : ': ')) . $c->name }}</option>

@@ -65,7 +65,7 @@
                                             <label for="select2Primary" class="form-label">دوره ها</label>
                                             <div class="select2-primary">
                                                 <select id="select2Primary" class="select2 form-select"
-                                                        name="products[]" multiple>
+                                                        name="products[]" multiple required>
                                                     @foreach(\Modules\Product\Models\Product::all() as $product)
                                                         <option
                                                             value="{{ $product->id }}" {{$order->products->contains($product) ? 'selected' : ''}}>{{ $product->title }}</option>
@@ -140,7 +140,7 @@
                             <div class="mb-3">
                                 <label class="form-label" for="status">وضعیت سفارش</label>
                                 <select class="form-select" name="status" id="status"
-                                        form="edit-item">
+                                        form="edit-item" required>
                                     <option value="">انتخاب کنید</option>
                                     <option value="completed" {{$order->status == 'completed' ? 'selected' : ''}}>تکمیل
                                         شده
@@ -161,7 +161,7 @@
                             <div class="mb-3">
                                 <label class="form-label" for="payment_method">نوع پرداخت</label>
                                 <select class="form-select" name="payment_method" id="payment_method"
-                                        form="edit-item">
+                                        form="edit-item" required>
                                     <option value="">انتخاب کنید</option>
                                     <option value="card" {{$order->payment_method  == 'card' ? 'selected' : ''}}>کارت به
                                         کارت
@@ -183,12 +183,38 @@
                             <div class="pt-4 d-flex align-items-center justify-content-between">
                                 <button type="submit" class="btn btn-sm btn-primary " form="edit-item">بروز رسانی
                                 </button>
+                                @can('delete-orders')
+                                    <x-admin::deletebutton/>
+                                @endcan
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
+        </div>
+        <div class="modal fade" id="delete-modal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="text-center mb-4 mt-0 mt-md-n2">
+                            <h3 class="secondary-font">آیا اطمینان دارید؟</h3>
+                        </div>
+                        <form id="deleteForm" action="{{ route("admin.orders.destroy", $order) }}"
+                              method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <div class="col-12 text-center mt-4">
+                                <button type="submit" class="btn btn-danger me-sm-3 me-1">حذف</button>
+                                <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
+                                        aria-label="Close">
+                                    انصراف
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

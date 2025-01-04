@@ -103,13 +103,13 @@
                             @foreach($reports as $report)
                                 <tr>
                                     <td class="sorting_1">
-                                        <div class="d-flex justify-content-start align-items-center user-name">
-                                            <div class="d-flex flex-column">
+                                        @can('view-users')
                                                 <a class="text-truncate text-body"
                                                    href="{{ route('admin.users.show', $report->user) }}"><span
                                                         class="fw-semibold">{{ $report->user->name() }}</span></a>
-                                            </div>
-                                        </div>
+                                        @else
+                                            {{ $report->user->name() }}
+                                        @endcan
                                     </td>
                                     <td>
                                         <a href="{{ route('admin.studentreports.analysis', $report) }}">{{ $report->analysis }}</a>

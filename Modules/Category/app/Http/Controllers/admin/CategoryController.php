@@ -56,13 +56,13 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         Gate::authorize('create-categories');
+        $validData = $request->validate([
+            'name' => 'required',
+            'type_create' => 'required',
+            'parent_id' => 'nullable|exists:categories,id',
+            'archive_slug' => "nullable|unique:categories,archive_slug",
+        ]);
         try {
-            $validData = $request->validate([
-                'name' => 'required',
-                'type_create' => 'required',
-                'parent_id' => 'nullable|exists:categories,id',
-                'archive_slug' => "nullable|unique:categories,archive_slug",
-            ]);
             $validData['archive_slug'] = self::getSlug($validData['archive_slug']);
             if(!is_null($validData['parent_id'])) {
                 if (Category::where('id', $validData['parent_id'])->first()->type != $validData['type_create']) {
@@ -115,13 +115,13 @@ class CategoryController extends Controller
     public function update(Category $category)
     {
         Gate::authorize('edit-categories');
+        $validData = request()->validate([
+            'name_edit' => 'required',
+            'parent_id_edit' => 'nullable|exists:categories,id',
+            'archive_slug_edit' => "nullable",
+            'type_edit' => 'required',
+        ]);
         try {
-            $validData = request()->validate([
-                'name_edit' => 'required',
-                'parent_id_edit' => 'nullable|exists:categories,id',
-                'archive_slug_edit' => "nullable",
-                'type_edit' => 'required',
-            ]);
             $validData['archive_slug_edit'] = self::getSlug($validData['archive_slug_edit']);
             if (!is_null($validData['parent_id_edit'])) {
                 if (Category::where('id', $validData['parent_id_edit'])->first()->type != $validData['type_edit']) {

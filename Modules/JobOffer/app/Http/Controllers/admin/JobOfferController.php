@@ -50,15 +50,15 @@ class JobOfferController extends Controller
     public function store()
     {
         Gate::authorize('create-job-offers');
-        try {
-            $data = request()->validate([
-                'title' => 'bail|required|string|max:255',
-                'content' => 'bail|required',
-                'status' => 'bail|required|string',
-                'type' => 'bail|required|string',
-                'categories.*' => 'bail|required|exists:categories,id',
-            ]);
+        $data = request()->validate([
+            'title' => 'bail|required|string|max:255',
+            'content' => 'bail|required',
+            'status' => 'bail|required|string',
+            'type' => 'bail|required|string',
+            'categories.*' => 'bail|required|exists:categories,id',
+        ]);
 
+        try {
             $jobOffer = JobOffer::create([
                 'title' => $data['title'],
                 'content' => $data['content'],
@@ -100,14 +100,14 @@ class JobOfferController extends Controller
     public function update(JobOffer $joboffer)
     {
         Gate::authorize('edit-job-offers');
+        $data = request()->validate([
+            'title' => 'bail|required|string|max:255',
+            'content' => 'bail|required',
+            'status' => 'bail|required|string',
+            'categories.*' => 'bail|required|exists:categories,id',
+            'type' => 'bail|required|string',
+        ]);
         try {
-            $data = request()->validate([
-                'title' => 'bail|required|string|max:255',
-                'content' => 'bail|required',
-                'status' => 'bail|required|string',
-                'categories.*' => 'bail|required|exists:categories,id',
-                'type' => 'bail|required|string',
-            ]);
             $data = array_filter($data, function ($value) {
                 return !is_null($value);
             });

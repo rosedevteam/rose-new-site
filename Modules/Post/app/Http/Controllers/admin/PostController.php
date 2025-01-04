@@ -87,20 +87,20 @@ class PostController extends Controller
     public function store(Request $request)
     {
         Gate::authorize('create-posts');
-        try {
-            $data = $request->validate([
-                'title' => 'required|string|max:255',
-                'slug' => 'required|string|max:255',
-                'content' => 'required|string',
-                'image' => 'nullable',
-                'comment_status' => 'required|string',
-                'status' => 'required|string',
-                'categories.*' => 'required|nullable|exists:categories,id',
-                'meta_title' => 'nullable',
-                'meta_description' => 'nullable',
-                'meta_keywords' => 'nullable',
-            ]);
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'slug' => 'required|string|max:255',
+            'content' => 'required|string',
+            'image' => 'nullable',
+            'comment_status' => 'required|string',
+            'status' => 'required|string',
+            'categories.*' => 'required|nullable|exists:categories,id',
+            'meta_title' => 'nullable',
+            'meta_description' => 'nullable',
+            'meta_keywords' => 'nullable',
+        ]);
 
+        try {
             $data['slug'] = self::getSlug($data['slug']);
             $post = Post::create([
                 'title' => $data['title'],
@@ -151,20 +151,20 @@ class PostController extends Controller
     public function update(Post $post)
     {
         Gate::authorize('edit-posts');
-        try {
-            $data = request()->validate([
-                'title' => 'required|string|max:255',
-                'slug' => 'required|string|max:255',
-                'content' => 'required|string',
-                'comment_status' => 'required',
-                'status' => 'required',
-                'image' => 'nullable',
-                'categories.*' => 'required|nullable|exists:categories,id',
-                'meta_title' => 'nullable',
-                'meta_description' => 'nullable',
-                'meta_keywords' => 'nullable',
-            ]);
+        $data = request()->validate([
+            'title' => 'required|string|max:255',
+            'slug' => 'required|string|max:255',
+            'content' => 'required|string',
+            'comment_status' => 'required',
+            'status' => 'required',
+            'image' => 'nullable',
+            'categories.*' => 'required|nullable|exists:categories,id',
+            'meta_title' => 'nullable',
+            'meta_description' => 'nullable',
+            'meta_keywords' => 'nullable',
+        ]);
 
+        try {
             $data['slug'] = self::getSlug($data['slug']);
             $data['comment_status'] = $data['comment_status'] == 1;
 
@@ -183,12 +183,22 @@ class PostController extends Controller
                 return !is_null($category);
             });
             $post->categories()->sync($data['categories']);
-            $post->metadata()->updateOrCreate([
-                'title' => $data['meta_title'],
-                'description' => $data['meta_description'],
-                'keywords' => $data['meta_keywords'],
-                'user_id' => auth()->user()->id,
-            ]);
+
+            if ($post->metadata()->exists()) {
+                $post->metadata()->update([
+                    'title' => $data['meta_title'],
+                    'description' => $data['meta_description'],
+                    'keywords' => $data['meta_keywords'],
+                    'user_id' => auth()->user()->id,
+                ]);
+            } else {
+                $post->metadata()->create([
+                    'title' => $data['meta_title'],
+                    'description' => $data['meta_description'],
+                    'keywords' => $data['meta_keywords'],
+                    'user_id' => auth()->user()->id,
+                ]);
+            }
 
             activity()
                 ->causedBy(auth()->user())

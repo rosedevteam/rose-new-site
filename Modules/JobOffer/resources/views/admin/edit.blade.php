@@ -63,22 +63,20 @@
                                     <textarea id="adminEditor" name="content">{{ $joboffer->content }}</textarea>
                                 </div>
                             </div>
-                            <div class="pt-4">
+                            <div class="pt-4 d-flex justify-content-between">
                                 <button type="submit" class="btn btn-primary me-sm-3 me-1">ویرایش</button>
+                                @can('delete-job-offers')
+                                    <x-admin::deletebutton/>
+                                @endcan
                             </div>
                         </div>
                     </div>
                 </form>
-                <div class="mx-4 mb-2">
-                    @can('delete-job-offers')
-                        <x-admin::deletebutton data-id="{{ $joboffer->id }}"/>
-                    @endcan
-                </div>
             </div>
         </div>
     </div>
     <div class="modal fade" id="delete-modal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="text-center mb-4 mt-0 mt-md-n2">

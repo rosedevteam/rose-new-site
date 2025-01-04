@@ -24,7 +24,8 @@
                             <div class="row g-3 mb-4">
                                 <div class="col-md-6">
                                     <label class="form-label" for="title">عنوان</label>
-                                    <input type="text" id="title" name="title" class="form-control">
+                                    <input type="text" id="title" name="title" class="form-control"
+                                           value="{{ old('title') }}">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="select2Primary" class="form-check-label">دسته بندی</label>
@@ -32,14 +33,15 @@
                                         <select id="select2Primary" class="select2 form-select" name="categories[]" multiple>
                                             @foreach($categories as $c)
                                                 <option
-                                                    value="{{ $c->id }}">{{ ($c->parent?->name . (is_null($c->parent) ? '' : ': ')) . $c->name }}</option>
+                                                    value="{{ $c->id }}" {{ in_array($c->id, old('categories') ?: []) ? 'selected' : '' }}>{{ ($c->parent?->name . (is_null($c->parent) ? '' : ': ')) . $c->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label" for="type">نوع</label>
-                                    <input class="form-control" type="text" id="type" name="type">
+                                    <input class="form-control" type="text" id="type" name="type"
+                                           value="{{ old('type') }}">
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label" for="status">وضعیت</label>
@@ -52,7 +54,7 @@
                             <div class="row g-3 mb-4">
                                 <div class="row g-3">
                                     <label for="adminEditor" class="form-label">محتوا</label>
-                                    <textarea id="adminEditor" name="content"></textarea>
+                                    <textarea id="adminEditor" name="content">{{ old('content') }}</textarea>
                                 </div>
                             </div>
                             <div class="pt-4">

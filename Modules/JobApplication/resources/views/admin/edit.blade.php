@@ -46,22 +46,20 @@
                                         </option>
                                     </select>
                                 </div>
-                                <div class="col-md-2 mt-4">
+                                <div class="col-md-2 mt-4 d-flex justify-content-between">
                                     <button type="submit" class="btn btn-primary">تغییر</button>
+                                    @can('delete-job-applications')
+                                        <x-admin::deletebutton/>
+                                    @endcan
                                 </div>
                             </div>
                         </form>
-                        @can('delete-job-applications')
-                            <div class="mt-3">
-                                <x-admin::deletebutton data-id="{{ $jobapplication->id }}"/>
-                            </div>
-                        @endcan
                     </div>
                 </div>
             </div>
         </div>
         <div class="modal fade" id="delete-modal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
                 <div class="modal-content">
                     <div class="modal-body">
                         <div class="text-center mb-4 mt-0 mt-md-n2">

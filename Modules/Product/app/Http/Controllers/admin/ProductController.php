@@ -63,27 +63,27 @@ class ProductController extends Controller
     public function store()
     {
         Gate::authorize('create-products');
-        try {
-            $validatedData = request()->validate([
-                'title' => 'required',
-                'short_description' => 'required',
-                'content' => 'nullable',
-                'price' => 'required|numeric',
-                'slug' => 'required|unique:products,slug',
-                'spot_player_key' => 'required',
-                'sale_price' => 'nullable',
-                'comment_status' => 'required',
-                'status' => 'required',
-                'image' => 'required',
-                'attributes' => 'nullable',
-                'lessons' => 'nullable',
-                'is_free' => 'required',
-                'categories.*' => 'required|exists:categories,id',
-                'meta_title' => 'nullable',
-                'meta_description' => 'nullable',
-                'meta_keywords' => 'nullable',
-            ]);
+        $validatedData = request()->validate([
+            'title' => 'required',
+            'short_description' => 'required',
+            'content' => 'required',
+            'price' => 'required|numeric',
+            'slug' => 'required|unique:products,slug',
+            'spot_player_key' => 'required',
+            'sale_price' => 'nullable',
+            'comment_status' => 'required',
+            'status' => 'required',
+            'image' => 'required',
+            'attributes' => 'nullable',
+            'lessons' => 'nullable',
+            'is_free' => 'required',
+            'categories.*' => 'required|exists:categories,id',
+            'meta_title' => 'nullable',
+            'meta_description' => 'nullable',
+            'meta_keywords' => 'nullable',
+        ]);
 
+        try {
             $validatedData['slug'] = self::getSlug($validatedData['slug']);
 
             $product = auth()->user()->products()->create(Arr::except($validatedData, ['attributes', 'lessons', 'categories', 'meta_title', 'meta_description', 'meta_keywords']));
@@ -155,36 +155,36 @@ class ProductController extends Controller
     public function update(Product $product)
     {
         Gate::authorize('edit-products');
+        $validatedData = request()->validate([
+            'title' => 'required',
+            'short_description' => 'required',
+            'content' => 'required',
+            'price' => 'required',
+            'slug' => 'required',
+            'spot_player_key' => 'required',
+            'sale_price' => 'nullable',
+            'comment_status' => 'required',
+            'status' => 'required',
+            'image' => 'required',
+            'is_free' => 'required',
+            'lessons' => 'sometimes|nullable',
+            'attributes' => 'nullable',
+            'categories.*' => 'required|exists:categories,id',
+            'meta_title' => 'nullable',
+            'meta_description' => 'nullable',
+            'meta_keywords' => 'nullable',
+        ]);
         try {
-            $validatedData = request()->validate([
-                'title' => 'required',
-                'short_description' => 'required',
-                'content' => 'required',
-                'price' => 'required',
-                'slug' => 'required',
-                'spot_player_key' => 'required',
-                'sale_price' => 'nullable',
-                'comment_status' => 'required',
-                'status' => 'required',
-                'image' => 'required',
-                'is_free' => 'required',
-                'lessons' => 'sometimes|nullable',
-                'attributes' => 'nullable',
-                'categories.*' => 'required|exists:categories,id',
-                'meta_title' => 'nullable',
-                'meta_description' => 'nullable',
-                'meta_keywords' => 'nullable',
-            ]);
             $validatedData['slug'] = self::getSlug($validatedData['slug']);
 
             if ($validatedData['attributes'] ?? false) {
                 foreach ($validatedData['attributes'] as $attribute) {
                     if ($attribute['attr_title']) {
-                        $path = $this->uploadFile($attribute['icon'] , "/products/attrs");
+                        $path = $this->uploadFile($attribute['icon'], "/products/attrs");
                         $product->attributes()->create([
                             'title' => $attribute['attr_title'],
                             'subtitle' => $attribute['attr_subtitle'],
-                            'icon' =>   '/uploads/' . $path,
+                            'icon' => '/uploads/' . $path,
                         ]);
                     }
 
@@ -203,12 +203,21 @@ class ProductController extends Controller
                 }
             }
 
-            $product->metadata()->updateOrCreate([
-                'title' => $validatedData['meta_title'],
-                'description' => $validatedData['meta_description'],
-                'keywords' => $validatedData['meta_keywords'],
-                'user_id' => auth()->user()->id,
-            ]);
+            if ($product->metadata()->exists()) {
+                $product->metadata()->update([
+                    'title' => $validatedData['meta_title'],
+                    'description' => $validatedData['meta_description'],
+                    'keywords' => $validatedData['meta_keywords'],
+                    'user_id' => auth()->user()->id,
+                ]);
+            } else {
+                $product->metadata()->create([
+                    'title' => $validatedData['meta_title'],
+                    'description' => $validatedData['meta_description'],
+                    'keywords' => $validatedData['meta_keywords'],
+                    'user_id' => auth()->user()->id,
+                ]);
+            }
 
             $before = json_encode($product, JSON_UNESCAPED_UNICODE);
             $product->update(Arr::except($validatedData, ['attributes', 'lessons', 'categories', 'meta_title', 'meta_description', 'meta_keywords']));

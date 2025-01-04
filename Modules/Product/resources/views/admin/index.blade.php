@@ -75,7 +75,7 @@
                                     style="width: 7%;">قیمت عادی
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 7%;">  فروش ویژه
+                                    style="width: 7%;"> فروش ویژه
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 5%;">وضعیت
@@ -95,20 +95,21 @@
                             @foreach($products as $product)
                                 <tr>
                                     <td>
-                                        <div class="d-flex justify-content-start align-items-center user-name">
-                                            <div class="d-flex flex-column"><a
-                                                    href="{{ route('admin.products.edit', $product) }}"
-                                                    class="text-body text-truncate">
-                                                    <span class="fw-semibold">{{ $product->title }}</span>
-                                                </a>
-                                            </div>
-                                        </div>
+                                        @can('view-products')
+                                            <a
+                                                href="{{ route('admin.products.edit', $product) }}"
+                                                class="text-body text-truncate">
+                                                <span class="fw-semibold">{{ $product->title }}</span>
+                                            </a>
+                                        @else
+                                            <span class="fw-semibold">{{ $product->title }}</span>
+                                        @endcan
                                     </td>
                                     <td><span class="fw-semibold">{{ number_format($product->price) }}
                                         تومان
                                         </span></td>
                                     <td>{{ number_format($product->sale_price) }}
-                                    تومان
+                                        تومان
                                     </td>
                                     <td>
                                         <span class="fw-semibold">
@@ -122,12 +123,14 @@
                                         </span>
                                     </td>
                                     <td>
-                                        <div class="d-inline-block text-nowrap">
+                                        @can('view-users')
                                             <a href="{{ route('admin.users.show', $product->user) }}"
                                                class="text-body text-truncate">
                                                 {{ $product->user->name() }}
                                             </a>
-                                        </div>
+                                        @else
+                                            {{ $product->user->name() }}
+                                        @endcan
                                     </td>
                                     <td>{{ verta($product->created_at)->formatJalaliDate() }}</td>
                                     <td>
