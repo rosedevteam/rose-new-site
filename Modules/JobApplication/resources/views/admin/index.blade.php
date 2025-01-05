@@ -69,9 +69,11 @@
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 8%;">تاریخ ارسال
                                 </th>
+                                @can('edit-job-applications')
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 5%;">جزییات
                                 </th>
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
@@ -100,6 +102,7 @@
                                             @case('rejected')<span class="badge bg-danger">رد شده</span>@break
                                     @endswitch </td>
                                     <td>{{ verta($jobApplication->created_at)->formatJalaliDateTime() }}</td>
+                                    @can('edit-job-applications')
                                     <td>
                                         <div class="d-flex gap-3 text-nowrap">
                                             <a href="{{ route('admin.jobapplications.edit', $jobApplication) }}"
@@ -111,6 +114,7 @@
                                             @endcan
                                         </div>
                                     </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                             </tbody>

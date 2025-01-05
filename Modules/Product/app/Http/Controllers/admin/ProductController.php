@@ -5,19 +5,19 @@ namespace Modules\Product\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\traits\Slug;
 use App\traits\Upload;
-use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Illuminate\Support\Arr;
 use Modules\Product\Models\Product;
 
 class ProductController extends Controller
 {
-    use SEOTools, Upload, Slug;
+    use Upload, Slug;
 
     public function index()
     {
-        $this->seo()->setTitle('دوره ها');
         Gate::authorize('view-products');
+        $this->seo()->setTitle('دوره ها');
+
         try {
 
             $sort_by = request('sort_by', 'created_at');
@@ -93,7 +93,6 @@ class ProductController extends Controller
                 return !is_null($category);
             });
             $product->categories()->sync(Arr::except($validatedData['categories'], ['0']));
-            $after = json_encode($validatedData, JSON_UNESCAPED_UNICODE);
 
             if ($validatedData['attributes']) {
                 foreach ($validatedData['attributes'] as $attribute) {
@@ -127,11 +126,9 @@ class ProductController extends Controller
                 'user_id' => auth()->user()->id,
             ]);
 
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($product)
-                ->withProperties(compact('after'))
-                ->log('ساخت محصول');
+            $after = $product->with('lessons', 'attributes', 'metadata', 'categories')->get()->toArray();
+
+            self::log($product, compact('after'), 'ساخت دوره');
             alert()->success("موفق", "با موفقیت انجام شد");
 
             return redirect(route('admin.products.index'));
@@ -179,6 +176,7 @@ class ProductController extends Controller
 
         try {
             $validatedData['slug'] = self::getSlug($validatedData['slug']);
+            $before = $product->with('lessons', 'attributes', 'categories', 'metadata')->get()->toArray();
 
             if ($validatedData['attributes'] ?? false) {
                 foreach ($validatedData['attributes'] as $attribute) {
@@ -222,20 +220,16 @@ class ProductController extends Controller
                 ]);
             }
 
-            $before = json_encode($product, JSON_UNESCAPED_UNICODE);
             $product->update(Arr::except($validatedData, ['attributes', 'lessons', 'categories', 'meta_title', 'meta_description', 'meta_keywords']));
-            $after = json_encode($product, JSON_UNESCAPED_UNICODE);
 
             $validatedData['categories'] = array_filter($validatedData['categories'], function ($category) {
                 return !is_null($category);
             });
             $product->categories()->sync($validatedData['categories']);
 
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($product)
-                ->withProperties(compact('before', 'after'))
-                ->log('ویرایش محصول');
+            $after = $product->with('lessons', 'attributes', 'categories', 'metadata')->get()->toArray();
+
+            self::log($product, compact('before', 'after'), 'ویرایش دوره');
             alert()->success("موفق", "ویرایش با موفقیت انجام شد");
 
             return redirect(route('admin.products.edit', compact('product')));
@@ -260,13 +254,10 @@ class ProductController extends Controller
     {
         Gate::authorize('delete-products');
         try {
-            $before = json_encode($product, JSON_UNESCAPED_UNICODE);
+            $before = $product->with('lessons', 'attributes', 'categories', 'metadata')->get()->toArray();
             $product->delete();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->withProperties(compact('before'))
-                ->log('حذف محصول');
+            self::log(null, compact('before'), 'حذف دوره');
             alert()->success('موفق', 'محصول با موفقیت حذف شد');
 
             return redirect(route('admin.products.index'));

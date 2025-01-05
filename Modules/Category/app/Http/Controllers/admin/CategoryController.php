@@ -4,21 +4,20 @@ namespace Modules\Category\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\traits\Slug;
-use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Illuminate\Http\Request;
 use Modules\Category\Models\Category;
 
 class CategoryController extends Controller
 {
-    use SEOTools, Slug;
+    use Slug;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $this->seo()->setTitle('دسته بندی ها');
         Gate::authorize('view-categories');
+        $this->seo()->setTitle('دسته بندی ها');
         try {
 
             $types = [
@@ -77,13 +76,9 @@ class CategoryController extends Controller
                 'parent_id' => $validData['parent_id'],
                 'archive_slug' => $validData['archive_slug'],
             ]);
-            $after = json_encode($category, JSON_UNESCAPED_UNICODE);
+            $after = $category->toArray();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($category)
-                ->withProperties(compact('after'))
-                ->log('ساخت کتگوری');
+            self::log($category, compact('after'), 'ساخت دسته بندی');
             alert()->success('موفق', 'کتگوری با موفقیت ساخته شد');
 
             return redirect(route('admin.categories.index'));
@@ -129,19 +124,15 @@ class CategoryController extends Controller
                 }
             }
 
-            $before = json_encode($category, JSON_UNESCAPED_UNICODE);
+            $before = $category->toArray();
             $category->update([
                 'name' => $validData['name_edit'],
                 'archive_slug' => $validData['archive_slug_edit'],
                 'parent_id' => $validData['parent_id_edit'],
             ]);
-            $after = json_encode($category, JSON_UNESCAPED_UNICODE);
+            $after = $category->toArray();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($category)
-                ->withProperties(compact('before', 'after'))
-                ->log('ویرایش کتگوری');
+            self::log($category, compact('before', 'after'), 'ویرایش دسته بندی');
             alert()->success('موفق', 'کتگوری با موفقیت ساخته شد');
 
             return redirect(route('admin.categories.index'));
@@ -158,13 +149,10 @@ class CategoryController extends Controller
     {
         Gate::authorize('delete-categories');
         try {
-            $before = json_encode($category, JSON_UNESCAPED_UNICODE);
+            $before = $category->toArray();
             $category->delete();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->withProperties(compact('before'))
-                ->log('حذف کتگوری');
+            self::log(null, compact('before'), 'حذف دسته بندی');
             alert()->success('موفق', 'کنگوری با موفقیت حذف شد');
 
             return redirect(route('admin.categories.index'));

@@ -4,15 +4,13 @@ namespace Modules\Menu\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\traits\Slug;
-use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Illuminate\Http\Request;
 use Modules\Menu\Models\Menu;
 
 class MenuController extends Controller
 {
-
-    use SEOTools, Slug;
+    use Slug;
 
     /**
      * Display a listing of the resource.
@@ -69,14 +67,10 @@ class MenuController extends Controller
         try {
             $validData['slug'] = self::getSlug($validData['slug']);
 
-            $menu = Menu::create($validData);
-            $after = json_encode($menu, JSON_UNESCAPED_UNICODE);
+            $menu = auth()->user()->menus()->create($validData);
+            $after = $menu->toArray();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($menu)
-                ->withProperties(compact('after'))
-                ->log('ساخت منو');
+            self::log($menu, compact('after'), 'ساخت منو');
             alert()->success('منوی جدید با موفقیت ایجاد شد.');
 
             return back();
@@ -119,13 +113,10 @@ class MenuController extends Controller
         Gate::authorize('delete-menus');
         try {
 
-            $before = json_encode($menu, JSON_UNESCAPED_UNICODE);
+            $before = $menu->toArray();
             $menu->delete();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->withProperties(compact('before'))
-                ->log('حذف منو');
+            self::log(null, compact('before'), 'حذف منو');
             alert()->success('موفق', 'منو با موفقیت حذف شد');
 
             return redirect(route('admin.menus.index'));

@@ -28,12 +28,9 @@ class AttributeController extends Controller
                     ]);
                 }
             }
-            $after = json_encode($validData, JSON_UNESCAPED_UNICODE);
+            $after = $validData->toArray();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->withProperties(compact('after'))
-                ->log('ویرایش ویژگی');
+            self::log(null, compact('after'), 'ویرایش ویژگی پست');
             alert()->success('ویرایش ویژگی ها با موفقیت انجام شد');
 
             return back();
@@ -50,12 +47,10 @@ class AttributeController extends Controller
     {
         try {
 
-            $before = json_encode($attribute, JSON_UNESCAPED_UNICODE);
+            $before = $attribute->toArray();
             $attribute->delete();
-            activity()
-                ->causedBy(auth()->user())
-                ->withProperties(compact('before'))
-                ->log('حذف ویژگی محصول');
+
+            self::log(null, compact('before'), 'حذف ویژگی پست');
             return response()->json([
                'success' => true,
                'message' => 'ویژگی با موفقیت حذف شد'

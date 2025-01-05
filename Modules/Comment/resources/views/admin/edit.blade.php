@@ -9,10 +9,14 @@
             <div class="card">
                 <div class="card-header border-bottom mx-3">
                     کامنت برای:
+                    @if($comment->commentable)
                     <a href="{{
                     route("admin." . strtolower(substr(strrchr($comment->commentable_type, '\\'), 1)) . "s.show", $comment->commentable)
                     }}" class="text-body text-truncate">
                         <span class="fw-semibold">{{ $comment->commentable->title }}</span></a>
+                    @else
+                        حذف شده
+                    @endif
                 </div>
                 <div class="card-content mx-5 my-5">
                     <div class="row justify-content-start">

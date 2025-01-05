@@ -73,9 +73,11 @@
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 5%;">تاریخ ساخت
                                 </th>
+                                @can('edit-job-offers')
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 5%;">جزییات
                                 </th>
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
@@ -113,6 +115,7 @@
                                         </span>
                                     </td>
                                     <td>{{ verta($jobOffer->created_at)->formatJalaliDateTime() }}</td>
+                                    @can('edit-job-offers')
                                     <td>
                                         <div class="d-flex gap-3 text-nowrap">
                                             <a href="{{ route('admin.joboffers.edit', $jobOffer) }}"
@@ -124,6 +127,7 @@
                                             @endcan
                                         </div>
                                     </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                             </tbody>

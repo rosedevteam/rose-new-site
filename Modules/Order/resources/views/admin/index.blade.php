@@ -105,9 +105,11 @@
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
                                     colspan="1" style="width: 12%" aria-sort="ascending">تاریخ ثبت
                                 </th>
+                                @can('edit-orders')
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
                                     colspan="1" style="width: 5%" aria-sort="ascending">جزییات
                                 </th>
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
@@ -129,7 +131,7 @@
                                         @endphp
                                         @foreach($order->products()->get() as $product)
                                             @can('view-products')
-                                            <a href="{{ route('admin.products.show', $product) }}"
+                                                <a href="{{ route('admin.products.edit', $product) }}"
                                                class="text-body text-truncate"><span
                                                     class="fw-semibold">{{ $product->title . ($i != $len ? "، " : "") }}</span></a>
                                             @else
@@ -176,6 +178,7 @@
                                             </div>
                                         </div>
                                     </td>
+                                    @can('edit-orders')
                                     <td>
                                         <div class="d-flex gap-3 text-nowrap">
                                             <a href="{{ route('admin.orders.edit', $order) }}"
@@ -187,6 +190,7 @@
                                             @endcan
                                         </div>
                                     </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                             </tbody>

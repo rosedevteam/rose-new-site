@@ -3,15 +3,14 @@
 namespace Modules\StudentReport\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use Artesaos\SEOTools\Traits\SEOTools;
+use App\traits\ConvertNums;
 use Gate;
 use Illuminate\Http\Request;
 use Modules\StudentReport\Models\StudentReport;
 
 class StudentReportController extends Controller
 {
-    use SEOTools;
-
+    use ConvertNums;
     /**
      * Display a listing of the resource.
      */
@@ -66,13 +65,9 @@ class StudentReportController extends Controller
                 'status' => $validData['status'],
 
             ]);
-            $after = json_encode($analysis, JSON_UNESCAPED_UNICODE);
+            $after = $analysis->toArray();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($analysis)
-                ->withProperties(compact('after'))
-                ->log('ساخت تحلیل');
+            self::log($analysis, compact('after'), 'ساخت تحلیل');
             alert()->success('موفق', 'تحلیل با موفقیت ساخته شد');
 
             return redirect(route('admin.studentreports.index'));
@@ -94,16 +89,6 @@ class StudentReportController extends Controller
             alert()->error($th->getMessage());
             return back();
         }
-    }
-
-    protected static function convertNums($string)
-    {
-        $persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-        $arabic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-
-        $num = range(0, 9);
-        $convertedPersianNums = str_replace($persian, $num, $string);
-        return str_replace($arabic, $num, $convertedPersianNums);
     }
 
     /**
@@ -151,7 +136,7 @@ class StudentReportController extends Controller
                 $name = $studentreport->analysis;
             }
 
-            $before = json_encode($studentreport, JSON_UNESCAPED_UNICODE);
+            $before = $studentreport->toArray();
             $studentreport->update([
                 'company' => $validData['company'],
                 'date' => $this->convertNums($validData['date']),
@@ -159,13 +144,9 @@ class StudentReportController extends Controller
                 'description' => $validData['description'],
                 'status' => $validData['status'],
             ]);
-            $after = json_encode($studentreport, JSON_UNESCAPED_UNICODE);
+            $after = $studentreport->toArray();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($studentreport)
-                ->withProperties(compact('before', 'after'))
-                ->log('ویرایش تحلیل');
+            self::log($studentreport, compact('before', 'after'), 'ویرایش پست');
             alert()->success('موفق', 'تحلیل با موفقیت ویرایش شد');
 
             return redirect(route('admin.studentreports.edit', $studentreport));
@@ -183,14 +164,10 @@ class StudentReportController extends Controller
     {
         Gate::authorize('delete-student-reports');
         try {
-            $before = json_encode($studentreport, JSON_UNESCAPED_UNICODE);
+            $before = $studentreport->toArray();
             $studentreport->delete();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($studentreport)
-                ->withProperties(compact('before'))
-                ->log('حذف تحلیل');
+            self::log($studentreport, compact('before'), 'حذف تحلیل');
             alert()->success('موفق', 'تحلیل با موفقیت حذف شد');
 
             return redirect(route('admin.studentreports.index'));

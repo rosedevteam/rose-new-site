@@ -4,7 +4,6 @@ namespace Modules\User\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Arr;
-use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,11 +13,10 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    use SEOTools;
     public function index()
     {
-        $this->seo()->setTitle('کاربران');
         Gate::authorize('view-users');
+        $this->seo()->setTitle('کاربران');
         try {
 
             $roles = Role::all()->select('name', 'id');
@@ -78,13 +76,9 @@ class UserController extends Controller
             ]);
 
             $user->assignRole('مشتری');
-            $after = json_encode(Arr::except($user->toArray(), 'password'), JSON_UNESCAPED_UNICODE);
+            $after = Arr::except($user->toArray(), ['password']);
 
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($user)
-                ->withProperties(compact('after'))
-                ->log('ساخت کاربر');
+            self::log($user, compact('after'), 'ساخت کاربر');
             alert()->success("موفق", "کاربر با موفقیت ساخته شد");
 
             return redirect(route('admin.users.index'));
@@ -97,9 +91,6 @@ class UserController extends Controller
     public function show(User $user)
     {
         Gate::authorize('view-users');
-//        if ($user->trashed() && Gate::denies('restore-users')) {
-//            abort(404);
-//        }
         try {
 
             $orders = null;
@@ -126,15 +117,10 @@ class UserController extends Controller
     public function update(User $user)
     {
         Gate::authorize('update', $user);
-//        Gate::authorize('edit-users');
-//        if($user->hasPermissionTo('admin-panel') &&
-//            (auth()->user()->id != $user->id || !auth()->user()->hasRole('super-admin'))) {
-//            throw new AuthorizationException();
-//        }
         $userData = request()->validate([
             'first_name' => 'bail|nullable|string|max:255',
             'last_name' => 'bail|nullable|string|max:255',
-            'email' => 'bail|nullable|string|email|unique:users,email',
+            'email' => 'bail|nullable|string|email',
         ]);
         try {
 
@@ -152,24 +138,17 @@ class UserController extends Controller
                 $billingData = array_filter($billingData, function ($value) {
                     return !is_null($value);
                 });
-                $before = json_encode($user->billing()->first(), JSON_UNESCAPED_UNICODE);
+                $before = $user->billing()->first()->toArray();
                 $user->billing()->update($billingData);
-                $after = json_encode($user->billing()->first(), JSON_UNESCAPED_UNICODE);
-                activity()
-                    ->causedBy(auth()->user())
-                    ->performedOn($user->billing()->first())
-                    ->withProperties(compact('before', 'after'))
-                    ->log('ویرایش اطلاعات صورتحساب کاربر');
+                $after = $user->billing()->first()->toArray();
+                self::log($user, compact('after', 'before'), 'ویرایش اطلاعات صورتحساب کاربر');
             }
-            $before = json_encode(Arr::except($user->toArray(), 'password'), JSON_UNESCAPED_UNICODE);
-            $user->update($userData);
-            $after = json_encode(Arr::except($user->toArray(), 'password'), JSON_UNESCAPED_UNICODE);
 
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($user)
-                ->withProperties(compact('before', 'after'))
-                ->log('ویرایش کاربر');
+            $before = Arr::except($user->toArray(), ['password']);
+            $user->update($userData);
+            $after = Arr::except($user->toArray(), ['password']);
+
+            self::log($user, compact('before', 'after'), 'ویرایش کاربر');
             alert()->success("موفق", "با موفقیت انجام شد");
 
             return redirect(route('admin.users.show', $user));
@@ -182,20 +161,12 @@ class UserController extends Controller
     public function destroy(User $user): RedirectResponse
     {
         Gate::authorize('delete', $user);
-//        Gate::authorize('delete-users');
-//        if ($user->hasRole('super-admin') || auth()->user()->id == $user->id ||
-//            ($user->hasRole('ادمین') && !auth()->user()->hasRole('super-admin'))) {
-//            throw new AuthorizationException();
-//        }
         try {
 
-            $before = json_encode(Arr::except($user->toArray(), 'password'), JSON_UNESCAPED_UNICODE);
+            $before = Arr::except($user->toArray(), ['password']);
             $user->delete();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->withProperties(compact('before'))
-                ->log('حذف کاربر');
+            self::log(null, compact('before'), 'حذف کاربر');
             alert()->success("موفق", "کاربر حذف شد");
 
             return redirect(route('admin.users.index'));
@@ -207,11 +178,6 @@ class UserController extends Controller
     public function setRole(User $user)
     {
         Gate::authorize('setRole', $user);
-//        Gate::authorize('set-role');
-//        if ($user->hasRole('super-admin') || auth()->user()->id == $user->id ||
-//            ($user->hasRole('ادمین') && !auth()->user()->hasRole('super-admin'))) {
-//            throw new AuthorizationException();
-//        }
         try {
 
             $data = request()->validate([
@@ -222,14 +188,11 @@ class UserController extends Controller
                 return back();
             }
 
-            $before = json_encode($user->getRoleNames(), JSON_UNESCAPED_UNICODE);
+            $before = $user->getRoleNames();
             $user->syncRoles($role);
-            $after = json_encode($user->getRoleNames(), JSON_UNESCAPED_UNICODE);
+            $after = $user->getRoleNames();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->withProperties(compact('before', 'after'))
-                ->log('ویرایش نقش');
+            self::log($user, compact('before', 'after'), 'ویرایش نقش');
             alert()->success('موفق', 'ویرایش نقش با موفقیت انجام شد');
 
             return back();
@@ -238,62 +201,4 @@ class UserController extends Controller
             return back();
         }
     }
-
-//    public function deleted()
-//    {
-//        gate::authorize('restore-users');
-//        try {
-//            $roles = Role::all()->select('name', 'id');
-//            $role_id = request('role');
-//            $sort_by = request('sort_by');
-//            $sort_direction = request('sort_direction', 'asc');
-//            $search = request('search');
-//            $count = request('count', 10);
-//            $users = User::onlyTrashed()->with('roles');
-//            if ($role_id) {
-//                $users = $users->whereHas('roles', function ($query) use ($role_id) {
-//                    return $query->where('role_id', $role_id);
-//                });
-//            }
-//            if ($search) {
-//                $users = $users->where('first_name', 'like', '%' . $search . '%')
-//                    ->orWhere('last_name', 'like', '%' . $search . '%')
-//                    ->orWhere('email', 'like', '%' . $search . '%')
-//                    ->orWhere('phone', 'like', '%' . $search . '%');
-//            }
-//            if ($sort_by || $sort_direction) {
-//                $users = $users->orderBy($sort_by, $sort_direction);
-//            }
-//            $users = $users->paginate($count)->withQueryString();
-//            return view('user::admin.deleted', compact(
-//                'users',
-//                'roles',
-//                'sort_by',
-//                'sort_direction',
-//                'search',
-//                'role_id',
-//                'count'
-//            ));
-//        } catch (\Throwable $th) {
-//            alert()->error("خطا", $th->getMessage());
-//            return back();
-//        }
-//    }
-
-//    public function restore(User $user)
-//    {
-//        Gate::authorize('restore-users');
-//        try {
-//            $user->restore();
-//            activity()
-//                ->causedBy(auth()->user())
-//                ->performedOn($user)
-//                ->log('لغو حذف کاربر');
-//            alert()->success("موفق", 'با موفقیت انجام شد');
-//            return redirect(route('admin.users.index'));
-//        } catch (\Throwable $th) {
-//            alert()->error("خطا", $th->getMessage());
-//            return back();
-//        }
-//    }
 }

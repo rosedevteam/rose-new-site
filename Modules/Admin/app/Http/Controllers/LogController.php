@@ -3,14 +3,11 @@
 namespace Modules\Admin\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Spatie\Activitylog\Models\Activity;
 
 class LogController extends Controller
 {
-    use SEOTools;
-
     public function index()
     {
         $this->seo()->setTitle('لاگ');
@@ -38,6 +35,16 @@ class LogController extends Controller
     {
         Gate::authorize('view-logs');
         dd(Activity::whereId($id)->first());
+    }
+
+    public function destroy()
+    {
+        if (auth()->user()->hasRole('super-admin')) {
+            Activity::query()->delete();
+            return back();
+        } else {
+            abort(403);
+        }
     }
 
 }

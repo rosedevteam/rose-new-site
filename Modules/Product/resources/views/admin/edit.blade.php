@@ -13,6 +13,9 @@
 @section('content')
 
     <div class="content-wrapper">
+        @if($errors->any())
+            <div class="alert alert-danger" style="padding-right: 80px">{{ $errors->first() }}</div>
+        @endif
         <div class="container-xxl flex-grow-1 container-p-y">
             <div class="row">
                 <div class="col-md-8">
