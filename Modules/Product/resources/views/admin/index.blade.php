@@ -117,9 +117,9 @@
                                         <span class="fw-semibold">
                                             @switch($product->status)
                                                 @case('public')<span
-                                                    class="badge bg-label-success">منتشر شده</span>@break
-                                                @case('draft')<span class="badge bg-label-warning">پیشنویس</span>@break
-                                                @case('hidden')<span class="badge bg-label-gray">پنهان</span>@break
+                                                    class="badge bg-success">منتشر شده</span>@break
+                                                @case('draft')<span class="badge bg-warning">پیشنویس</span>@break
+                                                @case('hidden')<span class="badge bg-gray">پنهان</span>@break
                                                 @case('outofstock')<span
                                                     class="badge bg-label-danger">پنهان</span>@break
                                             @endswitch

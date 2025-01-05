@@ -174,7 +174,7 @@
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column">
                                                 <span
-                                                    class="fw-semibold">{{ verta($order->created_at)->formatJalaliDate() }}</span>
+                                                    class="fw-semibold">{{ verta($order->created_at)->formatJalaliDateTime() }}</span>
                                             </div>
                                         </div>
                                     </td>

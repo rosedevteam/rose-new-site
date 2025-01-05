@@ -62,9 +62,6 @@
                                id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 100%;">
                             <thead>
                             <tr>
-                                <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width: 12%" aria-sort="ascending">تاریخ ثبت
-                                </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 12%;">نویسنده
                                 </th>
@@ -74,10 +71,13 @@
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 15%;">فایل
                                 </th>
-                                @can('edit-daily-reports')
-                                <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">عملیات
+                                <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                    colspan="1" style="width: 12%" aria-sort="ascending">تاریخ ثبت
                                 </th>
+                                @can('edit-daily-reports')
+                                    <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                        style="width: 5%;">عملیات
+                                    </th>
                                 @endcan
                             </tr>
                             </thead>
@@ -85,14 +85,6 @@
                             @foreach($dailyReports as $dailyReport)
                                 <tr class="">
                                     <td class="sorting_1">
-                                        <div class="d-flex justify-content-start align-items-center user-name">
-                                            <div class="d-flex flex-column">
-                                                <span
-                                                    class="fw-semibold">{{ verta($dailyReport->created_at)->formatJalaliDateTime() }}</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
                                 <span class="fw-semibold">
                                     <a href="{{ route('admin.users.show', $dailyReport->user) }}"
                                        class="text-body text-truncate">
@@ -100,19 +92,22 @@
                                     </a>
                                 </span>
                                     </td>
-                                    <td><span
-                                            class="fw-semibold">{{ $dailyReport->title }}</span></td>
+                                    <td>
+                                        <span class="fw-semibold">{{ $dailyReport->title }}</span></td>
                                     <td>
                                         <a href="{{ route('admin.dailyreports.file', $dailyReport) }}">{{ $dailyReport->file }}</a>
+                                    <td>
+                                                <span
+                                                    class="fw-semibold">{{ verta($dailyReport->created_at)->formatJalaliDateTime() }}</span>
                                     </td>
                                     @can('edit-daily-reports')
-                                    <td>
-                                        <div class="d-flex gap-3 text-nowrap">
-                                            @can('delete-daily-reports')
-                                                <x-admin::deletebutton data-id="{{ $dailyReport->id }}"/>
-                                            @endcan
-                                        </div>
-                                    </td>
+                                        <td>
+                                            <div class="d-flex gap-3 text-nowrap">
+                                                @can('delete-daily-reports')
+                                                    <x-admin::deletebutton data-id="{{ $dailyReport->id }}"/>
+                                                @endcan
+                                            </div>
+                                        </td>
                                     @endcan
                                 </tr>
                             @endforeach

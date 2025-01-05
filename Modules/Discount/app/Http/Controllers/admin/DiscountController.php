@@ -18,7 +18,7 @@ class DiscountController extends Controller
 
         try {
 
-            $sort_direction = request()->input('sort_direction', 'desc');
+            $sort_direction = request('sort_direction', 'desc');
             $search = request('search');
             $is_active = request('is_active', 'all');
             $type = request('type', 'all');
@@ -35,7 +35,7 @@ class DiscountController extends Controller
                 $discounts = $discounts->where('code', 'like', '%' . $search . '%');
             }
 
-            $discounts = $discounts->orderBy('create_at', $sort_direction)->paginate($count);
+            $discounts = $discounts->orderBy('created_at', $sort_direction)->paginate($count);
 
             return view('discount::admin.index', compact(
                 'discounts',
