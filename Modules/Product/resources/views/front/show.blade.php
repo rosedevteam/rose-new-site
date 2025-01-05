@@ -99,7 +99,7 @@
                                     @if($product->lessons->count())
                                         @foreach($product->lessons as $lesson)
                                             <li>
-                                                <a class="select-video" data-video-src="{{$lesson->file}}">
+                                                <a class="select-video @auth is-loggedin @endauth" data-video-src="{{$lesson->file}}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"
                                                          fill="none">
                                                         <path fill-rule="evenodd" clip-rule="evenodd"
