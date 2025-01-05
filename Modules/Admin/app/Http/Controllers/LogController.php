@@ -19,7 +19,11 @@ class LogController extends Controller
             $logs = Activity::query();
 
             if (!is_null($search)) {
-                $logs = $logs->where('description', 'like', '%' . $search . '%');
+                $logs = $logs->where('description', 'like', '%' . $search . '%')
+                    ->orWhereHasMorph('causer', ['Modules\User\Models\User'], function ($query) use ($search) {
+                        $query->where('first_name', 'like', '%' . $search . '%')
+                            ->orWhere('last_name', 'like', '%' . $search . '%');
+                    });
             }
 
             $logs = $logs->orderBy('created_at', $sort_direction);
