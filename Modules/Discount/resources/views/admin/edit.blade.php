@@ -1,12 +1,7 @@
 @extends('admin::layouts.main')
 
 @push('css')
-    <link rel="stylesheet" href="/assets/admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css">
-    <link rel="stylesheet" href="/assets/admin/vendor/libs/typeahead-js/typeahead.css">
     <link rel="stylesheet" href="/assets/admin/vendor/libs/select2/select2.css">
-    <link rel="stylesheet" href="/assets/admin/vendor/libs/tagify/tagify.css">
-    <link rel="stylesheet" href="/assets/admin/vendor/libs/bootstrap-select/bootstrap-select.css">
-    <link rel="stylesheet" href="/assets/admin/vendor/libs/typeahead-js/typeahead.css">
     <link rel="stylesheet" href="/assets/admin/js/datepicker/persian-datepicker.min.css">
 @endpush
 
@@ -115,15 +110,7 @@
 @push('vendor')
     <script src="/assets/admin/vendor/libs/select2/select2.js"></script>
     <script src="/assets/admin/vendor/libs/select2/i18n/fa.js"></script>
-    <script src="/assets/admin/vendor/libs/tagify/tagify.js"></script>
-    <script src="/assets/admin/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
-    <script src="/assets/admin/vendor/libs/bootstrap-select/i18n/defaults-fa_IR.js"></script>
-    <script src="/assets/admin/vendor/libs/typeahead-js/typeahead.js"></script>
-    <script src="/assets/admin/vendor/libs/bloodhound/bloodhound.js"></script>
-    <script src="/assets/admin/js/main.js"></script>
     <script src="/assets/admin/js/forms-selects.js"></script>
-    <script src="/assets/admin/js/forms-tagify.js"></script>
-    <script src="/assets/admin/js/forms-typeahead.js"></script>
     <script src="/assets/admin/js/datepicker/persian-date.min.js"></script>
     <script src="/assets/admin/js/datepicker/persian-datepicker.min.js"></script>
     <script type="text/javascript">
