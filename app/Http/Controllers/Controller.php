@@ -28,12 +28,15 @@ abstract class Controller
             $properties = $difference;
         }
 
+        if ($model) {
+            $properties['id'] = $model->id;
+        }
         $properties = json_encode($properties, JSON_UNESCAPED_UNICODE);
 
         $log = activity()
             ->causedBy(auth()->user())
             ->withProperties($properties);
-        if (!is_null($model)) {
+        if ($model) {
             $log->performedOn($model);
         }
         $log->log($message);

@@ -96,16 +96,15 @@
                                         @endcan
                                     </td>
                                     <td>
-                                        @can('view-products')
+                                        @if($comment->commentable)
                                             <a href="{{
                                         route("admin." . strtolower(substr(strrchr($comment->commentable_type, '\\'), 1)) . "s.edit", $comment->commentable)
                                     }}" class="text-body text-truncate">
                                             <span
                                                 class="fw-semibold">{{ $comment->commentable->title ?: "کامنت " . $comment->user->name() }}</span></a>
                                         @else
-                                            <span
-                                                class="fw-semibold">{{ $comment->commentable->title ?: "کامنت " . $comment->user->name() }}</span>
-                                        @endcan
+                                            <span>حذف شده</span>
+                                        @endif
                                     </td>
                                     <td>@switch($comment->status)
                                             @case("approved")<span class="badge bg-success">تایید شده</span>@break

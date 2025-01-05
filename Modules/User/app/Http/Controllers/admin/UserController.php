@@ -15,8 +15,8 @@ class UserController extends Controller
 {
     public function index()
     {
-        $this->seo()->setTitle('کاربران');
         Gate::authorize('view-users');
+        $this->seo()->setTitle('کاربران');
         try {
 
             $roles = Role::all()->select('name', 'id');
