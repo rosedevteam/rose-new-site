@@ -14,6 +14,7 @@ use Modules\Product\Http\Controllers\ProductController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('product', ProductController::class)->names('product');
+Route::prefix('products')->group(function () {
+    Route::get('/', [\Modules\Product\Http\Controllers\front\ProductController::class, 'all'])->name('products.all');
+    Route::get('/{product}', [\Modules\Product\Http\Controllers\front\ProductController::class, 'show'])->name('products.show');
 });
