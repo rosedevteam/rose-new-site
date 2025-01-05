@@ -10,8 +10,9 @@ class LogController extends Controller
 {
     public function index()
     {
-        $this->seo()->setTitle('لاگ');
         Gate::authorize('view-logs');
+        $this->seo()->setTitle('لاگ');
+
         try {
             $sort_direction = request('sort_direction', 'desc');
             $count = request('count', 50);
