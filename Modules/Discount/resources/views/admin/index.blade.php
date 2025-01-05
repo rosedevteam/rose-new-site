@@ -7,7 +7,6 @@
 @section('content')
     <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
-            <!-- Users List Table -->
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
@@ -115,7 +114,7 @@
                                     </td>
                                     <td>
                                 <span class="fw-semibold">
-                                    {{ $discount->type }}
+                                    {{ $discount->type == 'amount' ? 'مقدار' : 'درصد' }}
                                 </span>
                                     </td>
                                     <td><span
