@@ -16,9 +16,13 @@ class AdminController extends Controller
             $userCount = User::all()->count();
             $orderCount = Order::all()->count();
 
+            $totalSales = Order::pluck('price')->map(function ($item) {
+                return (int)$item;
+            })->sum();
+
             $latestOrders = Order::query()->latest()->take(10)->get();
 
-            return view('admin::index', compact('userCount', 'orderCount', 'latestOrders'));
+            return view('admin::index', compact('userCount', 'orderCount', 'totalSales', 'latestOrders'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();

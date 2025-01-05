@@ -27,6 +27,14 @@
                                         <h3 class="mb-0">{{ $orderCount }}</h3>
                                     </div>
                                 </div>
+                                <div class="text-center me-2">
+                                    <i class="bx bx-food-menu me-1"></i>
+                                    <span>فروش کل</span>
+                                    <div class="d-flex align-items-center mt-2">
+                                        <div class="chart-report" data-color="warning" data-series="76"></div>
+                                        <h3 class="mb-0">{{ $totalSales }}</h3>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
