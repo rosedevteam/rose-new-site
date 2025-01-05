@@ -14,8 +14,9 @@ class OrderController extends Controller
     use FormatDate;
     public function index()
     {
-        $this->seo()->setTitle('سفارش ها');
         Gate::authorize('view-orders');
+
+        $this->seo()->setTitle('سفارش ها');
         try {
 
             $sort_by = request('sort_by', 'created_at');
@@ -94,7 +95,7 @@ class OrderController extends Controller
                 'price' => $total,
             ]);
             $order->products()->attach($validData['products']);
-            $after = json_encode($order, JSON_UNESCAPED_UNICODE);
+            $after = $order->with('products')->get()->toArray();
 
             //if status was completed then send a request to spot player api for create license
             if ($order->status == 'completed') {
@@ -123,11 +124,7 @@ class OrderController extends Controller
                 }
             }
 
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($order)
-                ->withProperties(compact('after'))
-                ->log('ساخت سفارش');
+            self::log($order, compact('after'), 'ساخت سفارش');
             alert()->success('موفق', 'سفارش با موفقیت ساخته شد');
 
             return redirect(route('admin.orders.index'));
@@ -178,7 +175,7 @@ class OrderController extends Controller
                 $total = ($product->isOnSale() ? $product->sale_price : $product->price) + $total;
             }
 
-            $before = json_encode($order, JSON_UNESCAPED_UNICODE);
+            $before = $order->with('products')->get()->toArray();
             $order->update([
                 'user_id' => $validData['user_id'],
                 'created_at' => $validData['created_at'],
@@ -188,13 +185,9 @@ class OrderController extends Controller
                 'price' => $total,
             ]);
             $order->products()->sync($validData['products']);
-            $after = json_encode($order, JSON_UNESCAPED_UNICODE);
+            $after = $order->with('products')->get()->toArray();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($order)
-                ->withProperties(compact('before', 'after'))
-                ->log('ویرایش سفارش');
+            self::log($order, compact('before', 'after'), 'ویرایش سفارش');
 
             alert()->success('موفق', 'سفارش با موفقیت ,یرایش شد');
 
@@ -210,13 +203,10 @@ class OrderController extends Controller
         Gate::authorize('delete-orders');
         try {
 
-            $before = json_encode($order, JSON_UNESCAPED_UNICODE);
+            $before = $order->with('products')->get()->toArray();
             $order->delete();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->withProperties(compact('before'))
-                ->log('حذف سفارش');
+            self::log(null, compact('before'), 'حذف سفارش');
             alert()->success('موفق', 'سفارش با موفقیت حذف شد');
 
             return redirect(route('admin.orders.index'));

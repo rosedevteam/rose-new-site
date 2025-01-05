@@ -13,8 +13,9 @@ class PostController extends Controller
     use Slug;
     public function index()
     {
-        $this->seo()->setTitle('پست ها');
         Gate::authorize('view-posts');
+        $this->seo()->setTitle('پست ها');
+
         try {
 
             $sort_by = request('sort_by', 'created_at');
@@ -119,13 +120,9 @@ class PostController extends Controller
                 'keywords' => $data['meta_keywords'],
                 'user_id' => auth()->user()->id,
             ]);
-            $after = json_encode($data, JSON_UNESCAPED_UNICODE);
+            $after = $post->with(['categories', 'metadata'])->get()->toArray();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($post)
-                ->withProperties(compact('after'))
-                ->log('ساخت پست');
+            self::log($post, compact('after'), 'ساخت پست');
             alert()->success("موفق", "با موفقیت انجام شد");
 
             return redirect(route('admin.posts.index'));
@@ -167,7 +164,7 @@ class PostController extends Controller
             $data['slug'] = self::getSlug($data['slug']);
             $data['comment_status'] = $data['comment_status'] == 1;
 
-            $before = json_encode($data, JSON_UNESCAPED_UNICODE);
+            $before = $post->with(['categories', 'metadata'])->get()->toArray();
             $post->update([
                 'title' => $data['title'],
                 'slug' => $data['slug'],
@@ -176,7 +173,6 @@ class PostController extends Controller
                 'status' => $data['status'],
                 'image' => $data['image'],
             ]);
-            $after = json_encode($data, JSON_UNESCAPED_UNICODE);
 
             $data['categories'] = array_filter($data['categories'], function ($category) {
                 return !is_null($category);
@@ -199,11 +195,9 @@ class PostController extends Controller
                 ]);
             }
 
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($post)
-                ->withProperties(compact('before', 'after'))
-                ->log('ویرایش پست');
+            $after = $post->with(['categories', 'metadata'])->get()->toArray();
+
+            self::log($post, compact('before', 'after'), 'ویرایش پست');
             alert()->success("موفق", "ویرایش با موفقیت انجام شد");
 
             return redirect(route('admin.posts.edit', compact('post')));
@@ -219,13 +213,10 @@ class PostController extends Controller
         Gate::authorize('delete-posts');
         try {
 
-            $before = json_encode($post, JSON_UNESCAPED_UNICODE);
+            $before = $post->with(['categories', 'metadata'])->get()->toArray();
             $post->delete();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->withProperties(compact('before'))
-                ->log('حذف پست');
+            self::log(null, compact('before'), 'حذف پست');
             alert()->success('موفق', 'پست با موفقیت حذف شد');
 
             return redirect(route('admin.posts.index'));
