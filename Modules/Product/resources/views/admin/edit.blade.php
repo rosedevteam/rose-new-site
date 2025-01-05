@@ -380,6 +380,13 @@
                             </div>
 
                             <div class="my-3">
+                                <label class="form-label" for="duration">مدت زمان دوره</label>
+                                <input type="text" id="duration" name="duration" class="form-control"
+                                       form="create-item"
+                                       value="{{$product->duration}}">
+                            </div>
+
+                            <div class="my-3">
                                 <label for="short-description" class="form-label">توضیح کوتاه</label>
                                 <textarea class="form-control" rows="8" name="short_description" id="short_description"
                                           form="edit-item">{{$product->short_description}}</textarea>

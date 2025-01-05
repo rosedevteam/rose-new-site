@@ -77,6 +77,7 @@ class ProductController extends Controller
             'attributes' => 'nullable',
             'lessons' => 'nullable',
             'is_free' => 'required',
+            'duration' => 'nullable',
             'categories.*' => 'required|exists:categories,id',
             'meta_title' => 'nullable',
             'meta_description' => 'nullable',
@@ -158,7 +159,7 @@ class ProductController extends Controller
         $validatedData = request()->validate([
             'title' => 'required',
             'short_description' => 'required',
-            'content' => 'required',
+            'content' => 'nullable',
             'price' => 'required',
             'slug' => 'required',
             'spot_player_key' => 'required',
@@ -167,6 +168,7 @@ class ProductController extends Controller
             'status' => 'required',
             'image' => 'required',
             'is_free' => 'required',
+            'duration' => 'nullable',
             'lessons' => 'sometimes|nullable',
             'attributes' => 'nullable',
             'categories.*' => 'required|exists:categories,id',
@@ -174,6 +176,7 @@ class ProductController extends Controller
             'meta_description' => 'nullable',
             'meta_keywords' => 'nullable',
         ]);
+
         try {
             $validatedData['slug'] = self::getSlug($validatedData['slug']);
 
