@@ -37,4 +37,14 @@ class LogController extends Controller
         dd(Activity::whereId($id)->first());
     }
 
+    public function destroy()
+    {
+        if (auth()->user()->hasRole('super-admin')) {
+            Activity::query()->delete();
+            return back();
+        } else {
+            abort(403);
+        }
+    }
+
 }

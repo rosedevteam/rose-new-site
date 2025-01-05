@@ -10,8 +10,9 @@ class JobOfferController extends Controller
 {
     public function index()
     {
-        $this->seo()->setTitle('فرصت های شغلی');
         Gate::authorize('view-job-offers');
+        $this->seo()->setTitle('فرصت های شغلی');
+
         try {
 
             $sort_direction = request('sort_direction', 'desc');
@@ -65,13 +66,9 @@ class JobOfferController extends Controller
                 'type' => $data['type'],
             ]);
             $jobOffer->categories()->sync($data['categories']);
-            $after = json_encode($jobOffer, JSON_UNESCAPED_UNICODE);
+            $after = $jobOffer->with('categories:id,name')->get()->toArray();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($jobOffer)
-                ->withProperties(compact('after'))
-                ->log('ساخت فرصت شغلی');
+            self::log($jobOffer, compact('after'), 'ساخت فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت ساخته شد');
 
             return redirect(route("admin.joboffers.edit", $jobOffer));
@@ -110,7 +107,7 @@ class JobOfferController extends Controller
                 return !is_null($value);
             });
 
-            $before = json_encode($data, JSON_UNESCAPED_UNICODE);
+            $before = $joboffer->with('categories:id,name')->get()->toArray();
             $joboffer->update([
                 'title' => $data['title'],
                 'content' => $data['content'],
@@ -118,13 +115,9 @@ class JobOfferController extends Controller
                 'type' => $data['type'],
             ]);
             $joboffer->categories()->sync($data['categories']);
-            $after = json_encode($data, JSON_UNESCAPED_UNICODE);
+            $after = $joboffer->with('categories:id,name')->get()->toArray();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($joboffer)
-                ->withProperties(compact('before', 'after'))
-                ->log('ویرایش فرصت شغلی');
+            self::log($joboffer, compact('before', 'after'), 'ویرایش فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت ویرایش شد');
 
             return redirect(route("admin.joboffers.edit", $joboffer));
@@ -139,13 +132,10 @@ class JobOfferController extends Controller
         Gate::authorize('delete-job-offers');
         try {
 
-            $before = json_encode($joboffer, JSON_UNESCAPED_UNICODE);
+            $before = $joboffer->with('categories:id,name')->get()->toArray();
             $joboffer->delete();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->withProperties(compact('before'))
-                ->log('حذف فرصت شغلی');
+            self::log($joboffer, compact('before'), 'حذف فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت حذف شد');
 
             return redirect(route("admin.joboffers.index"));
