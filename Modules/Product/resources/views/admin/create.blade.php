@@ -255,6 +255,13 @@
                             </div>
 
                             <div class="my-3">
+                                <label class="form-label" for="duration">مدت زمان دوره</label>
+                                <input type="text" id="duration" name="duration" class="form-control"
+                                       form="create-item"
+                                       value="{{ old('duration')}}">
+                            </div>
+
+                            <div class="my-3">
                                 <label for="select2Primary" class="form-check-label">دسته بندی</label>
                                 <div class="select2-primary">
                                     <select id="select2Primary" class="select2 form-select" name="categories[]"

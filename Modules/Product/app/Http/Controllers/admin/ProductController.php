@@ -69,7 +69,7 @@ class ProductController extends Controller
             'content' => 'required',
             'price' => 'required|numeric',
             'slug' => 'required|unique:products,slug',
-            'spot_player_key' => 'required',
+            'spot_player_key' => 'nullable',
             'sale_price' => 'nullable',
             'comment_status' => 'required',
             'status' => 'required',
@@ -77,6 +77,7 @@ class ProductController extends Controller
             'attributes' => 'nullable',
             'lessons' => 'nullable',
             'is_free' => 'required',
+            'duration' => 'nullable',
             'categories.*' => 'required|exists:categories,id',
             'meta_title' => 'nullable',
             'meta_description' => 'nullable',
@@ -155,15 +156,16 @@ class ProductController extends Controller
         $validatedData = request()->validate([
             'title' => 'required',
             'short_description' => 'required',
-            'content' => 'required',
+            'content' => 'nullable',
             'price' => 'required',
             'slug' => 'required',
-            'spot_player_key' => 'required',
+            'spot_player_key' => 'nullable',
             'sale_price' => 'nullable',
             'comment_status' => 'required',
             'status' => 'required',
             'image' => 'required',
             'is_free' => 'required',
+            'duration' => 'nullable',
             'lessons' => 'sometimes|nullable',
             'attributes' => 'nullable',
             'categories.*' => 'required|exists:categories,id',
@@ -171,6 +173,7 @@ class ProductController extends Controller
             'meta_description' => 'nullable',
             'meta_keywords' => 'nullable',
         ]);
+
         try {
             $validatedData['slug'] = self::getSlug($validatedData['slug']);
             $before = $product->with('lessons', 'attributes', 'categories', 'metadata')->get()->toArray();

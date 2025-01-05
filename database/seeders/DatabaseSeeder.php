@@ -216,6 +216,7 @@ class DatabaseSeeder extends Seeder
             'comment_status' => 1,
             'image' => "",
             'slug' => "dore-fis",
+            'duration'=> '+۴۰ ساعت',
             'spot_player_key' => '619636a27ff03979c37fc360'
         ]);
         $product2 = Product::factory()->create([
@@ -229,6 +230,7 @@ class DatabaseSeeder extends Seeder
             'comment_status' => 0,
             'image' => "",
             'slug' => "masir-servat-saz",
+            'duration'=> '+۴۰ ساعت',
             'spot_player_key' => '6210b0b5637d0950ee5ea2bb'
         ]);
         $product3 = Product::factory()->create([
@@ -242,6 +244,7 @@ class DatabaseSeeder extends Seeder
             'comment_status' => 1,
             'image' => "asdijbnag",
             'slug' => "modirat-mali",
+            'duration'=> '+۴۰ ساعت',
             'spot_player_key' => null
         ]);
         $product4 = Product::factory()->create([
@@ -255,6 +258,7 @@ class DatabaseSeeder extends Seeder
             'comment_status' => 1,
             'image' => "",
             'slug' => "hesabdar-nokhbe",
+            'duration'=> '+۴۰ ساعت',
             'spot_player_key' => '635faca3dc6fbb9779bf0164'
         ]);
 
@@ -269,6 +273,7 @@ class DatabaseSeeder extends Seeder
             'comment_status' => 1,
             'image' => "",
             'slug' => "fac-course",
+            'duration'=> '+۴۰ ساعت',
             'spot_player_key' => null
         ]);
 
@@ -283,6 +288,7 @@ class DatabaseSeeder extends Seeder
             'comment_status' => 1,
             'image' => "",
             'slug' => "dore-jame",
+            'duration'=> '+۴۰ ساعت',
             'spot_player_key' => null
         ]);
 
@@ -297,6 +303,7 @@ class DatabaseSeeder extends Seeder
             'comment_status' => 1,
             'image' => "",
             'slug' => "flm-course",
+            'duration'=> '+۴۰ ساعت',
             'spot_player_key' => '65e56b64f0db10220b5b8758'
         ]);
 
