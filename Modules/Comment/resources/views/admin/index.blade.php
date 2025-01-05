@@ -76,9 +76,11 @@
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 10%;">وضعیت
                                 </th>
+                                @can('edit-comments')
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 5%;">جزییات
                                 </th>
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
@@ -112,6 +114,7 @@
                                             @case("pending")<span
                                                 class="badge bg-label-secondary">در انتظار</span>@break
                                         @endswitch</td>
+                                    @can('edit-comments')
                                     <td>
                                         <div class="d-flex gap-3 text-nowrap">
                                             <a href="{{ route('admin.comments.edit', $comment) }}"
@@ -122,6 +125,7 @@
                                                 <x-admin::deletebutton data-id="{{ $comment->id }}"/>
                                         @endcan
                                     </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                             </tbody>

@@ -118,9 +118,11 @@
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 12%;">تاریخ ثبت نام
                                 </th>
-                                <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 2%;">جزییات
-                                </th>
+                                @can('edit-users')
+                                    <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                        style="width: 2%;">جزییات
+                                    </th>
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
@@ -129,7 +131,7 @@
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column">
-                                                    <span class="fw-semibold">{{ $user->first_name }}</span>
+                                                <span class="fw-semibold">{{ $user->first_name }}</span>
                                             </div>
                                         </div>
                                     </td>
@@ -146,17 +148,19 @@
                                         @endforeach
                                     </td>
                                     <td>{{ verta($user->created_at)->formatJalaliDateTime() }}</td>
-                                    <td>
-                                        <div class="d-flex gap-3 text-nowrap">
-                                            <a href="{{ route('admin.users.show', $user) }}"
-                                               class="btn btn-sm btn-info">
-                                                ویرایش
-                                            </a>
-                                            @can('delete', $user)
-                                                <x-admin::deletebutton data-id="{{ $user->id }}"/>
-                                            @endcan
-                                        </div>
-                                    </td>
+                                    @can('edit-users')
+                                        <td>
+                                            <div class="d-flex gap-3 text-nowrap">
+                                                <a href="{{ route('admin.users.show', $user) }}"
+                                                   class="btn btn-sm btn-info">
+                                                    ویرایش
+                                                </a>
+                                                @can('delete', $user)
+                                                    <x-admin::deletebutton data-id="{{ $user->id }}"/>
+                                                @endcan
+                                            </div>
+                                        </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                             </tbody>

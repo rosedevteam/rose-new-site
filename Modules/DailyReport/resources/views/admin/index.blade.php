@@ -74,9 +74,11 @@
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 15%;">فایل
                                 </th>
+                                @can('edit-daily-reports')
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">عملیت
+                                    style="width: 5%;">عملیات
                                 </th>
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
@@ -103,6 +105,7 @@
                                     <td>
                                         <a href="{{ route('admin.dailyreports.file', $dailyReport) }}">{{ $dailyReport->file }}</a>
                                     </td>
+                                    @can('edit-daily-reports')
                                     <td>
                                         <div class="d-flex gap-3 text-nowrap">
                                             @can('delete-daily-reports')
@@ -110,6 +113,7 @@
                                             @endcan
                                         </div>
                                     </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                             </tbody>

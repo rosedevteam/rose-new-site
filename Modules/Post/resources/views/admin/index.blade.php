@@ -88,17 +88,19 @@
                                     style="width: 5%;">نویسنده
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 10%;">کتگوری ها
+                                    style="width: 8%;">کتگوری ها
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">وضعیت
+                                    style="width: 2%;">وضعیت
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">کامنت
+                                    style="width: 1%;">کامنت
                                 </th>
-                                <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">ویرایش
-                                </th>
+                                @can('edit-posts')
+                                    <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                        style="width: 5%;">ویرایش
+                                    </th>
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
@@ -143,17 +145,19 @@
                                             @endswitch
                                     </span></td>
                                     <td>{{ $post->comment_status ? 'باز' : 'بسته' }}</td>
-                                    <td>
-                                        <div class="d-flex gap-3 text-nowrap">
-                                            <a href="{{ route('admin.posts.edit', $post) }}"
-                                               class="btn btn-sm btn-info">
-                                                ویرایش
-                                            </a>
-                                            @can('delete-posts')
-                                                <x-admin::deletebutton data-id="{{ $post->id }}"/>
-                                            @endcan
-                                        </div>
-                                    </td>
+                                    @can('edit-posts')
+                                        <td>
+                                            <div class="d-flex gap-3 text-nowrap">
+                                                <a href="{{ route('admin.posts.edit', $post) }}"
+                                                   class="btn btn-sm btn-info">
+                                                    ویرایش
+                                                </a>
+                                                @can('delete-posts')
+                                                    <x-admin::deletebutton data-id="{{ $post->id }}"/>
+                                                @endcan
+                                            </div>
+                                        </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                             </tbody>

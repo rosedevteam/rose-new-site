@@ -105,9 +105,11 @@
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
                                     colspan="1" style="width: 12%" aria-sort="ascending">تاریخ ثبت
                                 </th>
+                                @can('edit-orders')
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
                                     colspan="1" style="width: 5%" aria-sort="ascending">جزییات
                                 </th>
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
@@ -176,6 +178,7 @@
                                             </div>
                                         </div>
                                     </td>
+                                    @can('edit-orders')
                                     <td>
                                         <div class="d-flex gap-3 text-nowrap">
                                             <a href="{{ route('admin.orders.edit', $order) }}"
@@ -187,6 +190,7 @@
                                             @endcan
                                         </div>
                                     </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                             </tbody>

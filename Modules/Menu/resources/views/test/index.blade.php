@@ -48,9 +48,11 @@
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 5%;">تاریخ ساخت
                                 </th>
-                                <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">جزییات
-                                </th>
+                                @can('edit-menus')
+                                    <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                        style="width: 5%;">جزییات
+                                    </th>
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
@@ -105,6 +107,7 @@
                                 </span>
                                     </td>
                                     <td>{{ verta($menu->created_at)->formatJalaliDateTime() }}</td>
+                                    @can('edit-menus')
                                     <td>
                                         <div class="d-inline-block text-nowrap">
                                             <button class="btn btn-sm btn-icon">
@@ -114,6 +117,7 @@
                                             </button>
                                         </div>
                                     </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                             </tbody>

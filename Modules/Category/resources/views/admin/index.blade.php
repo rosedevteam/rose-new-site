@@ -75,9 +75,11 @@
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 10%;">تاریخ ساخت
                                 </th>
+                                @can('edit-categories')
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 2%;">عملیات
                                 </th>
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
@@ -104,6 +106,7 @@
                                             {{ $category->user->name() }}
                                         @endcan</td>
                                     <td>{{ verta($category->created_at)->formatJalaliDateTime() }}</td>
+                                    @can('edit-categories')
                                     <td>
                                         <div class="d-flex gap-3 text-nowrap">
                                             @can('edit-categories')
@@ -123,6 +126,7 @@
                                             @endcan
                                         </div>
                                     </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                             </tbody>

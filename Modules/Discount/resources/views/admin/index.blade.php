@@ -99,9 +99,11 @@
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 12%;">تاریخ انقضا
                                 </th>
+                                @can('edit-discounts')
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 2%;">عملیات
                                 </th>
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
@@ -137,6 +139,7 @@
                                             {{ verta($discount->expires_at)->formatJalaliDatetime() }}
                                         </span>
                                     </td>
+                                    @can('edit-users')
                                     <td>
                                         <div class="d-flex gap-3 text-nowrap">
                                             <a href="{{ route('admin.discounts.edit', $discount) }}"
@@ -148,6 +151,7 @@
                                             @endcan
                                         </div>
                                     </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                             </tbody>
