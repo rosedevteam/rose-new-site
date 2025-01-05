@@ -20,7 +20,6 @@
             <div class="alert alert-danger" style="padding-right: 80px">{{ $errors->first() }}</div>
         @endif
         <div class="container-xxl flex-grow-1 container-p-y">
-            <!-- Users List Table -->
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
@@ -38,6 +37,9 @@
                                 <select id="role" name="role" class="form-select text-capitalize">
                                     <option value="" selected>همه نقش ها</option>
                                     @foreach($roles as $role)
+                                        @if($role['name'] == 'super-admin')
+                                            @continue
+                                        @endif
                                         <option
                                             value="{{ $role['id'] }}" {{ $role_id == $role['id'] ? 'selected' : ''}}>{{ $role['name'] }}</option>
                                     @endforeach
@@ -144,7 +146,7 @@
                                     <td>{{ $user->email }}</td>
                                     <td>
                                         @foreach($user->getRoleNames() as $role)
-                                            <span @class(['badge', 'bg-primary' => $role == 'مشتری', 'bg-reddit' => $role == 'ادمین', 'bg-info' => $role == 'نویسنده', 'bg-github' => $role == 'پشتیبان', 'bg-success' => $role == 'super-admin'])>{{ $role }}</span>
+                                            <span @class(['badge', 'bg-primary' => $role == 'مشتری', 'bg-reddit' => $role == 'ادمین', 'bg-info' => $role == 'نویسنده', 'bg-instagram' => $role == 'پشتیبان', 'bg-success' => $role == 'super-admin'])>{{ $role }}</span>
                                         @endforeach
                                     </td>
                                     <td>{{ verta($user->created_at)->formatJalaliDateTime() }}</td>
@@ -169,7 +171,6 @@
                     </div>
 
                 </div>
-                <!-- Offcanvas to add new user -->
                 @can('create-users')
                     <div class="offcanvas offcanvas-end" id="offcanvasAddUser"
                          aria-labelledby="offcanvasAddUserLabel">

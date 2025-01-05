@@ -78,9 +78,6 @@
                                id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 100%;">
                             <thead>
                             <tr>
-                                <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 3%;">تاریخ ساخت
-                                </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
                                     colspan="1" style="width: 10%" aria-sort="ascending">نام
                                 </th>
@@ -96,6 +93,9 @@
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 1%;">کامنت
                                 </th>
+                                <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                    style="width: 3%;">تاریخ ساخت
+                                </th>
                                 @can('edit-posts')
                                     <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                         style="width: 5%;">ویرایش
@@ -106,7 +106,6 @@
                             <tbody>
                             @foreach($posts as $post)
                                 <tr class="">
-                                    <td>{{ verta($post->created_at)->formatJalaliDateTime() }}</td>
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column"><a
@@ -145,6 +144,7 @@
                                             @endswitch
                                     </span></td>
                                     <td>{{ $post->comment_status ? 'باز' : 'بسته' }}</td>
+                                    <td>{{ verta($post->created_at)->formatJalaliDateTime() }}</td>
                                     @can('edit-posts')
                                         <td>
                                             <div class="d-flex gap-3 text-nowrap">
