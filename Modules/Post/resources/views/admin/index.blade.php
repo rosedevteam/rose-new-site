@@ -3,7 +3,6 @@
 @section('content')
     <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
-            <!-- Users List Table -->
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
@@ -53,7 +52,6 @@
                                 </button>
                             </div>
                         </div>
-
                     </form>
                 </div>
                 <div class="card-datatable table-responsive">
@@ -162,14 +160,12 @@
                         </table>
                         {{ $posts->links() }}
                     </div>
-
                 </div>
             </div>
             <x-admin::deletemodal/>
         </div>
         <div class="content-backdrop fade"></div>
     </div>
-
 @endsection
 
 @push('vendor')
@@ -185,5 +181,3 @@
     <script src="/assets/admin/vendor/libs/cleavejs/cleave-phone.js"></script>
     <x-admin::deletemodalscript model="posts"/>
 @endpush
-
-

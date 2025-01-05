@@ -3,14 +3,12 @@
 namespace Modules\Comment\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Modules\Comment\Models\Comment;
 use Throwable;
 
 class CommentController extends Controller
 {
-    use SEOTools;
     public function index()
     {
         $this->seo()->setTitle('کامنت ها');

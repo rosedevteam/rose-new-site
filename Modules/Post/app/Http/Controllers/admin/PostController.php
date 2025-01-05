@@ -4,14 +4,13 @@ namespace Modules\Post\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\traits\Slug;
-use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Illuminate\Http\Request;
 use Modules\Post\Models\Post;
 
 class PostController extends Controller
 {
-    use SEOTools, Slug;
+    use Slug;
     public function index()
     {
         $this->seo()->setTitle('پست ها');

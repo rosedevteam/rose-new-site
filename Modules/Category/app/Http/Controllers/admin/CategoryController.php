@@ -4,14 +4,13 @@ namespace Modules\Category\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\traits\Slug;
-use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Illuminate\Http\Request;
 use Modules\Category\Models\Category;
 
 class CategoryController extends Controller
 {
-    use SEOTools, Slug;
+    use Slug;
     /**
      * Display a listing of the resource.
      */

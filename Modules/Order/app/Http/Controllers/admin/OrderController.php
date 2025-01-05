@@ -3,17 +3,15 @@
 namespace Modules\Order\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use Artesaos\SEOTools\Traits\SEOTools;
+use App\traits\FormatDate;
 use Gate;
-use Hekmatinasser\Verta\Verta;
 use Illuminate\Http\Request;
 use Modules\Order\Models\Order;
 use Modules\Product\Models\Product;
 
 class OrderController extends Controller
 {
-    use SEOTools;
-
+    use FormatDate;
     public function index()
     {
         $this->seo()->setTitle('سفارش ها');
@@ -103,7 +101,7 @@ class OrderController extends Controller
                 $spot_response = self::createSpotPlayerLicence(
                     $order->user->first_name . ' ' . $order->user->last_name,
                     array_filter($spot_keys, null),
-                    $validData['watermark'] ? $validData['watermark'] : $order->user->phone);
+                    $validData['watermark'] ?: $order->user->phone);
                 $spot = json_decode($spot_response->getContent(), true);
 
                 if ($spot_response->getStatusCode() == 200) {
@@ -111,7 +109,7 @@ class OrderController extends Controller
                         'spot_player_id' => $spot['id'],
                         'spot_player_licence' => $spot['key'],
                         'spot_player_log' => $spot['message'],
-                        'spot_player_watermark' => $validData['watermark'] ? $validData['watermark'] : $order->user->phone
+                        'spot_player_watermark' => $validData['watermark'] ?: $order->user->phone
 
                     ]);
                 } else {
@@ -119,7 +117,7 @@ class OrderController extends Controller
                         [
                             'status' => 'pending',
                             'spot_player_log' => $spot['message'],
-                            'spot_player_watermark' => $validData['watermark'] ? $validData['watermark'] : $order->user->phone,
+                            'spot_player_watermark' => $validData['watermark'] ?: $order->user->phone,
                         ]);
 
                 }
@@ -288,25 +286,6 @@ class OrderController extends Controller
         }
     }
 
-    protected static function formatDate(string $d)
-    {
-        $expires_at = self::convertNums($d);
-        $t = explode(' ', $expires_at);
-        $date = explode('/', $t[0]);
-        $verta = Verta::jalaliToGregorian($date[0], $date[1], $date[2]);
-        return $verta[0] . '/' . $verta[1] . '/' . $verta[2] . ' ' . $t[1];
-    }
-
-    protected static function convertNums($string)
-    {
-        $persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-        $arabic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-
-        $num = range(0, 9);
-        $convertedPersianNums = str_replace($persian, $num, $string);
-        return str_replace($arabic, $num, $convertedPersianNums);
-    }
-
     public function createSpotLicence(Request $request , Order $order)
     {
         try {
@@ -379,7 +358,7 @@ class OrderController extends Controller
                     [
                         'status' => 'pending',
                         'spot_player_log' => $e->getMessage(),
-                        'spot_player_watermark' => $validData['watermark'] ? $validData['watermark'] : $order->user->phone,
+                        'spot_player_watermark' => $validData['watermark'] ?: $order->user->phone,
                     ]);
 
                 return back();

@@ -1,5 +1,9 @@
 @extends('admin::layouts.main')
 
+@push('css')
+    <link rel="stylesheet" href="/assets/admin/js/datepicker/persian-datepicker.min.css">
+@endpush
+
 @section('content')
     <div class="content-wrapper">
         @if($errors->any())
@@ -101,10 +105,6 @@
                                     </td>
                                     <td>
                                         <div class="d-flex gap-3 text-nowrap">
-                                            {{--                                            <a href="{{ route('admin.dailyreports.edit', $dailyReport) }}"--}}
-                                            {{--                                               class="btn btn-sm btn-info">--}}
-                                            {{--                                                ویرایش--}}
-                                            {{--                                            </a>--}}
                                             @can('delete-daily-reports')
                                                 <x-admin::deletebutton data-id="{{ $dailyReport->id }}"/>
                                             @endcan
@@ -132,10 +132,9 @@
                                   method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="flatpickr-date" class="form-label">روز</label>
-                                    <input type="text" class="form-control" id="flatpickr-date" name="date"
-                                           value="{{ old('date') }}"
-                                           placeholder="YYYY/MM/DD">
+                                    <label for="date" class="form-label">روز</label>
+                                    <input type="text" class="form-control date-picker" id="date" name="date"
+                                           value="{{ old('date') }}" autocomplete="off" required>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="file">فایل</label>
@@ -169,4 +168,16 @@
     <script src="/assets/admin/vendor/libs/cleavejs/cleave.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave-phone.js"></script>
     <x-admin::deletemodalscript model="dailyreports"/>
+    <script src="/assets/admin/js/datepicker/persian-date.min.js"></script>
+    <script src="/assets/admin/js/datepicker/persian-datepicker.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".date-picker").persianDatepicker({
+                initialValue: false,
+                format: 'YYYY/MM/DD',
+                autoClose: true,
+                maxDate: new persianDate(),
+            });
+        });
+    </script>
 @endpush

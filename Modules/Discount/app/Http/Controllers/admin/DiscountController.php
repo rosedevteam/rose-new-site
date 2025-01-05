@@ -3,15 +3,14 @@
 namespace Modules\Discount\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use Artesaos\SEOTools\Traits\SEOTools;
+use App\traits\FormatDate;
 use Gate;
 use Modules\Discount\Models\Discount;
 use Modules\Product\Models\Product;
-use Verta;
 
 class DiscountController extends Controller
 {
-    use SEOTools;
+    use FormatDate;
     public function index()
     {
         $this->seo()->setTitle('تخفیف ها');
@@ -179,25 +178,6 @@ class DiscountController extends Controller
             alert()->error("خطا", $th->getMessage());
             return back();
         }
-    }
-
-    protected static function formatDate(string $d)
-    {
-        $expires_at = self::convertNums($d);
-        $t = explode(' ', $expires_at);
-        $date = explode('/', $t[0]);
-        $verta = Verta::jalaliToGregorian($date[0], $date[1], $date[2]);
-        return $verta[0] . '/' . $verta[1] . '/' . $verta[2] . ' ' . $t[1];
-    }
-
-    protected static function convertNums($string)
-    {
-        $persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-        $arabic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-
-        $num = range(0, 9);
-        $convertedPersianNums = str_replace($persian, $num, $string);
-        return str_replace($arabic, $num, $convertedPersianNums);
     }
 
 

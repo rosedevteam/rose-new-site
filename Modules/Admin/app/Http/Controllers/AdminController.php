@@ -3,11 +3,9 @@
 namespace Modules\Admin\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Artesaos\SEOTools\Traits\SEOTools;
 
 class AdminController extends Controller
 {
-    use SEOTools;
     public function index()
     {
         $this->seo()->setTitle('داشبورد');

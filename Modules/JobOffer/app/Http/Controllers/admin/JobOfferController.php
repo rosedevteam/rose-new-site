@@ -3,13 +3,11 @@
 namespace Modules\JobOffer\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Modules\JobOffer\Models\JobOffer;
 
 class JobOfferController extends Controller
 {
-    use SEOTools;
     public function index()
     {
         $this->seo()->setTitle('فرصت های شغلی');

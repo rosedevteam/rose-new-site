@@ -3,14 +3,14 @@
 namespace Modules\DailyReport\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use Artesaos\SEOTools\Traits\SEOTools;
+use App\traits\ConvertNums;
 use Gate;
 use Illuminate\Validation\Rules\File;
 use Modules\DailyReport\Models\DailyReport;
 
 class DailyReportController extends Controller
 {
-    use SEOTools;
+    use ConvertNums;
     public function index()
     {
         $this->seo()->setTitle('گزارش های روزانه بازار');
@@ -53,7 +53,7 @@ class DailyReportController extends Controller
             request()->file('file')->storeAs('daily-reports', $name);
 
             $dailyReport = DailyReport::create([
-                'title' => $data['date'],
+                'title' => $this->convertNums($data['date']),
                 'file' => $name,
                 'user_id' => auth()->user()->id,
             ]);

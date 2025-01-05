@@ -4,15 +4,13 @@ namespace Modules\Menu\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\traits\Slug;
-use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Illuminate\Http\Request;
 use Modules\Menu\Models\Menu;
 
 class MenuController extends Controller
 {
-
-    use SEOTools, Slug;
+    use Slug;
 
     /**
      * Display a listing of the resource.

@@ -3,14 +3,12 @@
 namespace Modules\Auth\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use Artesaos\SEOTools\Traits\SEOTools;
 use Illuminate\Http\Request;
 use Modules\Auth\Models\OtpCode;
 use Modules\User\Models\User;
 
 class TokenController extends Controller
 {
-    use SEOTools;
     public function show(Request $request)
     {
         //Set Title Of Page

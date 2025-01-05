@@ -3,14 +3,11 @@
 namespace Modules\Admin\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Spatie\Activitylog\Models\Activity;
 
 class LogController extends Controller
 {
-    use SEOTools;
-
     public function index()
     {
         $this->seo()->setTitle('لاگ');

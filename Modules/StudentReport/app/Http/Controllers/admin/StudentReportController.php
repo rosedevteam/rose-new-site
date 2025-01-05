@@ -3,15 +3,14 @@
 namespace Modules\StudentReport\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use Artesaos\SEOTools\Traits\SEOTools;
+use App\traits\ConvertNums;
 use Gate;
 use Illuminate\Http\Request;
 use Modules\StudentReport\Models\StudentReport;
 
 class StudentReportController extends Controller
 {
-    use SEOTools;
-
+    use ConvertNums;
     /**
      * Display a listing of the resource.
      */
@@ -94,16 +93,6 @@ class StudentReportController extends Controller
             alert()->error($th->getMessage());
             return back();
         }
-    }
-
-    protected static function convertNums($string)
-    {
-        $persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-        $arabic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-
-        $num = range(0, 9);
-        $convertedPersianNums = str_replace($persian, $num, $string);
-        return str_replace($arabic, $num, $convertedPersianNums);
     }
 
     /**
