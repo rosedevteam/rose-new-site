@@ -22605,6 +22605,7 @@ Single Product Page
 .rose-playlist-course {
   padding: 1rem 1rem 0 0 !important;
   max-height: 420px;
+  height: 420px;
   overflow-x: hidden;
   overflow-y: scroll;
   direction: ltr;
