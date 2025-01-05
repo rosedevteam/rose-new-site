@@ -129,7 +129,7 @@
                                         @endphp
                                         @foreach($order->products()->get() as $product)
                                             @can('view-products')
-                                            <a href="{{ route('admin.products.show', $product) }}"
+                                                <a href="{{ route('admin.products.edit', $product) }}"
                                                class="text-body text-truncate"><span
                                                     class="fw-semibold">{{ $product->title . ($i != $len ? "، " : "") }}</span></a>
                                             @else
