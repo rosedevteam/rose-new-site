@@ -7,7 +7,6 @@
 @section('content')
     <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
-            <!-- Users List Table -->
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
@@ -100,9 +99,11 @@
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 12%;">تاریخ انقضا
                                 </th>
+                                @can('edit-discounts')
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 2%;">عملیات
                                 </th>
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
@@ -115,7 +116,7 @@
                                     </td>
                                     <td>
                                 <span class="fw-semibold">
-                                    {{ $discount->type }}
+                                    {{ $discount->type == 'amount' ? 'مقدار' : 'درصد' }}
                                 </span>
                                     </td>
                                     <td><span
@@ -123,7 +124,7 @@
                                                 %
                                             @endif</span></td>
                                     <td>@can('view-users')
-                                            <a href="{{ route('admin.users.show', $discount->user) }}"
+                                            <a href="{{ route('admin.users.edit', $discount->user) }}"
                                                class="text-body text-truncate">{{ $discount->user->name() }}</a>
                                         @else
                                             {{ $discount->user->name() }}
@@ -138,6 +139,7 @@
                                             {{ verta($discount->expires_at)->formatJalaliDatetime() }}
                                         </span>
                                     </td>
+                                    @can('edit-users')
                                     <td>
                                         <div class="d-flex gap-3 text-nowrap">
                                             <a href="{{ route('admin.discounts.edit', $discount) }}"
@@ -149,6 +151,7 @@
                                             @endcan
                                         </div>
                                     </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                             </tbody>

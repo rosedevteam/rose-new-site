@@ -75,9 +75,11 @@
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 10%;">تاریخ ساخت
                                 </th>
+                                @can('edit-categories')
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 2%;">عملیات
                                 </th>
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
@@ -98,12 +100,13 @@
                                     <td>{{ $category->parent?->name ?: 'ندارد' }}</td>
                                     <td>{{ $category->archive_slug ?: 'ندارد' }}</td>
                                     <td>@can('view-users')
-                                            <a href="{{ route('admin.users.show', $category->user) }}"
+                                            <a href="{{ route('admin.users.edit', $category->user) }}"
                                                class="text-body text-truncate">{{ $category->user->name() }}</a>
                                         @else
                                             {{ $category->user->name() }}
                                         @endcan</td>
                                     <td>{{ verta($category->created_at)->formatJalaliDateTime() }}</td>
+                                    @can('edit-categories')
                                     <td>
                                         <div class="d-flex gap-3 text-nowrap">
                                             @can('edit-categories')
@@ -123,6 +126,7 @@
                                             @endcan
                                         </div>
                                     </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                             </tbody>

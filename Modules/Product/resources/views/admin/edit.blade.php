@@ -2,17 +2,15 @@
 
 @push('css')
     <link rel="stylesheet" href="/assets/vendor/sweetalert/sweetalert2.css">
-    <link rel="stylesheet" href="/assets/admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css">
-    <link rel="stylesheet" href="/assets/admin/vendor/libs/typeahead-js/typeahead.css">
     <link rel="stylesheet" href="/assets/admin/vendor/libs/select2/select2.css">
-    <link rel="stylesheet" href="/assets/admin/vendor/libs/tagify/tagify.css">
-    <link rel="stylesheet" href="/assets/admin/vendor/libs/bootstrap-select/bootstrap-select.css">
-    <link rel="stylesheet" href="/assets/admin/vendor/libs/typeahead-js/typeahead.css">
 @endpush
 
 @section('content')
 
     <div class="content-wrapper">
+        @if($errors->any())
+            <div class="alert alert-danger" style="padding-right: 80px">{{ $errors->first() }}</div>
+        @endif
         <div class="container-xxl flex-grow-1 container-p-y">
             <div class="row">
                 <div class="col-md-8">
@@ -465,13 +463,5 @@
     <script src="/assets/admin/js/products/edit.js"></script>
     <script src="/assets/admin/vendor/libs/select2/select2.js"></script>
     <script src="/assets/admin/vendor/libs/select2/i18n/fa.js"></script>
-    <script src="/assets/admin/vendor/libs/tagify/tagify.js"></script>
-    <script src="/assets/admin/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
-    <script src="/assets/admin/vendor/libs/bootstrap-select/i18n/defaults-fa_ir.js"></script>
-    <script src="/assets/admin/vendor/libs/typeahead-js/typeahead.js"></script>
-    <script src="/assets/admin/vendor/libs/bloodhound/bloodhound.js"></script>
-    <script src="/assets/admin/js/main.js"></script>
     <script src="/assets/admin/js/forms-selects.js"></script>
-    <script src="/assets/admin/js/forms-tagify.js"></script>
-    <script src="/assets/admin/js/forms-typeahead.js"></script>
 @endpush

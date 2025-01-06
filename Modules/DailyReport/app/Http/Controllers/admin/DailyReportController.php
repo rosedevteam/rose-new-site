@@ -3,18 +3,19 @@
 namespace Modules\DailyReport\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use Artesaos\SEOTools\Traits\SEOTools;
+use App\traits\ConvertNums;
 use Gate;
 use Illuminate\Validation\Rules\File;
 use Modules\DailyReport\Models\DailyReport;
 
 class DailyReportController extends Controller
 {
-    use SEOTools;
+    use ConvertNums;
     public function index()
     {
-        $this->seo()->setTitle('گزارش های روزانه بازار');
         Gate::authorize('view-daily-reports');
+        $this->seo()->setTitle('گزارش های روزانه بازار');
+
         try {
 
             $sort_by = request('sort_by', 'created_at');
@@ -53,17 +54,13 @@ class DailyReportController extends Controller
             request()->file('file')->storeAs('daily-reports', $name);
 
             $dailyReport = DailyReport::create([
-                'title' => $data['date'],
+                'title' => $this->convertNums($data['date']),
                 'file' => $name,
                 'user_id' => auth()->user()->id,
             ]);
-            $after = json_encode($dailyReport, JSON_UNESCAPED_UNICODE);
+            $after = $dailyReport->toArray();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($dailyReport)
-                ->withProperties(compact('after'))
-                ->log('ساخت گزارش روزانه');
+            self::log($dailyReport, compact('after'), 'ساخت گزارش روزانه');
             alert()->success("موفق", "با موفقیت انجام شد");
 
             return redirect(route('admin.dailyreports.index'));
@@ -77,13 +74,10 @@ class DailyReportController extends Controller
     {
         Gate::authorize('delete-daily-reports');
         try {
-            $before = json_encode($dailyreport, JSON_UNESCAPED_UNICODE);
+            $before = $dailyreport->toArray();
             $dailyreport->delete();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->withProperties(compact('before'))
-                ->log('حذف گزارش روزانه');
+            self::log($dailyreport, compact('before'), 'حذف گزارش روزانه');
             alert()->success('موفق', 'گزارش روزانه با موفقیت حذف شد');
 
             return redirect(route('admin.dailyreports.index'));

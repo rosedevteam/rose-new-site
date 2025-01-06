@@ -33,6 +33,13 @@
                                 <button id="submit" type="submit" class="btn btn-primary mt-4 data-submit">جستجو
                                 </button>
                             </div>
+                            @if(auth()->user()->hasRole('super-admin'))
+                                <div class="col-md-2 mx-4">
+                                    <button type="button" class="btn btn-danger mt-4" data-bs-target="#delete-modal"
+                                            data-bs-toggle="modal">حذف همه
+                                    </button>
+                                </div>
+                            @endif
                         </div>
                     </form>
                 </div>
@@ -80,8 +87,8 @@
                                                     data-bs-target="#details" data-bs-toggle="modal"
                                                     data-log-id="{{ $log->id }}"
                                                     data-description="{{ $log->description }}"
-                                                    data-type="{{ array_reverse(explode('\\', $log->subject_type))[0] }}"
-                                                    data-id="{{ $log->subject_id }}"
+                                                    data-route="{{ getEditRouteByType($log->subject_type, $log->subject_id) }}"
+                                                    data-subject-name="{{ getModelTitleByType($log->subject_type, $log->subject_id) }}"
                                                     data-causer-id="{{ $log->causer_id }}"
                                                     data-causer-name="{{ $log->causer->name() }}"
                                                     data-properties="{{ $log->properties }}"
@@ -118,6 +125,14 @@
                                     <span id="created_at"></span>
                                 </div>
                             </div>
+                            <div class="row" id="route-div" hidden>
+                                <div class="col mb-3">
+                                    <label for="route">روی: </label>
+                                    <a href="" id="route-ref">
+                                        <span id="route"></span>
+                                    </a>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col">
                                     <label for="properties">جزییات: </label>
@@ -128,6 +143,31 @@
                     </div>
                 </div>
             </div>
+            @if(auth()->user()->hasRole('super-admin'))
+                <div class="modal fade" id="delete-modal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="text-center mb-4 mt-0 mt-md-n2">
+                                    <h3 class="secondary-font">آیا اطمینان دارید؟</h3>
+                                </div>
+                                <form id="deleteUserForm" action="{{ route('admin.logs.destroy') }}"
+                                      method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <div class="col-12 text-center mt-4">
+                                        <button type="submit" class="btn btn-danger me-sm-3 me-1">حذف</button>
+                                        <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
+                                                aria-label="Close">
+                                            انصراف
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
         <div class="content-backdrop fade"></div>
     </div>
@@ -153,12 +193,19 @@
                     const causerName = event.target.getAttribute('data-causer-name');
                     const createdAt = event.target.getAttribute('data-created-at');
                     const logId = event.target.getAttribute('data-log-id');
+                    const route = event.target.getAttribute('data-route');
+                    const subjectName = event.target.getAttribute('data-subject-name');
                     let properties = event.target.getAttribute('data-properties');
                     properties = properties.replace(/&quot;/g, '"');
                     document.getElementById('title').textContent = logId + " : " + description;
                     document.getElementById('causer').textContent = causerName;
                     document.getElementById('created_at').textContent = createdAt;
                     document.getElementById('properties').textContent = JSON.stringify(JSON.parse(properties), null, 4);
+                    if (route !== "") {
+                        document.getElementById('route-div').hidden = false;
+                        document.getElementById('route-ref').href = route;
+                        document.getElementById('route').textContent = subjectName;
+                    }
                 }
             });
         });

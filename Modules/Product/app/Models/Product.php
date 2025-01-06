@@ -19,7 +19,9 @@ use Modules\User\Models\User;
 class Product extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+    protected $hidden = ['pivot'];
 
     public function user(): BelongsTo
     {

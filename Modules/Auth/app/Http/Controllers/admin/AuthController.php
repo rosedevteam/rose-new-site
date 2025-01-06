@@ -3,7 +3,6 @@
 namespace Modules\Auth\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use Artesaos\SEOTools\Traits\SEOTools;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
@@ -16,7 +15,6 @@ use Modules\User\Models\User;
 
 class AuthController extends Controller
 {
-    use SEOTools;
     public function index()
     {
         $this->seo()->setTitle('ورود');

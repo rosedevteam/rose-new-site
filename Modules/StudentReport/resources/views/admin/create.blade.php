@@ -35,13 +35,11 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-4">
                     <div class="card mb-3">
                         <div class="ps-3 p-3 d-flex align-items-center justify-content-between">
                             <h5>جزییات</h5>
                             <a href="{{route('admin.studentreports.index')}}">بازگشت</a>
-
                         </div>
                         <hr>
                         <div class="ps-3 p-3">

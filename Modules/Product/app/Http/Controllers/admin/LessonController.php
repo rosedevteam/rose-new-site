@@ -27,11 +27,9 @@ class LessonController extends Controller
                     ]);
                 }
             }
-            $after = json_encode($validData, JSON_UNESCAPED_UNICODE);
-            activity()
-                ->causedBy(auth()->user())
-                ->withProperties(compact('after'))
-                ->log('ویرایش درس');
+            $after = $validData->toArray();
+
+            self::log(null, compact('after'), 'ویرایش درس های دوره');
             alert()->success('ویرایش ویژگی ها با موفقیت انجام شد');
 
             return back();
@@ -48,12 +46,10 @@ class LessonController extends Controller
     {
         try {
 
-            $before = json_encode($lesson, JSON_UNESCAPED_UNICODE);
+            $before = $lesson->toArray();
             $lesson->delete();
-            activity()
-                ->causedBy(auth()->user())
-                ->withProperties(compact('before'))
-                ->log('حذف درس از محصول');
+
+            self::log(null, compact('before'), 'حذف درس دوره');
             return response()->json([
                 'success' => true,
                 'message' => 'درس با موفقیت حذف شد'

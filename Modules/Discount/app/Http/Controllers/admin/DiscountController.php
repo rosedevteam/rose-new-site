@@ -3,22 +3,22 @@
 namespace Modules\Discount\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use Artesaos\SEOTools\Traits\SEOTools;
+use App\traits\FormatDate;
 use Gate;
 use Modules\Discount\Models\Discount;
 use Modules\Product\Models\Product;
-use Verta;
 
 class DiscountController extends Controller
 {
-    use SEOTools;
+    use FormatDate;
     public function index()
     {
-        $this->seo()->setTitle('تخفیف ها');
         Gate::authorize('view-discounts');
+        $this->seo()->setTitle('تخفیف ها');
+
         try {
 
-            $sort_direction = request()->input('sort_direction', 'desc');
+            $sort_direction = request('sort_direction', 'desc');
             $search = request('search');
             $is_active = request('is_active', 'all');
             $type = request('type', 'all');
@@ -35,7 +35,7 @@ class DiscountController extends Controller
                 $discounts = $discounts->where('code', 'like', '%' . $search . '%');
             }
 
-            $discounts = $discounts->orderBy('create_at', $sort_direction)->paginate($count);
+            $discounts = $discounts->orderBy('created_at', $sort_direction)->paginate($count);
 
             return view('discount::admin.index', compact(
                 'discounts',
@@ -77,13 +77,9 @@ class DiscountController extends Controller
                 'user_id' => auth()->user()->id,
             ]);
             $discount->products()->attach($data['products']);
-            $after = json_encode($data, JSON_UNESCAPED_UNICODE);
+            $after = Discount::with('products:id,title')->find($discount->id)->toArray();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($discount)
-                ->withProperties(compact('after'))
-                ->log('ساخت تخفیف');
+            self::log($discount, compact('after'), 'ساخت تخفیف');
             alert()->success('موفق', 'تخفیف با موفقیت ساخته شد');
 
             return redirect(route('admin.discounts.index'));
@@ -136,7 +132,7 @@ class DiscountController extends Controller
         try {
             $data['expires_at'] = self::formatDate($data['expires_at']);
 
-            $before = json_encode($discount, JSON_UNESCAPED_UNICODE);
+            $before = Discount::with('products:id,title')->find($discount->id)->toArray();
             $discount->update([
                 'code' => $data['code'] ?: $discount->code,
                 'type' => $data['type'],
@@ -146,13 +142,9 @@ class DiscountController extends Controller
                 'limit' => $data['limit'],
             ]);
             $discount->products()->sync($data['products']);
-            $after = json_encode($discount, JSON_UNESCAPED_UNICODE);
+            $after = Discount::with('products:id,title')->find($discount->id)->toArray();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($discount)
-                ->withProperties(compact('before', 'after'))
-                ->log('ویرایش تخفیف');
+            self::log($discount, compact('before', 'after'), 'ویرایش تخفیف');
             alert()->success('موفق', 'تخفیف با موفقیت ویرایش شد');
 
             return redirect(route('admin.discounts.edit', $discount));
@@ -166,38 +158,16 @@ class DiscountController extends Controller
     {
         Gate::authorize('delete-discounts');
         try {
-            $before = json_encode($discount, JSON_UNESCAPED_UNICODE);
+            $before = Discount::with('products:id,title')->find($discount->id)->toArray();
             $discount->delete();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->withProperties(compact('before'))
-                ->log('حذف تخفیف');
+            self::log(null, compact('before'), 'حذف تخفیف');
             alert()->success('موفق', 'تخفیف با موفقیت حذف شد');
             return redirect(route('admin.discounts.index'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
         }
-    }
-
-    protected static function formatDate(string $d)
-    {
-        $expires_at = self::convertNums($d);
-        $t = explode(' ', $expires_at);
-        $date = explode('/', $t[0]);
-        $verta = Verta::jalaliToGregorian($date[0], $date[1], $date[2]);
-        return $verta[0] . '/' . $verta[1] . '/' . $verta[2] . ' ' . $t[1];
-    }
-
-    protected static function convertNums($string)
-    {
-        $persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-        $arabic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-
-        $num = range(0, 9);
-        $convertedPersianNums = str_replace($persian, $num, $string);
-        return str_replace($arabic, $num, $convertedPersianNums);
     }
 
 

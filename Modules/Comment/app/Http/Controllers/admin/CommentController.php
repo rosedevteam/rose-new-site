@@ -3,18 +3,17 @@
 namespace Modules\Comment\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Modules\Comment\Models\Comment;
 use Throwable;
 
 class CommentController extends Controller
 {
-    use SEOTools;
     public function index()
     {
-        $this->seo()->setTitle('کامنت ها');
         Gate::authorize('view-comments');
+        $this->seo()->setTitle('کامنت ها');
+
         try {
 
             $sort_direction = request('sort_direction', 'desc');
@@ -71,15 +70,11 @@ class CommentController extends Controller
                 'status' => 'required|string|in:pending,approved,rejected',
             ]);
 
-            $before = json_encode($comment, JSON_UNESCAPED_UNICODE);
+            $before = $comment->toArray();
             $comment->update($data);
-            $after = json_encode($comment, JSON_UNESCAPED_UNICODE);
+            $after = $comment->toArray();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($comment)
-                ->withProperties(compact('before', 'after'))
-                ->log('ویرایش کامنت');
+            self::log($comment, compact('before', 'after'), 'ویرایش کامنت');
             alert()->success("موفق", 'ویرایش با موفقیت انجام شد');
 
             return view('comment::admin.edit', compact('comment'));
@@ -105,13 +100,9 @@ class CommentController extends Controller
                 'user_id' => auth()->id(),
                 'status' => 'approved',
             ]);
-            $after = json_encode($newComment, JSON_UNESCAPED_UNICODE);
+            $after = $newComment->toArray();
 
-            activity()
-                ->causedBy(auth()->id())
-                ->performedOn($newComment)
-                ->withProperties(compact('after'))
-                ->log('پاسخ کامنت');
+            self::log($newComment, compact('after'), 'پاسخ کامنت');
             alert()->success("موفق", 'کامنت با موفقیت ثبت شد');
 
             return redirect(route('admin.comments.edit', $comment));
@@ -126,13 +117,10 @@ class CommentController extends Controller
         Gate::authorize('delete-comments');
         try {
 
-            $before = json_encode($comment, JSON_UNESCAPED_UNICODE);
+            $before = $comment->toArray();
             $comment->delete();
 
-            activity()
-                ->causedBy(auth()->id())
-                ->withProperties(compact('before'))
-                ->log('حذف کامنت');
+            self::log(null, compact('before'), 'حذف کامنت');
             alert()->success('موفق', 'کامنت با موفقیت حذف شد');
 
             return redirect(route('admin.comments.index'));

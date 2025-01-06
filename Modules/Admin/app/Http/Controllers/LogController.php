@@ -3,18 +3,16 @@
 namespace Modules\Admin\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Spatie\Activitylog\Models\Activity;
 
 class LogController extends Controller
 {
-    use SEOTools;
-
     public function index()
     {
-        $this->seo()->setTitle('لاگ');
         Gate::authorize('view-logs');
+        $this->seo()->setTitle('لاگ');
+
         try {
             $sort_direction = request('sort_direction', 'desc');
             $count = request('count', 50);
@@ -22,7 +20,11 @@ class LogController extends Controller
             $logs = Activity::query();
 
             if (!is_null($search)) {
-                $logs = $logs->where('description', 'like', '%' . $search . '%');
+                $logs = $logs->where('description', 'like', '%' . $search . '%')
+                    ->orWhereHasMorph('causer', ['Modules\User\Models\User'], function ($query) use ($search) {
+                        $query->where('first_name', 'like', '%' . $search . '%')
+                            ->orWhere('last_name', 'like', '%' . $search . '%');
+                    });
             }
 
             $logs = $logs->orderBy('created_at', $sort_direction);
@@ -38,6 +40,16 @@ class LogController extends Controller
     {
         Gate::authorize('view-logs');
         dd(Activity::whereId($id)->first());
+    }
+
+    public function destroy()
+    {
+        if (auth()->user()->hasRole('super-admin')) {
+            Activity::query()->delete();
+            return back();
+        } else {
+            abort(403);
+        }
     }
 
 }

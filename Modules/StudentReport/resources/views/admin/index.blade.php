@@ -94,9 +94,11 @@
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 12%;">تاریخ ثبت
                                 </th>
+                                @can('edit-student-reports')
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 2%;">عملیات
                                 </th>
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
@@ -105,7 +107,7 @@
                                     <td class="sorting_1">
                                         @can('view-users')
                                                 <a class="text-truncate text-body"
-                                                   href="{{ route('admin.users.show', $report->user) }}"><span
+                                                   href="{{ route('admin.users.edit', $report->user) }}"><span
                                                         class="fw-semibold">{{ $report->user->name() }}</span></a>
                                         @else
                                             {{ $report->user->name() }}
@@ -128,6 +130,7 @@
                                                 @break
                                         @endswitch</td>
                                     <td>{{ verta($report->created_at)->formatJalaliDateTime() }}</td>
+                                    @can('edit-student-reports')
                                     <td>
                                         <div class="d-flex gap-3 text-nowrap">
                                             <a href="{{ route('admin.studentreports.edit', $report) }}"
@@ -139,6 +142,7 @@
                                             @endcan
                                         </div>
                                     </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                             </tbody>

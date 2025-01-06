@@ -36,7 +36,7 @@ return [
     ],
 
     'admin' => [
-        'prefix' => env('ADMIN_PREFIX', 'admin'),
+        'prefix' => env('ADMIN_PREFIX', 'kara-fa'),
     ],
 
     'sms' => [

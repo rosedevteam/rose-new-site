@@ -58,7 +58,6 @@
                             </tbody>
                         </table>
                     </div>
-
                 </div>
                 @can('create-menus')
                     <div class="offcanvas offcanvas-end" id="offcanvasAddUser"
@@ -97,7 +96,7 @@
                                            required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="image_label">آیکن</label>
+                                    <label for="image_label" class="form-label">آیکن</label>
                                     <div class="input-group">
                                         <input type="text" id="image_label" class="form-control" name="icon"
                                                aria-label="Image" aria-describedby="button-image"
@@ -110,7 +109,7 @@
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="parent_id">منوی مادر</label>
+                                    <label for="parent_id" class="form-label">منوی مادر</label>
                                     <select name="parent_id" id="parent_id" class="form-select">
                                         <option value="">انتخاب کنید</option>
                                         @foreach($menus as $menu)
@@ -132,7 +131,6 @@
         </div>
         <div class="content-backdrop fade"></div>
     </div>
-
 @endsection
 
 @push('vendor')

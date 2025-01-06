@@ -20,7 +20,6 @@
             <div class="alert alert-danger" style="padding-right: 80px">{{ $errors->first() }}</div>
         @endif
         <div class="container-xxl flex-grow-1 container-p-y">
-            <!-- Users List Table -->
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
@@ -38,6 +37,9 @@
                                 <select id="role" name="role" class="form-select text-capitalize">
                                     <option value="" selected>همه نقش ها</option>
                                     @foreach($roles as $role)
+                                        @if($role['name'] == 'super-admin')
+                                            @continue
+                                        @endif
                                         <option
                                             value="{{ $role['id'] }}" {{ $role_id == $role['id'] ? 'selected' : ''}}>{{ $role['name'] }}</option>
                                     @endforeach
@@ -118,9 +120,11 @@
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 12%;">تاریخ ثبت نام
                                 </th>
-                                <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 2%;">جزییات
-                                </th>
+                                @can('edit-users')
+                                    <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                        style="width: 2%;">جزییات
+                                    </th>
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
@@ -129,7 +133,7 @@
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column">
-                                                    <span class="fw-semibold">{{ $user->first_name }}</span>
+                                                <span class="fw-semibold">{{ $user->first_name }}</span>
                                             </div>
                                         </div>
                                     </td>
@@ -142,21 +146,23 @@
                                     <td>{{ $user->email }}</td>
                                     <td>
                                         @foreach($user->getRoleNames() as $role)
-                                            <span @class(['badge', 'bg-primary' => $role == 'مشتری', 'bg-reddit' => $role == 'ادمین', 'bg-info' => $role == 'نویسنده', 'bg-github' => $role == 'پشتیبان', 'bg-success' => $role == 'super-admin'])>{{ $role }}</span>
+                                            <span @class(['badge', 'bg-primary' => $role == 'مشتری', 'bg-reddit' => $role == 'ادمین', 'bg-info' => $role == 'نویسنده', 'bg-instagram' => $role == 'پشتیبان', 'bg-success' => $role == 'super-admin'])>{{ $role }}</span>
                                         @endforeach
                                     </td>
                                     <td>{{ verta($user->created_at)->formatJalaliDateTime() }}</td>
-                                    <td>
-                                        <div class="d-flex gap-3 text-nowrap">
-                                            <a href="{{ route('admin.users.show', $user) }}"
-                                               class="btn btn-sm btn-info">
-                                                ویرایش
-                                            </a>
-                                            @can('delete', $user)
-                                                <x-admin::deletebutton data-id="{{ $user->id }}"/>
-                                            @endcan
-                                        </div>
-                                    </td>
+                                    @can('edit-users')
+                                        <td>
+                                            <div class="d-flex gap-3 text-nowrap">
+                                                <a href="{{ route('admin.users.edit', $user) }}"
+                                                   class="btn btn-sm btn-info">
+                                                    ویرایش
+                                                </a>
+                                                @can('delete', $user)
+                                                    <x-admin::deletebutton data-id="{{ $user->id }}"/>
+                                                @endcan
+                                            </div>
+                                        </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                             </tbody>
@@ -165,7 +171,6 @@
                     </div>
 
                 </div>
-                <!-- Offcanvas to add new user -->
                 @can('create-users')
                     <div class="offcanvas offcanvas-end" id="offcanvasAddUser"
                          aria-labelledby="offcanvasAddUserLabel">

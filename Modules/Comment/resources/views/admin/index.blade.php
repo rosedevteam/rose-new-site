@@ -65,9 +65,6 @@
                             <thead>
                             <tr>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 10%;">تاریخ ساخت
-                                </th>
-                                <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 10%;">نویسنده
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
@@ -76,18 +73,22 @@
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 10%;">وضعیت
                                 </th>
+                                <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                    style="width: 10%;">تاریخ ساخت
+                                </th>
+                                @can('edit-comments')
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 5%;">جزییات
                                 </th>
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($comments as $comment)
                                 <tr class="">
-                                    <td>{{ verta($comment->created_at)->formatJalaliDateTime() }}</td>
                                     <td class="sorting_1">
                                         @can('view-users')
-                                            <a href="{{ route('admin.users.show', $comment->user) }}"
+                                            <a href="{{ route('admin.users.edit', $comment->user) }}"
                                                class="text-body text-truncate">
                                                 <span class="fw-semibold">{{ $comment->user->name() }}</span>
                                             </a>
@@ -96,16 +97,15 @@
                                         @endcan
                                     </td>
                                     <td>
-                                        @can('view-products')
+                                        @if($comment->commentable)
                                             <a href="{{
                                         route("admin." . strtolower(substr(strrchr($comment->commentable_type, '\\'), 1)) . "s.edit", $comment->commentable)
                                     }}" class="text-body text-truncate">
                                             <span
                                                 class="fw-semibold">{{ $comment->commentable->title ?: "کامنت " . $comment->user->name() }}</span></a>
                                         @else
-                                            <span
-                                                class="fw-semibold">{{ $comment->commentable->title ?: "کامنت " . $comment->user->name() }}</span>
-                                        @endcan
+                                            <span>حذف شده</span>
+                                        @endif
                                     </td>
                                     <td>@switch($comment->status)
                                             @case("approved")<span class="badge bg-success">تایید شده</span>@break
@@ -113,6 +113,8 @@
                                             @case("pending")<span
                                                 class="badge bg-label-secondary">در انتظار</span>@break
                                         @endswitch</td>
+                                    <td>{{ verta($comment->created_at)->formatJalaliDateTime() }}</td>
+                                    @can('edit-comments')
                                     <td>
                                         <div class="d-flex gap-3 text-nowrap">
                                             <a href="{{ route('admin.comments.edit', $comment) }}"
@@ -123,6 +125,7 @@
                                                 <x-admin::deletebutton data-id="{{ $comment->id }}"/>
                                         @endcan
                                     </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                             </tbody>

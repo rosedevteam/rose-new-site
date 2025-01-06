@@ -20,7 +20,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
-                            <a class="dropdown-item" href="{{ route("admin.users.show", auth()->user()) }}">
+                            <a class="dropdown-item" href="{{ route("admin.users.edit", auth()->user()) }}">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-grow-1">
                                         <span

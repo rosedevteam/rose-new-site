@@ -11,7 +11,9 @@ use Modules\User\Models\User;
 class Comment extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+    protected $hidden = ['pivot'];
 
     public function commentable(): MorphTo
     {
@@ -23,6 +25,11 @@ class Comment extends Model
         if ($this->commentable_type == "\\Modules\\Comment\\Models\\Comment")
             return $this->commentable();
         return null;
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Comment::class, 'parent_id', 'id');
     }
 
     public function user()

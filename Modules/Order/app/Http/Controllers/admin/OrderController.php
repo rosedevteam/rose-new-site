@@ -3,21 +3,20 @@
 namespace Modules\Order\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use Artesaos\SEOTools\Traits\SEOTools;
+use App\traits\FormatDate;
 use Gate;
-use Hekmatinasser\Verta\Verta;
 use Illuminate\Http\Request;
 use Modules\Order\Models\Order;
 use Modules\Product\Models\Product;
 
 class OrderController extends Controller
 {
-    use SEOTools;
-
+    use FormatDate;
     public function index()
     {
-        $this->seo()->setTitle('سفارش ها');
         Gate::authorize('view-orders');
+
+        $this->seo()->setTitle('سفارش ها');
         try {
 
             $sort_by = request('sort_by', 'created_at');
@@ -96,14 +95,14 @@ class OrderController extends Controller
                 'price' => $total,
             ]);
             $order->products()->attach($validData['products']);
-            $after = json_encode($order, JSON_UNESCAPED_UNICODE);
+            $after = Order::with('products:id,title')->find($order->id)->toArray();
 
             //if status was completed then send a request to spot player api for create license
             if ($order->status == 'completed') {
                 $spot_response = self::createSpotPlayerLicence(
                     $order->user->first_name . ' ' . $order->user->last_name,
                     array_filter($spot_keys, null),
-                    $validData['watermark'] ? $validData['watermark'] : $order->user->phone);
+                    $validData['watermark'] ?: $order->user->phone);
                 $spot = json_decode($spot_response->getContent(), true);
 
                 if ($spot_response->getStatusCode() == 200) {
@@ -111,7 +110,7 @@ class OrderController extends Controller
                         'spot_player_id' => $spot['id'],
                         'spot_player_licence' => $spot['key'],
                         'spot_player_log' => $spot['message'],
-                        'spot_player_watermark' => $validData['watermark'] ? $validData['watermark'] : $order->user->phone
+                        'spot_player_watermark' => $validData['watermark'] ?: $order->user->phone
 
                     ]);
                 } else {
@@ -119,17 +118,13 @@ class OrderController extends Controller
                         [
                             'status' => 'pending',
                             'spot_player_log' => $spot['message'],
-                            'spot_player_watermark' => $validData['watermark'] ? $validData['watermark'] : $order->user->phone,
+                            'spot_player_watermark' => $validData['watermark'] ?: $order->user->phone,
                         ]);
 
                 }
             }
 
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($order)
-                ->withProperties(compact('after'))
-                ->log('ساخت سفارش');
+            self::log($order, compact('after'), 'ساخت سفارش');
             alert()->success('موفق', 'سفارش با موفقیت ساخته شد');
 
             return redirect(route('admin.orders.index'));
@@ -180,7 +175,7 @@ class OrderController extends Controller
                 $total = ($product->isOnSale() ? $product->sale_price : $product->price) + $total;
             }
 
-            $before = json_encode($order, JSON_UNESCAPED_UNICODE);
+            $before = Order::with('products:id,title')->find($order->id)->toArray();
             $order->update([
                 'user_id' => $validData['user_id'],
                 'created_at' => $validData['created_at'],
@@ -190,13 +185,9 @@ class OrderController extends Controller
                 'price' => $total,
             ]);
             $order->products()->sync($validData['products']);
-            $after = json_encode($order, JSON_UNESCAPED_UNICODE);
+            $after = Order::with('products:id,title')->find($order->id)->toArray();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($order)
-                ->withProperties(compact('before', 'after'))
-                ->log('ویرایش سفارش');
+            self::log($order, compact('before', 'after'), 'ویرایش سفارش');
 
             alert()->success('موفق', 'سفارش با موفقیت ,یرایش شد');
 
@@ -212,13 +203,10 @@ class OrderController extends Controller
         Gate::authorize('delete-orders');
         try {
 
-            $before = json_encode($order, JSON_UNESCAPED_UNICODE);
+            $before = Order::with('products:id,title')->find($order->id)->toArray();
             $order->delete();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->withProperties(compact('before'))
-                ->log('حذف سفارش');
+            self::log(null, compact('before'), 'حذف سفارش');
             alert()->success('موفق', 'سفارش با موفقیت حذف شد');
 
             return redirect(route('admin.orders.index'));
@@ -286,25 +274,6 @@ class OrderController extends Controller
                 'message' => $e->getMessage()
             ], 400);
         }
-    }
-
-    protected static function formatDate(string $d)
-    {
-        $expires_at = self::convertNums($d);
-        $t = explode(' ', $expires_at);
-        $date = explode('/', $t[0]);
-        $verta = Verta::jalaliToGregorian($date[0], $date[1], $date[2]);
-        return $verta[0] . '/' . $verta[1] . '/' . $verta[2] . ' ' . $t[1];
-    }
-
-    protected static function convertNums($string)
-    {
-        $persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-        $arabic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-
-        $num = range(0, 9);
-        $convertedPersianNums = str_replace($persian, $num, $string);
-        return str_replace($arabic, $num, $convertedPersianNums);
     }
 
     public function createSpotLicence(Request $request , Order $order)
@@ -379,7 +348,7 @@ class OrderController extends Controller
                     [
                         'status' => 'pending',
                         'spot_player_log' => $e->getMessage(),
-                        'spot_player_watermark' => $validData['watermark'] ? $validData['watermark'] : $order->user->phone,
+                        'spot_player_watermark' => $validData['watermark'] ?: $order->user->phone,
                     ]);
 
                 return back();

@@ -3,17 +3,16 @@
 namespace Modules\JobApplication\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use Artesaos\SEOTools\Traits\SEOTools;
 use Gate;
 use Modules\JobApplication\Models\JobApplication;
 
 class JobApplicationController extends Controller
 {
-    use SEOTools;
     public function index()
     {
-        $this->seo()->setTitle('رزومه ها');
         Gate::authorize('view-job-applications');
+        $this->seo()->setTitle('رزومه ها');
+
         try {
 
             $count = request('count', 50);
@@ -65,15 +64,11 @@ class JobApplicationController extends Controller
                 'status' => 'required|string|in:accepted,rejected,pending',
             ]);
 
-            $before = json_encode($jobapplication, JSON_UNESCAPED_UNICODE);
+            $before = $jobapplication->toArray();
             $jobapplication->update($data);
-            $after = json_encode($jobapplication, JSON_UNESCAPED_UNICODE);
+            $after = $jobapplication->toArray();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($jobapplication)
-                ->withProperties(compact('before', 'after'))
-                ->log('ویرایش رزومه');
+            self::log($jobapplication, compact('before', 'after'), 'ویرایش رزومه');
             alert()->success('موفق', 'ویرایش رزومه با موفقیت انجام شد');
 
             return back();
@@ -87,13 +82,10 @@ class JobApplicationController extends Controller
     {
         Gate::authorize('delete-job-applications');
         try {
-            $before = json_encode($jobapplication, JSON_UNESCAPED_UNICODE);
+            $before = $jobapplication->toArray();
             $jobapplication->delete();
 
-            activity()
-                ->causedBy(auth()->user())
-                ->withProperties(compact('before'))
-                ->log('حذف پست');
+            self::log(null, compact('before'), 'حذف رزومه');
             alert()->success('موفق', 'پست با موفقیت حذف شد');
 
             return redirect(route('admin.jobapplications.index'));

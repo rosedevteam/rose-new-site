@@ -3,7 +3,6 @@
 @section('content')
     <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
-            <!-- Users List Table -->
             <div class="card">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
@@ -53,7 +52,6 @@
                                 </button>
                             </div>
                         </div>
-
                     </form>
                 </div>
                 <div class="card-datatable table-responsive">
@@ -80,9 +78,6 @@
                                id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 100%;">
                             <thead>
                             <tr>
-                                <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 3%;">تاریخ ساخت
-                                </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
                                     colspan="1" style="width: 10%" aria-sort="ascending">نام
                                 </th>
@@ -90,23 +85,27 @@
                                     style="width: 5%;">نویسنده
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 10%;">کتگوری ها
+                                    style="width: 8%;">کتگوری ها
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">وضعیت
+                                    style="width: 2%;">وضعیت
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">کامنت
+                                    style="width: 1%;">کامنت
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">ویرایش
+                                    style="width: 3%;">تاریخ ساخت
                                 </th>
+                                @can('edit-posts')
+                                    <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                        style="width: 5%;">ویرایش
+                                    </th>
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($posts as $post)
                                 <tr class="">
-                                    <td>{{ verta($post->created_at)->formatJalaliDateTime() }}</td>
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column"><a
@@ -119,7 +118,7 @@
                                     </td>
                                     <td>
                                         @can('view-users')
-                                            <a href="{{ route('admin.users.show', $post->user) }}"
+                                            <a href="{{ route('admin.users.edit', $post->user) }}"
                                                class="text-body text-truncate">
                                             <span class="fw-semibold">
                                     {{ $post->user->name() }}
@@ -145,31 +144,32 @@
                                             @endswitch
                                     </span></td>
                                     <td>{{ $post->comment_status ? 'باز' : 'بسته' }}</td>
-                                    <td>
-                                        <div class="d-flex gap-3 text-nowrap">
-                                            <a href="{{ route('admin.posts.edit', $post) }}"
-                                               class="btn btn-sm btn-info">
-                                                ویرایش
-                                            </a>
-                                            @can('delete-posts')
-                                                <x-admin::deletebutton data-id="{{ $post->id }}"/>
-                                            @endcan
-                                        </div>
-                                    </td>
+                                    <td>{{ verta($post->created_at)->formatJalaliDateTime() }}</td>
+                                    @can('edit-posts')
+                                        <td>
+                                            <div class="d-flex gap-3 text-nowrap">
+                                                <a href="{{ route('admin.posts.edit', $post) }}"
+                                                   class="btn btn-sm btn-info">
+                                                    ویرایش
+                                                </a>
+                                                @can('delete-posts')
+                                                    <x-admin::deletebutton data-id="{{ $post->id }}"/>
+                                                @endcan
+                                            </div>
+                                        </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
                         {{ $posts->links() }}
                     </div>
-
                 </div>
             </div>
             <x-admin::deletemodal/>
         </div>
         <div class="content-backdrop fade"></div>
     </div>
-
 @endsection
 
 @push('vendor')
@@ -185,5 +185,3 @@
     <script src="/assets/admin/vendor/libs/cleavejs/cleave-phone.js"></script>
     <x-admin::deletemodalscript model="posts"/>
 @endpush
-
-

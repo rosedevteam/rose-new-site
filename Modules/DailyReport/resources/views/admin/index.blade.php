@@ -1,5 +1,9 @@
 @extends('admin::layouts.main')
 
+@push('css')
+    <link rel="stylesheet" href="/assets/admin/js/datepicker/persian-datepicker.min.css">
+@endpush
+
 @section('content')
     <div class="content-wrapper">
         @if($errors->any())
@@ -58,9 +62,6 @@
                                id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 100%;">
                             <thead>
                             <tr>
-                                <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width: 12%" aria-sort="ascending">تاریخ ثبت
-                                </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 12%;">نویسنده
                                 </th>
@@ -70,46 +71,44 @@
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 15%;">فایل
                                 </th>
-                                <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">عملیت
+                                <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                    colspan="1" style="width: 12%" aria-sort="ascending">تاریخ ثبت
                                 </th>
+                                @can('edit-daily-reports')
+                                    <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                        style="width: 5%;">عملیات
+                                    </th>
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($dailyReports as $dailyReport)
                                 <tr class="">
                                     <td class="sorting_1">
-                                        <div class="d-flex justify-content-start align-items-center user-name">
-                                            <div class="d-flex flex-column">
-                                                <span
-                                                    class="fw-semibold">{{ verta($dailyReport->created_at)->formatJalaliDateTime() }}</span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
                                 <span class="fw-semibold">
-                                    <a href="{{ route('admin.users.show', $dailyReport->user) }}"
+                                    <a href="{{ route('admin.users.edit', $dailyReport->user) }}"
                                        class="text-body text-truncate">
                                     {{ $dailyReport->user->name() }}
                                     </a>
                                 </span>
                                     </td>
-                                    <td><span
-                                            class="fw-semibold">{{ $dailyReport->title }}</span></td>
+                                    <td>
+                                        <span class="fw-semibold">{{ $dailyReport->title }}</span></td>
                                     <td>
                                         <a href="{{ route('admin.dailyreports.file', $dailyReport) }}">{{ $dailyReport->file }}</a>
-                                    </td>
                                     <td>
-                                        <div class="d-flex gap-3 text-nowrap">
-                                            {{--                                            <a href="{{ route('admin.dailyreports.edit', $dailyReport) }}"--}}
-                                            {{--                                               class="btn btn-sm btn-info">--}}
-                                            {{--                                                ویرایش--}}
-                                            {{--                                            </a>--}}
-                                            @can('delete-daily-reports')
-                                                <x-admin::deletebutton data-id="{{ $dailyReport->id }}"/>
-                                            @endcan
-                                        </div>
+                                                <span
+                                                    class="fw-semibold">{{ verta($dailyReport->created_at)->formatJalaliDateTime() }}</span>
                                     </td>
+                                    @can('edit-daily-reports')
+                                        <td>
+                                            <div class="d-flex gap-3 text-nowrap">
+                                                @can('delete-daily-reports')
+                                                    <x-admin::deletebutton data-id="{{ $dailyReport->id }}"/>
+                                                @endcan
+                                            </div>
+                                        </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                             </tbody>
@@ -132,10 +131,9 @@
                                   method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="flatpickr-date" class="form-label">روز</label>
-                                    <input type="text" class="form-control" id="flatpickr-date" name="date"
-                                           value="{{ old('date') }}"
-                                           placeholder="YYYY/MM/DD">
+                                    <label for="date" class="form-label">روز</label>
+                                    <input type="text" class="form-control date-picker" id="date" name="date"
+                                           value="{{ old('date') }}" autocomplete="off" required>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="file">فایل</label>
@@ -169,4 +167,16 @@
     <script src="/assets/admin/vendor/libs/cleavejs/cleave.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave-phone.js"></script>
     <x-admin::deletemodalscript model="dailyreports"/>
+    <script src="/assets/admin/js/datepicker/persian-date.min.js"></script>
+    <script src="/assets/admin/js/datepicker/persian-datepicker.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".date-picker").persianDatepicker({
+                initialValue: false,
+                format: 'YYYY/MM/DD',
+                autoClose: true,
+                maxDate: new persianDate(),
+            });
+        });
+    </script>
 @endpush
