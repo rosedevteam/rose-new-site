@@ -103,7 +103,6 @@
                         </table>
                         {{ $logs->links() }}
                     </div>
-
                 </div>
             </div>
             <div class="modal fade" id="details" tabindex="-1" aria-hidden="true">

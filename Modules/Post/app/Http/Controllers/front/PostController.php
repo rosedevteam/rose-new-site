@@ -1,9 +1,10 @@
 <?php
 
-namespace Modules\Post\Http\Controllers;
+namespace Modules\Post\Http\Controllers\front;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Modules\Post\Models\Post;
 
 class PostController extends Controller
 {
@@ -12,7 +13,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('post::index');
+        $posts = Post::query();
+        $posts = $posts->paginate(9)->withQueryString();
+        $categories = Post::allCategories()->where('archive_slug');
+
+        return view('post::front.index', compact('posts', 'categories'));
     }
 
     /**
@@ -34,9 +39,9 @@ class PostController extends Controller
     /**
      * Show the specified resource.
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        return view('post::show');
+        return view('post::front.show', compact('post'));
     }
 
     /**

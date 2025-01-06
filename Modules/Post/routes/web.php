@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Post\Http\Controllers\PostController;
+use Modules\Post\Http\Controllers\front\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +14,7 @@ use Modules\Post\Http\Controllers\PostController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('post', PostController::class)->names('post');
+Route::prefix('blog')->group(function () {
+    Route::get('/', [PostController::class, 'index'])->name('posts.index');
+    Route::get('/{post:slug}', [PostController::class, 'show'])->name('posts.show');
 });

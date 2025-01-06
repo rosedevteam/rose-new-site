@@ -1,9 +1,6 @@
 @component('front.master')
     @section('content')
         <div class="container">
-            @include('front.partials.heading' , ['title' => 'دوره ها' , 'subtitle' => 'دوره های مجموعه آموزشی رز در قالب دوره های آموزش بورس و حسابداری عرضه می‌شوند'])
-        </div>
-        <div class="container">
             <section class="mt-4">
                 <div class="row">
                     @foreach($products as $product)
