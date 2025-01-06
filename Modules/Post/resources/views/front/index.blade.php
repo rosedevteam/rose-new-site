@@ -65,10 +65,10 @@
                             <ul class="blog-categories p-0">
                                 @foreach($categories as $category)
                                     <li class="category-item ">
-                                        <a href="#">
+                                        <a href="?category={{ $category->archive_slug }}">
                                             <div class="d-flex justify-content-between br-default">
                                                 {{ $category->name }}
-                                                <span>24</span>
+                                                <span>{{ $category->posts_count }}</span>
                                             </div>
                                         </a>
                                     </li>

@@ -1,3 +1,4 @@
+@if($paginator->hasMorePages())
 <div class="row mx-4 mt-3 justify-content-around">
     <div class="col-sm-12 col-md-6">
         <div class="dataTables_info" id="DataTables_Table_0_info" role="status"
@@ -39,3 +40,4 @@
         </div>
     </div>
 </div>
+@endif

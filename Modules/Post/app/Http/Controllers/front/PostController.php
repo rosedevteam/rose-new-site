@@ -4,6 +4,7 @@ namespace Modules\Post\Http\Controllers\front;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Modules\Category\Models\Category;
 use Modules\Post\Models\Post;
 
 class PostController extends Controller
@@ -13,9 +14,28 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::query();
+        $category = request('category');
+        $search = request('search');
+
+        $posts = Post::query()->where('status', 'public');
+
+        if ($category) {
+            $posts = $posts->whereHas('categories', function ($query) use ($category) {
+                $query->where('archive_slug', $category);
+            });
+        }
+
+        if ($search) {
+            $posts = $posts->where('title', 'like', '%' . $search . '%');
+        }
+
         $posts = $posts->paginate(9)->withQueryString();
-        $categories = Post::allCategories()->where('archive_slug');
+
+        $categories = Category::where('archive_slug', "!=", null)
+            ->where('type', 'post')
+            ->withCount('posts')
+            ->where('posts_count', '!=', 0)
+            ->get();
 
         return view('post::front.index', compact('posts', 'categories'));
     }
