@@ -30,7 +30,7 @@
                                                 <a href="{{ route('posts.show', $post) }}">{{ $post->title }}</a>
                                             </h3>
                                             <div class="post-content">
-                                                <p>{!! Str::limit(strip_tags($post->content), 60) !!}</p>
+                                                <p>{!! Str::limit(strip_tags($post->content)) !!}</p>
                                             </div>
                                             <div class="post-footer">
                                                 <a href="{{ route('posts.show', $post) }}" class="btn btn-link">

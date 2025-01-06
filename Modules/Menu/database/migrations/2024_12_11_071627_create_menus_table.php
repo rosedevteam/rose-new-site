@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('slug');
             $table->integer('parent_id')->nullable();
             $table->integer('order')->nullable();
-            $table->string('icon');
+            $table->string('icon')->nullable();
             $table->string('subtitle')->nullable();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
 //            $table->unsignedBigInteger('author_id')->after('id');

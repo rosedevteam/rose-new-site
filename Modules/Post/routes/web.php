@@ -14,7 +14,7 @@ use Modules\Post\Http\Controllers\front\PostController;
 |
 */
 
-Route::prefix('blog')->group(function () {
-    Route::get('/', [PostController::class, 'index'])->name('posts.index');
-    Route::get('/{post:slug}', [PostController::class, 'show'])->name('posts.show');
+Route::prefix('blog/')->group(function () {
+    Route::get('', [PostController::class, 'index'])->name('posts.index');
+    Route::get('{post:slug}', [PostController::class, 'show'])->name('posts.show');
 });

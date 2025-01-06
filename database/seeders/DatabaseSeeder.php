@@ -322,7 +322,7 @@ class DatabaseSeeder extends Seeder
                 'title' => $item['title'],
                 'content' => $item['content'],
                 'status' => ($item['status'] == 'publish') ? 'public' : 'draft',
-                'slug' => $item['slug'],
+                'slug' => urldecode($item['slug']),
                 'comment_status' => $item['comment_status'] == 'open',
                 'created_at' => $item['created_at'],
                 'updated_at' => $item['updated_at'],
