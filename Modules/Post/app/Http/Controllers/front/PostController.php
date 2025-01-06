@@ -17,7 +17,7 @@ class PostController extends Controller
         $category = request('category');
         $search = request('search');
 
-        $posts = Post::query()->where('status', 'public');
+        $posts = Post::where('status', 'public');
 
         if ($category) {
             $posts = $posts->whereHas('categories', function ($query) use ($category) {
@@ -29,7 +29,10 @@ class PostController extends Controller
             $posts = $posts->where('title', 'like', '%' . $search . '%');
         }
 
-        $posts = $posts->paginate(9)->withQueryString();
+        $posts->withCount(['comments' => function ($query) {
+            $query->where('status', 'approved');
+        }]);
+        $posts = $posts->orderBy('created_at', 'desc')->paginate(9)->withQueryString();
 
         $categories = Category::where('archive_slug', "!=", null)
             ->where('type', 'post')
@@ -37,7 +40,7 @@ class PostController extends Controller
             ->where('posts_count', '!=', 0)
             ->get();
 
-        return view('post::front.index', compact('posts', 'categories'));
+        return view('post::front.index', compact('posts', 'categories', 'search'));
     }
 
     /**

@@ -323,7 +323,7 @@ class DatabaseSeeder extends Seeder
                 'content' => $item['content'],
                 'status' => ($item['status'] == 'publish') ? 'public' : 'draft',
                 'slug' => $item['slug'],
-                'comment_status' => $item['comment_status'],
+                'comment_status' => $item['comment_status'] == 'open',
                 'created_at' => $item['created_at'],
                 'updated_at' => $item['updated_at'],
             ]);
@@ -384,14 +384,14 @@ class DatabaseSeeder extends Seeder
         $comment1 = Comment::factory()->create([
             'user_id' => 2,
             'commentable_id' => 1,
-            'commentable_type' => '\\Modules\\Product\\Models\\Product',
+            'commentable_type' => 'Modules\\Product\\Models\\Product',
             'status' => 'approved',
             'content' => "alskgong;qwbegqwbegipbqg",
         ]);
         $comment2 = Comment::factory()->create([
             'user_id' => 1,
             'commentable_id' => 1,
-            'commentable_type' => '\\Modules\\Product\\Models\\Product',
+            'commentable_type' => 'Modules\\Product\\Models\\Product',
             'status' => 'pending',
             'content' => "alskgong;qwbegqwbegipbqg",
         ]);
@@ -399,7 +399,7 @@ class DatabaseSeeder extends Seeder
         $comment3 = Comment::factory()->create([
             'user_id' => 3,
             'commentable_id' => 2,
-            'commentable_type' => '\\Modules\\Product\\Models\\Product',
+            'commentable_type' => 'Modules\\Product\\Models\\Product',
             'status' => 'rejected',
             'content' => "asvdnawn;wgn;iweagbqiugi",
         ]);

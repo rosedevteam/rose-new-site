@@ -11,7 +11,6 @@
             </div>
             <div class="container mt-5 mb-5">
                 <div class="row gx-5">
-
                     <div class="col-xl-8 col-lg-8">
                         <div class="row">
                             @foreach($posts as $post)
@@ -31,7 +30,7 @@
                                                 <a href="{{ route('posts.show', $post) }}">{{ $post->title }}</a>
                                             </h3>
                                             <div class="post-content">
-                                                <p>{!! $post->content !!}</p>
+                                                <p>{!! Str::limit(strip_tags($post->content), 60) !!}</p>
                                             </div>
                                             <div class="post-footer">
                                                 <a href="{{ route('posts.show', $post) }}" class="btn btn-link">
@@ -40,7 +39,7 @@
                                                 </a>
                                                 <div class="post-comments">
                                                     <a href="#">
-                                                        0
+                                                        {{ $post->comment_status ? $post->comments_count : 0 }}
                                                         <i class="bi bi-chat-left"></i>
                                                     </a>
                                                 </div>
@@ -77,7 +76,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     @endsection
