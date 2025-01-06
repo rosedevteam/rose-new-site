@@ -95,7 +95,7 @@ class OrderController extends Controller
                 'price' => $total,
             ]);
             $order->products()->attach($validData['products']);
-            $after = $order->with('products')->get()->toArray();
+            $after = Order::with('products:id,title')->find($order->id)->toArray();
 
             //if status was completed then send a request to spot player api for create license
             if ($order->status == 'completed') {
@@ -175,7 +175,7 @@ class OrderController extends Controller
                 $total = ($product->isOnSale() ? $product->sale_price : $product->price) + $total;
             }
 
-            $before = $order->with('products')->get()->toArray();
+            $before = Order::with('products:id,title')->find($order->id)->toArray();
             $order->update([
                 'user_id' => $validData['user_id'],
                 'created_at' => $validData['created_at'],
@@ -185,7 +185,7 @@ class OrderController extends Controller
                 'price' => $total,
             ]);
             $order->products()->sync($validData['products']);
-            $after = $order->with('products')->get()->toArray();
+            $after = Order::with('products:id,title')->find($order->id)->toArray();
 
             self::log($order, compact('before', 'after'), 'ویرایش سفارش');
 
@@ -203,7 +203,7 @@ class OrderController extends Controller
         Gate::authorize('delete-orders');
         try {
 
-            $before = $order->with('products')->get()->toArray();
+            $before = Order::with('products:id,title')->find($order->id)->toArray();
             $order->delete();
 
             self::log(null, compact('before'), 'حذف سفارش');

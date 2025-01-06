@@ -66,7 +66,7 @@ class JobOfferController extends Controller
                 'type' => $data['type'],
             ]);
             $jobOffer->categories()->sync($data['categories']);
-            $after = $jobOffer->with('categories:id,name')->get()->toArray();
+            $after = JobOffer::with('categories:id,name')->find($jobOffer->id)->toArray();
 
             self::log($jobOffer, compact('after'), 'ساخت فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت ساخته شد');
@@ -107,7 +107,7 @@ class JobOfferController extends Controller
                 return !is_null($value);
             });
 
-            $before = $joboffer->with('categories:id,name')->get()->toArray();
+            $before = JobOffer::with('categories:id,name')->find($joboffer->id)->toArray();
             $joboffer->update([
                 'title' => $data['title'],
                 'content' => $data['content'],
@@ -115,7 +115,7 @@ class JobOfferController extends Controller
                 'type' => $data['type'],
             ]);
             $joboffer->categories()->sync($data['categories']);
-            $after = $joboffer->with('categories:id,name')->get()->toArray();
+            $after = JobOffer::with('categories:id,name')->find($joboffer->id)->toArray();
 
             self::log($joboffer, compact('before', 'after'), 'ویرایش فرصت شغلی');
             alert()->success('موفق', 'فرصت شغلی با موفقیت ویرایش شد');
@@ -132,7 +132,7 @@ class JobOfferController extends Controller
         Gate::authorize('delete-job-offers');
         try {
 
-            $before = $joboffer->with('categories:id,name')->get()->toArray();
+            $before = JobOffer::with('categories:id,name')->find($joboffer->id)->toArray();
             $joboffer->delete();
 
             self::log($joboffer, compact('before'), 'حذف فرصت شغلی');

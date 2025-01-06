@@ -126,7 +126,7 @@ class ProductController extends Controller
                 'user_id' => auth()->user()->id,
             ]);
 
-            $after = $product->with('lessons', 'attributes', 'metadata', 'categories')->get()->toArray();
+            $after = Product::with('lessons:id,title', 'attributes:id,title', 'metadata:id,title,keywords,description', 'categories:id,name')->find($product->id)->toArray();
 
             self::log($product, compact('after'), 'ساخت دوره');
             alert()->success("موفق", "با موفقیت انجام شد");
@@ -176,7 +176,7 @@ class ProductController extends Controller
 
         try {
             $validatedData['slug'] = self::getSlug($validatedData['slug']);
-            $before = $product->with('lessons', 'attributes', 'categories', 'metadata')->get()->toArray();
+            $before = Product::with('lessons:id,title', 'attributes:id,title', 'metadata:id,title,keywords,description', 'categories:id,name')->find($product->id)->toArray();
 
             if ($validatedData['attributes'] ?? false) {
                 foreach ($validatedData['attributes'] as $attribute) {
@@ -227,7 +227,7 @@ class ProductController extends Controller
             });
             $product->categories()->sync($validatedData['categories']);
 
-            $after = $product->with('lessons', 'attributes', 'categories', 'metadata')->get()->toArray();
+            $after = Product::with('lessons:id,title', 'attributes:id,title', 'metadata:id,title,keywords,description', 'categories:id,name')->find($product->id)->toArray();
 
             self::log($product, compact('before', 'after'), 'ویرایش دوره');
             alert()->success("موفق", "ویرایش با موفقیت انجام شد");
@@ -254,7 +254,7 @@ class ProductController extends Controller
     {
         Gate::authorize('delete-products');
         try {
-            $before = $product->with('lessons', 'attributes', 'categories', 'metadata')->get()->toArray();
+            $before = Product::with('lessons:id,title', 'attributes:id,title', 'metadata:id,title,keywords,description', 'categories:id,name')->find($product->id)->toArray();
             $product->delete();
 
             self::log(null, compact('before'), 'حذف دوره');

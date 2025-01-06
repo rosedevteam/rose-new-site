@@ -120,7 +120,7 @@ class PostController extends Controller
                 'keywords' => $data['meta_keywords'],
                 'user_id' => auth()->user()->id,
             ]);
-            $after = $post->with(['categories', 'metadata'])->get()->toArray();
+            $after = $post->with(['categories:id,name', 'metadata:id,title,keywords,description'])->find($post->id)->toArray();
 
             self::log($post, compact('after'), 'ساخت پست');
             alert()->success("موفق", "با موفقیت انجام شد");
@@ -164,7 +164,7 @@ class PostController extends Controller
             $data['slug'] = self::getSlug($data['slug']);
             $data['comment_status'] = $data['comment_status'] == 1;
 
-            $before = $post->with(['categories', 'metadata'])->get()->toArray();
+            $before = $post->with(['categories:id,name', 'metadata:id,title,keywords,description'])->find($post->id)->toArray();
             $post->update([
                 'title' => $data['title'],
                 'slug' => $data['slug'],
@@ -195,7 +195,7 @@ class PostController extends Controller
                 ]);
             }
 
-            $after = $post->with(['categories', 'metadata'])->get()->toArray();
+            $after = $post->with(['categories:id,name', 'metadata:id,title,keywords,description'])->find($post->id)->toArray();
 
             self::log($post, compact('before', 'after'), 'ویرایش پست');
             alert()->success("موفق", "ویرایش با موفقیت انجام شد");
@@ -213,7 +213,7 @@ class PostController extends Controller
         Gate::authorize('delete-posts');
         try {
 
-            $before = $post->with(['categories', 'metadata'])->get()->toArray();
+            $before = $post->with(['categories:id,name', 'metadata:id,title,keywords,description'])->find($post->id)->toArray();
             $post->delete();
 
             self::log(null, compact('before'), 'حذف پست');

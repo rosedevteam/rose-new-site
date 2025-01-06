@@ -11,7 +11,9 @@ use Modules\User\Models\User;
 class Comment extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+    protected $hidden = ['pivot'];
 
     public function commentable(): MorphTo
     {

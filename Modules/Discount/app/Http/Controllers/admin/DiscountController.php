@@ -77,7 +77,7 @@ class DiscountController extends Controller
                 'user_id' => auth()->user()->id,
             ]);
             $discount->products()->attach($data['products']);
-            $after = $discount->with('products:id,title')->get()->toArray();
+            $after = Discount::with('products:id,title')->find($discount->id)->toArray();
 
             self::log($discount, compact('after'), 'ساخت تخفیف');
             alert()->success('موفق', 'تخفیف با موفقیت ساخته شد');
@@ -132,7 +132,7 @@ class DiscountController extends Controller
         try {
             $data['expires_at'] = self::formatDate($data['expires_at']);
 
-            $before = $discount->with('products:id,title')->get()->toArray();
+            $before = Discount::with('products:id,title')->find($discount->id)->toArray();
             $discount->update([
                 'code' => $data['code'] ?: $discount->code,
                 'type' => $data['type'],
@@ -142,7 +142,7 @@ class DiscountController extends Controller
                 'limit' => $data['limit'],
             ]);
             $discount->products()->sync($data['products']);
-            $after = $discount->with('products:id,title')->get()->toArray();
+            $after = Discount::with('products:id,title')->find($discount->id)->toArray();
 
             self::log($discount, compact('before', 'after'), 'ویرایش تخفیف');
             alert()->success('موفق', 'تخفیف با موفقیت ویرایش شد');
@@ -158,7 +158,7 @@ class DiscountController extends Controller
     {
         Gate::authorize('delete-discounts');
         try {
-            $before = $discount->with('products:id,title')->get()->toArray();
+            $before = Discount::with('products:id,title')->find($discount->id)->toArray();
             $discount->delete();
 
             self::log(null, compact('before'), 'حذف تخفیف');
