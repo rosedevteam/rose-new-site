@@ -89,7 +89,7 @@
                                                     data-description="{{ $log->description }}"
                                                     data-route="{{ getEditRouteByType($log->subject_type, $log->subject_id) }}"
                                                     data-subject-name="{{ getModelTitleByType($log->subject_type, $log->subject_id) }}"
-                                                    data-causer-id="{{ $log->causer_id }}"
+                                                    data-causer-route="{{ route('admin.users.edit', $log->causer) }}"
                                                     data-causer-name="{{ $log->causer->name() }}"
                                                     data-properties="{{ $log->properties }}"
                                                     data-created-at="{{ verta($log->created_at)->formatJalaliDatetime() }}"
@@ -118,7 +118,8 @@
                             <div class="row">
                                 <div class="col mb-3">
                                     <label for="causer">توسط: </label>
-                                    <span id="causer"></span>
+                                    <a href="" id="causer-ref">
+                                        <span id="causer"></span></a>
                                 </div>
                                 <div class="col mb-3">
                                     <label for="created_at">تاریخ: </label>
@@ -195,10 +196,12 @@
                     const logId = event.target.getAttribute('data-log-id');
                     const route = event.target.getAttribute('data-route');
                     const subjectName = event.target.getAttribute('data-subject-name');
+                    const causerRoute = event.target.getAttribute('data-causer-route')
                     let properties = event.target.getAttribute('data-properties');
                     properties = properties.replace(/&quot;/g, '"');
                     document.getElementById('title').textContent = logId + " : " + description;
                     document.getElementById('causer').textContent = causerName;
+                    document.getElementById('causer-ref').href = causerRoute;
                     document.getElementById('created_at').textContent = createdAt;
                     document.getElementById('properties').textContent = JSON.stringify(JSON.parse(properties), null, 4);
                     if (route !== "") {
