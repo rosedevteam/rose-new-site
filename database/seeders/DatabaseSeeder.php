@@ -212,7 +212,7 @@ class DatabaseSeeder extends Seeder
             'short_description' => "",
             'sale_price' => 5460000,
             'content' => "test",
-            'status' => 'draft',
+            'status' => 'public',
             'comment_status' => 1,
             'image' => "",
             'slug' => "dore-fis",
@@ -384,14 +384,14 @@ class DatabaseSeeder extends Seeder
         $comment1 = Comment::factory()->create([
             'user_id' => 2,
             'commentable_id' => 1,
-            'commentable_type' => '\\Modules\\Product\\Models\\Product',
+            'commentable_type' => 'Modules\\Product\\Models\\Product',
             'status' => 'approved',
             'content' => "alskgong;qwbegqwbegipbqg",
         ]);
         $comment2 = Comment::factory()->create([
             'user_id' => 1,
             'commentable_id' => 1,
-            'commentable_type' => '\\Modules\\Product\\Models\\Product',
+            'commentable_type' => 'Modules\\Product\\Models\\Product',
             'status' => 'pending',
             'content' => "alskgong;qwbegqwbegipbqg",
         ]);
@@ -399,9 +399,18 @@ class DatabaseSeeder extends Seeder
         $comment3 = Comment::factory()->create([
             'user_id' => 3,
             'commentable_id' => 2,
-            'commentable_type' => '\\Modules\\Product\\Models\\Product',
+            'commentable_type' => 'Modules\\Product\\Models\\Product',
             'status' => 'rejected',
             'content' => "asvdnawn;wgn;iweagbqiugi",
+        ]);
+
+        $comment4 = Comment::factory()->create([
+            'user_id' => 1,
+            'commentable_id' => 2,
+            'commentable_type' => 'Modules\\Product\\Models\\Product',
+            'status' => 'approved',
+            'parent_id' => 1,
+            'content' => "پاسخ",
         ]);
 
     }
