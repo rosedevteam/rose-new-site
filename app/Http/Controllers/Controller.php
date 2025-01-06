@@ -10,7 +10,7 @@ abstract class Controller
 {
     use SEOTools;
 
-    protected static function log(?Model $model, array $properties, string $message)
+    protected function log(?Model $model, array $properties, string $message)
     {
         if (isset($properties['before'], $properties['after'])) {
 

@@ -27,6 +27,11 @@ class Comment extends Model
         return null;
     }
 
+    public function children()
+    {
+        return $this->hasMany(Comment::class, 'parent_id', 'id');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
