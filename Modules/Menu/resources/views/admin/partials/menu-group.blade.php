@@ -7,7 +7,7 @@
             {{ str_repeat('--- ' , $level)  . $menu->title}}
         </td>
         <td>{{ $menu->link }}</td>
-        <td><a href="{{ route('admin.users.show', $menu->user) }}" class="text-truncate text-body">
+        <td><a href="{{ route('admin.users.edit', $menu->user) }}" class="text-truncate text-body">
             {{ $menu->user->name() }}</a>
         </td>
         <td>{{ verta($menu->created_at)->formatJalaliDateTime() }}</td>

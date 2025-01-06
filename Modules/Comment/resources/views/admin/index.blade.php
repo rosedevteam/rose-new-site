@@ -88,7 +88,7 @@
                                 <tr class="">
                                     <td class="sorting_1">
                                         @can('view-users')
-                                            <a href="{{ route('admin.users.show', $comment->user) }}"
+                                            <a href="{{ route('admin.users.edit', $comment->user) }}"
                                                class="text-body text-truncate">
                                                 <span class="fw-semibold">{{ $comment->user->name() }}</span>
                                             </a>

@@ -124,7 +124,7 @@
                                                 %
                                             @endif</span></td>
                                     <td>@can('view-users')
-                                            <a href="{{ route('admin.users.show', $discount->user) }}"
+                                            <a href="{{ route('admin.users.edit', $discount->user) }}"
                                                class="text-body text-truncate">{{ $discount->user->name() }}</a>
                                         @else
                                             {{ $discount->user->name() }}

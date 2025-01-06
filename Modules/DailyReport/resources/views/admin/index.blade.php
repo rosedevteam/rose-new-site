@@ -86,7 +86,7 @@
                                 <tr class="">
                                     <td class="sorting_1">
                                 <span class="fw-semibold">
-                                    <a href="{{ route('admin.users.show', $dailyReport->user) }}"
+                                    <a href="{{ route('admin.users.edit', $dailyReport->user) }}"
                                        class="text-body text-truncate">
                                     {{ $dailyReport->user->name() }}
                                     </a>

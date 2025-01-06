@@ -107,7 +107,7 @@
                                     <td class="sorting_1">
                                         @can('view-users')
                                                 <a class="text-truncate text-body"
-                                                   href="{{ route('admin.users.show', $report->user) }}"><span
+                                                   href="{{ route('admin.users.edit', $report->user) }}"><span
                                                         class="fw-semibold">{{ $report->user->name() }}</span></a>
                                         @else
                                             {{ $report->user->name() }}

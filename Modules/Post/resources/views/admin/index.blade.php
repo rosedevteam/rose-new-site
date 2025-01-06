@@ -118,7 +118,7 @@
                                     </td>
                                     <td>
                                         @can('view-users')
-                                            <a href="{{ route('admin.users.show', $post->user) }}"
+                                            <a href="{{ route('admin.users.edit', $post->user) }}"
                                                class="text-body text-truncate">
                                             <span class="fw-semibold">
                                     {{ $post->user->name() }}

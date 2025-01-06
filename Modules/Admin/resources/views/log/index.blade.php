@@ -34,7 +34,7 @@
                                 </button>
                             </div>
                             @if(auth()->user()->hasRole('super-admin'))
-                                <div class="col-md-2">
+                                <div class="col-md-2 mx-4">
                                     <button type="button" class="btn btn-danger mt-4" data-bs-target="#delete-modal"
                                             data-bs-toggle="modal">حذف همه
                                     </button>
@@ -87,8 +87,8 @@
                                                     data-bs-target="#details" data-bs-toggle="modal"
                                                     data-log-id="{{ $log->id }}"
                                                     data-description="{{ $log->description }}"
-                                                    data-type="{{ array_reverse(explode('\\', $log->subject_type))[0] }}"
-                                                    data-id="{{ $log->subject_id }}"
+                                                    data-route="{{ getEditRouteByType($log->subject_type, $log->subject_id) }}"
+                                                    data-subject-name="{{ getModelTitleByType($log->subject_type, $log->subject_id) }}"
                                                     data-causer-id="{{ $log->causer_id }}"
                                                     data-causer-name="{{ $log->causer->name() }}"
                                                     data-properties="{{ $log->properties }}"
@@ -123,6 +123,14 @@
                                 <div class="col mb-3">
                                     <label for="created_at">تاریخ: </label>
                                     <span id="created_at"></span>
+                                </div>
+                            </div>
+                            <div class="row" id="route-div" hidden>
+                                <div class="col mb-3">
+                                    <label for="route">روی: </label>
+                                    <a href="" id="route-ref">
+                                        <span id="route"></span>
+                                    </a>
                                 </div>
                             </div>
                             <div class="row">
@@ -185,12 +193,19 @@
                     const causerName = event.target.getAttribute('data-causer-name');
                     const createdAt = event.target.getAttribute('data-created-at');
                     const logId = event.target.getAttribute('data-log-id');
+                    const route = event.target.getAttribute('data-route');
+                    const subjectName = event.target.getAttribute('data-subject-name');
                     let properties = event.target.getAttribute('data-properties');
                     properties = properties.replace(/&quot;/g, '"');
                     document.getElementById('title').textContent = logId + " : " + description;
                     document.getElementById('causer').textContent = causerName;
                     document.getElementById('created_at').textContent = createdAt;
                     document.getElementById('properties').textContent = JSON.stringify(JSON.parse(properties), null, 4);
+                    if (route !== "") {
+                        document.getElementById('route-div').hidden = false;
+                        document.getElementById('route-ref').href = route;
+                        document.getElementById('route').textContent = subjectName;
+                    }
                 }
             });
         });

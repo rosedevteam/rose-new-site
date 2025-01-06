@@ -80,7 +80,7 @@
                                     <tr class="">
                                         <td>
                                             @can('view-users')
-                                                <a href="{{ route('admin.users.show', $order->user->first()) }}"
+                                                <a href="{{ route('admin.users.edit', $order->user->first()) }}"
                                                    class="text-body text-truncate"><span
                                                         class="fw-semibold">{{ $order->user->name() }}</span> </a>
                                             @else

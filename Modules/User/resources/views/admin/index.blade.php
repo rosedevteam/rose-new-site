@@ -153,7 +153,7 @@
                                     @can('edit-users')
                                         <td>
                                             <div class="d-flex gap-3 text-nowrap">
-                                                <a href="{{ route('admin.users.show', $user) }}"
+                                                <a href="{{ route('admin.users.edit', $user) }}"
                                                    class="btn btn-sm btn-info">
                                                     ویرایش
                                                 </a>

@@ -100,7 +100,7 @@
                                     <td>{{ $category->parent?->name ?: 'ندارد' }}</td>
                                     <td>{{ $category->archive_slug ?: 'ندارد' }}</td>
                                     <td>@can('view-users')
-                                            <a href="{{ route('admin.users.show', $category->user) }}"
+                                            <a href="{{ route('admin.users.edit', $category->user) }}"
                                                class="text-body text-truncate">{{ $category->user->name() }}</a>
                                         @else
                                             {{ $category->user->name() }}
