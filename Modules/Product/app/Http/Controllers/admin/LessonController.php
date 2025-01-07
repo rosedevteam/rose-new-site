@@ -5,6 +5,7 @@ namespace Modules\Product\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\traits\Upload;
 use Modules\Product\Models\Lesson;
+use Modules\Product\Models\Product;
 
 class LessonController extends Controller
 {
@@ -17,6 +18,8 @@ class LessonController extends Controller
                 'lessons' => 'required'
             ]);
 
+            $productId = 0;
+
             foreach ($validData['lessons'] as $index => $lesson) {
 
                 $item = Lesson::whereId($index)->first();
@@ -26,10 +29,11 @@ class LessonController extends Controller
                         'file' => $lesson['file']
                     ]);
                 }
+                $productId = $item->product->id;
             }
-            $after = $validData->toArray();
+            $after = $validData;
 
-            self::log(null, compact('after'), 'ویرایش درس های دوره');
+            self::log(Product::find($productId), compact('after'), 'ویرایش درس های دوره');
             alert()->success('ویرایش ویژگی ها با موفقیت انجام شد');
 
             return back();

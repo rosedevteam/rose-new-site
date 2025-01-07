@@ -5,6 +5,7 @@ namespace Modules\Product\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\traits\Upload;
 use Modules\Product\Models\Attribute;
+use Modules\Product\Models\Product;
 
 class AttributeController extends Controller
 {
@@ -17,6 +18,7 @@ class AttributeController extends Controller
                 'attributes' => 'required'
             ]);
 
+            $productId = 0;
             foreach ($validData['attributes'] as $index => $attribute) {
 
                 $attr = Attribute::whereId($index)->first();
@@ -27,10 +29,12 @@ class AttributeController extends Controller
                         'icon' => '/upload/' . $path
                     ]);
                 }
-            }
-            $after = $validData->toArray();
 
-            self::log(null, compact('after'), 'ویرایش ویژگی پست');
+                $productId = $attr->product->id;
+            }
+            $after = $validData;
+
+            self::log(Product::find($productId), compact('after'), 'ویرایش ویژگی پست');
             alert()->success('ویرایش ویژگی ها با موفقیت انجام شد');
 
             return back();
