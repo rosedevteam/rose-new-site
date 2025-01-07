@@ -203,11 +203,9 @@
                     document.getElementById('causer-ref').href = causerRoute;
                     document.getElementById('created_at').textContent = createdAt;
                     document.getElementById('properties').textContent = JSON.stringify(JSON.parse(properties), null, 4);
-                    if (route !== "") {
-                        document.getElementById('route-div').hidden = false;
-                        document.getElementById('route-ref').href = route;
-                        document.getElementById('route').textContent = subjectName;
-                    }
+                    document.getElementById('route-ref').href = route;
+                    document.getElementById('route').textContent = subjectName;
+                    document.getElementById('route-div').hidden = route === "";
                 }
             });
         });

@@ -13,10 +13,9 @@ if (!function_exists('getEditRouteByType')) {
         }
         return route('admin.' . $type . 's.edit', $id, false);
     }
-
 }
 
-if (!function_exists('getModelRouteByType')) {
+if (!function_exists('getModelTitleByType')) {
     function getModelTitleByType($type, $id)
     {
         $name = "";

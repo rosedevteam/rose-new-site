@@ -58,6 +58,7 @@
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-4">
+                        <div class="single-post-image"><img alt="post-image" src="{{ $post->image }}"></div>
                         <div class="blog-categories-widget mt-4 br-default bg-white b-none">
                             <div class="title-box no-line">
                                 <div class="title-wrapper gap-2">
@@ -70,7 +71,7 @@
                             <ul class="blog-categories p-0">
                                 @foreach($categories as $category)
                                     <li class="category-item ">
-                                        <a href="?category={{ $category->archive_slug }}">
+                                        <a href="/blog?category={{ $category->archive_slug }}">
                                             <div class="d-flex justify-content-between br-default">
                                                 {{ $category->name }}
                                                 <span>{{ $category->posts_count }}</span>
