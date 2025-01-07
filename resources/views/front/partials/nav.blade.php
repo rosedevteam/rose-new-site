@@ -50,7 +50,7 @@
                         </ul>
                     </div>
 
-                    <div class="left">
+                    <div class="left d-flex align-items-center justify-content-between gap-3">
                         <div class="header-cart" id="cart-icon">
                             <span class="rose-cart-counter" data-counter="0">1</span>
                             <a href="#" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions"
@@ -71,7 +71,9 @@
 
                             </a>
                         </div>
-
+                        <a  class="btn btn-default" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            ورود / ثبت نام
+                        </a>
                     </div>
                 </div>
             </nav>
@@ -214,3 +216,5 @@
 
 </div>
 <!--End Of Side Cart-->
+
+@include('auth::front.components.auth')

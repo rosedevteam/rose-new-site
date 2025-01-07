@@ -77,3 +77,39 @@ input[type=number]:focus,
     right: .2rem;
   }
 }
+
+.input-group {
+    border: solid #D0D5E0 1px;
+    border-radius: 4px;
+    input {
+        border: none;
+    }
+    span{
+        border: none;
+        background: transparent;
+    }
+}
+
+.form-label {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+input {
+    &::placeholder {
+        color: #A0A3A9 !important;
+        font-size: .9rem;
+    }
+}
+
+/* Chrome, Safari, Edge, Opera */
+.numeral-mask::-webkit-outer-spin-button,
+.numeral-mask::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+.numeral-mask[type=number] {
+    -moz-appearance: textfield;
+}
