@@ -307,8 +307,6 @@ class DatabaseSeeder extends Seeder
             'spot_player_key' => '65e56b64f0db10220b5b8758'
         ]);
 
-
-
     }
 
     private function seedPosts(): void
