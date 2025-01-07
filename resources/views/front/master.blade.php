@@ -19,7 +19,7 @@
 
     <title>مجموعه آموزشی رز</title>
 </head>
-<body class="body-bg-default">
+<body class="body-bg-default @yield('body_class')">
 
 {{--Nav Menu--}}
 @include('front.partials.nav')
