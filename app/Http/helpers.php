@@ -82,18 +82,6 @@ if (!function_exists('getModelTitleByType')) {
                 $name = \Modules\StudentReport\Models\StudentReport::find($id)?->date ?: "";
                 break;
 
-            case 'billing':
-                $name = \Modules\User\Models\Billing::find($id)?->user?->name() ?: "";
-                break;
-
-            case 'attribute':
-                $name = \Modules\Product\Models\Attribute::find($id)?->title ?: "";
-                break;
-
-            case "lesson":
-                $name = \Modules\Product\Models\Lesson::find($id)?->title ?: "";
-                break;
-
         }
 
         return $name;
