@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->string('type');
+            $table->enum('type', ['joboffer', 'post', 'product']);
             $table->string('name');
             $table->foreignId('parent_id')->nullable()->constrained('categories')->cascadeOnDelete();
             $table->string('archive_slug')->nullable();

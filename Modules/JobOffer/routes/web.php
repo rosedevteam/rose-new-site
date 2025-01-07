@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\JobOffer\Http\Controllers\JobOfferController;
+use Modules\JobOffer\Http\Controllers\front\JobOfferController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +14,7 @@ use Modules\JobOffer\Http\Controllers\JobOfferController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('joboffer', JobOfferController::class)->names('joboffer');
+Route::prefix('/همکاری-با-ما')->name('joboffers.')->group(function () {
+    Route::get('/', [JobOfferController::class, 'index'])->name('index');
+    Route::get('/{jobOffer:title}', [JobOfferController::class, 'show'])->name('show');
 });
