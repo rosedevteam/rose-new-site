@@ -474,7 +474,7 @@ class DatabaseSeeder extends Seeder
         Menu::factory()->create([
             'title' => 'دوره های آموزشی',
             'user_id' => 1,
-            'slug' => "دوره-ها",
+            'slug' => "products",
             'parent_id' => 2,
             'order' => 0,
             'icon' => 'graduate-hat-square.svg',
