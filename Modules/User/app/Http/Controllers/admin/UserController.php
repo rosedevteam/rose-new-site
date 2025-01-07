@@ -107,7 +107,7 @@ class UserController extends Controller
                 $billing = Billing::orderByDesc('created_at')->first();
             }
 
-            return view('user::admin.show', compact('user', 'orders', 'billing', 'roles', 'canEdit', 'canSetRole', 'canDelete'));
+            return view('user::admin.edit', compact('user', 'orders', 'billing', 'roles', 'canEdit', 'canSetRole', 'canDelete'));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();
@@ -151,7 +151,7 @@ class UserController extends Controller
             self::log($user, compact('before', 'after'), 'ویرایش کاربر');
             alert()->success("موفق", "با موفقیت انجام شد");
 
-            return redirect(route('admin.users.show', $user));
+            return redirect(route('admin.users.edit', $user));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
             return back();

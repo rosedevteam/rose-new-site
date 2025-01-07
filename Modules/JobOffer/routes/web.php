@@ -16,5 +16,5 @@ use Modules\JobOffer\Http\Controllers\front\JobOfferController;
 
 Route::prefix('/همکاری-با-ما')->name('joboffers.')->group(function () {
     Route::get('/', [JobOfferController::class, 'index'])->name('index');
-    Route::get('/{jobOffer:title}', [JobOfferController::class, 'show'])->name('show');
+    Route::get('/{jobOffer}', [JobOfferController::class, 'show'])->name('show');
 });

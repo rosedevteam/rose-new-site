@@ -98,7 +98,7 @@
                                     <td>
                                         @switch($jobApplication->status)
                                             @case('accepted')<span class="badge bg-success">تایید شده</span>@break
-                                            @case('pending')<span class="badge bg-warning">حال بررسی</span>@break
+                                            @case('pending')<span class="badge bg-warning">در حال بررسی</span>@break
                                             @case('rejected')<span class="badge bg-danger">رد شده</span>@break
                                     @endswitch </td>
                                     <td>{{ verta($jobApplication->created_at)->formatJalaliDateTime() }}</td>
