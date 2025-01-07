@@ -21,7 +21,7 @@
                     </div>
                     <div class="logo">
                         <a href="/">
-                        <img src="assets/front/images/logo.svg" width="156" alt="مجموعه آموزشی رز">
+                            <img src="/assets/front/images/logo.svg" width="156" alt="مجموعه آموزشی رز">
                         </a>
                     </div>
                     <div class="menu">

@@ -44,6 +44,13 @@ class PostController extends Controller
         if ($post->status != 'public') {
             abort(404);
         }
-        return view('post::front.show', compact('post'));
+
+        $categories = Category::where('archive_slug', "!=", null)
+            ->where('type', 'post')
+            ->withCount('posts')
+            ->where('posts_count', '!=', 0)
+            ->get();
+
+        return view('post::front.show', compact('post', 'categories'));
     }
 }

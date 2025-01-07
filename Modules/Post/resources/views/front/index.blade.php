@@ -5,7 +5,7 @@
                 <div class="col d-flex align-items-start">
                     <ul class="tm-breadcrumb-1 p-0">
                         <li class="tm-breadcrumb-item"><a href="/"><i class="bi bi-house-door"></i></a></li>
-                        <li class="tm-breadcrumb-item">وبلاگ</li>
+                        <li class="tm-breadcrumb-item"><a href="/blog">وبلاگ</a></li>
                     </ul>
                 </div>
             </div>
