@@ -411,10 +411,10 @@ class DatabaseSeeder extends Seeder
         Menu::factory()->create([
             'title' => 'صفحه نخست',
             'user_id' => 1,
-            'slug' => "#",
+            'slug' => "/",
             'parent_id' => null,
             'order' => 0,
-            'icon' => '#',
+            'icon' => null,
             'subtitle' => null,
         ]);
         Menu::factory()->create([
@@ -423,8 +423,125 @@ class DatabaseSeeder extends Seeder
             'slug' => "#",
             'parent_id' => null,
             'order' => 1,
-            'icon' => '#',
+            'icon' => null,
             'subtitle' => null,
+        ]);
+        Menu::factory()->create([
+            'title' => 'آموزش ها',
+            'user_id' => 1,
+            'slug' => "#",
+            'parent_id' => null,
+            'order' => 2,
+            'icon' => null,
+            'subtitle' => null,
+        ]);
+        Menu::factory()->create([
+            'title' => 'گزارش روزانه بازار',
+            'user_id' => 1,
+            'slug' => "گزارشات-روزانه-بازار",
+            'parent_id' => null,
+            'order' => 3,
+            'icon' => null,
+            'subtitle' => null,
+        ]);
+        Menu::factory()->create([
+            'title' => 'تحلیل دانشپذیران',
+            'user_id' => 1,
+            'slug' => "تحلیل-های-دانشپذیران",
+            'parent_id' => null,
+            'order' => 4,
+            'icon' => null,
+            'subtitle' => null,
+        ]);
+        Menu::factory()->create([
+            'title' => 'ارتباط با ما',
+            'user_id' => 1,
+            'slug' => "#",
+            'parent_id' => null,
+            'order' => 5,
+            'icon' => null,
+            'subtitle' => null,
+        ]);
+        Menu::factory()->create([
+            'title' => 'امتیازدهی',
+            'user_id' => 1,
+            'slug' => "#",
+            'parent_id' => null,
+            'order' => 6,
+            'icon' => null,
+            'subtitle' => null,
+        ]);
+        Menu::factory()->create([
+            'title' => 'دوره های آموزشی',
+            'user_id' => 1,
+            'slug' => "دوره-ها",
+            'parent_id' => 2,
+            'order' => 0,
+            'icon' => 'graduate-hat-square.svg',
+            'subtitle' => 'لیست دوره های آموزشی ویدیویی رز',
+        ]);
+        Menu::factory()->create([
+            'title' => 'بازنشستگی در ۷ سال',
+            'user_id' => 1,
+            'slug' => "retirement-in-7-years",
+            'parent_id' => 2,
+            'order' => 1,
+            'icon' => 'target-goal.svg',
+            'subtitle' => 'مسیر درست زندگی!',
+        ]);
+        Menu::factory()->create([
+            'title' => 'وبلاگ',
+            'user_id' => 1,
+            'slug' => "blog",
+            'parent_id' => 3,
+            'order' => 0,
+            'icon' => 'programming-code-list.svg',
+            'subtitle' => 'مقالات عملی',
+        ]);
+        Menu::factory()->create([
+            'title' => 'پادکست',
+            'user_id' => 1,
+            'slug' => "podcast",
+            'parent_id' => 3,
+            'order' => 1,
+            'icon' => 'headphones.svg',
+            'subtitle' => 'فایل های صوتی آموزشی',
+        ]);
+        Menu::factory()->create([
+            'title' => 'درباره ما',
+            'user_id' => 1,
+            'slug' => "about",
+            'parent_id' => 6,
+            'order' => 1,
+            'icon' => 'News-Bookmark-1.svg',
+            'subtitle' => 'آشنایی با مجموعه آموزشی رز',
+        ]);
+        Menu::factory()->create([
+            'title' => 'همکاری با ما',
+            'user_id' => 1,
+            'slug' => "همکاری-با-ما",
+            'parent_id' => 6,
+            'order' => 2,
+            'icon' => 'star-review-1.svg',
+            'subtitle' => 'جهت همکاری با محموعه در زمینه های مختلف',
+        ]);
+        Menu::factory()->create([
+            'title' => 'تماس با ما',
+            'user_id' => 1,
+            'slug' => "contact",
+            'parent_id' => 6,
+            'order' => 3,
+            'icon' => 'Headphones-Customer-support-1.svg',
+            'subtitle' => 'راههای ارتباطی مخموعه آموزشی رز',
+        ]);
+        Menu::factory()->create([
+            'title' => 'هم مسیر',
+            'user_id' => 1,
+            'slug' => "ham-masir",
+            'parent_id' => 7,
+            'order' => 1,
+            'icon' => 'crystal.svg',
+            'subtitle' => 'آشنایی با جزییات هم مسیر',
         ]);
     }
 
