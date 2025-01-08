@@ -2,8 +2,8 @@
 
 namespace Modules\Product\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Modules\Product\Database\Factories\AttributeFactory;
 
 // use Modules\Product\Database\Factories\AttributeFactory;
@@ -22,7 +22,8 @@ class Attribute extends Model
     {
         return $this->belongsTo(Product::class);
     }
-     protected static function newFactory(): AttributeFactory
+
+    protected static function newFactory(): AttributeFactory
      {
           return AttributeFactory::new();
      }

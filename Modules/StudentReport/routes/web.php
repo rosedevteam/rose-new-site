@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\StudentReport\Http\Controllers\StudentReportController;
+use Modules\StudentReport\Http\Controllers\front\StudentReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +14,5 @@ use Modules\StudentReport\Http\Controllers\StudentReportController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('studentreport', StudentReportController::class)->names('studentreport');
-});
+Route::get('/تحلیل-های-دانشپذیران', [StudentReportController::class, 'index'])->name('index');
+Route::get('/تحلیل-های-دانشپذیران/{studentReport}/', [StudentReportController::class, 'show'])->name('show');

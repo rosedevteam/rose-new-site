@@ -95,4 +95,14 @@ class JobApplicationController extends Controller
         }
     }
 
+    public function getResume($id)
+    {
+        $jobApplication = JobApplication::find($id);
+        $filePath = storage_path('app/private/' . $jobApplication->resume);
+        if (file_exists($filePath)) {
+            return response()->download($filePath);
+        }
+        abort(404);
+    }
+
 }

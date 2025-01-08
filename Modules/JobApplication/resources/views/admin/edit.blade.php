@@ -18,8 +18,8 @@
                         <div class="row mx-2 my-2">شماره:
                             {{ $jobapplication->phone }}
                         </div>
-                        <div class="row mx-2 my-2">رزومه:
-                            {{ $jobapplication->resume }}
+                        <div class="row mx-2 my-2">
+                            <a href="{{ route('admin.jobapplications.resume', $jobapplication) }}">رزومه</a>
                         </div>
                         <div class="row mx-2 my-2">توضیحات:
                             {{ $jobapplication->description }}

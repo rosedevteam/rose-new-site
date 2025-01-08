@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\JobApplication\Http\Controllers\JobApplicationController;
+use Modules\JobApplication\Http\Controllers\front\JobApplicationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +14,4 @@ use Modules\JobApplication\Http\Controllers\JobApplicationController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('jobapplication', JobApplicationController::class)->names('jobapplication');
-});
+Route::post('/jobApplication', [JobApplicationController::class, 'store'])->name('jobapplications.store');

@@ -1,65 +1,90 @@
 <?php
 
+if (!function_exists("getClassName")) {
+    function getClassName($namespace)
+    {
+        return array_reverse(explode('\\', $namespace))[0];
+    }
+}
 
 if (!function_exists('getEditRouteByType')) {
     function getEditRouteByType($type, $id)
     {
-        if (is_null($id)) {
-            return "";
-        }
-        $type = strtolower(array_reverse(explode('\\', $type))[0]);
-        if (in_array($type, ['category', 'dailyreport', 'menu'])) {
-            return "";
-        }
-        return route('admin.' . $type . 's.edit', $id, false);
-    }
+        if (is_null($id)) return "";
 
+        $type = getClassName($type);
+
+        // return empty for models that don't have edit pages
+        if (in_array($type, ['Category', 'DailyReport', 'Menu'])) {
+            return "";
+        }
+
+        return route('admin.' . strtolower($type) . 's.edit', $id, false);
+    }
 }
 
-if (!function_exists('getModelRouteByType')) {
+if (!function_exists('getModelTitleByType')) {
     function getModelTitleByType($type, $id)
     {
         $name = "";
+
         if (is_null($id)) return $name;
-        $type = strtolower(array_reverse(explode('\\', $type))[0]);
+
+        $type = getClassName($type);
+
+        // add a case for every model
         switch ($type) {
-            case 'user':
+
+            case 'User':
                 $name = \Modules\User\Models\User::find($id)?->name() ?: "";
                 break;
-            case 'discount':
+
+            case 'Discount':
                 $name = \Modules\Discount\Models\Discount::find($id)?->code ?: "";
                 break;
-            case 'post':
+
+            case 'Post':
                 $name = \Modules\Post\Models\Post::find($id)?->title ?: "";
                 break;
-            case 'product':
+
+            case 'Product':
                 $name = \Modules\Product\Models\Product::find($id)?->title ?: "";
                 break;
-            case 'joboffer':
+
+            case 'JobOffer':
                 $name = \Modules\JobOffer\Models\JobOffer::find($id)?->title ?: "";
                 break;
-            case 'jobapplication':
+
+            case 'JobApplication':
                 $name = \Modules\JobApplication\Models\JobApplication::find($id)?->full_name ?: "";
                 break;
-            case 'order':
+
+            case 'Order':
                 $name = \Modules\Order\Models\Order::find($id)?->user?->name() ?: "";
                 break;
-            case 'menu':
+
+            case 'Menu':
                 $name = \Modules\Menu\Models\Menu::find($id)?->title ?: "";
                 break;
-            case 'dailyreport':
+
+            case 'DailyReport':
                 $name = \Modules\DailyReport\Models\DailyReport::find($id)?->title ?: "";
                 break;
-            case 'comment':
+
+            case 'Comment':
                 $name = \Modules\Comment\Models\Comment::find($id)?->user?->name() ?: "";
                 break;
-            case 'category':
+
+            case 'Category':
                 $name = \Modules\Category\Models\Category::find($id)?->name ?: "";
                 break;
-            case 'studentreport':
+
+            case 'StudentReport':
                 $name = \Modules\StudentReport\Models\StudentReport::find($id)?->date ?: "";
                 break;
+
         }
+
         return $name;
     }
 }

@@ -7,7 +7,7 @@
 
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="">
+    <link rel="icon" type="image/x-icon" href="/assets/admin/img/favicon/favicon.svg">
     <link rel="alternate" hreflang="fa-IR" href="https://roseoj.com/"/>
 
     <!-- Style -->
@@ -21,7 +21,7 @@
 
     <title>مجموعه آموزشی رز</title>
 </head>
-<body class="body-bg-default">
+<body class="body-bg-default @yield('body_class')">
 
 {{--Nav Menu--}}
 @include('front.partials.nav')
