@@ -36,6 +36,7 @@ class LoginController extends Controller
                 return response()->json([
                     'success' => true,
                     'is_signed_up' => true,
+                    'message' => 'کد با موفقیت ارسال شد',
                     'phone' => $validData['phone'],
                 ] , 200);
             }else{
@@ -44,20 +45,6 @@ class LoginController extends Controller
                     'is_signed_up' => false,
                     'phone' => $validData['phone']
                 ] , 200);
-
-//                $code = RegisterOtp::create([
-//                    'otp' => mt_rand(100000, 999999),
-//                    'phone' => $validData['phone'],
-//                    'expired_at' => now()->addMinutes(2)
-//                ]);
-//                $template="verify";
-//                //Send null for tokens not defined in the template
-//                //Pass token10 and token20 as parameter 6th and 7th
-//
-//                $kavenegar = new KavenegarApi(config('services.sms.api'));
-//
-//                $kavenegar->VerifyLookup($code->phone, $code->otp , '' , '' , $template);
-
 
             }
 

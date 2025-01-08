@@ -17,6 +17,11 @@ class RegisterOtp extends Model
 
     protected $table = 'register_otp';
 
+    public static function verifyCode($codeId , $code)
+    {
+        return !!RegisterOtp::where('id' , $codeId)->where('otp' , $code)->where('expired_at', '>', now())->first();
+    }
+
     // protected static function newFactory(): RegisterOtpFactory
     // {
     //     // return RegisterOtpFactory::new();

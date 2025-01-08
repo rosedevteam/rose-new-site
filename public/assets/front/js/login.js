@@ -74,17 +74,22 @@ if (formAuthentication) {
                     phone: $('#phone').val()
                 })
                     .then(function (res) {
-                        if (res.data.is_signed_up) {
-                            $('#subtitle-login').html(`
+                        $('#subtitle-login').html(`
                 لطفا کد 6 رقمی ارسال شده به شماره
                   <strong>${res.data.phone}</strong>
                   را وارد کنید
                 `)
-                            $('.login-form-elements').html(createTwoStepForm(true));
-                            twoStepForm();
+                        if (res.data.is_signed_up == true) {
+                            $('.login-form-elements').html(createTwoStepForm(true, res.data.phone));
+                            twoStepForm(res.data.phone);
 
                         } else {
-                            $('.login-form-elements').html(createTwoStepForm(false));
+                            axios.post('/register/auth', {
+                                phone: res.data.phone
+                            })
+                            $('.login-form-elements').html(createTwoStepForm(false, res.data.phone));
+                            twoStepForm(res.data.phone);
+
                         }
                         $.unblockUI();
                     })
@@ -113,9 +118,10 @@ if (formAuthentication) {
     });
 }
 
-function createTwoStepForm(is_signed_up) {
+
+function createTwoStepForm(is_signed_up, phone) {
     return `
-        <form id="twoStepsForm" data-is-signed-up="${is_signed_up}">
+        <form id="twoStepsForm" data-is-signed-up="${is_signed_up}" data-phone="${phone}">
             <div class="mb-3">
                 <div class="auth-input-wrapper d-flex align-items-center justify-content-sm-between numeral-mask-wrapper" dir="ltr">
                     ${Array(6).fill('').map(() => `
@@ -124,13 +130,140 @@ function createTwoStepForm(is_signed_up) {
                 </div>
                 <input type="hidden" name="otp" id="otp">
             </div>
-
+            <div class="d-flex flex-column align-items-center justify-content-center">
+            <div class="countdown my-2"></div>
+            <div class="refresh my-2"></div>
+</div>
             <button type="submit" class="btn btn-default w-100">ورود </button>
         </form>
     `;
 }
 
-function twoStepForm() {
+function countdownTimer() {
+    var timer2 = "02:01";
+    var interval = setInterval(function () {
+
+        var timer = timer2.split(':');
+        //by parsing integer, I avoid all extra string processing
+        var minutes = parseInt(timer[0], 10);
+        var seconds = parseInt(timer[1], 10);
+        --seconds;
+        minutes = (seconds < 0) ? --minutes : minutes;
+        seconds = (seconds < 0) ? 59 : seconds;
+        seconds = (seconds < 10) ? '0' + seconds : seconds;
+        //minutes = (minutes < 10) ?  minutes : minutes;
+        $('.countdown').html(minutes + ':' + seconds);
+        if (minutes < 0) clearInterval(interval);
+        //check if both minutes and seconds are 0
+        if ((seconds <= 0) && (minutes <= 0)) {
+            clearInterval(interval);
+            $('.refresh').show()
+            $('.refresh').html(
+                `<a class="btn btn-link" onclick="refreshToken($('#twoStepsForm').attr('data-phone') , $('#twoStepsForm').attr('data-is-signed-up'))">ارسال مجدد کد تایید</a>`
+            )
+        }
+        timer2 = minutes + ':' + seconds;
+    }, 1000);
+
+}
+
+function refreshToken(phone, is_signed_up) {
+    if (is_signed_up == 'true') {
+        axios.post('/login/auth', {
+            phone: phone
+        })
+            .then(function (res) {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "موفق",
+                    text: res.data.message
+                });
+                $('.refresh').hide();
+
+                countdownTimer();
+                $.unblockUI();
+
+            })
+            .catch(function (err) {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "warning",
+                    title: "خطا",
+                    text: err.response.data.message
+                });
+                $.unblockUI();
+            })
+    } else {
+        axios.post('/register/auth', {
+            phone: phone
+        })
+            .then(function (res) {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "موفق",
+                    text: res.data.message
+                });
+                $('.refresh').hide();
+                countdownTimer();
+                $.unblockUI();
+
+            })
+            .catch(function (err) {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "warning",
+                    title: "خطا",
+                    text: err.response.data.message
+                });
+                $.unblockUI();
+            })
+    }
+}
+
+function twoStepForm(phone) {
+    countdownTimer()
     const twoStepsForm = document.querySelector('#twoStepsForm');
 
 // Form validation for Add new record
@@ -188,7 +321,7 @@ function twoStepForm() {
 
         $('#twoStepsForm').submit(function (e) {
             e.preventDefault()
-            if ($('#twoStepsForm').attr('data-is-signed-up') == true) {
+            if ($('#twoStepsForm').attr('data-is-signed-up') == 'true') {
                 axios.post('/login/token', {
                     otp: $('#otp').val()
                 })
@@ -232,28 +365,14 @@ function twoStepForm() {
                         });
                         $.unblockUI();
                     })
-            }else {
+            } else {
                 axios.post('/register/token', {
-                    otp: $('#otp').val()
+                    otp: $('#otp').val(),
+                    phone: phone
                 })
                     .then(function (res) {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: "top-end",
-                            showConfirmButton: false,
-                            timer: 3000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.onmouseenter = Swal.stopTimer;
-                                toast.onmouseleave = Swal.resumeTimer;
-                            }
-                        });
-                        Toast.fire({
-                            icon: "success",
-                            title: "موفق",
-                            text: res.data.message
-                        });
-                        window.location.replace(res.data.redirect)
+                        $('.login-form-elements').html(createEnterNameLastNameForm());
+                        updateUser(res.data.phone);
                         $.unblockUI();
                     })
                     .catch(function (err) {
@@ -279,14 +398,14 @@ function twoStepForm() {
             }
 
 
-
         })
     }
 }
 
-function createRegisterForm() {
+
+function createEnterNameLastNameForm() {
     return `
-      <form id="registerForm">
+      <form id="updateUser">
                             <div class="mb-3">
                                 <label for="first_name" class="form-label mt-4">نام</label>
                                 <input type="text" id="first_name" name="first_name" class="form-control" required>
@@ -295,12 +414,59 @@ function createRegisterForm() {
                                 <label for="last_name" class="form-label mt-4">نام خانوادگی</label>
                                 <input type="text" id="last_name" name="last_name" class="form-control" required>
                             </div>
-            <button type="submit" class="btn btn-default w-100">ادامه </button>
+            <button type="submit" class="btn btn-default w-100">ورود </button>
 
                         </form>
     `;
 }
 
+function updateUser(phone) {
+    $('#updateUser').submit(function (e) {
+        e.preventDefault();
+        axios.post(`register`, {
+            first_name: $('#first_name').val(),
+            last_name: $('#last_name').val(),
+            phone: phone
+        })
+            .then(function (res) {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "موفق",
+                    text: res.data.message
+                });
+                window.location.replace(res.data.redirect)
+                $.unblockUI();
 
-
-
+            })
+            .catch(function (err) {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "warning",
+                    title: "خطا",
+                    text: err.response.data.message
+                });
+                $.unblockUI();
+            })
+    })
+}
