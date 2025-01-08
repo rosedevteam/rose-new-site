@@ -19260,6 +19260,21 @@ Other Classes
   color: #F8B806 !important;
 }
 
+.blockPage {
+  transform: translate(-35%, -40%) !important;
+  width: 100% !important;
+  z-index: 99999 !important;
+}
+
+.blockOverlay {
+  z-index: 99999 !important;
+}
+
+.h-px-50 {
+  height: 50px;
+  max-width: 50px;
+}
+
 /*----------------------------------
 CSS Reset
 ------------------------------------*/
@@ -19519,6 +19534,40 @@ input[type=number]:focus,
 .product-quantity .quantity-plus {
   top: 0.7rem;
   right: 0.2rem;
+}
+
+.input-group {
+  border: solid #D0D5E0 1px;
+  border-radius: 4px;
+}
+.input-group input {
+  border: none;
+}
+.input-group span {
+  border: none;
+  background: transparent;
+}
+
+.form-label {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+input::placeholder {
+  color: #A0A3A9 !important;
+  font-size: 0.9rem;
+}
+
+/* Chrome, Safari, Edge, Opera */
+.numeral-mask::-webkit-outer-spin-button,
+.numeral-mask::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.numeral-mask[type=number] {
+  -moz-appearance: textfield;
 }
 
 /*--------------------------------

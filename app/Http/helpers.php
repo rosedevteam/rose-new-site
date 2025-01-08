@@ -88,3 +88,26 @@ if (!function_exists('getModelTitleByType')) {
         return $name;
     }
 }
+
+if (!function_exists('sendVerifySms')) {
+    function sendVerifySms($phone , $code)
+    {
+        try {
+            $template = "verify";
+            //Send null for tokens not defined in the template
+            //Pass token10 and token20 as parameter 6th and 7th
+
+            $kavenegar = new \Kavenegar\KavenegarApi(config('services.sms.api'));
+            return $kavenegar->VerifyLookup($phone, $code, '', '', $template);
+        }
+        catch(\Kavenegar\Exceptions\ApiException $e){
+            // در صورتی که خروجی وب سرویس 200 نباشد این خطا رخ می دهد
+            echo $e->errorMessage();
+        }
+        catch(\Kavenegar\Exceptions\HttpException $e){
+            // در زمانی که مشکلی در برقرای ارتباط با وب سرویس وجود داشته باشد این خطا رخ می دهد
+            echo $e->errorMessage();
+        }
+
+    }
+}
