@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\DailyReport\Http\Controllers\DailyReportController;
+use Modules\DailyReport\Http\Controllers\front\DailyReportController;
 
 /*
  *--------------------------------------------------------------------------

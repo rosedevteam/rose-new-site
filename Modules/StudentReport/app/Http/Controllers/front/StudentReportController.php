@@ -10,7 +10,7 @@ class StudentReportController extends Controller
 {
     public function index()
     {
-        $studentReports = StudentReport::where('status', 'approved')->get();
+        $studentReports = StudentReport::where('status', 'approved')->orderBy('created_at', 'desc')->get();
 
         return view('studentreport::front.index', compact('studentReports'));
     }
