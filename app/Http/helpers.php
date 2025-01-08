@@ -7,6 +7,8 @@ if (!function_exists("getClassName")) {
     }
 }
 
+// todo add logging for WalletTransactions
+
 if (!function_exists('getEditRouteByType')) {
     function getEditRouteByType($type, $id)
     {
