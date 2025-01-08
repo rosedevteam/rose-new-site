@@ -22,12 +22,12 @@
                 <div class="row my-5">
                     <div class="col-md-4">
                         <div class="icon-box-contact">
-                            <img src="/assets/front/images/teacher.svg" alt="">
+                            <img src="/assets/front/images/Messages-Chat.svg" alt="">
 
                             <div class="content p-3 mt-3 br-default text-center shadow-none">
-                                <h3 class="title">گفتگوی آنلاین</h3>
+                                <h3 class="title color-default">گفتگوی آنلاین</h3>
                                 <p>
-                                    بیش از 15 هزار دانش پذیر در طول مسیر خدمت رسانی
+                                    تماس با کارشناسان ما از طریق چت آنلاین
                                 </p>
                                 <a href="#" class="btn btn-sm btn-default">ارتباط با پشتیبانی</a>
                             </div>
@@ -35,27 +35,26 @@
                     </div>
                     <div class="col-md-4">
                         <div class="icon-box-contact">
-                            <img src="/assets/front/images/teacher.svg" alt="">
+                            <img src="/assets/front/images/Group.svg" alt="">
 
                             <div class="content p-3 mt-3 br-default shadow-none text-center">
-                                <h3 class="title">گفتگوی آنلاین</h3>
+                                <h3 class="title color-default">تماس با کارشناسان</h3>
                                 <p>
-                                    بیش از 15 هزار دانش پذیر در طول مسیر خدمت رسانی
+                                    ارتباط با کارشناسان ما از طریق تماس تلفنی
                                 </p>
-                                <a href="#" class="btn btn-sm btn-default">ارتباط با پشتیبانی</a>
+                                <a href="tel:02191691548" class="btn btn-sm btn-outline-secondary">021-91691548</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="icon-box-contact">
-                            <img src="/assets/front/images/teacher.svg" alt="">
+                            <img src="/assets/front/images/Mail-Email-Letter.svg" alt="">
 
                             <div class="content p-3 mt-3 br-default shadow-none text-center">
-                                <h3 class="title">گفتگوی آنلاین</h3>
-                                <p>
-                                    بیش از 15 هزار دانش پذیر در طول مسیر خدمت رسانی
-                                </p>
-                                <a href="#" class="btn btn-sm btn-default">ارتباط با پشتیبانی</a>
+                                <h3 class="title color-default">ارسال ایمیل</h3>
+                                <p>دریافت پیام های مکتوب شما از طریق ایمیل</p>
+                                <p><a href="mailto:info@roseoj.com" class="color-default">info@roseoj.com</a></p>
+                                <a href="mailto:info@roseoj.com" class="btn btn-sm btn-default">ارسال ایمیل</a>
                             </div>
                         </div>
                     </div>
