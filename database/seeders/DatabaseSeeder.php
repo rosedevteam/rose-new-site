@@ -419,7 +419,7 @@ class DatabaseSeeder extends Seeder
             'title' => 'دوره ها',
             'user_id' => 1,
             'slug' => "#",
-            'parent_id' => null,
+            'parent_id' => '#',
             'order' => 1,
             'icon' => null,
             'subtitle' => null,
