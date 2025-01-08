@@ -14,6 +14,7 @@ use Modules\Product\Models\Product;
 use Modules\StudentReport\Models\StudentReport;
 use Modules\User\Database\Factories\UserFactory;
 use Modules\Wallet\Models\Wallet;
+use Modules\Wallet\Models\WalletTransaction;
 use Spatie\Permission\Traits\HasRoles;
 
 
@@ -22,6 +23,16 @@ class User extends \Illuminate\Foundation\Auth\User
     use HasFactory, HasRoles, Notifiable;
 
     protected $guarded = [];
+
+    protected static function booted()
+    {
+        parent::booted();
+
+        self::created(function (User $user) {
+            $user->wallet()->create();
+        });
+
+    }
 
     public function name(): string
     {
@@ -77,6 +88,11 @@ class User extends \Illuminate\Foundation\Auth\User
     public function menus()
     {
         return $this->hasMany(Menu::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(WalletTransaction::class);
     }
 
     protected static function newFactory()

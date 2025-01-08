@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('wallet_transactions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->nullable()->default(null)->constrained('users');
             $table->foreignId('wallet_id')->constrained('wallets')->cascadeOnDelete();
             $table->string('description');
             $table->enum('type', ['debit', 'credit'])->default('debit');

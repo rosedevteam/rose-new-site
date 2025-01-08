@@ -33,6 +33,10 @@
                                         <span class="fw-bold me-2">ایمیل:</span>
                                         <span>{{ $user->email }}</span>
                                     </li>
+                                    <li class="mb-3">
+                                        <span class="fw-bold me-2">کیف پول:</span>
+                                        <span>{{ $user->wallet->balance }}</span>
+                                    </li>
                                     @can('view-billings')
                                         @if(!is_null($billing))
                                             <li class="mb-3">
@@ -170,6 +174,85 @@
                         </div>
                     </div>
                 @endif
+
+                @can('view-wallet-transactions')
+                    <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
+                        <div class="card mb-4">
+                            <div class="card-header border-bottom">
+                                <div class="col d-flex justify-content-between">
+                                    <h5 class="card-title" style="display: inline">تراکنش های کیف پول</h5>
+                                    <button class="btn btn-primary my-3" data-bs-target="#create-transaction-modal"
+                                            data-bs-toggle="modal">افزایش اعتبار
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="table-responsive mb-3">
+                                <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                                    <table class="table datatable-invoice border-top dataTable no-footer dtr-column"
+                                           id="DataTables_Table_1" aria-describedby="DataTables_Table_1_info"
+                                           style="width: 100%;">
+                                        <thead>
+                                        <tr>
+                                            <th tabindex="0"
+                                                aria-controls="DataTables_Table_1" rowspan="1" colspan="1"
+                                                style="width: 5%;">نوع
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_1"
+                                                rowspan="1"
+                                                colspan="1" style="width: 10%;">مقدار
+                                            </th>
+                                            <th class="sorting sorting_desc" tabindex="0"
+                                                aria-controls="DataTables_Table_1"
+                                                rowspan="1" colspan="1" style="width: 15%;">توضیحات
+                                            </th>
+                                            <th class="control sorting dtr-hidden" tabindex="0"
+                                                aria-controls="DataTables_Table_1" rowspan="1" colspan="1"
+                                                style="width: 5%;">تاریخ تراکنش
+                                            </th>
+                                            @can('edit-wallet-transactions')
+                                                <th class="control sorting dtr-hidden" tabindex="0"
+                                                    aria-controls="DataTables_Table_1" rowspan="1" colspan="1"
+                                                    style="width: 5%;">ویرایش
+                                                </th>
+                                            @endcan
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($user->wallet->transactions as $transaction)
+                                            <tr>
+                                                <td>
+                                                    @if($transaction->order)
+                                                        <a href="{{  route("admin.orders.edit", $transaction->order)  }}"
+                                                           class="text-body">@endif{{ $transaction->type == 'credit' ? 'افزایش اعتبار' : 'کسر اعتبار' }}
+                                                            @if($transaction->order)</a>
+                                                    @endif
+                                                </td>
+                                                <td>{{ $transaction->amount }}</td>
+                                                <td>{{ $transaction->description }}</td>
+                                                <td>{{ verta($transaction->created_at)->formatJalaliDatetime() }}</td>
+                                                @can('edit-wallet-transactions')
+                                                    <td>
+                                                        <button class="btn btn-primary"
+                                                                data-amount="{{ $transaction->amount }}"
+                                                                data-type="{{ $transaction->type }}"
+                                                                data-description="{{ $transaction->description }}"
+                                                                id="edit-transaction-button"
+                                                                data-bs-target="#edit-transaction-modal"
+                                                                data-bs-toggle="modal"
+                                                                data-route="{{ route('admin.wallettransactions.update', $transaction) }}">
+                                                            ویرایش
+                                                        </button>
+                                                    </td>
+                                                @endcan
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endcan
             </div>
 
             @if($canEdit)
@@ -277,17 +360,17 @@
                                 <div class="text-center mb-4 mt-0 mt-md-n2">
                                     <h3 class="secondary-font">ویرایش نقش</h3>
                                 </div>
-                                <form id="deleteUserForm" action="{{ route('admin.users.role', $user) }}"
-                                      method="POST">
+                                <form id="deleteuserform" action="{{ route('admin.users.role', $user) }}"
+                                      method="post">
                                     @csrf
-                                    @method('PATCH')
+                                    @method('patch')
                                     <select name="role_id" class="form-select">
                                         @foreach($roles as $role)
                                             @if($role['name'] == 'super-admin')
                                                 @continue
                                             @endif
                                             <option class="form-control"
-                                                    value="{{ $role['id'] }}" {{ $role['name'] == $user->getRoleNames()[0] ? 'selected' : ""}}>{{ $role['name'] }}</option>
+                                                    value="{{ $role['id'] }}" {{ $role['name'] == $user->getrolenames()[0] ? 'selected' : ""}}>{{ $role['name'] }}</option>
                                         @endforeach
                                     </select>
                                     <div class="col-12 text-center mt-4">
@@ -295,7 +378,7 @@
                                         </button>
                                         <button type="reset" class="btn btn-label-secondary"
                                                 data-bs-dismiss="modal"
-                                                aria-label="Close">
+                                                aria-label="close">
                                             انصراف
                                         </button>
                                     </div>
@@ -305,6 +388,92 @@
                     </div>
                 </div>
             @endif
+            @can('create-wallet-transactions')
+
+                <div class="modal fade" id="create-transaction-modal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="text-center mb-4 mt-0 mt-md-n2">
+                                    <h3 class="secondary-font">ساخت تراکنش</h3>
+                                </div>
+                                <form action="{{ route('admin.wallettransactions.store') }}"
+                                      method="post">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="amount">مقدار</label>
+                                            <input type="text" id="amount" name="amount"
+                                                   class="form-control" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="type">نوع</label>
+                                            <select class="form-select" name="type" id="type">
+                                                <option value="credit" selected>افزایش اعتبار</option>
+                                                <option value="debit">کسر اعتبار</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <label class="form-label" for="description">توضیحات</label>
+                                    <textarea id="description" class="form-control" name="description"></textarea>
+                                    <input type="hidden" name="wallet_id" value="{{ $user->wallet->id }}">
+                                    <div class="col-12 text-center mt-4">
+                                        <button type="submit" class="btn btn-label-primary me-sm-3 me-1">ثبت
+                                        </button>
+                                        <button type="reset" class="btn btn-label-secondary"
+                                                data-bs-dismiss="modal"
+                                                aria-label="close">
+                                            انصراف
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endcan
+            @can('edit-wallet-transactions')
+                <div class="modal fade" id="edit-transaction-modal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="text-center mb-4 mt-0 mt-md-n2">
+                                    <h3 class="secondary-font">ساخت تراکنش</h3>
+                                </div>
+                                <form id="edit-transaction-form" action="" method="post">
+                                    @csrf
+                                    @method('PATCH')
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="edit-amount">مقدار</label>
+                                            <input type="text" id="edit-amount" name="amount"
+                                                   class="form-control" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="edit-type">نوع</label>
+                                            <select class="form-select" name="type" id="edit-type">
+                                                <option value="credit">افزایش اعتبار</option>
+                                                <option value="debit">کسر اعتبار</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <label class="form-label" for="edit-description">توضیحات</label>
+                                    <textarea id="edit-description" class="form-control" name="description"></textarea>
+                                    <div class="col-12 text-center mt-4">
+                                        <button type="submit" class="btn btn-label-primary me-sm-3 me-1">ثبت
+                                        </button>
+                                        <button type="reset" class="btn btn-label-secondary"
+                                                data-bs-dismiss="modal"
+                                                aria-label="close">
+                                            انصراف
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endcan
         </div>
         <div class="content-backdrop fade"></div>
     </div>
@@ -322,4 +491,20 @@
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/FormValidation.min.js"></script>
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js"></script>
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.addEventListener('click', (event) => {
+                if (event.target.matches('#edit-transaction-button')) {
+                    const route = event.target.getAttribute('data-route');
+                    const amount = event.target.getAttribute('data-amount');
+                    const type = event.target.getAttribute('data-type');
+                    const description = event.target.getAttribute('data-description');
+                    document.getElementById('edit-amount').value = amount;
+                    document.getElementById('edit-type').value = type;
+                    document.getElementById('edit-description').value = description;
+                    document.getElementById('edit-transaction-form').action = route;
+                }
+            });
+        });
+    </script>
 @endpush
