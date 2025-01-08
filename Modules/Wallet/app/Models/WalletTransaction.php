@@ -14,6 +14,7 @@ class WalletTransaction extends Model
     use HasFactory;
 
     protected $guarded;
+    protected $hidden = ['pivot'];
 
     protected static function booted()
     {
