@@ -15,5 +15,6 @@
     "Discount": true,
     "Payment": true,
     "StudentReport": true,
-    "PageBuilder": true
+    "PageBuilder": true,
+    "Wallet": true
 }

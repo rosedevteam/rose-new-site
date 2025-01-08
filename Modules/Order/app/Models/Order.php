@@ -8,6 +8,7 @@ use Modules\Order\Database\Factories\OrderFactory;
 use Modules\Payment\Models\Payment;
 use Modules\Product\Models\Product;
 use Modules\User\Models\User;
+use Modules\Wallet\Models\WalletTransaction;
 
 class Order extends Model
 {
@@ -29,6 +30,11 @@ class Order extends Model
     public function payments()
     {
         return $this->hasMany(Payment::class);
+    }
+
+    public function walletTransaction()
+    {
+        return $this->belongsTo(WalletTransaction::class);
     }
 
     protected static function newFactory()

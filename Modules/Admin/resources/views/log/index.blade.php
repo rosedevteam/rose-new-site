@@ -1,5 +1,4 @@
 @extends('admin::layouts.main')
-
 @section('content')
     <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
@@ -117,7 +116,7 @@
                             <div class="row">
                                 <div class="col mb-3">
                                     <label for="causer">توسط: </label>
-                                    <a href="" id="causer-ref">
+                                    <a href="" class="text-body" id="causer-ref">
                                         <span id="causer"></span></a>
                                 </div>
                                 <div class="col mb-3">
@@ -128,7 +127,7 @@
                             <div class="row" id="route-div" hidden>
                                 <div class="col mb-3">
                                     <label for="route">روی: </label>
-                                    <a href="" id="route-ref">
+                                    <a href="" class="text-body" id="route-ref">
                                         <span id="route"></span>
                                     </a>
                                 </div>

@@ -13,6 +13,7 @@ use Modules\Post\Models\Post;
 use Modules\Product\Models\Product;
 use Modules\StudentReport\Models\StudentReport;
 use Modules\User\Database\Factories\UserFactory;
+use Modules\Wallet\Models\Wallet;
 use Spatie\Permission\Traits\HasRoles;
 
 
@@ -35,6 +36,11 @@ class User extends \Illuminate\Foundation\Auth\User
     public function billing()
     {
         return $this->hasOne(Billing::class);
+    }
+
+    public function wallet()
+    {
+        return $this->hasOne(Wallet::class);
     }
 
     public function posts()
