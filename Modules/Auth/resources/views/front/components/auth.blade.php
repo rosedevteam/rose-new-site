@@ -6,9 +6,9 @@
                 <div class="d-flex align-items-center justify-content-center flex-column">
                     <img src="{{asset('assets/front/images/logo-mini.svg')}}" alt="مجموعه آموزشی رز">
                     <h3>ورود | ثبت نام</h3>
-
+                    <p id="subtitle-login"></p>
                     <div class="login-form-elements w-100">
-                        <form  id="loginForm">
+                        <form id="formLogin">
                             <label for="phone" class="form-label mt-4">موبایل</label>
                             <div class="input-group mb-3">
                                 <input type="text" name="phone" id="phone" class="form-control " placeholder="09125342039"
@@ -34,3 +34,4 @@
         </div>
     </div>
 </div>
+

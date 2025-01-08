@@ -71,9 +71,14 @@
 
                             </a>
                         </div>
-                        <a  class="btn btn-default" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">
-                            ورود / ثبت نام
-                        </a>
+                        @auth
+                            {{auth()->user()->first_name}}
+                        @else
+                            <a  class="btn btn-default" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">
+                                ورود / ثبت نام
+                            </a>
+                        @endauth
+
                     </div>
                 </div>
             </nav>
