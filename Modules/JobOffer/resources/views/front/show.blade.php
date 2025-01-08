@@ -1,8 +1,5 @@
 @component('front.master')
     @section('content')
-        @if($errors->any())
-            <div class="alert alert-danger" style="padding-right: 80px">{{ $errors->first() }}</div>
-        @endif
         <div class="main-sec top-bg second-bg ">
             <div class="container">
                 <h2 class="rose-sec-title text-center mt-5 rose-py-7 pt-4">{{ $jobOffer->title }}</h2>
@@ -57,21 +54,21 @@
         </div>
 
         <div class="modal fade" id="post-modal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
                 <div class="modal-content p-3 p-md-5">
                     <div class="modal-body">
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
-                        <form class="row g-3 pt-md-5"
+                        <form class="container"
                               action="{{ route('jobapplications.store') }}"
                               method="POST" enctype="multipart/form-data">
                             @csrf
-                            <div class="row">
+                            <div class="row d-flex mt-3">
                                 <label class="form-label" for="full_name">نام و نام خانوادگی</label>
                                 <input type="text" id="full_name" name="full_name" value="{{ old('full_name') }}"
                                        class="form-control" required>
                             </div>
-                            <div class="row justify-content-center mt-3">
+                            <div class="row d-flex mt-3 justify-content-between">
                                 <div class="col-md-6">
                                     <label class="form-label" for="email">ایمیل</label>
                                     <input type="text" id="email" name="email" value="{{ old('email') }}"
@@ -83,15 +80,17 @@
                                            class="form-control text-start" required>
                                 </div>
                             </div>
-                            <div class="row mt-3">
-                                <label class="form-label" for="resume">رزومه</label>
+                            <div class="row d-flex mt-3">
+                                <label class="form-label" for="resume">رزومه (pdf)</label>
                                 <input id="resume" type="file" name="resume" value="{{ old('resume') }}"
                                        class="form-control" required>
                             </div>
-                            <label for="description">توضیحات</label>
-                            <textarea id="description" name="description"
-                                      class="form-control">{{ old('description') }}</textarea>
-                            <input type="hidden" name="job_offer_id" value="{{ $jobOffer->id }}">
+                            <div class="row mt-3">
+                                <label for="description" class="form-label">توضیحات</label>
+                                <textarea id="description" name="description"
+                                          class="form-control d-flex">{{ old('description') }}</textarea>
+                                <input type="hidden" name="job_offer_id" value="{{ $jobOffer->id }}">
+                            </div>
                             <div class="col-12 text-center mt-4">
                                 <button type="submit" class="btn btn-default btn-hero me-sm-3 me-1">ثبت</button>
                             </div>

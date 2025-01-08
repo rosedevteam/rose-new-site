@@ -26,7 +26,7 @@ class JobApplicationController extends Controller
         ]);
         // todo validate with jquery
 
-        $path = $this->uploadFile($validData['resume'], '/uploads/job-applications');
+        $path = $this->uploadFile($validData['resume'], '/job-applications', 'local');
         $validData['resume'] = $path;
 
         JobApplication::create($validData);
