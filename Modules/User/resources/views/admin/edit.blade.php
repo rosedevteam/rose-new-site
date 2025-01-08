@@ -88,8 +88,8 @@
                     </div>
                 </div>
 
-                @if(!is_null($orders) && !$orders->isEmpty())
-                    <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
+                <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
+                    @if(!is_null($orders) && !$orders->isEmpty())
                         <div class="card mb-4">
                             <div class="card-header border-bottom">
                                 <h5 class="card-title">سفارش ها</h5>
@@ -172,11 +172,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endif
 
+                    @endif
                 @can('view-wallet-transactions')
-                    <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
                         <div class="card mb-4">
                             <div class="card-header border-bottom">
                                 <div class="col d-flex justify-content-between">
@@ -251,8 +249,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endcan
+                    @endcan
+                </div>
             </div>
 
             @if($canEdit)
@@ -508,3 +506,4 @@
         });
     </script>
 @endpush
+{{--todo badges for transactions--}}

@@ -161,8 +161,8 @@ if (document.getElementById('layout-menu')) {
     .then(function (t) {
       localize();
     });
-      
-    // Language Dropdown
+
+      // Language Dropdown
     let languageDropdown = document.getElementsByClassName('dropdown-language');
 
     if (languageDropdown.length) {
@@ -192,8 +192,8 @@ if (document.getElementById('layout-menu')) {
         });
       }
     }
-    
-    // Localize Function
+
+      // Localize Function
     function localize() {
       let i18nList = document.querySelectorAll('[data-i18n]');
       // Set the current language in dd
@@ -354,7 +354,6 @@ if (document.getElementById('layout-menu')) {
 // ! Removed following code if you do't wish to use jQuery. Remember that navbar search functionality will stop working on removal.
 if (typeof $ !== 'undefined') {
   $(function () {
-    // ! TODO: Required to load after DOM is ready, did this now with jQuery ready.
     window.Helpers.initSidebarToggle();
     // Toggle Universal Sidebar
 
@@ -388,7 +387,6 @@ if (typeof $ !== 'undefined') {
         }
       }
     });
-    // Todo: Add container-xxl to twitter-typeahead
     searchInput.on('focus', function () {
       if (searchInputWrapper.hasClass('container-xxl')) {
         searchInputWrapper.find('.twitter-typeahead').addClass('container-xxl');

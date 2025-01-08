@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->nullable()->default(null)->constrained('users');
             $table->foreignId('wallet_id')->constrained('wallets')->cascadeOnDelete();
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->enum('type', ['debit', 'credit'])->default('debit');
             $table->integer('amount');
             $table->timestamps();

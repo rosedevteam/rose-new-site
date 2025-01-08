@@ -12,7 +12,7 @@ class WalletTransactionController extends Controller
     {
         Gate::authorize('create-wallet-transactions');
         $validData = request()->validate([
-            'description' => 'required',
+            'description' => 'nullable',
             'amount' => 'required',
             'wallet_id' => 'required|exists:wallets,id',
             'type' => 'required|in:credit,debit',
@@ -34,7 +34,7 @@ class WalletTransactionController extends Controller
     {
         Gate::authorize('create-wallet-transactions');
         $validData = request()->validate([
-            'description' => 'required',
+            'description' => 'nullable',
             'amount' => 'required',
             'type' => 'required|in:credit,debit',
         ]);
@@ -51,4 +51,6 @@ class WalletTransactionController extends Controller
             return back();
         }
     }
+
+    // todo destroy transactions
 }

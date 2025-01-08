@@ -36,7 +36,7 @@ class WalletTransaction extends Model
 
     private static function calculateBalance(Wallet $wallet)
     {
-        $walletTransactions = WalletTransaction::where('wallet_id', $wallet->id);
+        $walletTransactions = WalletTransaction::where('wallet_id', $wallet->id)->get();
         $credit = $walletTransactions->where('type', 'credit')->sum('amount');
         $debit = $walletTransactions->where('type', 'debit')->sum('amount');
         $wallet->balance = $credit - $debit;
