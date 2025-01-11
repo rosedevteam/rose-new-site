@@ -15,8 +15,8 @@ class AdminLogin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->guest()) {
-            $next($request);
+        if (!auth()->check()) {
+            return $next($request);
         }
 
         if (auth()->user()->hasPermissionTo('admin-panel')) {

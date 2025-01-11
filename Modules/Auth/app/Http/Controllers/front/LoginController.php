@@ -1,13 +1,11 @@
 <?php
 
-namespace Modules\Auth\Http\Controllers\Front;
+namespace Modules\Auth\Http\Controllers\front;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
-use Kavenegar\KavenegarApi;
 use Modules\Auth\Models\OtpCode;
-use Modules\Auth\Models\RegisterOtp;
 use Modules\Auth\Notifications\OtpNotification;
 use Modules\User\Models\User;
 

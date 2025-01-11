@@ -15,12 +15,12 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->guest()) {
+        if (!auth()->check()) {
             return redirect(route('admin.login'));
         }
 
         if (auth()->user()->hasPermissionTo('admin-panel')) {
-            $next($request);
+            return $next($request);
         }
 
         return redirect(route('index'));

@@ -1,11 +1,10 @@
 <?php
 
-namespace Modules\Auth\Http\Controllers\Front;
+namespace Modules\Auth\Http\Controllers\front;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
-use Modules\Auth\Models\OtpCode;
 use Modules\Auth\Models\RegisterOtp;
 use Modules\User\Models\User;
 
@@ -59,7 +58,7 @@ class RegisterController extends Controller
 
             $request->session()->reflash();
 
-//            //check auth session exists
+            //check auth session exists
             if (!$request->session()->has('auth')) {
                 return redirect(route('index'));
             }
@@ -104,10 +103,10 @@ class RegisterController extends Controller
             ]);
 
             $user = User::create($validData);
+            $user->assignRole('مشتری');
 
-            $user->update($validData);
+            $user->login();
 
-            auth()->loginUsingId($user->id);
 
             return response()->json([
                 'success' => true,
