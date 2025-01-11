@@ -19,16 +19,18 @@ class UserController extends Controller
         Gate::authorize('view-users');
         $this->seo()->setTitle('کاربران');
         try {
-            $roles = Role::all()->select('name', 'id');
-            $role_id = request('role');
             $sort_by = request('sort_by', 'created_at');
             $sort_direction = request('sort_direction', 'desc');
+            $role_id = request('role');
             $search = request('search');
             $count = request('count', 50);
             $wallet_balance = request('wallet_balance');
             $wallet_search_type = request('wallet_search_type');
             $productQuery = request('products');
+
             $products = Product::all();
+            $roles = Role::all()->select('name', 'id');
+
             $users = User::with('roles');
 
             if ($role_id) {
