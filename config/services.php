@@ -45,6 +45,9 @@ return [
 
     'spotplayer' => [
         'api' => env('SPOT_PLAYER_API'),
-    ]
+    ],
 
+    'cart' => [
+        'cookie-name' => env('CART_COOKIE_NAME')
+    ]
 ];

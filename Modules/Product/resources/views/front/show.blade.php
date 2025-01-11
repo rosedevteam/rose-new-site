@@ -53,8 +53,9 @@
 
                                     <div
                                         class="d-flex flex-wrap justify-content-center justify-content-lg-between w-100 align-items-center my-4 my-lg-0">
+
                                         <!--Add To Cart Button-->
-                                        <a href="#" class="btn btn-default">ثبت نام در دوره</a>
+                                        <a role="button" class="btn btn-default" id="add-to-cart" data-product="{{$product->id}}">ثبت نام در دوره</a>
                                         <!--Add To Cart Button End-->
 
                                         <div class="product-price mt-4 mt-lg-0">
@@ -251,6 +252,7 @@
     @endsection
     @section('footer')
         <script src="{{asset('assets/front/js/rose-video-player.js')}}"></script>
+        <script src="{{asset('assets/front/js/single-product.js')}}"></script>
     @stop
 
 @endcomponent

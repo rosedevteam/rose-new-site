@@ -62,6 +62,8 @@
 
 <script src="{{asset('assets/front/vendor/cleavejs/cleave.js')}}"></script>
 
+<script src="{{asset('assets/front/js/axios-loader.js')}}"></script>
+
 <script src="{{asset('assets/front/js/login.js')}}"></script>
 
 <script src="{{asset('assets/front/js/app.js')}}"></script>
