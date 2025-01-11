@@ -51,6 +51,30 @@ class PodcastController extends Controller
         }
     }
 
+    public function update(Podcast $podcast)
+    {
+        Gate::authorize('edit-podcasts');
+        $validData = request()->validate([
+            'title' => 'required',
+            'image' => 'nullable',
+        ]);
+        try {
+            $validData['image'] = $this->uploadFile($validData['image'], '/podcasts');
+
+            $before = $podcast->toArray();
+            $podcast->update($validData);
+            $after = $podcast->toArray();
+
+            $this->log($podcast, compact('before', 'after'), 'ویرایش پادکست');
+
+            alert()->success('موفق', 'ساخت پادکست با موفقیت انجام شد');
+            return back();
+        } catch (\Throwable $th) {
+            alert()->error("خطا", $th->getMessage());
+            return back();
+        }
+    }
+
     public function destroy(Podcast $podcast)
     {
         Gate::authorize('delete-podcasts');
