@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Middleware\Admin;
-use App\Http\Middleware\AdminGuest;
+use App\Http\Middleware\AdminLogin;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -13,7 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->group('admin', [Admin::class]);
-        $middleware->group('admin-guest', [AdminGuest::class]);
+        $middleware->group('admin-login', [AdminLogin::class]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

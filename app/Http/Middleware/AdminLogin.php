@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminGuest
+class AdminLogin
 {
     /**
      * Handle an incoming request.
@@ -15,11 +15,14 @@ class AdminGuest
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check()) {
+        if (auth()->guest()) {
+            $next($request);
+        }
+
+        if (auth()->user()->hasPermissionTo('admin-panel')) {
             return redirect(route('admin.index'));
         }
-        return $next($request);
-    }
 
-    // todo fix middleware for customer in admin panel
+        return redirect(route('index'));
+    }
 }

@@ -5,7 +5,7 @@ use Modules\Auth\Http\Controllers\admin\AuthController;
 use Modules\Auth\Http\Controllers\admin\TokenController;
 
 
-Route::controller(AuthController::class)->middleware('admin-guest')->group(function () {
+Route::controller(AuthController::class)->middleware('admin-login')->group(function () {
     Route::get('/login' , [AuthController::class , 'index'])->name('login');
     Route::post("/login", [AuthController::class, 'login']);
 //token
@@ -14,4 +14,4 @@ Route::controller(AuthController::class)->middleware('admin-guest')->group(funct
 
 });
 
-Route::post('/logout', 'AuthController@logout')->name('logout');
+Route::post('/logout', 'AuthController@logout')->middleware('admin')->name('logout');
