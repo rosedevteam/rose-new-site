@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use Modules\Auth\Models\OtpCode;
+use Modules\Auth\Models\RegisterOtp;
 use Modules\Auth\Notifications\OtpNotification;
 use Modules\User\Models\User;
 
@@ -38,6 +39,10 @@ class LoginController extends Controller
                     'phone' => $validData['phone'],
                 ] , 200);
             }else{
+//                if (RegisterOtp::hasLiveCode()) {
+//                    throw new \Exception('کد تایید برای شما ارسال شده است. جهت ارسال دوباره کد تایید لطفا صبر کنید');
+//
+//                }
                 return response()->json([
                     'success' => true,
                     'is_signed_up' => false,

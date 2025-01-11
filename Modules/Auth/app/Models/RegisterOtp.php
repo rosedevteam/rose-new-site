@@ -22,6 +22,10 @@ class RegisterOtp extends Model
         return !!RegisterOtp::where('id' , $codeId)->where('otp' , $code)->where('expired_at', '>', now())->first();
     }
 
+    public static function hasLiveCode(){
+        return !!RegisterOtp::where('expired_at', '>', now())->first();
+    }
+
     // protected static function newFactory(): RegisterOtpFactory
     // {
     //     // return RegisterOtpFactory::new();

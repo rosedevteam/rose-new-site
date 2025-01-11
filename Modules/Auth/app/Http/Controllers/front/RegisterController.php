@@ -21,6 +21,8 @@ class RegisterController extends Controller
                 RegisterOtp::where('phone', $validData['phone'])->first()->delete();
             }
 
+
+
             $code = \Modules\Auth\Models\RegisterOtp::create([
                 'otp' => mt_rand(100000, 999999),
                 'phone' => $validData['phone'],
@@ -64,6 +66,7 @@ class RegisterController extends Controller
             }
 
             $code = RegisterOtp::verifyCode($request->session()->get('auth')['code_id'], $validData['otp']);
+
             //check auth session exists
             if (!$request->session()->has('auth')) {
                 return redirect(route('index'));
@@ -103,10 +106,10 @@ class RegisterController extends Controller
             ]);
 
             $user = User::create($validData);
+
             $user->assignRole('مشتری');
 
-            $user->login();
-
+            auth()->login($user);
 
             return response()->json([
                 'success' => true,
