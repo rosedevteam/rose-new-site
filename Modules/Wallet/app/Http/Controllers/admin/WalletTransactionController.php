@@ -43,7 +43,7 @@ class WalletTransactionController extends Controller
             $wallettransaction->update($validData);
             $after = $wallettransaction->toArray();
 
-            $this->log($wallettransaction, compact('before', 'after'), 'ویرایش تراکنس کیف پول');
+            $this->log($wallettransaction, compact('before', 'after'), 'ویرایش تراکنش کیف پول');
             alert()->success('موفق', 'تراکنش با موفقیت ویرایش داده شد');
             return back();
         } catch (\Throwable $th) {
@@ -52,5 +52,20 @@ class WalletTransactionController extends Controller
         }
     }
 
-    // todo destroy transactions
+    public function destroy(WalletTransaction $wallettransaction)
+    {
+        Gate::authorize('delete-wallet-transactions');
+        try {
+            $before = $wallettransaction->toArray();
+            $wallettransaction->delete();
+
+            $this->log(null, compact('before'), 'حذف تراکنش کیف پول');
+
+            alert()->success('موفق', 'با موفقیت انجام شد');
+            return back();
+        } catch (\Throwable $th) {
+            alert()->error("خطا", $th->getMessage());
+            return back();
+        }
+    }
 }

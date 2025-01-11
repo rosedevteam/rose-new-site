@@ -112,7 +112,7 @@
                                     موبایل
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 15%;">ایمیل
+                                    style="width: 10%;">موجودی کیف پول
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 7%;">نقش
@@ -143,7 +143,7 @@
                                 </span>
                                     </td>
                                     <td><span class="fw-semibold">{{ $user->phone }}</span></td>
-                                    <td>{{ $user->email }}</td>
+                                    <td>{{ number_format($user->wallet->balance) }}</td>
                                     <td>
                                         @foreach($user->getRoleNames() as $role)
                                             <span @class(['badge', 'bg-primary' => $role == 'مشتری', 'bg-reddit' => $role == 'ادمین', 'bg-info' => $role == 'نویسنده', 'bg-instagram' => $role == 'پشتیبان', 'bg-success' => $role == 'super-admin'])>{{ $role }}</span>

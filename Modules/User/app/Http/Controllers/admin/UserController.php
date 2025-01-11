@@ -18,7 +18,7 @@ class UserController extends Controller
         Gate::authorize('view-users');
         $this->seo()->setTitle('کاربران');
         try {
-
+            // todo search by wallet balance
             $roles = Role::all()->select('name', 'id');
             $role_id = request('role');
             $sort_by = request('sort_by', 'created_at');
