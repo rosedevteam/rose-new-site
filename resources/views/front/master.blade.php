@@ -13,6 +13,8 @@
     <!-- Style -->
     <link rel="stylesheet" href="{{asset('assets/front/css/icons/bootstrap-icons/font/bootstrap-icons.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/front/vendor/owl-carousel/owl.carousel.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/vendor/sweetalert/sweetalert2.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/front/vendor/formvalidation/dist/css/formValidation.css')}}">
     <link rel="stylesheet" href="{{asset('assets/front/css/app.css')}}">
 
     @yield('head')
@@ -45,6 +47,22 @@
 <script src="{{asset('assets/front/js/bootstrap/bootstrap.min.js')}}"></script>
 
 <script src="{{asset('assets/front/vendor/owl-carousel/owl.carousel.js')}}"></script>
+
+<script src="{{asset('assets/vendor/sweetalert/sweetalert2.js')}}"></script>
+
+<script src="{{asset('assets/front/vendor/formvalidation/dist/js/formValidation.js')}}"></script>
+
+<script src="{{asset('assets/front/vendor/formvalidation/dist/js/plugins/Bootstrap5.min.js')}}"></script>
+
+<script src="{{asset('assets/front/vendor/formvalidation/dist/js/plugins/AutoFocus.min.js')}}"></script>
+
+<script src="{{asset('assets/front/vendor/block-ui/block-ui.js')}}"></script>
+
+<script src="{{asset('assets/vendor/axios/axios.min.js')}}"></script>
+
+<script src="{{asset('assets/front/vendor/cleavejs/cleave.js')}}"></script>
+
+<script src="{{asset('assets/front/js/login.js')}}"></script>
 
 <script src="{{asset('assets/front/js/app.js')}}"></script>
 

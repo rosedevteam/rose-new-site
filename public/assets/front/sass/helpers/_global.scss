@@ -464,3 +464,18 @@ Other Classes
 .color-gold {
   color: $theme-secondary !important;
 }
+
+.blockPage {
+    transform: translate(-35%, -40%) !important;
+    width: 100% !important;
+    z-index: 99999 !important;
+}
+
+.blockOverlay {
+    z-index: 99999 !important;
+}
+
+.h-px-50 {
+    height: 50px;
+    max-width: 50px;
+}

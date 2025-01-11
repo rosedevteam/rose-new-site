@@ -216,7 +216,7 @@ class DatabaseSeeder extends Seeder
             'short_description' => "",
             'sale_price' => 5460000,
             'content' => "test",
-            'status' => 'draft',
+            'status' => 'public',
             'comment_status' => 1,
             'image' => "",
             'slug' => "dore-fis",
@@ -404,6 +404,15 @@ class DatabaseSeeder extends Seeder
             'commentable_type' => 'Modules\\Product\\Models\\Product',
             'status' => 'rejected',
             'content' => "asvdnawn;wgn;iweagbqiugi",
+        ]);
+
+        $comment4 = Comment::factory()->create([
+            'user_id' => 1,
+            'commentable_id' => 2,
+            'commentable_type' => 'Modules\\Product\\Models\\Product',
+            'status' => 'approved',
+            'parent_id' => 1,
+            'content' => "پاسخ",
         ]);
 
     }

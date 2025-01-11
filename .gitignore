@@ -4,7 +4,6 @@
 /public/hot
 /public/uploads
 /public/storage
-/public/assets/front/images
 /storage/*.key
 /storage/pail
 /vendor
