@@ -26,7 +26,7 @@ class PodcastController extends Controller
             'image' => 'nullable',
         ]);
         try {
-            $validData['image'] = $this->uploadFile($validData['image'], 'podcasts');
+            $validData['image'] = $this->uploadFile($validData['image'], '/podcasts');
             $podcast = auth()->user()->podcasts()->create($validData);
             $after = $podcast->toArray();
 
