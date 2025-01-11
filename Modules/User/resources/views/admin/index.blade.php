@@ -27,10 +27,25 @@
                         <div
                             class="d-flex justify-content-start align-items-center row py-3 gap-1 gap-md-0 primary-font">
                             <div class="col-md-3">
-                                <label for="count" class="form-label">جستجو: </label>
+                                <label for="search" class="form-label">جستجو: </label>
                                 <div id="search" class="search-input">
                                     <input type="search" name="search" value="{{ $search }}" class="form-control">
                                 </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="wallet_balance" class="form-label">موجودی کیف پول: </label>
+                                <div id="wallet_balance" class="search-input">
+                                    <input type="search" name="wallet_balance" value="{{ $wallet_balance }}"
+                                           class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="wallet_search_type" class="form-label">کیف پول های: </label>
+                                <select id="wallet_search_type" name="wallet_search_type"
+                                        class="form-select text-capitalize">
+                                    <option value=">=" selected>بیشتر</option>
+                                    <option value="<=" {{ $wallet_search_type == "<=" ? 'selected' : '' }}>کمتر</option>
+                                </select>
                             </div>
                             <div class="col-md-2">
                                 <label for="role" class="form-label">نقش: </label>

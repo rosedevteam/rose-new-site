@@ -18,13 +18,14 @@ class UserController extends Controller
         Gate::authorize('view-users');
         $this->seo()->setTitle('کاربران');
         try {
-            // todo search by wallet balance
             $roles = Role::all()->select('name', 'id');
             $role_id = request('role');
             $sort_by = request('sort_by', 'created_at');
             $sort_direction = request('sort_direction', 'desc');
             $search = request('search');
             $count = request('count', 50);
+            $wallet_balance = request('wallet_balance');
+            $wallet_search_type = request('wallet_search_type');
             $users = User::with('roles');
 
             if ($role_id) {
@@ -38,6 +39,11 @@ class UserController extends Controller
                     ->orWhere('email', 'like', '%' . $search . '%')
                     ->orWhere('phone', 'like', '%' . $search . '%');
             }
+            if ($wallet_balance) {
+                $users = $users->whereHas('wallet', function ($query) use ($wallet_balance, $wallet_search_type) {
+                    return $query->where('balance', $wallet_search_type, $wallet_balance);
+                });
+            }
 
             $users = $users->orderBy($sort_by, $sort_direction);
             $users = $users->paginate($count)->withQueryString();
@@ -49,7 +55,9 @@ class UserController extends Controller
                 'sort_direction',
                 'sort_by',
                 'role_id',
-                'count'
+                'count',
+                'wallet_balance',
+                'wallet_search_type'
             ));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
