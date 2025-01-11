@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('title');
-            $table->string('content');
+            $table->longText('content');
             $table->enum('status', ['public', 'draft', 'hidden'])->default('draft');
             $table->boolean('comment_status')->default(true);
             $table->string('slug')->unique();

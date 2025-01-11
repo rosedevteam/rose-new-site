@@ -91,6 +91,11 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'create-discounts']);
         Permission::create(['name' => 'delete-discounts']);
         //
+        Permission::create(['name' => 'view-podcasts']);
+        Permission::create(['name' => 'edit-podcasts']);
+        Permission::create(['name' => 'create-podcasts']);
+        Permission::create(['name' => 'delete-podcasts']);
+        //
         Permission::create(['name' => 'view-student-reports']);
         Permission::create(['name' => 'edit-student-reports']);
         Permission::create(['name' => 'create-student-reports']);
