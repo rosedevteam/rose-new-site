@@ -12,6 +12,7 @@
             -moz-appearance: textfield;
         }
     </style>
+    <link rel="stylesheet" href="/assets/admin/vendor/libs/select2/select2.css">
 @endpush
 
 @section('content')
@@ -46,6 +47,17 @@
                                     <option value=">=" selected>بیشتر</option>
                                     <option value="<=" {{ $wallet_search_type == "<=" ? 'selected' : '' }}>کمتر</option>
                                 </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="select2Primary" class="form-label">دوره ها: </label>
+                                <div class="select2-primary">
+                                    <select id="select2Primary" class="select2 form-select" name="products[]" multiple>
+                                        @foreach($products as $product)
+                                            <option
+                                                value="{{ $product->id }}" {{ in_array($product->id, $productQuery ?: []) ? 'selected' : '' }}>{{ $product->title }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                             <div class="col-md-2">
                                 <label for="role" class="form-label">نقش: </label>
@@ -239,6 +251,7 @@
     <script src="/assets/admin/vendor/libs/datatables-bs5/i18n/fa.js"></script>
     <script src="/assets/admin/vendor/libs/select2/select2.js"></script>
     <script src="/assets/admin/vendor/libs/select2/i18n/fa.js"></script>
+    <script src="/assets/admin/js/forms-selects.js"></script>
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/FormValidation.min.js"></script>
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js"></script>
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>

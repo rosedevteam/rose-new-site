@@ -7,6 +7,7 @@ use Arr;
 use Gate;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Modules\Product\Models\Product;
 use Modules\User\Models\Billing;
 use Modules\User\Models\User;
 use Spatie\Permission\Models\Role;
@@ -26,6 +27,8 @@ class UserController extends Controller
             $count = request('count', 50);
             $wallet_balance = request('wallet_balance');
             $wallet_search_type = request('wallet_search_type');
+            $productQuery = request('products');
+            $products = Product::all();
             $users = User::with('roles');
 
             if ($role_id) {
@@ -44,6 +47,17 @@ class UserController extends Controller
                     return $query->where('balance', $wallet_search_type, $wallet_balance);
                 });
             }
+            if ($productQuery) {
+                $users = $users->whereHas('orders', function ($query) use ($productQuery) {
+                    $query->where('status', 'completed');
+                    foreach ($productQuery as $product) {
+                        $query->whereHas('products', function ($query) use ($product) {
+                            $query->where('product_id', $product);
+                        });
+                    };
+                });
+            }
+
 
             $users = $users->orderBy($sort_by, $sort_direction);
             $users = $users->paginate($count)->withQueryString();
@@ -57,7 +71,9 @@ class UserController extends Controller
                 'role_id',
                 'count',
                 'wallet_balance',
-                'wallet_search_type'
+                'wallet_search_type',
+                'products',
+                'productQuery'
             ));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
@@ -183,6 +199,7 @@ class UserController extends Controller
             return back();
         }
     }
+
     public function setRole(User $user)
     {
         Gate::authorize('setRole', $user);
