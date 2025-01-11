@@ -3,13 +3,46 @@ let addToCart =  $('#add-to-cart');
 addToCart.on('click' , function (e ) {
     e.preventDefault();
     axios.post(`/cart/add/${$(this).attr('data-product')}` , {
-        quantity: $('pr-quantity').val()
+        quantity: $('#pr-quantity').val()
     })
         .then(function (res) {
-            console.log(res.data)
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: "موفق",
+                text: res.data.message
+            });
+            $.unblockUI();
+
         })
         .catch(function (err) {
-            console.log(err.data)
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "warning",
+                title: "خطا",
+                text: err.response.data.message
+            });
+            $.unblockUI();
         })
 });
 

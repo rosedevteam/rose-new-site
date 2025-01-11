@@ -58,6 +58,8 @@
                                         <a role="button" class="btn btn-default" id="add-to-cart" data-product="{{$product->id}}">ثبت نام در دوره</a>
                                         <!--Add To Cart Button End-->
 
+                                        <input type="hidden" name="pr-quantity" id="pr-quantity" value="1">
+
                                         <div class="product-price mt-4 mt-lg-0">
                                             @if($product->isOnSale())
                                                 @php

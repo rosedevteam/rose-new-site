@@ -23,42 +23,41 @@ class CartController extends Controller
 
     public function addToCart(Product $product, Request $request)
     {
-        dd($product);
         try {
-            $cart = Cart::instance(config('services.cart.cookie-name'));
-            if ($request->ajax()) {
-                if ($cart->has($product)) {
-                    throw new \Exception('محصول مورد نظر در سبد خرید شما از قبل وجود دارد');
-                } else {
-                    $cart->put(
-                        [
-                            'quantity' => $request->input('quantity'),
-                        ],
-                        $product
-                    );
-                    $totalPrice = Cart::all()->sum(function ($cart) {
-                        if (!is_null($cart['product']->sale_price)) {
-                            return $cart['product']->sale_price * $cart['quantity'];
-                        } else {
-                            return $cart['product']->price * $cart['quantity'];
-                        }
-                    });
-                    return response()->json([
-                        'success' => true,
-                        'message' => 'محصول مورد نظر به سبد خرید اضافه شد',
-                        'cart_items' => $cart->all()->count(),
-                        'cart_total_price' => $totalPrice
-                    ] , 200);
-                }
-
-
-
-            }
-        }catch (\Exception $exception){
-            return response()->json([
-               'success' => false,
-               'message' => $exception->getMessage()
+            $validData = $request->validate([
+                'quantity' => 'required|integer'
             ]);
+
+            $cart = Cart::instance(config('services.cart.cookie-name'));
+            if ($cart->has($product)) {
+                throw new \Exception('محصول مورد نظر در سبد خرید شما از قبل وجود دارد');
+            } else {
+                $cart->put(
+                    [
+                        'quantity' => $validData['quantity'],
+                    ],
+                    $product
+                );
+                $totalPrice = Cart::all()->sum(function ($cart) {
+                    if (!is_null($cart['product']->sale_price)) {
+                        return $cart['product']->sale_price * $cart['quantity'];
+                    } else {
+                        return $cart['product']->price * $cart['quantity'];
+                    }
+                });
+                return response()->json([
+                    'success' => true,
+                    'message' => 'محصول مورد نظر به سبد خرید اضافه شد',
+                    'cart_items' => $cart->all()->count(),
+                    'cart_total_price' => $totalPrice
+                ], 200);
+            }
+
+        } catch (\Exception $exception) {
+            return response()->json([
+                'success' => false,
+                'message' => $exception->getMessage()
+            ] , 400);
         }
 
     }

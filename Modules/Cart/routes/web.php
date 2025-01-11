@@ -16,7 +16,7 @@ use Modules\Cart\Http\Controllers\CartController;
 
 Route::prefix('cart')->group(function () {
     Route::get('/' , [\Modules\Cart\Http\Controllers\front\CartController::class , 'cart'])->name('cart.show');
-    Route::post('/add/{product}' , 'CartController@addToCart')->name('cart.add');
+    Route::post('/add/{product}' , [\Modules\Cart\Http\Controllers\front\CartController::class , 'addToCart'])->name('cart.add');
     Route::patch('/quantity/change' , 'CartController@quantityChange')->name('cart.quantity.change');
     Route::delete('/delete/{cart}' , 'CartController@deleteFromCart')->name('cart.destroy');
 });

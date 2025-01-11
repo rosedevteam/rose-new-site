@@ -5,6 +5,7 @@ namespace Modules\Cart\Classes\Helpers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
+use Modules\Discount\Models\Discount;
 
 class CartService
 {
@@ -126,7 +127,7 @@ class CartService
         $cart = $this->cart;
         $cart = collect($this->cart['items'])->map(function($item) use ($cart) {
             $item = $this->withRelationshipIfExist($item);
-            $item = $this->checkDiscountValidate($item , $cart['discount']);
+//            $item = $this->checkDiscountValidate($item , $cart['discount']);
             return $item;
         });
 
@@ -191,7 +192,7 @@ class CartService
 
 //    protected function checkDiscountValidate($item, $discount)
 //    {
-//        $discount = Discount::where('code' , $discount)->first();
+//        $discount = Discount::where('code' , $discount)->where('is_active')->first();
 //        if($discount && $discount->expired_at > now() ) {
 //            if(
 //                (  ! $discount->products->count() && ! $discount->categories->count() ) ||
