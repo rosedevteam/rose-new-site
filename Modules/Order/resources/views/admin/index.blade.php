@@ -94,16 +94,16 @@
                                     style="width: 15%;">دوره ها
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">قیمت خرید
+                                    style="width: 10%;">قیمت خرید
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 5%;">وضعیت
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 5%;">روش پرداخت
+                                    style="width: 3%;">روش پرداخت
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width: 12%" aria-sort="ascending">تاریخ ثبت
+                                    colspan="1" style="width: 10%" aria-sort="ascending">تاریخ ثبت
                                 </th>
                                 @can('edit-orders')
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"

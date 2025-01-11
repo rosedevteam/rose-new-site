@@ -13,7 +13,7 @@
                             <h5 class="card-title me-2" style="display: inline">تراکنش های کیف پول</h5>
                             <a href="{{ route('admin.users.edit', $wallet->user) }}"
                                class="h5">{{ $wallet->user->name() }}</a>
-                            <h5 class="mt-2">موجودی {{ number_format($wallet->balance) }}</h5>
+                            <h5 class="mt-2">موجودی {{ number_format($wallet->balance) }} تومان</h5>
                         </div>
                         <button class="btn btn-primary my-3" data-bs-target="#create-transaction-modal"
                                 data-bs-toggle="modal">افزایش اعتبار
@@ -66,7 +66,7 @@
                                                 @if($transaction->order)</a>
                                         @endif
                                     </td>
-                                    <td>{{ number_format($transaction->amount) }}</td>
+                                    <td>{{ number_format($transaction->amount) }} تومان</td>
                                     <td>{{ $transaction->description }}</td>
                                     <td>{{ verta($transaction->created_at)->formatJalaliDatetime() }}</td>
                                     @can('edit-wallet-transactions')
@@ -199,6 +199,7 @@
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave-phone.js"></script>
+    <script src="/assets/admin/js/autonumeric/autonumeric.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             document.body.addEventListener('click', (event) => {
@@ -218,6 +219,18 @@
                     deleteForm.action = `/kara-fa/wallettransactions/${id}`;
                     //todo admin panel prefix is hardcoded in js
                 }
+            });
+            const amount = new AutoNumeric('#amount', {
+                digitGroupSeparator: ',',
+                minimumValue: '0',
+                unformatOnSubmit: true,
+                decimalPlaces: 0,
+            });
+            const editAmount = new AutoNumeric('#edit-amount', {
+                digitGroupSeparator: ',',
+                minimumValue: '0',
+                unformatOnSubmit: true,
+                decimalPlaces: 0,
             });
         });
     </script>

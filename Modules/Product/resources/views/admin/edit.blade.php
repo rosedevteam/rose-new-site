@@ -314,7 +314,8 @@
                                         @method('get')
                                         <input type="hidden" name="pagebuilder_type" value="{{get_class($product)}}">
                                         <input type="hidden" name="pagebuilder_id" value="{{$product->id}}">
-                                        <input type="submit" class="btn btn-primary w-100" value="ساخت صفحه با ویرایشگر زنده">
+                                        <input type="submit" class="btn btn-primary w-100"
+                                               value="ساخت صفحه با ویرایشگر زنده">
                                     </form>
                                 @else
                                     <a href="{{route('admin.pagebuilder.edit' , $product->pagebuilder)}}"
@@ -451,17 +452,34 @@
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
-    </div>
-@endsection
+            @endsection
 
-@push('script')
-    <x-admin::tinymce/>
-    <x-admin::filemanager-btn/>
-    <script src="/assets/admin/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-    <script src="/assets/vendor/sweetalert/sweetalert2.js"></script>
-    <script src="/assets/admin/js/products/edit.js"></script>
-    <script src="/assets/admin/vendor/libs/select2/select2.js"></script>
-    <script src="/assets/admin/vendor/libs/select2/i18n/fa.js"></script>
-    <script src="/assets/admin/js/forms-selects.js"></script>
-@endpush
+            @push('script')
+                <x-admin::tinymce/>
+                <x-admin::filemanager-btn/>
+                <script src="/assets/admin/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
+                <script src="/assets/vendor/sweetalert/sweetalert2.js"></script>
+                <script src="/assets/admin/js/products/edit.js"></script>
+                <script src="/assets/admin/vendor/libs/select2/select2.js"></script>
+                <script src="/assets/admin/vendor/libs/select2/i18n/fa.js"></script>
+                <script src="/assets/admin/js/forms-selects.js"></script>
+                <script src="/assets/admin/js/autonumeric/autonumeric.min.js"></script>
+                <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const price = new AutoNumeric('#price', {
+                            digitGroupSeparator: ',',
+                            minimumValue: '0',
+                            unformatOnSubmit: true,
+                            decimalPlaces: 0,
+                        });
+                        const salePrice = new AutoNumeric('#sale_price', {
+                            digitGroupSeparator: ',',
+                            minimumValue: '0',
+                            unformatOnSubmit: true,
+                            decimalPlaces: 0,
+                        });
+                    });
+                </script
+    @endpush
