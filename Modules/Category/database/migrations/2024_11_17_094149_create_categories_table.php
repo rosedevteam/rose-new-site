@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->enum('type', ['joboffer', 'post', 'product']);
+            $table->enum('type', ['joboffer', 'post', 'product', 'podcast']);
             $table->string('name');
-            $table->foreignId('parent_id')->nullable()->constrained('categories')->cascadeOnDelete();
-            $table->string('archive_slug')->nullable();
+            $table->foreignId('parent_id')->nullable()->default(null)->constrained('categories')->cascadeOnDelete();
+            $table->string('archive_slug')->nullable()->default(null);
             $table->timestamps();
         });
 

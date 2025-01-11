@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Podcast\Http\Controllers\PodcastController;
+use Modules\Podcast\Http\Controllers\front\PodcastController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +14,4 @@ use Modules\Podcast\Http\Controllers\PodcastController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('podcast', PodcastController::class)->names('podcast');
-});
+Route::get('/podcast', [PodcastController::class, 'index'])->name('podcasts.index');

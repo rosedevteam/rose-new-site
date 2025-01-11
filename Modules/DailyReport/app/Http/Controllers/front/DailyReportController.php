@@ -9,6 +9,7 @@ class DailyReportController extends Controller
 {
     public function index()
     {
+        $this->seo()->setTitle('گزارشات روزانه بازار');
         $dailyReports = DailyReport::all()->sortByDesc('created_at');
 
         return view('dailyreport::front.index', compact('dailyReports'));

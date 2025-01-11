@@ -19,7 +19,7 @@
 
     @yield('head')
 
-    <title>مجموعه آموزشی رز</title>
+    {!! SEO::generate(true) !!}
 </head>
 <body class="body-bg-default @yield('body_class')">
 
