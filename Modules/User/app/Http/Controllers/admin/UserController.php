@@ -58,7 +58,6 @@ class UserController extends Controller
                 });
             }
 
-
             $users = $users->orderBy($sort_by, $sort_direction);
             $users = $users->paginate($count)->withQueryString();
 
