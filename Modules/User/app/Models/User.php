@@ -9,6 +9,7 @@ use Modules\Comment\Models\Comment;
 use Modules\DailyReport\Models\DailyReport;
 use Modules\Menu\Models\Menu;
 use Modules\Order\Models\Order;
+use Modules\Podcast\Models\Podcast;
 use Modules\Post\Models\Post;
 use Modules\Product\Models\Product;
 use Modules\StudentReport\Models\StudentReport;
@@ -93,6 +94,11 @@ class User extends \Illuminate\Foundation\Auth\User
     public function transactions()
     {
         return $this->hasMany(WalletTransaction::class);
+    }
+
+    public function podcasts()
+    {
+        return $this->hasMany(Podcast::class);
     }
 
     protected static function newFactory()

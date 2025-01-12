@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\Category\Models\Category;
 use Modules\Comment\Models\Comment;
 use Modules\Menu\Models\Menu;
 use Modules\Order\Models\Order;
@@ -26,10 +27,10 @@ class DatabaseSeeder extends Seeder
         $this->seedPayments();
         $this->seedComments();
         $this->seedMenu();
-
+        $this->seedCategories();
     }
 
-    private function seedUsersAndPermissions(): void
+    private function seedUsersAndPermissions()
     {
         Permission::create(['name' => 'admin-panel']);
         //
@@ -91,6 +92,11 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'create-discounts']);
         Permission::create(['name' => 'delete-discounts']);
         //
+        Permission::create(['name' => 'view-podcasts']);
+        Permission::create(['name' => 'edit-podcasts']);
+        Permission::create(['name' => 'create-podcasts']);
+        Permission::create(['name' => 'delete-podcasts']);
+        //
         Permission::create(['name' => 'view-student-reports']);
         Permission::create(['name' => 'edit-student-reports']);
         Permission::create(['name' => 'create-student-reports']);
@@ -99,6 +105,7 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'view-wallet-transactions']);
         Permission::create(['name' => 'edit-wallet-transactions']);
         Permission::create(['name' => 'create-wallet-transactions']);
+        Permission::create(['name' => 'delete-wallet-transactions']);
         //
         Permission::create(['name' => 'set-roles']);
         Permission::create(['name' => 'view-logs']);
@@ -207,7 +214,7 @@ class DatabaseSeeder extends Seeder
         $user5->assignRole($superAdmin);
     }
 
-    private function seedProducts(): void
+    private function seedProducts()
     {
         $product1 = Product::factory()->create([
             'title' => "دوره تخصصی FIS",
@@ -313,7 +320,7 @@ class DatabaseSeeder extends Seeder
 
     }
 
-    private function seedPosts(): void
+    private function seedPosts()
     {
         $json = \File::get(database_path() . '/posts.json');
         $data = json_decode($json, true);
@@ -332,7 +339,7 @@ class DatabaseSeeder extends Seeder
         }
     }
 
-    private function seedOrders(): void
+    private function seedOrders()
     {
         $order1 = Order::factory()->create([
             'user_id' => 1,
@@ -381,7 +388,7 @@ class DatabaseSeeder extends Seeder
         ]);
     }
 
-    private function seedComments(): void
+    private function seedComments()
     {
         $comment1 = Comment::factory()->create([
             'user_id' => 2,
@@ -432,7 +439,7 @@ class DatabaseSeeder extends Seeder
             'title' => 'دوره ها',
             'user_id' => 1,
             'slug' => "#",
-            'parent_id' => '#',
+            'parent_id' => null,
             'order' => 1,
             'icon' => null,
             'subtitle' => null,
@@ -449,7 +456,7 @@ class DatabaseSeeder extends Seeder
         Menu::factory()->create([
             'title' => 'گزارش روزانه بازار',
             'user_id' => 1,
-            'slug' => "گزارشات-روزانه-بازار",
+            'slug' => "/گزارشات-روزانه-بازار",
             'parent_id' => null,
             'order' => 3,
             'icon' => null,
@@ -458,7 +465,7 @@ class DatabaseSeeder extends Seeder
         Menu::factory()->create([
             'title' => 'تحلیل دانشپذیران',
             'user_id' => 1,
-            'slug' => "تحلیل-های-دانشپذیران",
+            'slug' => "/تحلیل-های-دانشپذیران",
             'parent_id' => null,
             'order' => 4,
             'icon' => null,
@@ -556,4 +563,37 @@ class DatabaseSeeder extends Seeder
         ]);
     }
 
+    private function seedCategories()
+    {
+        Category::factory()->create([
+            'type' => 'joboffer',
+            'name' => 'بازار های مالی',
+            'user_id' => 1,
+        ]);
+        Category::factory()->create([
+            'type' => 'joboffer',
+            'name' => 'مارکتینگ',
+            'user_id' => 1,
+        ]);
+        Category::factory()->create([
+            'type' => 'post',
+            'name' => 'بورس',
+            'user_id' => 1,
+        ]);
+        Category::factory()->create([
+            'type' => 'post',
+            'name' => 'مقالات',
+            'user_id' => 1,
+        ]);
+        Category::factory()->create([
+            'type' => 'product',
+            'name' => 'رایگان',
+            'user_id' => 1,
+        ]);
+        Category::factory()->create([
+            'type' => 'product',
+            'name' => 'حضوری',
+            'user_id' => 1,
+        ]);
+    }
 }

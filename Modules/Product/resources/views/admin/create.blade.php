@@ -321,4 +321,21 @@
     <script src="/assets/admin/vendor/libs/select2/select2.js"></script>
     <script src="/assets/admin/vendor/libs/select2/i18n/fa.js"></script>
     <script src="/assets/admin/js/forms-selects.js"></script>
+    <script src="/assets/admin/js/autonumeric/autonumeric.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const price = new AutoNumeric('#price', {
+                digitGroupSeparator: ',',
+                minimumValue: '0',
+                unformatOnSubmit: true,
+                decimalPlaces: 0,
+            });
+            const salePrice = new AutoNumeric('#sale_price', {
+                digitGroupSeparator: ',',
+                minimumValue: '0',
+                unformatOnSubmit: true,
+                decimalPlaces: 0,
+            });
+        });
+    </script>
 @endpush

@@ -40,15 +40,6 @@ class UserPolicy
         if (!$user->hasPermissionTo('delete-users')) {
             return false;
         }
-        if ($user->id == $model->id) {
-            return false;
-        }
-        if ($model->hasRole('super-admin')) {
-            return false;
-        }
-        if ($user->hasRole('super-admin')) {
-            return true;
-        }
         if ($model->hasPermissionTo('admin-panel')) {
             return false;
         }

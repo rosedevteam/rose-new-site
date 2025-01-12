@@ -4,14 +4,13 @@ namespace Modules\Product\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\traits\Slug;
-use App\traits\Upload;
 use Gate;
 use Illuminate\Support\Arr;
 use Modules\Product\Models\Product;
 
 class ProductController extends Controller
 {
-    use Upload, Slug;
+    use Slug;
 
     public function index()
     {

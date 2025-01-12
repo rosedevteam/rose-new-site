@@ -10,6 +10,7 @@ class PostController extends Controller
 {
     public function index()
     {
+        $this->seo()->setTitle('وبلاگ');
         $category = request('category');
         $search = request('search');
 
@@ -44,7 +45,7 @@ class PostController extends Controller
         if ($post->status != 'public') {
             abort(404);
         }
-
+        $this->seo()->setTitle($post->metadata?->title ?: $post->title);
         $categories = Category::where('archive_slug', "!=", null)
             ->where('type', 'post')
             ->withCount('posts')

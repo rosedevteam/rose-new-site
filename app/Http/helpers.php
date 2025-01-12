@@ -7,8 +7,6 @@ if (!function_exists("getClassName")) {
     }
 }
 
-// todo add logging for WalletTransactions
-
 if (!function_exists('getEditRouteByType')) {
     function getEditRouteByType($type, $id)
     {
@@ -17,9 +15,10 @@ if (!function_exists('getEditRouteByType')) {
         $type = getClassName($type);
 
         // return empty for models that don't have edit pages
-        if (in_array($type, ['Category', 'DailyReport', 'Menu'])) {
+        if (in_array($type, ['Category', 'DailyReport', 'Menu', 'WalletTransaction', 'Podcast'])) {
             return "";
         }
+        // todo fix transaction/podcast log
 
         return route('admin.' . strtolower($type) . 's.edit', $id, false);
     }

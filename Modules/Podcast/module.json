@@ -1,0 +1,11 @@
+{
+    "name": "Podcast",
+    "alias": "podcast",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Podcast\\Providers\\PodcastServiceProvider"
+    ],
+    "files": []
+}

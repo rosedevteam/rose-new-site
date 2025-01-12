@@ -12,6 +12,7 @@
             -moz-appearance: textfield;
         }
     </style>
+    <link rel="stylesheet" href="/assets/admin/vendor/libs/select2/select2.css">
 @endpush
 
 @section('content')
@@ -27,9 +28,35 @@
                         <div
                             class="d-flex justify-content-start align-items-center row py-3 gap-1 gap-md-0 primary-font">
                             <div class="col-md-3">
-                                <label for="count" class="form-label">جستجو: </label>
+                                <label for="search" class="form-label">جستجو: </label>
                                 <div id="search" class="search-input">
                                     <input type="search" name="search" value="{{ $search }}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="wallet_balance" class="form-label">موجودی کیف پول: </label>
+                                <div id="wallet_balance" class="search-input">
+                                    <input type="search" name="wallet_balance" value="{{ $wallet_balance }}"
+                                           class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="wallet_search_type" class="form-label">کیف پول های: </label>
+                                <select id="wallet_search_type" name="wallet_search_type"
+                                        class="form-select text-capitalize">
+                                    <option value=">=" selected>بیشتر</option>
+                                    <option value="<=" {{ $wallet_search_type == "<=" ? 'selected' : '' }}>کمتر</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="select2Primary" class="form-label">دوره ها: </label>
+                                <div class="select2-primary">
+                                    <select id="select2Primary" class="select2 form-select" name="products[]" multiple>
+                                        @foreach($products as $product)
+                                            <option
+                                                value="{{ $product->id }}" {{ in_array($product->id, $productQuery ?: []) ? 'selected' : '' }}>{{ $product->title }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-2">
@@ -112,7 +139,7 @@
                                     موبایل
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 15%;">ایمیل
+                                    style="width: 10%;">موجودی کیف پول
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 7%;">نقش
@@ -143,7 +170,7 @@
                                 </span>
                                     </td>
                                     <td><span class="fw-semibold">{{ $user->phone }}</span></td>
-                                    <td>{{ $user->email }}</td>
+                                    <td>{{ number_format($user->wallet->balance) }}</td>
                                     <td>
                                         @foreach($user->getRoleNames() as $role)
                                             <span @class(['badge', 'bg-primary' => $role == 'مشتری', 'bg-reddit' => $role == 'ادمین', 'bg-info' => $role == 'نویسنده', 'bg-instagram' => $role == 'پشتیبان', 'bg-success' => $role == 'super-admin'])>{{ $role }}</span>
@@ -224,6 +251,7 @@
     <script src="/assets/admin/vendor/libs/datatables-bs5/i18n/fa.js"></script>
     <script src="/assets/admin/vendor/libs/select2/select2.js"></script>
     <script src="/assets/admin/vendor/libs/select2/i18n/fa.js"></script>
+    <script src="/assets/admin/js/forms-selects.js"></script>
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/FormValidation.min.js"></script>
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js"></script>
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>

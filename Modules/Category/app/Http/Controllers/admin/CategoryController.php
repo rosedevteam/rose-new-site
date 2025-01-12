@@ -24,6 +24,7 @@ class CategoryController extends Controller
                 'joboffer',
                 'post',
                 'product',
+                'podcast'
             ];
             $type = request('type', 'all');
             $categories = Category::query();

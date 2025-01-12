@@ -3,21 +3,16 @@
 namespace Modules\StudentReport\Http\Controllers\front;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Modules\StudentReport\Models\StudentReport;
 
 class StudentReportController extends Controller
 {
     public function index()
     {
+        $this->seo()->setTitle('تحلیل های دانشپذیران');
         $studentReports = StudentReport::where('status', 'approved')->orderBy('created_at', 'desc')->get();
 
         return view('studentreport::front.index', compact('studentReports'));
-    }
-
-    public function store(Request $request)
-    {
-        //
     }
 
     public function show(StudentReport $studentReport)

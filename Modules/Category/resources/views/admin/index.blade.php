@@ -23,6 +23,7 @@
                                                 @case('post')پست@break
                                                 @case('joboffer')فرصت شغلی@break
                                                 @case('product')دوره@break
+                                                @case('podcast')پادکست@break
                                             @endswitch</option>
                                     @endforeach
                                 </select></div>
@@ -96,6 +97,7 @@
                                                 @case('post')پست@break
                                                 @case('joboffer')فرصت شغلی@break
                                                 @case('product')دوره@break
+                                                @case('podcast')پادکست@break
                                             @endswitch</span></td>
                                     <td>{{ $category->parent?->name ?: 'ندارد' }}</td>
                                     <td>{{ $category->archive_slug ?: 'ندارد' }}</td>
@@ -164,6 +166,7 @@
                                                     @case('post')پست@break
                                                     @case('joboffer')فرصت شغلی@break
                                                     @case('product')دوره@break
+                                                    @case('podcast')پادکست@break
                                                 @endswitch</option>
                                         @endforeach
                                     </select>
