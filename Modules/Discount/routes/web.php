@@ -14,6 +14,7 @@ use Modules\Discount\Http\Controllers\DiscountController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('discount', DiscountController::class)->names('discount');
+Route::prefix('discount')->group(function() {
+    Route::post('check', [\Modules\Discount\Http\Controllers\front\DiscountController::class , 'check'])->name('cart.discount.check');
+    Route::delete('delete' , [\Modules\Discount\Http\Controllers\front\DiscountController::class , 'destroy']);
 });

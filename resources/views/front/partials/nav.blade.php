@@ -54,8 +54,8 @@
 
                     <div class="left d-flex align-items-center justify-content-between gap-3">
                         <div class="header-cart" id="cart-icon">
-                            <span class="rose-cart-counter" data-counter="0">1</span>
-                            <a href="#" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions"
+                            <span class="rose-cart-counter" data-counter="0">{{\Modules\Cart\Classes\Helpers\Cart::instance(config('services.cart.cookie-name'))->all()->count()}}</span>
+                            <a href="#" type="button" data-bs-toggle="offcanvas" data-bs-target="#side-cart-modal"
                                aria-controls="offcanvasWithBothOptions">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"
                                      fill="none">
@@ -176,7 +176,7 @@
 
 
 <!--Start Of Side Cart-->
-<div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
+<div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="side-cart-modal"
      aria-labelledby="offcanvasWithBothOptionsLabel">
 
     <div class="offcanvas-header">
@@ -184,39 +184,76 @@
     </div>
     <div class="p-3">
         <div class="side-cart-content">
-            <ul class="p-0">
-                <li>
-                    <div class="product product-widget">
-                        <figure class="product-main">
-                            <a href="#">
-                                <img src="assets/front/images/fis.jpg" class="product-main-image">
-                            </a>
-                        </figure>
-                        <div class="product-details">
+            <ul class="p-0" id="nav-cart-inner">
+                @php
+                    $totalPrice = \Modules\Cart\Classes\Helpers\Cart::all()->sum(function ($cart) {
+                        if (!is_null($cart['product']->sale_price)) {
+                            return $cart['product']->sale_price * $cart['quantity'];
+                        } else {
+                            return $cart['product']->price * $cart['quantity'];
+                        }
+                    });
+                @endphp
+                @foreach(\Modules\Cart\Classes\Helpers\Cart::instance(config('services.cart.cookie-name'))->all() as $cart)
+                    <div class="cart-page-inner">
+                        <li class="parent-cart-item">
+                            <div class="product product-widget  pb-3" style="border-bottom: solid #e7e7e7 1px">
+                                <figure class="product-main">
+                                    <a href="products/{{$cart['product']->slug}}">
+                                        <img src="{{$cart['product']->image}}" class="product-main-image">
+                                    </a>
+                                </figure>
+                                <div class="product-details">
 
-                            <div class="product-title">
-                                <h3><a href="#">دوره آموزشی مستر FIS</a>
-                                </h3>
+                                    <div class="product-title">
+                                        <h3>
+                                            <a href="products/{{$cart['product']->slug}}">
+                                                {{$cart['product']->title}}
+                                            </a>
+                                        </h3>
+                                    </div>
+                                    <div class="product-price">
+                                        <ins class="new-price">{{number_format($cart['price'])}} تومان</ins>
+                                    </div>
+                                </div>
+                                <div class="remove-from-cart" data-cart="{{$cart['id']}}">
+                                    <a role="button">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M15.5457 21.0038H8.45991C7.28371 21.0038 6.30581 20.0982 6.2156 18.9255L5.25 6.37268H18.7556L17.79 18.9255C17.6998 20.0982 16.7219 21.0038 15.5457 21.0038V21.0038Z"
+                                                  stroke="#E06983" stroke-width="1.5" stroke-linecap="round"
+                                                  stroke-linejoin="round"/>
+                                            <path d="M20.0028 6.37264H3.99609" stroke="#E06983"
+                                                  stroke-width="1.5" stroke-linecap="round"
+                                                  stroke-linejoin="round"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M9.18797 2.99622H14.8153C15.4369 2.99622 15.9408 3.50011 15.9408 4.12168V6.37262H8.0625V4.12168C8.0625 3.50011 8.56639 2.99622 9.18797 2.99622Z"
+                                                  stroke="#E06983" stroke-width="1.5" stroke-linecap="round"
+                                                  stroke-linejoin="round"/>
+                                            <path d="M13.969 10.8745V16.5019" stroke="#E06983"
+                                                  stroke-width="1.5" stroke-linecap="round"
+                                                  stroke-linejoin="round"/>
+                                            <path d="M10.0315 10.8745V16.5019" stroke="#E06983"
+                                                  stroke-width="1.5" stroke-linecap="round"
+                                                  stroke-linejoin="round"/>
+                                        </svg>
+                                    </a>
+                                </div>
                             </div>
-                            <div class="product-price">
-                                <ins class="new-price">1 * 9.998.000 تومان</ins>
-                            </div>
-                        </div>
-                        <div class="delete-item">
-                            <a href="#"><i class="bi bi-x-square"></i></a>
-                        </div>
+                        </li>
                     </div>
-                </li>
+                @endforeach
             </ul>
         </div>
         <div class="side-cart-footer">
-            <div class="subtotal">
-                <p>جمع:</p>
-                <p>9.498.000 تومان</p>
+            <div class="subtotal mb-3 d-flex align-content-center justify-content-between">
+                <p>مجموع سبد خرید:</p>
+                <p class="cart-total">
+                    {{number_format($totalPrice)}} تومان</p>
             </div>
             <div class="side-cart-actions">
-                <a class="btn btn-default-outline" href="../../html/pages/cart.html">View Cart</a>
-                <a class="btn btn-default-outline" href="../../html/pages/checkout.html">Checkout</a>
+                <a class="btn btn-default w-100" href="{{route('cart.show')}}">سبد خرید و تسویه حساب</a>
             </div>
         </div>
     </div>

@@ -21,8 +21,10 @@ class CartController extends Controller
         return view('cart::front.cart', compact('cookieCart'));
     }
 
+
     public function addToCart(Product $product, Request $request)
     {
+
         try {
             $validData = $request->validate([
                 'quantity' => 'required|integer'
@@ -30,7 +32,7 @@ class CartController extends Controller
 
             $cart = Cart::instance(config('services.cart.cookie-name'));
             if ($cart->has($product)) {
-                throw new \Exception('محصول مورد نظر در سبد خرید شما از قبل وجود دارد');
+                throw new \Exception('محصول مورد از قبل در سبد خرید وجود دارد');
             } else {
                 $cart->put(
                     [
@@ -48,7 +50,9 @@ class CartController extends Controller
                 return response()->json([
                     'success' => true,
                     'message' => 'محصول مورد نظر به سبد خرید اضافه شد',
-                    'cart_items' => $cart->all()->count(),
+                    'count' => $cart->all()->count(),
+                    'added_item' => $product,
+                    'added_item_id' => $cart->get($product)['id'],
                     'cart_total_price' => $totalPrice
                 ], 200);
             }
@@ -186,11 +190,27 @@ class CartController extends Controller
 
     public function deleteFromCart($id)
     {
-        $cart = Cart::instance(config('services.cart.cookie-name'));
-        $cart->delete($id);
-        return response()->json([
-            'success' => true,
-            'data' => 'محصول با موفقیت از سبد خرید حذف شد'
-        ]);
+        try {
+            $cart = Cart::instance(config('services.cart.cookie-name'));
+            $cart->delete($id);
+            $totalPrice = Cart::all()->sum(function ($cart) {
+                if (!is_null($cart['product']->sale_price)) {
+                    return $cart['product']->sale_price * $cart['quantity'];
+                } else {
+                    return $cart['product']->price * $cart['quantity'];
+                }
+            });
+            return response()->json([
+                'success' => true,
+                'total' => $totalPrice,
+                'count' => $cart->all()->count(),
+                'message' => 'محصول با موفقیت از سبد خرید حذف شد'
+            ] , 200);
+        }catch(\Exception $exception) {
+            return response()->json([
+                'success' => false,
+                'message' => $exception->getMessage()
+            ] , 400);
+        }
     }
 }

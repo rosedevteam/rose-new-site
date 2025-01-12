@@ -65,7 +65,10 @@
                                         </div>
                                     @else
                                         <div class="price-wrapper">
-                                            <p class="price text-decoration-none fw-bold text-black">13.000.000 تومان</p>
+                                            <p class="price text-decoration-none fw-bold text-black">
+                                                {{number_format($product->price)}}
+                                                تومان
+                                            </p>
                                         </div>
                                    @endif
                                @endif

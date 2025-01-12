@@ -254,7 +254,6 @@
     @endsection
     @section('footer')
         <script src="{{asset('assets/front/js/rose-video-player.js')}}"></script>
-        <script src="{{asset('assets/front/js/single-product.js')}}"></script>
     @stop
 
 @endcomponent
