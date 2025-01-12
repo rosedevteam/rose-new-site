@@ -17,5 +17,6 @@
     "StudentReport": true,
     "PageBuilder": true,
     "Wallet": true,
-    "Podcast": true
+    "Podcast": true,
+    "Cart": true
 }
