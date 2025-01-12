@@ -39,10 +39,9 @@ class LoginController extends Controller
                     'phone' => $validData['phone'],
                 ] , 200);
             }else{
-//                if (RegisterOtp::hasLiveCode()) {
-//                    throw new \Exception('کد تایید برای شما ارسال شده است. جهت ارسال دوباره کد تایید لطفا صبر کنید');
-//
-//                }
+                if (RegisterOtp::hasLiveCode()) {
+                    throw new \Exception('کد تایید برای شما ارسال شده است. جهت ارسال دوباره کد تایید لطفا صبر کنید');
+                }
                 return response()->json([
                     'success' => true,
                     'is_signed_up' => false,
