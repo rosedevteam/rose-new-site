@@ -8,6 +8,8 @@ use Modules\Auth\Models\OtpCode;
 use Modules\Comment\Models\Comment;
 use Modules\DailyReport\Models\DailyReport;
 use Modules\Discount\Models\Discount;
+use Modules\Discount\Models\DiscountRecord;
+use Modules\Discount\Models\DiscountUse;
 use Modules\Menu\Models\Menu;
 use Modules\Order\Models\Order;
 use Modules\Podcast\Models\Podcast;
@@ -107,9 +109,9 @@ class User extends \Illuminate\Foundation\Auth\User
         return $this->hasMany(Discount::class);
     }
 
-    public function discountsUsed()
+    public function discountRecords()
     {
-        return $this->belongsToMany(Discount::class, table: 'discount_user', foreignPivotKey: 'discount_id');
+        return $this->hasMany(DiscountRecord::class);
     }
 
     protected static function newFactory()

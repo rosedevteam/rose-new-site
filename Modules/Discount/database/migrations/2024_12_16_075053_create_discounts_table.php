@@ -27,13 +27,6 @@ return new class extends Migration {
             $table->foreignId('discount_id')->constrained('discounts')->cascadeOnDelete();
             $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
         });
-
-        Schema::create('discount_user', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('discount_id')->constrained('discounts')->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('order_id')->constrained('orders')->cascadeOnDelete();
-        });
     }
 
     /**

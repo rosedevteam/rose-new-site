@@ -21,14 +21,14 @@ class Discount extends Model
         return $this->belongsToMany(Product::class);
     }
 
-    public function author()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 
-    public function users()
+    public function discountRecords()
     {
-        return $this->belongsToMany(User::class);
+        return $this->hasMany(DiscountRecord::class);
     }
 
     public function orders()
