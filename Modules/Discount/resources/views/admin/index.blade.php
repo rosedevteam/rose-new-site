@@ -124,10 +124,10 @@
                                                 %
                                             @endif</span></td>
                                     <td>@can('view-users')
-                                            <a href="{{ route('admin.users.edit', $discount->user) }}"
-                                               class="text-body text-truncate">{{ $discount->user->name() }}</a>
+                                            <a href="{{ route('admin.users.edit', $discount->author) }}"
+                                               class="text-body text-truncate">{{ $discount->author->name() }}</a>
                                         @else
-                                            {{ $discount->user->name() }}
+                                            {{ $discount->author->name() }}
                                         @endcan</td>
                                     <td>@if($discount->is_active)
                                             <span class="badge bg-success">فعال</span>

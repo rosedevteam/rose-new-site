@@ -4,6 +4,7 @@ namespace Modules\Order\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Discount\Models\Discount;
 use Modules\Order\Database\Factories\OrderFactory;
 use Modules\Payment\Models\Payment;
 use Modules\Product\Models\Product;
@@ -35,6 +36,11 @@ class Order extends Model
     public function walletTransaction()
     {
         return $this->belongsTo(WalletTransaction::class);
+    }
+
+    public function discount()
+    {
+        return $this->belongsToMany(Discount::class, table: 'discount_user');
     }
 
     protected static function newFactory()
