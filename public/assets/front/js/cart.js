@@ -1,7 +1,7 @@
 let addToCart =  $('#add-to-cart');
 let removeBtn = $('.remove-from-cart');
-let addDiscount = $('#submit-discount');
-let deleteDiscount = $('#delete-discount');
+// let addDiscount = $('#submit-discount');
+// let deleteDiscount = $('#delete-discount');
 
 addToCart.on('click' , function (e ) {
     e.preventDefault();
@@ -150,6 +150,10 @@ removeBtn.on('click' , function (e) {
                                              هیچ محصولی در سبد خرید شما نیست
                                          </div>
                 `)
+                deleteDiscount();
+            }
+            if (res.data.is_cart_discountable == false) {
+                deleteDiscount();
             }
             $.unblockUI();
         })
@@ -175,8 +179,8 @@ removeBtn.on('click' , function (e) {
         })
 })
 
-addDiscount.on('click' , function (e) {
-    e.preventDefault();
+function addDiscount() {
+    event.preventDefault();
     axios.post('/discount/check' , {
         cart: $('#cart-name').val(),
         discount: $('#discount-code').val()
@@ -185,7 +189,7 @@ addDiscount.on('click' , function (e) {
             const Toast = Swal.mixin({
                 toast: true,
                 position: "top-end",
-                showConfirmButton: true,
+                showConfirmButton: false,
                 customClass: {
                     confirmButton: "btn btn-sm btn-default w-100"
                 },
@@ -201,6 +205,18 @@ addDiscount.on('click' , function (e) {
                 title: "موفق",
                 text: res.data.message,
             })
+
+            $('.discount-code-wrapper').remove();
+            $('.discount-form-wrapper').html(`
+            <div class="d-flex align-items-center justify-content-between mb-3 title fw-bold">کد تخفیف فعال : <span class="text-success">${res.data.discount_code}</span> <a
+                                            class="btn btn-sm btn-danger" onclick="deleteDiscount()">حذف</a></div>
+                                    <div class="d-flex align-items-center justify-content-between title fw-bold">مبلغ تخفیف : <span class="text-success">${res.data.discount_amount.toLocaleString()} تومان </span></div>
+            `);
+            let total = res.data.cart_total - res.data.discount_amount
+            $('.cart-total').html(`
+            ${total.toLocaleString()}
+            تومان
+            `)
             $.unblockUI();
 
         })
@@ -223,10 +239,11 @@ addDiscount.on('click' , function (e) {
             });
             $.unblockUI();
         })
-})
+}
 
-deleteDiscount.on('click' , function (e) {
-    e.preventDefault();
+function deleteDiscount() {
+    event.preventDefault();
+
     axios.delete('/discount/delete' , {
         data: {
             cart: $('#cart-name').val()
@@ -236,7 +253,7 @@ deleteDiscount.on('click' , function (e) {
             const Toast = Swal.mixin({
                 toast: true,
                 position: "top-end",
-                showConfirmButton: true,
+                showConfirmButton: false,
                 customClass: {
                     confirmButton: "btn btn-sm btn-default w-100"
                 },
@@ -252,6 +269,19 @@ deleteDiscount.on('click' , function (e) {
                 title: "موفق",
                 text: res.data.message,
             });
+
+            $('.discount-info').remove();
+            $('.discount-form-wrapper').html(`
+            <form class="discount-code-wrapper">
+                                        <input type="text" class="form-control b-none" placeholder="کد تخفیف"
+                                               name="discount-code" id="discount-code">
+                                        <button class="btn btn-sm btn-default" onclick="addDiscount()">اعمال</button>
+                                    </form>
+            `)
+            $('.cart-total').html(`
+            ${res.data.cart_total.toLocaleString()}
+            تومان
+            `)
             $.unblockUI();
 
         })
@@ -274,4 +304,4 @@ deleteDiscount.on('click' , function (e) {
             });
             $.unblockUI();
         })
-})
+}

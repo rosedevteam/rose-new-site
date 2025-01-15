@@ -204,6 +204,7 @@ class CartController extends Controller
                 'success' => true,
                 'total' => $totalPrice,
                 'count' => $cart->all()->count(),
+                'is_cart_discountable' => $cart->isCartDiscountable(),
                 'message' => 'محصول با موفقیت از سبد خرید حذف شد'
             ] , 200);
         }catch(\Exception $exception) {
