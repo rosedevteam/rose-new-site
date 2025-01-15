@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Analytics\Http\Controllers\AnalyticsController;
+use Modules\Analytics\Http\Controllers\front\AnalyticsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +14,5 @@ use Modules\Analytics\Http\Controllers\AnalyticsController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('analytics', AnalyticsController::class)->names('analytics');
-});
+
+Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.index');

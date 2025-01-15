@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Analytics\Http\Controllers\front\AnalyticsController;
 
 /*
  *--------------------------------------------------------------------------
@@ -14,7 +13,7 @@ use Modules\Analytics\Http\Controllers\front\AnalyticsController;
  *
 */
 
-Route::prefix('/v1')->controller(AnalyticsController::class)->group(function () {
+Route::controller(ApiClient::class)->group(function () {
     Route::get('/token', 'token');
     Route::get('/companies', 'companies');
     Route::get('/indices', 'indices');
