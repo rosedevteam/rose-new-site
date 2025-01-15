@@ -4,6 +4,7 @@ namespace Modules\Discount\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Order\Models\Order;
 use Modules\Product\Models\Product;
 use Modules\User\Models\User;
 
@@ -25,9 +26,14 @@ class Discount extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function users()
+    public function discountRecords()
     {
-        return $this->belongsToMany(User::class);
+        return $this->hasMany(DiscountRecord::class);
+    }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class);
     }
 
 }

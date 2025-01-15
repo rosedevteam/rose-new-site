@@ -7,6 +7,9 @@ use Illuminate\Notifications\Notifiable;
 use Modules\Auth\Models\OtpCode;
 use Modules\Comment\Models\Comment;
 use Modules\DailyReport\Models\DailyReport;
+use Modules\Discount\Models\Discount;
+use Modules\Discount\Models\DiscountRecord;
+use Modules\Discount\Models\DiscountUse;
 use Modules\Menu\Models\Menu;
 use Modules\Order\Models\Order;
 use Modules\Podcast\Models\Podcast;
@@ -99,6 +102,16 @@ class User extends \Illuminate\Foundation\Auth\User
     public function podcasts()
     {
         return $this->hasMany(Podcast::class);
+    }
+
+    public function discountsCreated()
+    {
+        return $this->hasMany(Discount::class);
+    }
+
+    public function discountRecords()
+    {
+        return $this->hasMany(DiscountRecord::class);
     }
 
     protected static function newFactory()

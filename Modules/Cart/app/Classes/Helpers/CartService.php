@@ -5,7 +5,6 @@ namespace Modules\Cart\Classes\Helpers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
-use Modules\Discount\Database\Seeders\DiscountDatabaseSeeder;
 use Modules\Discount\Models\Discount;
 
 class CartService
@@ -193,11 +192,23 @@ class CartService
     protected function checkDiscountValidate($item, $discount)
     {
         $discount = Discount::where('code', $discount)->where('is_active', 1)->first();
+//        $product = Product::findOrFail($item['product']->id);
+//
+//        if (is_Null($discount)) return $item;
+//        if ($discount->expires_at < now()) return $item;
+//        if (!$discount->products->contains($product)) return $item;
+//        if ($discount->discountRecords()->where('user_id', auth()->id())->count() == $discount->limit) return $item;
+//
+//        if ($discount->type == 'amount') {
+//            $item['discount_amount'] = $discount->amount;
+//        } else {
+//            $item['discount_amount'] = ($discount->amount / 100) * ($product->sale_price ?: $product->price);
+//        }
+
         if ($discount && $discount->expires_at > now()) {
             if (
                 (!$discount->products->count()) ||
                 in_array($item['product']->id, $discount->products->pluck('id')->toArray())) {
-                $item['discount_amount'] = $discount->amount;
             }
         }
         return $item;
