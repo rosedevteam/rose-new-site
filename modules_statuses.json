@@ -18,5 +18,6 @@
     "PageBuilder": true,
     "Wallet": true,
     "Podcast": true,
-    "Cart": true
+    "Cart": true,
+    "Analytics": true
 }
