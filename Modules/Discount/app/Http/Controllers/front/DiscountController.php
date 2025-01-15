@@ -28,15 +28,14 @@ class DiscountController extends Controller
 
             $discount = Discount::where('code' , $validated['discount'])->where('is_active' , 1)->first();
 
+            if ($discount->discountRecords->count() <= $discount->limit) {
+                throw new \Exception('امکان استفاده از این کد تخفیف نیست');
+            }
+
             if( $discount->expires_at < now() ) {
                 throw new \Exception('مهلت استفاده از این کد تخفیف به پایان رسیده است');
             }
 
-            if( $discount->users()->count() ) {
-                if(! in_array( auth()->user()->id ,  $discount->users->pluck('id')->toArray() ) ) {
-                    throw new \Exception('شما قادر به استفاده از این کد تخفیف نیستید');
-                }
-            }
 
             if ($cart->all()->count() == 0) {
                 throw new \Exception('هیچ محصولی در سبد خرید نیست');
