@@ -4,6 +4,7 @@ namespace Modules\Discount\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Discount\Database\Factories\DiscountFactory;
 use Modules\Order\Models\Order;
 use Modules\Product\Models\Product;
 use Modules\User\Models\User;
@@ -36,4 +37,8 @@ class Discount extends Model
         return $this->belongsToMany(Order::class);
     }
 
+    protected static function newFactory(): DiscountFactory
+    {
+        return DiscountFactory::new();
+    }
 }
