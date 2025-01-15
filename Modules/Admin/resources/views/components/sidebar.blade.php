@@ -129,5 +129,13 @@
                 </a>
             </li>
         @endcan
+            @can('manage-channels')
+                <li @class(["menu-item", 'active' => $route == 'channels'])>
+                    <a href="{{ route("admin.channels.index") }}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-file"></i>
+                        <div data-i18n="کانال ها">کانال ها</div>
+                    </a>
+                </li>
+            @endcan
     </ul>
 </aside>

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Modules\Category\Models\Category;
+use Modules\Channel\Models\Channel;
 use Modules\Comment\Models\Comment;
 use Modules\Discount\Models\Discount;
 use Modules\Metadata\Models\Metadata;
@@ -82,6 +83,11 @@ class Product extends Model
             return true;
         }
         return false;
+    }
+
+    public function channels()
+    {
+        return $this->belongsToMany(Channel::class);
     }
 
     protected static function newFactory(): ProductFactory

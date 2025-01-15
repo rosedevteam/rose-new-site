@@ -5,6 +5,8 @@ namespace Modules\User\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Modules\Auth\Models\OtpCode;
+use Modules\Channel\Models\Channel;
+use Modules\Channel\Models\Message;
 use Modules\Comment\Models\Comment;
 use Modules\DailyReport\Models\DailyReport;
 use Modules\Discount\Models\Discount;
@@ -112,6 +114,16 @@ class User extends \Illuminate\Foundation\Auth\User
     public function discountRecords()
     {
         return $this->hasMany(DiscountRecord::class);
+    }
+
+    public function channels()
+    {
+        return $this->belongsToMany(Channel::class);
+    }
+
+    public function channelMessages()
+    {
+        return $this->hasMany(Message::class);
     }
 
     protected static function newFactory()
