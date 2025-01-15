@@ -12,6 +12,8 @@ use Modules\User\Models\User;
 
 class ChannelController extends Controller
 {
+
+    //todo fix channel module , send message,file,voice etc
     use SEOTools;
 
     public function index()

@@ -207,7 +207,7 @@ function getChannel(id) {
         return config
     });
 
-    getChannelRequest.get(`/kara-fa/channel/get/${id}` , {
+    getChannelRequest.get(`/kara-fa/channels/get/${id}` , {
         params: {
             page : channelMessagesPage
         }

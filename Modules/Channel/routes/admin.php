@@ -1,4 +1,6 @@
 <?php
+
+
 Route::resources(['channels' => 'ChannelController']);
 Route::get('channels/get/{channel}' , [\Modules\Channel\Http\Controllers\admin\ChannelController::class , 'get']);
 Route::get('channel/get/users/{channel}' , [\Modules\Channel\Http\Controllers\admin\ChannelController::class  , 'getUsers']);
