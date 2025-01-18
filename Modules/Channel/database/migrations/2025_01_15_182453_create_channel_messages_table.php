@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('channel_id')->constrained('channels')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->longText('text');
-            $table->enum('type' , ['text' , 'voice' , 'image']);
+            $table->longText('text')->nullable();
+            $table->enum('type' , ['text' , 'voice' , 'image' , 'file']);
             $table->bigInteger('views');
             $table->timestamps();
         });

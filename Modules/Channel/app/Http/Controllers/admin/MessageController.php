@@ -3,6 +3,7 @@
 namespace Modules\Channel\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\traits\Upload;
 use Hekmatinasser\Verta\Facades\Verta;
 use Illuminate\Http\Request;
 use Modules\Channel\Models\Channel;
@@ -10,9 +11,10 @@ use Modules\Channel\Models\Message;
 
 class MessageController extends Controller
 {
+    use Upload;
+
     public function send(Request $request, Channel $channel)
     {
-
         try {
             $validData = $request->validate([
                 'message_required' => 'nullable',
@@ -21,29 +23,32 @@ class MessageController extends Controller
                 'voice' => 'nullable',
                 'message' => 'required_if:message_required,==,true',
             ]);
+
             $filePath = null;
             $isFile = 0;
             $type = 'text';
 
             if ($validData['voice'] == 'true') {
-                $mime = pathinfo($validData['file']->getClientOriginalName() , PATHINFO_EXTENSION);
+                $mime = pathinfo($validData['file']->getClientOriginalName(), PATHINFO_EXTENSION);
                 $type = 'voice';
-                $filePath = "/files/$channel->id/voices/" . uploader($request, 'file', 'files/' . $channel->id . '/voices');
+
+                $filePath = '/uploads/' . $this->uploadFile($request['file'], $channel->id . '/voices');;
             } else {
                 if (isset($validData['file'])) {
-                    $mime = pathinfo($validData['file']->getClientOriginalName() , PATHINFO_EXTENSION);
+                    $mime = pathinfo($validData['file']->getClientOriginalName(), PATHINFO_EXTENSION);
                     $isFile = 1;
-                    if (($mime == 'png') || ($mime =='jpg') || ($mime == 'jpeg')) {
+                    if (($mime == 'png') || ($mime == 'jpg') || ($mime == 'jpeg')) {
                         $type = 'image';
                         $folder = 'images';
-                    }elseif (($mime == 'mp4') || ($mime == 'mpeg4')) {
+                    } elseif (($mime == 'mp4') || ($mime == 'mpeg4')) {
                         $type = 'video';
                         $folder = 'videos';
-                    }else {
+                    } else {
                         $type = 'file';
                         $folder = 'files';
                     }
-                    $filePath = "/files/$channel->id/$folder/" . uploader($request, 'file', 'files/' . $channel->id . "/$folder");
+
+                    $filePath = '/uploads/' . $this->uploadFile($request['file'], $channel->id . "/$folder");
                 }
             }
             $message = $channel->messages()->create([
@@ -52,7 +57,6 @@ class MessageController extends Controller
                 'views' => 0,
                 'type' => $type
             ]);
-
 
             if (isset($validData['file'])) {
                 $message->file()->create([
@@ -74,10 +78,6 @@ class MessageController extends Controller
             }
 
 
-
-            $channel->update([
-                'status' => 'پاسخ داده شده'
-            ]);
             return response()->json([
                 'status' => 200,
                 'isVoice' => $validData['voice'],
@@ -90,7 +90,7 @@ class MessageController extends Controller
                 'message' => $message->text,
                 'avatar' => $channel->avatar,
                 'date' => Verta::instance($message->created_at)->formatJalaliDate(),
-                'user' => $message->user->name . ' ' . $message->user->lastname
+                'user' => $message->user->first_name . ' ' . $message->user->last_name
             ]);
 
         } catch (\Throwable $e) {

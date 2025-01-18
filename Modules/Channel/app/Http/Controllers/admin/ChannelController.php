@@ -186,6 +186,7 @@ class ChannelController extends Controller
     public function get(Channel $channel , Request $request)
     {
         $messages = null;
+
         if ($channel->messages->count()) {
             foreach ($channel->messages as $message) {
                 $hasFile = false;
@@ -215,7 +216,7 @@ class ChannelController extends Controller
                         'caption' => $fileCaption
                     ],
                     'views' => $message->views,
-                    'user' => $message->user->name . ' ' . $message->user->lastname,
+                    'user' => $message->user->first_name . ' ' . $message->user->last_name,
                     'date' => Verta::instance($message->created_at)->formatJalaliDate(),
                     'created_at' => $message->created_at
                 ];
@@ -249,8 +250,8 @@ class ChannelController extends Controller
         $users = $channel->users->map(function ($item) {
             return [
                 'id' => $item->id,
-                'name' => $item->name,
-                'lastname' => $item->lastname,
+                'name' => $item->first_name,
+                'lastname' => $item->last_name,
                 'phone' => $item->phone
             ];
         });

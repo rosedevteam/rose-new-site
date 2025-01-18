@@ -203,10 +203,10 @@
                                                                 data-bs-dismiss="modal">
                                                             بستن
                                                         </button>
-                                                        {{--                                                <button type="button" class="btn btn-primary"--}}
-                                                        {{--                                                        onclick="sendFile({{$channel->id}})" id="sendFileButton">ارسال--}}
-                                                        {{--                                                    فایل--}}
-                                                        {{--                                                </button>--}}
+                                                                                                        <button type="button" class="btn btn-primary"
+                                                                                                                onclick="sendFile({{$channel->id}})" id="sendFileButton">ارسال
+                                                                                                            فایل
+                                                                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -243,7 +243,7 @@
                                         </button>
                                     </div>
                                 </div>
-                                <div class="edit-message-wrapper align-items-center">
+                                <div class="edit-message-wrapper align-items-center" style="display: none">
                                     <div class="d-flex align-items-center">
                                         <div class="dismiss-edit">
                                             <a type="button" class="me-3" onclick="dismissEdit()">
