@@ -63,6 +63,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        if (in_array($product->status, ['draft', 'hidden'])) abort(404);
         return view('product::front.show', compact('product'));
     }
 
