@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('trades', function (Blueprint $table) {
             $table->id();
             $table->string('coID');
-            $table->string('precedencyRight');
+            $table->boolean('precedencyRight');
             $table->string('boourseSymbol');
             $table->string('fullTitle');
             $table->string('tseSymbolCode');
@@ -29,7 +29,6 @@ return new class extends Migration {
             $table->string('previousClosePrice');
             $table->string('lastPrice');
             $table->string('closingPriceChange');
-            $table->string('closingPChgPercent');
             $table->string('closingPChgPercent');
             $table->string('shareCount');
             $table->string('marketValue');

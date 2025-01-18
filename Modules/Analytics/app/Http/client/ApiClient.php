@@ -36,12 +36,12 @@ class ApiClient
 
     public static function companies()
     {
-        return Http::get(self::url . '/v3/BaseInfo/Companies');
+        return json_decode(Http::get(self::url . '/v3/BaseInfo/Companies'), true);
     }
 
     public static function indices()
     {
-        return Http::get('https://data.nadpco.com/v1/baseInfo/Indices');
+        return json_decode(Http::get('https://data.nadpco.com/v1/baseInfo/Indices'), true);
     }
 
     public static function trades($id)
@@ -68,7 +68,7 @@ class ApiClient
         }
     }
 
-    public function indexValues($id)
+    public static function indexValues($id)
     {
         try {
             $response = Http::withToken(self::getToken())
@@ -86,7 +86,7 @@ class ApiClient
             $response = Http::withToken(self::getToken())
                 ->withQueryParameters(['companyId' => $id])
                 ->get(self::url . '/v3/TS/RealTimeBidAskToday');
-            return json_decode($response->body(), true)['data'];
+            return json_decode($response->body(), true);
         } catch (ConnectionException $e) {
             dd($e->getMessage());
         }

@@ -15,4 +15,14 @@ use Modules\Analytics\Http\Controllers\front\AnalyticsController;
 */
 
 
-Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
+Route::prefix('/analytics')->controller(AnalyticsController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/companies', 'companies');
+    Route::get('/companies/{coId}', 'companies');
+    Route::get('/indices', 'indices');
+    Route::get('/indices/{indexId}', 'indices');
+    Route::get('/trades/{coId}', 'trades');
+    Route::get('/legalTrades/{coId}', 'legalTrades');
+    Route::get('/indexValues/{indexId}', 'indexValues');
+    Route::get('/bidAsk/{coId}', 'bidAsk');
+});

@@ -11,13 +11,6 @@ class LegalTrade extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     */
-    protected $fillable = [];
+    protected $guarded;
 
-    // protected static function newFactory(): LegalTradeFactory
-    // {
-    //     // return LegalTradeFactory::new();
-    // }
 }

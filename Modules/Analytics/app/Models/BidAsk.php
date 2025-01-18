@@ -11,13 +11,6 @@ class BidAsk extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     */
-    protected $fillable = [];
+    protected $guarded;
 
-    // protected static function newFactory(): BidAskFactory
-    // {
-    //     // return BidAskFactory::new();
-    // }
 }

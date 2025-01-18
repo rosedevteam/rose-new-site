@@ -11,13 +11,5 @@ class Trade extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     */
-    protected $fillable = [];
-
-    // protected static function newFactory(): TradeFactory
-    // {
-    //     // return TradeFactory::new();
-    // }
+    protected $guarded;
 }
