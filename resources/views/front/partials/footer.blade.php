@@ -29,12 +29,12 @@
                     <p><strong>دسترسی سریع</strong></p>
                     <ul>
                         <li>
-                            <a href="https://roseoj.com/product-category/%d8%af%d9%88%d8%b1%d9%87-%d9%87%d8%a7/">دوره
+                            <a href="{{ route('products.index') }}">دوره
                                 ها</a></li>
                         <li>
-                            <a href="https://roseoj.com/contact/">تماس با ما</a></li>
+                            <a href="{{ route('contact') }}">تماس با ما</a></li>
                         <li>
-                            <a href="https://roseoj.com/%d9%87%d9%85%da%a9%d8%a7%d8%b1%db%8c-%d8%a8%d8%a7-%d9%85%d8%a7-2/">همکاری
+                            <a href="{{ route('joboffers.index') }}">همکاری
                                 با ما</a>
                         </li>
                     </ul>
@@ -44,8 +44,8 @@
                 <div class="footer-inner">
                     <p><strong>پیوند ها</strong></p>
                     <ul>
-                        <li><a href="/blog">وبلاگ</a></li>
-                        <li><a href="/podcast">پادکست</a></li>
+                        <li><a href="{{ route('posts.index') }}">وبلاگ</a></li>
+                        <li><a href="{{ route('podcasts.index') }}">پادکست</a></li>
                         <li>
                             <a href="https://roseoj.com/product/%d8%af%d9%88%d8%b1%d9%87-%d9%85%d9%82%d8%af%d9%85%d8%a7%d8%aa%db%8c-%d8%a8%d9%88%d8%b1%d8%b3/">دوره
                                 مقدماتی بورس</a></li>
@@ -67,15 +67,15 @@
             <div class="col-md-2">
                 <div class="footer-inner">
                     <p><strong>نماد ها</strong></p>
-                    <a href="https://roseoj.com/about/" class="mt-4">
+                    <a href="{{ route('about') }}" class="mt-4">
                         <img data-lazyloaded="1"
-                             src="https://roseoj.com/wp-content/uploads/2024/08/ENAMADpng.parspng.com_.png" width="125"
+                             src="assets/front/images/enamad.png" width="125"
                              height="136"
-                             data-src="https://roseoj.com/wp-content/uploads/2024/08/ENAMADpng.parspng.com_.png"
+                             data-src="assets/front/images/enamad.png"
                              class="attachment-full size-full wp-image-26673 entered litespeed-loaded" alt=""
                              data-ll-status="loaded">
                         <noscript><img width="125" height="136"
-                                       src="https://roseoj.com/wp-content/uploads/2024/08/ENAMADpng.parspng.com_.png"
+                                       src="assets/front/images/enamad.png"
                                        class="attachment-full size-full wp-image-26673" alt=""/></noscript>
                     </a>
                 </div>

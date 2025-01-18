@@ -34,7 +34,7 @@ class Category extends Model
 
     public function jobOffers()
     {
-        return $this->hasOne(JobOffer::class);
+        return $this->morphedByMany(JobOffer::class, 'categoryable');
     }
 
     public function parent()

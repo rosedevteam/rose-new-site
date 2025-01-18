@@ -42,9 +42,7 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        if ($post->status != 'public') {
-            abort(404);
-        }
+        if ($post->status != 'public') abort(404);
         $this->seo()->setTitle($post->metadata?->title ?: $post->title);
         $categories = Category::where('archive_slug', "!=", null)
             ->where('type', 'post')

@@ -17,9 +17,7 @@ class StudentReportController extends Controller
 
     public function show(StudentReport $studentReport)
     {
-        if ($studentReport->status != 'approved') {
-            abort(404);
-        }
+        if ($studentReport->status != 'approved') abort(404);
 
         $filePath = storage_path('app/private/student-reports/' . $studentReport->analysis);
         if (file_exists($filePath)) {

@@ -13,7 +13,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function all()
+    public function index()
     {
         $this->seo()->setTitle('دوره ها');
 
@@ -63,6 +63,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        if (in_array($product->status, ['draft', 'hidden'])) abort(404);
         return view('product::front.show', compact('product'));
     }
 

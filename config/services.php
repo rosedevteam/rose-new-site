@@ -49,5 +49,11 @@ return [
 
     'cart' => [
         'cookie-name' => env('CART_COOKIE_NAME')
+    ],
+
+    'nadpco_api' => [
+        'username' => env('NADPCO_API_USERNAME'),
+        'password' => env('NADPCO_API_PASSWORD'),
+        'token' => env('NADPCO_API_TOKEN'),
     ]
 ];

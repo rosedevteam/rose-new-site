@@ -22,6 +22,11 @@
                         <li>
                             <a class="dropdown-item" href="{{ route("admin.users.edit", auth()->user()) }}">
                                 <div class="d-flex align-items-center">
+                                    <div class="flex-shrink-0 me-3">
+                                        <div class="avatar avatar-online">
+                                            <img src="/assets/admin/img/avatars/user.png" alt="" class="rounded-circle">
+                                        </div>
+                                    </div>
                                     <div class="flex-grow-1">
                                         <span
                                             class="fw-semibold d-block">{{ auth()->user()->name() }}</span>
