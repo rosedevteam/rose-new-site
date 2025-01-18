@@ -36,14 +36,12 @@ class ApiClient
 
     public static function companies()
     {
-        $response = Http::get(self::url . '/v3/BaseInfo/Companies');
-        dd(json_decode($response->body(), true));
+        return Http::get(self::url . '/v3/BaseInfo/Companies');
     }
 
     public static function indices()
     {
-        $response = Http::get('https://data.nadpco.com/v1/baseInfo/Indices');
-        dd(json_decode($response->body(), true));
+        return Http::get('https://data.nadpco.com/v1/baseInfo/Indices');
     }
 
     public static function trades($id)
@@ -52,7 +50,7 @@ class ApiClient
             $response = Http::withToken(self::getToken())
                 ->withQueryParameters(['companyId' => $id])
                 ->get(self::url . '/v3/TS/RealTimeTradesToday');
-            dd(json_decode($response->body(), true));
+            return json_decode($response->body(), true);
         } catch (ConnectionException $e) {
             dd($e->getMessage());
         }
@@ -62,9 +60,9 @@ class ApiClient
     {
         try {
             $response = Http::withToken(self::getToken())
-                ->withQueryParameters(['companyId' => $id,])
-                ->get(self::url . '/v3/TS/RealTimeLegalTradesToday');
-            dd(json_decode($response->body(), true));
+                ->withQueryParameters(['companyId' => $id])
+                ->get(self::url . '/v3/TS/RealTimeRealLegalTradesToday');
+            return json_decode($response->body(), true);
         } catch (ConnectionException $e) {
             dd($e->getMessage());
         }
@@ -76,7 +74,7 @@ class ApiClient
             $response = Http::withToken(self::getToken())
                 ->withQueryParameters(['indexId' => $id])
                 ->get(self::url . '/v3/TS/RealTimeIndexValuesToday');
-            dd(json_decode($response->body(), true));
+            return json_decode($response->body(), true);
         } catch (ConnectionException $e) {
             dd($e->getMessage());
         }
@@ -88,7 +86,7 @@ class ApiClient
             $response = Http::withToken(self::getToken())
                 ->withQueryParameters(['companyId' => $id])
                 ->get(self::url . '/v3/TS/RealTimeBidAskToday');
-            dd(json_decode($response->body(), true));
+            return json_decode($response->body(), true)['data'];
         } catch (ConnectionException $e) {
             dd($e->getMessage());
         }

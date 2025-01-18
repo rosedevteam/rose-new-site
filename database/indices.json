@@ -1,0 +1,570 @@
+[
+    {
+        "IndexID": 1,
+        "IndexName": "ساخت محصولات فلزی",
+        "IndexNameEnglish": "Manufacture of fabricated metal products, except machinery and equipment",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "1123534346391630"
+    },
+    {
+        "IndexID": 2,
+        "IndexName": "مواد و محصولات دارویی",
+        "IndexNameEnglish": "Manufacture of pharmaceuticals, medicinal chemicals and botanical products",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "3615666621538524"
+    },
+    {
+        "IndexID": 3,
+        "IndexName": "انبوه سازی املاک و مستغلات",
+        "IndexNameEnglish": "Real estate activities",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "4654922806626448"
+    },
+    {
+        "IndexID": 4,
+        "IndexName": "رایانه و فعالیت های وابسته به آن",
+        "IndexNameEnglish": "Computer and related activities",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "8900726085939949"
+    },
+    {
+        "IndexID": 5,
+        "IndexName": "شاخص 30 شرکت بزرگ",
+        "IndexNameEnglish": "Top 30 Index",
+        "IndexGroupID": 1,
+        "IndexGrpName": "شاخص های کل در بورس",
+        "IndexTseCode": "10523825119011581"
+    },
+    {
+        "IndexID": 7,
+        "IndexName": "ماشین آلات و تجهیزات",
+        "IndexNameEnglish": "Manufacture of machinery and equipment n.e.c.",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "11451389074113298"
+    },
+    {
+        "IndexID": 8,
+        "IndexName": "فراورده نفتی، کک و سوخت هسته ای",
+        "IndexNameEnglish": "Manufacture of coke, refined petroleum products and nuclear fuel",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "12331083953323969"
+    },
+    {
+        "IndexID": 9,
+        "IndexName": "استخراج کانه های فلزی",
+        "IndexNameEnglish": "Mining of metal ores",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "13235969998952202"
+    },
+    {
+        "IndexID": 10,
+        "IndexName": "سایر محصولات کانی غیرفلزی",
+        "IndexNameEnglish": "Manufacture of other non-metallic mineral product",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "14651627750314021"
+    },
+    {
+        "IndexID": 11,
+        "IndexName": "محصولات غذایی و آشامیدنی به جز قند و شکر",
+        "IndexNameEnglish": "Manufacture of food products and beverages except suger",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "15508900928481581"
+    },
+    {
+        "IndexID": 12,
+        "IndexName": "استخراج ذغال سنگ",
+        "IndexNameEnglish": "Mining of coal and lignite; extraction of peat",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "19219679288446732"
+    },
+    {
+        "IndexID": 13,
+        "IndexName": "خودرو و ساخت قطعات",
+        "IndexNameEnglish": "Manufacture of motor vehicles, trailers and semi-trailers",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "20213770409093165"
+    },
+    {
+        "IndexID": 14,
+        "IndexName": "قند و شکر",
+        "IndexNameEnglish": "Manufacture of sugar",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "21948907150049163"
+    },
+    {
+        "IndexID": 15,
+        "IndexName": "حمل و نقل، انبارداری و ارتباطات",
+        "IndexNameEnglish": "Transportation and storage",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "24187097921483699"
+    },
+    {
+        "IndexID": 16,
+        "IndexName": "ساخت دستگاه ها و وسایل ارتباطی",
+        "IndexNameEnglish": "Manufacture of radio, television and communication equipment and apparatus",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "24733701189547084"
+    },
+    {
+        "IndexID": 17,
+        "IndexName": "سایر واسطه گری های مالی",
+        "IndexNameEnglish": "Other financial intermediation",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "25163959460949732"
+    },
+    {
+        "IndexID": 18,
+        "IndexName": "انتشار، چاپ و تکثیر",
+        "IndexNameEnglish": "Publishing, printing and reproduction of recorded media",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "25766336681098389"
+    },
+    {
+        "IndexID": 19,
+        "IndexName": "مبلمان و مصنوعات دیگر",
+        "IndexNameEnglish": "Manufacture of furniture; manufacturing n.e.c.",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "29331053506731535"
+    },
+    {
+        "IndexID": 20,
+        "IndexName": "محصولات کاغذی",
+        "IndexNameEnglish": "Manufacture of paper and paper products",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "30106839080444358"
+    },
+    {
+        "IndexID": 21,
+        "IndexName": "قیمت و بازده نقدی",
+        "IndexNameEnglish": "TEPIX",
+        "IndexGroupID": 1,
+        "IndexGrpName": "شاخص های کل در بورس",
+        "IndexTseCode": "30655480864841493"
+    },
+    {
+        "IndexID": 22,
+        "IndexName": "شاخص کل",
+        "IndexNameEnglish": "TEDPIX",
+        "IndexGroupID": 1,
+        "IndexGrpName": "شاخص های کل در بورس",
+        "IndexTseCode": "32097828799138957"
+    },
+    {
+        "IndexID": 23,
+        "IndexName": "فلزات اساسی",
+        "IndexNameEnglish": "Manufacture of basic metals",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "32453344048876642"
+    },
+    {
+        "IndexID": 24,
+        "IndexName": "محصولات شیمیایی",
+        "IndexNameEnglish": "Manufacture of chemicals and chemical products",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "33626672012415176"
+    },
+    {
+        "IndexID": 25,
+        "IndexName": "ماشین آلات و دستگاههای برقی",
+        "IndexNameEnglish": "Manufacture of electrical machinery and apparatus n.e.c.",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "33878047680249697"
+    },
+    {
+        "IndexID": 26,
+        "IndexName": "سرمایه گذاریها",
+        "IndexNameEnglish": "Investment",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "34295935482222451"
+    },
+    {
+        "IndexID": 27,
+        "IndexName": "مواد و محصولات شیمیایی",
+        "IndexNameEnglish": "Manufacture of chemicals and chemical products",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "34406437210199542"
+    },
+    {
+        "IndexID": 28,
+        "IndexName": "زراعت و خدمات وابسته",
+        "IndexNameEnglish": "Agriculture and related service activities",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "34408080767216529"
+    },
+    {
+        "IndexID": 29,
+        "IndexName": "لاستیک و پلاستیک",
+        "IndexNameEnglish": "Manufacture of rubber and plastics products",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "36469751685735891"
+    },
+    {
+        "IndexID": 30,
+        "IndexName": "فراورده های غذایی و آشامیدنی",
+        "IndexNameEnglish": "Manufacture of food products and beverages",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "38079223580972392"
+    },
+    {
+        "IndexID": 31,
+        "IndexName": "شرکت های چند رشته ای صنعتی",
+        "IndexNameEnglish": "Multidisciplinary industrial activities",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "40355846462826897"
+    },
+    {
+        "IndexID": 32,
+        "IndexName": "مخابرات",
+        "IndexNameEnglish": "Telecommunications",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "41867092385281437"
+    },
+    {
+        "IndexID": 33,
+        "IndexName": "پیمانکاری صنعتی",
+        "IndexNameEnglish": "Industrial Construction",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "41934470778361119"
+    },
+    {
+        "IndexID": 34,
+        "IndexName": "شاخص صنعت",
+        "IndexNameEnglish": "Industry Index",
+        "IndexGroupID": 1,
+        "IndexGrpName": "شاخص های کل در بورس",
+        "IndexTseCode": "43754960038275285"
+    },
+    {
+        "IndexID": 35,
+        "IndexName": "شاخص 50 شرکت برتر",
+        "IndexNameEnglish": "Top 50 Index",
+        "IndexGroupID": 1,
+        "IndexGrpName": "شاخص های کل در بورس",
+        "IndexTseCode": "46342955726788357"
+    },
+    {
+        "IndexID": 36,
+        "IndexName": "خدمات فنی مهندسی",
+        "IndexNameEnglish": "Engineering and other technical activities",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "47233872677452574"
+    },
+    {
+        "IndexID": 38,
+        "IndexName": "شاخص آزاد شناور",
+        "IndexNameEnglish": "Free Float Index",
+        "IndexGroupID": 1,
+        "IndexGrpName": "شاخص های کل در بورس",
+        "IndexTseCode": "49579049405614711"
+    },
+    {
+        "IndexID": 39,
+        "IndexName": "کاشی و سرامیک",
+        "IndexNameEnglish": "Manufacture of structural non-refractory clay and ceramic products",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "57616105980228781"
+    },
+    {
+        "IndexID": 40,
+        "IndexName": "سایر تجهیزات حمل و نقل",
+        "IndexNameEnglish": "Manufacture of other transport equipment",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "58231368623465359"
+    },
+    {
+        "IndexID": 41,
+        "IndexName": "محصولات چوبی",
+        "IndexNameEnglish": "Manufacture of wood and of products of wood",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "58440550086834602"
+    },
+    {
+        "IndexID": 43,
+        "IndexName": "منسوجات",
+        "IndexNameEnglish": "Manufacture of textiles",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "59288237226302898"
+    },
+    {
+        "IndexID": 44,
+        "IndexName": "واسطه گری های مالی و پولی",
+        "IndexNameEnglish": "financial intermediation",
+        "IndexGroupID": 1,
+        "IndexGrpName": "شاخص های کل در بورس",
+        "IndexTseCode": "61247168213690670"
+    },
+    {
+        "IndexID": 45,
+        "IndexName": "ابزار پزشکی، اپتیکی و اندازه گیری",
+        "IndexNameEnglish": "Manufacture of medical, precision and optical instruments",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "61848754958448778"
+    },
+    {
+        "IndexID": 46,
+        "IndexName": "استخراج سایر معادن",
+        "IndexNameEnglish": "Other mining and quarrying",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "62691002126902464"
+    },
+    {
+        "IndexID": 47,
+        "IndexName": "شاخص بازار اول",
+        "IndexNameEnglish": "Main Board Index",
+        "IndexGroupID": 1,
+        "IndexGrpName": "شاخص های کل در بورس",
+        "IndexTseCode": "62752761908615603"
+    },
+    {
+        "IndexID": 48,
+        "IndexName": "استخراج نفت گاز و خدمات جنبی جز اکتشاف",
+        "IndexNameEnglish": "Extraction of crude petroleum and natural gas and service activities incidental to, excluding survey",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "65675836323214668"
+    },
+    {
+        "IndexID": 49,
+        "IndexName": "دباغی، پرداخت چرم و ساخت انواع پاپوش",
+        "IndexNameEnglish": "Tanning and dressing of leather; manufacture of footwear",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "69306841376553334"
+    },
+    {
+        "IndexID": 50,
+        "IndexName": "شاخص قیمت 50 شرکت",
+        "IndexNameEnglish": "Top 50 Price Index",
+        "IndexGroupID": 1,
+        "IndexGrpName": "شاخص های کل در بورس",
+        "IndexTseCode": "69932667409721265"
+    },
+    {
+        "IndexID": 51,
+        "IndexName": "سیمان، آهک و گچ",
+        "IndexNameEnglish": "Manufacture of cement, lime and plaster",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "70077233737515808"
+    },
+    {
+        "IndexID": 52,
+        "IndexName": "شاخص بازار دوم",
+        "IndexNameEnglish": "Secondry Board Index",
+        "IndexGroupID": 1,
+        "IndexGrpName": "شاخص های کل در بورس",
+        "IndexTseCode": "71704845530629737"
+    },
+    {
+        "IndexID": 53,
+        "IndexName": "بانکها و موسسات اعتباری",
+        "IndexNameEnglish": "Monetary intermediation",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "72002976013856737"
+    },
+    {
+        "IndexID": 54,
+        "IndexName": "بیمه و صندوق بازنشستگی به جز تامین اجتماعی",
+        "IndexNameEnglish": "Telecommunications",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "59105676994811497"
+    },
+    {
+        "IndexID": 56,
+        "IndexName": "بازار دوم فرابورس",
+        "IndexNameEnglish": "OTC Secondry Board Index",
+        "IndexGroupID": 3,
+        "IndexGrpName": "شاخص های فرابورس",
+        "IndexTseCode": "35898516735559137"
+    },
+    {
+        "IndexID": 57,
+        "IndexName": "شاخص کل فرابورس",
+        "IndexNameEnglish": "OTC Overall Index",
+        "IndexGroupID": 3,
+        "IndexGrpName": "شاخص های فرابورس",
+        "IndexTseCode": "43685683301327984"
+    },
+    {
+        "IndexID": 58,
+        "IndexName": "بازار اول فرابورس",
+        "IndexNameEnglish": "OTC Main Board Index",
+        "IndexGroupID": 3,
+        "IndexGrpName": "شاخص های فرابورس",
+        "IndexTseCode": "68337207779130851"
+    },
+    {
+        "IndexID": 59,
+        "IndexName": "شاخص قیمت(وزنی-ارزشی)",
+        "IndexNameEnglish": "Tse Price Index (Weight-Value)",
+        "IndexGroupID": 1,
+        "IndexGrpName": "شاخص های کل در بورس",
+        "IndexTseCode": "5798407779416661"
+    },
+    {
+        "IndexID": 60,
+        "IndexName": "شاخص قیمت (هم وزن)",
+        "IndexNameEnglish": "Tse Price Index (Same Weight)",
+        "IndexGroupID": 1,
+        "IndexGrpName": "شاخص های کل در بورس",
+        "IndexTseCode": "8384385859414435"
+    },
+    {
+        "IndexID": 61,
+        "IndexName": "شاخص کل (هم وزن)",
+        "IndexNameEnglish": "Tse Overal Index (Weight)",
+        "IndexGroupID": 1,
+        "IndexGrpName": "شاخص های کل در بورس",
+        "IndexTseCode": "67130298613737946"
+    },
+    {
+        "IndexID": 63,
+        "IndexName": "تامین آب، برق، گاز",
+        "IndexNameEnglish": "AabBarghGaaz",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "54843635503648458"
+    },
+    {
+        "IndexID": 65,
+        "IndexName": "اداره بازارهای مالی",
+        "IndexNameEnglish": "BazarhayeMali",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "61985386521682984"
+    },
+    {
+        "IndexID": 66,
+        "IndexName": "خرده فروشی به جز وسایل نقلیه",
+        "IndexNameEnglish": "Retail trade, except of motor vehicles",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "65986638607018835"
+    },
+    {
+        "IndexID": 134,
+        "IndexName": "اطلاعات و ارتباطات",
+        "IndexNameEnglish": "Information and communication",
+        "IndexGroupID": 2,
+        "IndexGrpName": "شاخص صنعت",
+        "IndexTseCode": "18780171241610744"
+    },
+    {
+        "IndexID": 428,
+        "IndexName": "شاخص کل هم وزن فرابورس",
+        "IndexNameEnglish": "OTC Overal Index (Weight)",
+        "IndexGroupID": 3,
+        "IndexGrpName": "شاخص های فرابورس",
+        "IndexTseCode": "3454456635278563"
+    },
+    {
+        "IndexID": 429,
+        "IndexName": "چوب فرابورس",
+        "IndexNameEnglish": "OTC Manufacture of wood and of products of wood",
+        "IndexGroupID": 4,
+        "IndexGrpName": "شاخص صنعت فرابورس",
+        "IndexTseCode": "7694150664765911"
+    },
+    {
+        "IndexID": 430,
+        "IndexName": "فنی مهندسی فرابورس",
+        "IndexNameEnglish": "OTC Engineering and other technical activities",
+        "IndexGroupID": 4,
+        "IndexGrpName": "شاخص صنعت فرابورس",
+        "IndexTseCode": "11599352365626742"
+    },
+    {
+        "IndexID": 431,
+        "IndexName": "شاخص قیمت فرابورس",
+        "IndexNameEnglish": "OTC Price Index",
+        "IndexGroupID": 3,
+        "IndexGrpName": "شاخص های فرابورس",
+        "IndexTseCode": "16385144332417446"
+    },
+    {
+        "IndexID": 432,
+        "IndexName": "شاخص قیمت هم وزن فرابورس",
+        "IndexNameEnglish": "OTC Price Index (Same Weight)",
+        "IndexGroupID": 3,
+        "IndexGrpName": "شاخص های فرابورس",
+        "IndexTseCode": "24779787662870476"
+    },
+    {
+        "IndexID": 433,
+        "IndexName": "لاستیک فرابورس",
+        "IndexNameEnglish": "OTC Manufacture of rubber and plastics products",
+        "IndexGroupID": 4,
+        "IndexGrpName": "شاخص صنعت فرابورس",
+        "IndexTseCode": "29471826302648725"
+    },
+    {
+        "IndexID": 434,
+        "IndexName": "ماشین آلات فرابورس",
+        "IndexNameEnglish": "OTC Manufacture of machinery and equipment n.e.c.",
+        "IndexGroupID": 4,
+        "IndexGrpName": "شاخص صنعت فرابورس",
+        "IndexTseCode": "29763883614455544"
+    },
+    {
+        "IndexID": 436,
+        "IndexName": "دستگاه های برقی فرابورس",
+        "IndexNameEnglish": "OTC Manufacture of electrical machinery and apparatus n.e.c.",
+        "IndexGroupID": 4,
+        "IndexGrpName": "شاخص صنعت فرابورس",
+        "IndexTseCode": "17294951120469927"
+    },
+    {
+        "IndexID": 437,
+        "IndexName": "شاخص بازار پایه فرابورس",
+        "IndexNameEnglish": "Paye Index",
+        "IndexGroupID": 3,
+        "IndexGrpName": "شاخص های فرابورس",
+        "IndexTseCode": "62535800667941010"
+    },
+    {
+        "IndexID": 447,
+        "IndexName": "ارکان و نهادهای مالی فرابورس",
+        "IndexNameEnglish": "OTC BazarhayeMali",
+        "IndexGroupID": 4,
+        "IndexGrpName": "شاخص صنعت فرابورس",
+        "IndexTseCode": "61953785757685638"
+    }
+]

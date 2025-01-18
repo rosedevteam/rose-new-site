@@ -15,7 +15,6 @@ use Modules\Analytics\Http\client\ApiClient;
 */
 
 Route::controller(ApiClient::class)->group(function () {
-    Route::get('/token', 'token');
     Route::get('/companies', 'companies');
     Route::get('/indices', 'indices');
     Route::get('/trades/{id}', 'trades');
