@@ -13,7 +13,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function all()
+    public function index()
     {
         $this->seo()->setTitle('دوره ها');
 
