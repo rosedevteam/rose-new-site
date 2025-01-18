@@ -241,5 +241,6 @@ return [
         'start_date' => 'تاریخ شروع',
         'expires_at' => 'تاریخ انقضا',
         'analysis' => 'تحلیل',
+        "discount" => 'کد تخفیف'
     ],
 ];

@@ -37,12 +37,13 @@ class CartService
             } else {
                 $price = $obj->price;
             }
+
             $value = array_merge($value, [
                 'id' => Str::random(10),
                 'subject_id' => $obj->id,
                 'subject_type' => get_class($obj),
                 'price' => $price,
-                'discount_amount' => 0
+                'discountable' => null
             ]);
         } elseif (!isset($value['id'])) {
             $value = array_merge($value, [
@@ -128,7 +129,6 @@ class CartService
             $item = $this->withRelationshipIfExist($item);
             $item = $this->checkDiscountValidate($item, $cart['discount']);
             return $item;
-
         });
         return $cart;
     }
@@ -142,6 +142,11 @@ class CartService
         $this->storeCookie();
 
         return $this;
+    }
+
+    public function isCartDiscountable()
+    {
+        return $this->all()->pluck('discountable')->contains(true);
     }
 
     protected function withRelationshipIfExist($item)
@@ -189,28 +194,20 @@ class CartService
         Cookie::queue($this->name, $this->cart->toJson(), 60 * 24 * 7);
     }
 
-    protected function checkDiscountValidate($item, $discount)
+    public function checkDiscountValidate($item, $discount)
     {
         $discount = Discount::where('code', $discount)->where('is_active', 1)->first();
-//        $product = Product::findOrFail($item['product']->id);
-//
-//        if (is_Null($discount)) return $item;
-//        if ($discount->expires_at < now()) return $item;
-//        if (!$discount->products->contains($product)) return $item;
-//        if ($discount->discountRecords()->where('user_id', auth()->id())->count() == $discount->limit) return $item;
-//
-//        if ($discount->type == 'amount') {
-//            $item['discount_amount'] = $discount->amount;
-//        } else {
-//            $item['discount_amount'] = ($discount->amount / 100) * ($product->sale_price ?: $product->price);
-//        }
-
         if ($discount && $discount->expires_at > now()) {
             if (
-                (!$discount->products->count()) ||
+                ($discount->products->count()) &&
                 in_array($item['product']->id, $discount->products->pluck('id')->toArray())) {
+                $item['discountable'] = true;
+            }else {
+                $item['discountable'] = false;
             }
+
         }
+
         return $item;
     }
 }

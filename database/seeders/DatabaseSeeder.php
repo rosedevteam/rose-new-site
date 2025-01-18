@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Modules\Category\Models\Category;
 use Modules\Comment\Models\Comment;
+use Modules\Discount\Models\Discount;
 use Modules\Menu\Models\Menu;
 use Modules\Order\Models\Order;
 use Modules\Payment\Models\Payment;
@@ -28,6 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->seedComments();
         $this->seedMenu();
         $this->seedCategories();
+        $this->seedDiscounts();
     }
 
     private function seedUsersAndPermissions()
@@ -594,6 +596,45 @@ class DatabaseSeeder extends Seeder
             'type' => 'product',
             'name' => 'حضوری',
             'user_id' => 1,
+        ]);
+    }
+
+    public function seedDiscounts()
+    {
+        $discount = Discount::factory()->create([
+            'user_id' => 1,
+            'code' => 'pedar1403',
+            'type' => 'amount',
+            'amount' => 1000000,
+            'is_active' => 1,
+            'limit' => 5,
+            'expires_at' => now()->addDays(3),
+        ]);
+
+        $discount->discountRecords()->create([
+            'user_id' => 1,
+            'order_id' => 1,
+            'discount_id' => 1
+        ]);
+        $discount->discountRecords()->create([
+            'user_id' => 2,
+            'order_id' => 1,
+            'discount_id' => 1
+        ]);
+        $discount->discountRecords()->create([
+            'user_id' => 3,
+            'order_id' => 1,
+            'discount_id' => 1
+        ]);
+        $discount->discountRecords()->create([
+            'user_id' => 1,
+            'order_id' => 1,
+            'discount_id' => 1
+        ]);
+        $discount->discountRecords()->create([
+            'user_id' => 1,
+            'order_id' => 1,
+            'discount_id' => 1
         ]);
     }
 }
