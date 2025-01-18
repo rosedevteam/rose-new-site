@@ -24,10 +24,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Model::unguard();
-        Paginator::defaultView('vendor.pagination.admin-pagination');
+
+        Paginator::defaultView('vendor.pagination.rose-pagination');
+
         $menus = Menu::with('children')
             ->whereNull('parent_id')
-            ->get();;
-            View::share('menus', $menus);
+            ->get();
+        View::share('menus', $menus);
     }
 }

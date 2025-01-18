@@ -95,7 +95,7 @@ class AnalyticsController extends Controller
         return $builderQuery->count() == 0 || (self::isMarketOpen() && $builderQuery->first()?->created_at < now()->subMinutes(2));
     }
 
-    static function isMarketOpen()
+    private static function isMarketOpen()
     {
         // todo
         return true;
