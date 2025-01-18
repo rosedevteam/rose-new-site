@@ -4,13 +4,14 @@ namespace Modules\Post\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\traits\Slug;
+use App\traits\Upload;
 use Gate;
 use Illuminate\Http\Request;
 use Modules\Post\Models\Post;
 
 class PostController extends Controller
 {
-    use Slug;
+    use Slug, Upload;
     public function index()
     {
         Gate::authorize('view-posts');
@@ -108,6 +109,7 @@ class PostController extends Controller
                 'content' => $data['content'],
                 'comment_status' => $data['comment_status'] == 1,
                 'user_id' => auth()->user()->id,
+                'image' => $data['image'],
                 'status' => $data['status'],
             ]);
             $data['categories'] = array_filter($data['categories'], function ($category) {

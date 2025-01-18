@@ -154,7 +154,7 @@
                             <div class="pt-4 d-flex align-items-center justify-content-between">
                                 <button type="submit" class="btn btn-sm btn-primary " form="edit-item">بروز رسانی
                                 </button>
-                                <a class="btn btn-sm btn-info " href="{{url('/') . '/posts/' . $post->slug}}">مشاهده
+                                <a class="btn btn-sm btn-info " href="{{ route('posts.show', $post) }}">مشاهده
                                     آیتم</a>
                                 @can('delete-posts')
                                     <x-admin::deletebutton/>
