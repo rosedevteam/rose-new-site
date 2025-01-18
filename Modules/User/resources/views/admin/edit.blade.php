@@ -37,7 +37,7 @@
                                         <span class="fw-bold me-2">کیف پول:</span>
                                         <span>{{ $user->wallet->balance }}<a class="ms-5"
                                                                              href="{{ route('admin.wallets.edit', $user->wallet) }}"><i
-                                                    class="bx bx-detail"></i></a></span>
+                                                    class="bx bx-wallet"></i></a></span>
                                     </li>
                                     @can('view-billings')
                                         @if(!is_null($billing))
