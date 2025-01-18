@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\Analytics\Models\company;
+use Modules\Analytics\Models\index;
 use Modules\Category\Models\Category;
 use Modules\Comment\Models\Comment;
 use Modules\Discount\Models\Discount;
@@ -30,6 +32,8 @@ class DatabaseSeeder extends Seeder
         $this->seedMenu();
         $this->seedCategories();
         $this->seedDiscounts();
+        $this->seedIndices();
+//        $this->seedCompanies();
     }
 
     private function seedUsersAndPermissions()
@@ -636,5 +640,25 @@ class DatabaseSeeder extends Seeder
             'order_id' => 1,
             'discount_id' => 1
         ]);
+    }
+
+    private function seedCompanies()
+    {
+        $json = \File::get(database_path() . '/companies.json');
+        $data = json_decode($json, true, JSON_UNESCAPED_UNICODE);
+
+        foreach ($data as $item) {
+            Company::create($item);
+        }
+    }
+
+    private function seedIndices()
+    {
+        $json = \File::get(database_path() . '/indices.json');
+        $data = json_decode($json, true, JSON_UNESCAPED_UNICODE);
+
+        foreach ($data as $item) {
+            Index::create($item);
+        }
     }
 }

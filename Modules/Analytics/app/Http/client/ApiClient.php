@@ -22,15 +22,14 @@ class ApiClient
     private static function token()
     {
         return Cache::remember('nadpco-api-token', 60 * 24, function () {
-            try {
-                $response = Http::withBasicAuth(
-                    config('services.nadpco_api.username'),
-                    config('services.nadpco_api.password'),
-                )->post(self::url . 'v2/Token');
+            $response = Http::withBasicAuth(
+                config('services.nadpco_api.username'),
+                config('services.nadpco_api.password'),
+            )->post(self::url . 'v2/Token');
+            if ($response->status() == 200) {
                 return json_decode($response->body(), true)['token'];
-            } catch (ConnectionException $e) {
-                dd($e->getMessage());
             }
+            return "";
         });
     }
 

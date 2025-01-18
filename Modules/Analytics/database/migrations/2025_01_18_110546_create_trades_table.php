@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('coID');
             $table->boolean('precedencyRight');
-            $table->string('boourseSymbol');
+            $table->string('bourseSymbol');
             $table->string('fullTitle');
             $table->string('tseSymbolCode');
             $table->string('tradeDateGre');
@@ -26,7 +26,7 @@ return new class extends Migration {
             $table->string('tradeVolume');
             $table->string('tradeValue');
             $table->string('tradeQty');
-            $table->string('previousClosePrice');
+            $table->string('previousClosingPrice');
             $table->string('lastPrice');
             $table->string('closingPriceChange');
             $table->string('closingPChgPercent');
