@@ -614,6 +614,7 @@ class DatabaseSeeder extends Seeder
             'limit' => 5,
             'expires_at' => now()->addDays(3),
         ]);
+        $discount->products()->attach(Product::all());
 
         $discount->discountRecords()->create([
             'user_id' => 1,
