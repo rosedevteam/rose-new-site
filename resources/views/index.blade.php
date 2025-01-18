@@ -29,8 +29,9 @@
                             <p class="desc">مجموعه آموزشی رز به طور تخصصی در بحث آموزش حوزه مالی (بازار های مالی و حسابداری) و
                                 روانشناسی مالی فعال است و تنها رسالت ما آموزش و بالا بردن سطح دانش افراد می‌باشد.</p>
                             <div class="d-flex gap-2">
-                                <a href="#" class="btn btn-default btn-hero">بازنشستگی در 7 سال</a>
-                                <a href="#" class="btn btn-outline-secondary btn-hero">دوره ها</a>
+                                <a href="/retirement-in-7-years" class="btn btn-default btn-hero">بازنشستگی در 7 سال</a>
+                                <a href="{{ route("products.index") }}" class="btn btn-outline-secondary btn-hero">دوره
+                                    ها</a>
                             </div>
                         </div>
 
@@ -654,7 +655,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="banner banner-default br-default" style="height: 300px">
-                            <a href="#">
+                            <a href="{{ route('posts.index') }}">
                                 <figure class="banner-img hover-scale">
                                     <img src="assets/front/images/blog.jpg" alt="">
                                     <figcaption class="banner-details position-absolute top-50 start-50 translate-middle">
@@ -668,7 +669,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="banner banner-default br-default" style="height: 300px">
-                            <a href="#">
+                            <a href="{{ route('podcasts.index') }}">
                                 <figure class="banner-img hover-scale">
                                     <img src="assets/front/images/podcast.jpg" alt="">
                                     <figcaption class="banner-details position-absolute top-50 start-50 translate-middle">
