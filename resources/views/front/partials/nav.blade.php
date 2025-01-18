@@ -74,7 +74,7 @@
                             </a>
                         </div>
                         @auth
-                            {{auth()->user()->first_name}}
+                            {{auth()->user()->name()}}
                         @else
                             <a  class="btn btn-default" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">
                                 ورود / ثبت نام

@@ -1,0 +1,570 @@
+[
+  {
+    "IndexID": 1,
+    "IndexName": "\u0633\u0627\u062e\u062a \u0645\u062d\u0635\u0648\u0644\u0627\u062a \u0641\u0644\u0632\u06cc",
+    "IndexNameEnglish": "Manufacture of fabricated metal products, except machinery and equipment",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "1123534346391630"
+  },
+  {
+    "IndexID": 2,
+    "IndexName": "\u0645\u0648\u0627\u062f \u0648 \u0645\u062d\u0635\u0648\u0644\u0627\u062a \u062f\u0627\u0631\u0648\u06cc\u06cc",
+    "IndexNameEnglish": "Manufacture of pharmaceuticals, medicinal chemicals and botanical products",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "3615666621538524"
+  },
+  {
+    "IndexID": 3,
+    "IndexName": "\u0627\u0646\u0628\u0648\u0647 \u0633\u0627\u0632\u06cc \u0627\u0645\u0644\u0627\u06a9 \u0648 \u0645\u0633\u062a\u063a\u0644\u0627\u062a",
+    "IndexNameEnglish": "Real estate activities",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "4654922806626448"
+  },
+  {
+    "IndexID": 4,
+    "IndexName": "\u0631\u0627\u06cc\u0627\u0646\u0647 \u0648 \u0641\u0639\u0627\u0644\u06cc\u062a \u0647\u0627\u06cc \u0648\u0627\u0628\u0633\u062a\u0647 \u0628\u0647 \u0622\u0646",
+    "IndexNameEnglish": "Computer and related activities",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "8900726085939949"
+  },
+  {
+    "IndexID": 5,
+    "IndexName": "\u0634\u0627\u062e\u0635 30 \u0634\u0631\u06a9\u062a \u0628\u0632\u0631\u06af",
+    "IndexNameEnglish": "Top 30 Index",
+    "IndexGroupID": 1,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0647\u0627\u06cc \u06a9\u0644 \u062f\u0631 \u0628\u0648\u0631\u0633",
+    "IndexTseCode": "10523825119011581"
+  },
+  {
+    "IndexID": 7,
+    "IndexName": "\u0645\u0627\u0634\u06cc\u0646 \u0622\u0644\u0627\u062a \u0648 \u062a\u062c\u0647\u06cc\u0632\u0627\u062a",
+    "IndexNameEnglish": "Manufacture of machinery and equipment n.e.c.",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "11451389074113298"
+  },
+  {
+    "IndexID": 8,
+    "IndexName": "\u0641\u0631\u0627\u0648\u0631\u062f\u0647 \u0646\u0641\u062a\u06cc\u060c \u06a9\u06a9 \u0648 \u0633\u0648\u062e\u062a \u0647\u0633\u062a\u0647 \u0627\u06cc",
+    "IndexNameEnglish": "Manufacture of coke, refined petroleum products and nuclear fuel",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "12331083953323969"
+  },
+  {
+    "IndexID": 9,
+    "IndexName": "\u0627\u0633\u062a\u062e\u0631\u0627\u062c \u06a9\u0627\u0646\u0647 \u0647\u0627\u06cc \u0641\u0644\u0632\u06cc",
+    "IndexNameEnglish": "Mining of metal ores",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "13235969998952202"
+  },
+  {
+    "IndexID": 10,
+    "IndexName": "\u0633\u0627\u06cc\u0631 \u0645\u062d\u0635\u0648\u0644\u0627\u062a \u06a9\u0627\u0646\u06cc \u063a\u06cc\u0631\u0641\u0644\u0632\u06cc",
+    "IndexNameEnglish": "Manufacture of other non-metallic mineral product",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "14651627750314021"
+  },
+  {
+    "IndexID": 11,
+    "IndexName": "\u0645\u062d\u0635\u0648\u0644\u0627\u062a \u063a\u0630\u0627\u06cc\u06cc \u0648 \u0622\u0634\u0627\u0645\u06cc\u062f\u0646\u06cc \u0628\u0647 \u062c\u0632 \u0642\u0646\u062f \u0648 \u0634\u06a9\u0631",
+    "IndexNameEnglish": "Manufacture of food products and beverages except suger",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "15508900928481581"
+  },
+  {
+    "IndexID": 12,
+    "IndexName": "\u0627\u0633\u062a\u062e\u0631\u0627\u062c \u0630\u063a\u0627\u0644 \u0633\u0646\u06af",
+    "IndexNameEnglish": "Mining of coal and lignite; extraction of peat",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "19219679288446732"
+  },
+  {
+    "IndexID": 13,
+    "IndexName": "\u062e\u0648\u062f\u0631\u0648 \u0648 \u0633\u0627\u062e\u062a \u0642\u0637\u0639\u0627\u062a",
+    "IndexNameEnglish": "Manufacture of motor vehicles, trailers and semi-trailers",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "20213770409093165"
+  },
+  {
+    "IndexID": 14,
+    "IndexName": "\u0642\u0646\u062f \u0648 \u0634\u06a9\u0631",
+    "IndexNameEnglish": "Manufacture of sugar",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "21948907150049163"
+  },
+  {
+    "IndexID": 15,
+    "IndexName": "\u062d\u0645\u0644 \u0648 \u0646\u0642\u0644\u060c \u0627\u0646\u0628\u0627\u0631\u062f\u0627\u0631\u06cc \u0648 \u0627\u0631\u062a\u0628\u0627\u0637\u0627\u062a",
+    "IndexNameEnglish": "Transportation and storage",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "24187097921483699"
+  },
+  {
+    "IndexID": 16,
+    "IndexName": "\u0633\u0627\u062e\u062a \u062f\u0633\u062a\u06af\u0627\u0647 \u0647\u0627 \u0648 \u0648\u0633\u0627\u06cc\u0644 \u0627\u0631\u062a\u0628\u0627\u0637\u06cc",
+    "IndexNameEnglish": "Manufacture of radio, television and communication equipment and apparatus",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "24733701189547084"
+  },
+  {
+    "IndexID": 17,
+    "IndexName": "\u0633\u0627\u06cc\u0631 \u0648\u0627\u0633\u0637\u0647 \u06af\u0631\u06cc \u0647\u0627\u06cc \u0645\u0627\u0644\u06cc",
+    "IndexNameEnglish": "Other financial intermediation",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "25163959460949732"
+  },
+  {
+    "IndexID": 18,
+    "IndexName": "\u0627\u0646\u062a\u0634\u0627\u0631\u060c \u0686\u0627\u067e \u0648 \u062a\u06a9\u062b\u06cc\u0631",
+    "IndexNameEnglish": "Publishing, printing and reproduction of recorded media",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "25766336681098389"
+  },
+  {
+    "IndexID": 19,
+    "IndexName": "\u0645\u0628\u0644\u0645\u0627\u0646 \u0648 \u0645\u0635\u0646\u0648\u0639\u0627\u062a \u062f\u06cc\u06af\u0631",
+    "IndexNameEnglish": "Manufacture of furniture; manufacturing n.e.c.",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "29331053506731535"
+  },
+  {
+    "IndexID": 20,
+    "IndexName": "\u0645\u062d\u0635\u0648\u0644\u0627\u062a \u06a9\u0627\u063a\u0630\u06cc",
+    "IndexNameEnglish": "Manufacture of paper and paper products",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "30106839080444358"
+  },
+  {
+    "IndexID": 21,
+    "IndexName": "\u0642\u06cc\u0645\u062a \u0648 \u0628\u0627\u0632\u062f\u0647 \u0646\u0642\u062f\u06cc",
+    "IndexNameEnglish": "TEPIX",
+    "IndexGroupID": 1,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0647\u0627\u06cc \u06a9\u0644 \u062f\u0631 \u0628\u0648\u0631\u0633",
+    "IndexTseCode": "30655480864841493"
+  },
+  {
+    "IndexID": 22,
+    "IndexName": "\u0634\u0627\u062e\u0635 \u06a9\u0644",
+    "IndexNameEnglish": "TEDPIX",
+    "IndexGroupID": 1,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0647\u0627\u06cc \u06a9\u0644 \u062f\u0631 \u0628\u0648\u0631\u0633",
+    "IndexTseCode": "32097828799138957"
+  },
+  {
+    "IndexID": 23,
+    "IndexName": "\u0641\u0644\u0632\u0627\u062a \u0627\u0633\u0627\u0633\u06cc",
+    "IndexNameEnglish": "Manufacture of basic metals",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "32453344048876642"
+  },
+  {
+    "IndexID": 24,
+    "IndexName": "\u0645\u062d\u0635\u0648\u0644\u0627\u062a \u0634\u06cc\u0645\u06cc\u0627\u06cc\u06cc",
+    "IndexNameEnglish": "Manufacture of chemicals and chemical products",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "33626672012415176"
+  },
+  {
+    "IndexID": 25,
+    "IndexName": "\u0645\u0627\u0634\u06cc\u0646 \u0622\u0644\u0627\u062a \u0648 \u062f\u0633\u062a\u06af\u0627\u0647\u0647\u0627\u06cc \u0628\u0631\u0642\u06cc",
+    "IndexNameEnglish": "Manufacture of electrical machinery and apparatus n.e.c.",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "33878047680249697"
+  },
+  {
+    "IndexID": 26,
+    "IndexName": "\u0633\u0631\u0645\u0627\u06cc\u0647 \u06af\u0630\u0627\u0631\u06cc\u0647\u0627",
+    "IndexNameEnglish": "Investment",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "34295935482222451"
+  },
+  {
+    "IndexID": 27,
+    "IndexName": "\u0645\u0648\u0627\u062f \u0648 \u0645\u062d\u0635\u0648\u0644\u0627\u062a \u0634\u06cc\u0645\u06cc\u0627\u06cc\u06cc",
+    "IndexNameEnglish": "Manufacture of chemicals and chemical products",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "34406437210199542"
+  },
+  {
+    "IndexID": 28,
+    "IndexName": "\u0632\u0631\u0627\u0639\u062a \u0648 \u062e\u062f\u0645\u0627\u062a \u0648\u0627\u0628\u0633\u062a\u0647",
+    "IndexNameEnglish": "Agriculture and related service activities",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "34408080767216529"
+  },
+  {
+    "IndexID": 29,
+    "IndexName": "\u0644\u0627\u0633\u062a\u06cc\u06a9 \u0648 \u067e\u0644\u0627\u0633\u062a\u06cc\u06a9",
+    "IndexNameEnglish": "Manufacture of rubber and plastics products",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "36469751685735891"
+  },
+  {
+    "IndexID": 30,
+    "IndexName": "\u0641\u0631\u0627\u0648\u0631\u062f\u0647 \u0647\u0627\u06cc \u063a\u0630\u0627\u06cc\u06cc \u0648 \u0622\u0634\u0627\u0645\u06cc\u062f\u0646\u06cc",
+    "IndexNameEnglish": "Manufacture of food products and beverages",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "38079223580972392"
+  },
+  {
+    "IndexID": 31,
+    "IndexName": "\u0634\u0631\u06a9\u062a \u0647\u0627\u06cc \u0686\u0646\u062f \u0631\u0634\u062a\u0647 \u0627\u06cc \u0635\u0646\u0639\u062a\u06cc",
+    "IndexNameEnglish": "Multidisciplinary industrial activities",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "40355846462826897"
+  },
+  {
+    "IndexID": 32,
+    "IndexName": "\u0645\u062e\u0627\u0628\u0631\u0627\u062a",
+    "IndexNameEnglish": "Telecommunications",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "41867092385281437"
+  },
+  {
+    "IndexID": 33,
+    "IndexName": "\u067e\u06cc\u0645\u0627\u0646\u06a9\u0627\u0631\u06cc \u0635\u0646\u0639\u062a\u06cc",
+    "IndexNameEnglish": "Industrial Construction",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "41934470778361119"
+  },
+  {
+    "IndexID": 34,
+    "IndexName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexNameEnglish": "Industry Index",
+    "IndexGroupID": 1,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0647\u0627\u06cc \u06a9\u0644 \u062f\u0631 \u0628\u0648\u0631\u0633",
+    "IndexTseCode": "43754960038275285"
+  },
+  {
+    "IndexID": 35,
+    "IndexName": "\u0634\u0627\u062e\u0635 50 \u0634\u0631\u06a9\u062a \u0628\u0631\u062a\u0631",
+    "IndexNameEnglish": "Top 50 Index",
+    "IndexGroupID": 1,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0647\u0627\u06cc \u06a9\u0644 \u062f\u0631 \u0628\u0648\u0631\u0633",
+    "IndexTseCode": "46342955726788357"
+  },
+  {
+    "IndexID": 36,
+    "IndexName": "\u062e\u062f\u0645\u0627\u062a \u0641\u0646\u06cc \u0645\u0647\u0646\u062f\u0633\u06cc",
+    "IndexNameEnglish": "Engineering and other technical activities",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "47233872677452574"
+  },
+  {
+    "IndexID": 38,
+    "IndexName": "\u0634\u0627\u062e\u0635 \u0622\u0632\u0627\u062f \u0634\u0646\u0627\u0648\u0631",
+    "IndexNameEnglish": "Free Float Index",
+    "IndexGroupID": 1,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0647\u0627\u06cc \u06a9\u0644 \u062f\u0631 \u0628\u0648\u0631\u0633",
+    "IndexTseCode": "49579049405614711"
+  },
+  {
+    "IndexID": 39,
+    "IndexName": "\u06a9\u0627\u0634\u06cc \u0648 \u0633\u0631\u0627\u0645\u06cc\u06a9",
+    "IndexNameEnglish": "Manufacture of structural non-refractory clay and ceramic products",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "57616105980228781"
+  },
+  {
+    "IndexID": 40,
+    "IndexName": "\u0633\u0627\u06cc\u0631 \u062a\u062c\u0647\u06cc\u0632\u0627\u062a \u062d\u0645\u0644 \u0648 \u0646\u0642\u0644",
+    "IndexNameEnglish": "Manufacture of other transport equipment",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "58231368623465359"
+  },
+  {
+    "IndexID": 41,
+    "IndexName": "\u0645\u062d\u0635\u0648\u0644\u0627\u062a \u0686\u0648\u0628\u06cc",
+    "IndexNameEnglish": "Manufacture of wood and of products of wood",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "58440550086834602"
+  },
+  {
+    "IndexID": 43,
+    "IndexName": "\u0645\u0646\u0633\u0648\u062c\u0627\u062a",
+    "IndexNameEnglish": "Manufacture of textiles",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "59288237226302898"
+  },
+  {
+    "IndexID": 44,
+    "IndexName": "\u0648\u0627\u0633\u0637\u0647 \u06af\u0631\u06cc \u0647\u0627\u06cc \u0645\u0627\u0644\u06cc \u0648 \u067e\u0648\u0644\u06cc",
+    "IndexNameEnglish": "financial intermediation",
+    "IndexGroupID": 1,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0647\u0627\u06cc \u06a9\u0644 \u062f\u0631 \u0628\u0648\u0631\u0633",
+    "IndexTseCode": "61247168213690670"
+  },
+  {
+    "IndexID": 45,
+    "IndexName": "\u0627\u0628\u0632\u0627\u0631 \u067e\u0632\u0634\u06a9\u06cc\u060c \u0627\u067e\u062a\u06cc\u06a9\u06cc \u0648 \u0627\u0646\u062f\u0627\u0632\u0647 \u06af\u06cc\u0631\u06cc",
+    "IndexNameEnglish": "Manufacture of medical, precision and optical instruments",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "61848754958448778"
+  },
+  {
+    "IndexID": 46,
+    "IndexName": "\u0627\u0633\u062a\u062e\u0631\u0627\u062c \u0633\u0627\u06cc\u0631 \u0645\u0639\u0627\u062f\u0646",
+    "IndexNameEnglish": "Other mining and quarrying",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "62691002126902464"
+  },
+  {
+    "IndexID": 47,
+    "IndexName": "\u0634\u0627\u062e\u0635 \u0628\u0627\u0632\u0627\u0631 \u0627\u0648\u0644",
+    "IndexNameEnglish": "Main Board Index",
+    "IndexGroupID": 1,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0647\u0627\u06cc \u06a9\u0644 \u062f\u0631 \u0628\u0648\u0631\u0633",
+    "IndexTseCode": "62752761908615603"
+  },
+  {
+    "IndexID": 48,
+    "IndexName": "\u0627\u0633\u062a\u062e\u0631\u0627\u062c \u0646\u0641\u062a \u06af\u0627\u0632 \u0648 \u062e\u062f\u0645\u0627\u062a \u062c\u0646\u0628\u06cc \u062c\u0632 \u0627\u06a9\u062a\u0634\u0627\u0641",
+    "IndexNameEnglish": "Extraction of crude petroleum and natural gas and service activities incidental to, excluding survey",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "65675836323214668"
+  },
+  {
+    "IndexID": 49,
+    "IndexName": "\u062f\u0628\u0627\u063a\u06cc\u060c \u067e\u0631\u062f\u0627\u062e\u062a \u0686\u0631\u0645 \u0648 \u0633\u0627\u062e\u062a \u0627\u0646\u0648\u0627\u0639 \u067e\u0627\u067e\u0648\u0634",
+    "IndexNameEnglish": "Tanning and dressing of leather; manufacture of footwear",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "69306841376553334"
+  },
+  {
+    "IndexID": 50,
+    "IndexName": "\u0634\u0627\u062e\u0635 \u0642\u06cc\u0645\u062a 50 \u0634\u0631\u06a9\u062a",
+    "IndexNameEnglish": "Top 50 Price Index",
+    "IndexGroupID": 1,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0647\u0627\u06cc \u06a9\u0644 \u062f\u0631 \u0628\u0648\u0631\u0633",
+    "IndexTseCode": "69932667409721265"
+  },
+  {
+    "IndexID": 51,
+    "IndexName": "\u0633\u06cc\u0645\u0627\u0646\u060c \u0622\u0647\u06a9 \u0648 \u06af\u0686",
+    "IndexNameEnglish": "Manufacture of cement, lime and plaster",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "70077233737515808"
+  },
+  {
+    "IndexID": 52,
+    "IndexName": "\u0634\u0627\u062e\u0635 \u0628\u0627\u0632\u0627\u0631 \u062f\u0648\u0645",
+    "IndexNameEnglish": "Secondry Board Index",
+    "IndexGroupID": 1,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0647\u0627\u06cc \u06a9\u0644 \u062f\u0631 \u0628\u0648\u0631\u0633",
+    "IndexTseCode": "71704845530629737"
+  },
+  {
+    "IndexID": 53,
+    "IndexName": "\u0628\u0627\u0646\u06a9\u0647\u0627 \u0648 \u0645\u0648\u0633\u0633\u0627\u062a \u0627\u0639\u062a\u0628\u0627\u0631\u06cc",
+    "IndexNameEnglish": "Monetary intermediation",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "72002976013856737"
+  },
+  {
+    "IndexID": 54,
+    "IndexName": "\u0628\u06cc\u0645\u0647 \u0648 \u0635\u0646\u062f\u0648\u0642 \u0628\u0627\u0632\u0646\u0634\u0633\u062a\u06af\u06cc \u0628\u0647 \u062c\u0632 \u062a\u0627\u0645\u06cc\u0646 \u0627\u062c\u062a\u0645\u0627\u0639\u06cc",
+    "IndexNameEnglish": "Telecommunications",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "59105676994811497"
+  },
+  {
+    "IndexID": 56,
+    "IndexName": "\u0628\u0627\u0632\u0627\u0631 \u062f\u0648\u0645 \u0641\u0631\u0627\u0628\u0648\u0631\u0633",
+    "IndexNameEnglish": "OTC Secondry Board Index",
+    "IndexGroupID": 3,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0647\u0627\u06cc \u0641\u0631\u0627\u0628\u0648\u0631\u0633",
+    "IndexTseCode": "35898516735559137"
+  },
+  {
+    "IndexID": 57,
+    "IndexName": "\u0634\u0627\u062e\u0635 \u06a9\u0644 \u0641\u0631\u0627\u0628\u0648\u0631\u0633",
+    "IndexNameEnglish": "OTC Overall Index",
+    "IndexGroupID": 3,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0647\u0627\u06cc \u0641\u0631\u0627\u0628\u0648\u0631\u0633",
+    "IndexTseCode": "43685683301327984"
+  },
+  {
+    "IndexID": 58,
+    "IndexName": "\u0628\u0627\u0632\u0627\u0631 \u0627\u0648\u0644 \u0641\u0631\u0627\u0628\u0648\u0631\u0633",
+    "IndexNameEnglish": "OTC Main Board Index",
+    "IndexGroupID": 3,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0647\u0627\u06cc \u0641\u0631\u0627\u0628\u0648\u0631\u0633",
+    "IndexTseCode": "68337207779130851"
+  },
+  {
+    "IndexID": 59,
+    "IndexName": "\u0634\u0627\u062e\u0635 \u0642\u06cc\u0645\u062a(\u0648\u0632\u0646\u06cc-\u0627\u0631\u0632\u0634\u06cc)",
+    "IndexNameEnglish": "Tse Price Index (Weight-Value)",
+    "IndexGroupID": 1,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0647\u0627\u06cc \u06a9\u0644 \u062f\u0631 \u0628\u0648\u0631\u0633",
+    "IndexTseCode": "5798407779416661"
+  },
+  {
+    "IndexID": 60,
+    "IndexName": "\u0634\u0627\u062e\u0635 \u0642\u06cc\u0645\u062a (\u0647\u0645 \u0648\u0632\u0646)",
+    "IndexNameEnglish": "Tse Price Index (Same Weight)",
+    "IndexGroupID": 1,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0647\u0627\u06cc \u06a9\u0644 \u062f\u0631 \u0628\u0648\u0631\u0633",
+    "IndexTseCode": "8384385859414435"
+  },
+  {
+    "IndexID": 61,
+    "IndexName": "\u0634\u0627\u062e\u0635 \u06a9\u0644 (\u0647\u0645 \u0648\u0632\u0646)",
+    "IndexNameEnglish": "Tse Overal Index (Weight)",
+    "IndexGroupID": 1,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0647\u0627\u06cc \u06a9\u0644 \u062f\u0631 \u0628\u0648\u0631\u0633",
+    "IndexTseCode": "67130298613737946"
+  },
+  {
+    "IndexID": 63,
+    "IndexName": "\u062a\u0627\u0645\u06cc\u0646 \u0622\u0628\u060c \u0628\u0631\u0642\u060c \u06af\u0627\u0632",
+    "IndexNameEnglish": "AabBarghGaaz",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "54843635503648458"
+  },
+  {
+    "IndexID": 65,
+    "IndexName": "\u0627\u062f\u0627\u0631\u0647 \u0628\u0627\u0632\u0627\u0631\u0647\u0627\u06cc \u0645\u0627\u0644\u06cc",
+    "IndexNameEnglish": "BazarhayeMali",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "61985386521682984"
+  },
+  {
+    "IndexID": 66,
+    "IndexName": "\u062e\u0631\u062f\u0647 \u0641\u0631\u0648\u0634\u06cc \u0628\u0647 \u062c\u0632 \u0648\u0633\u0627\u06cc\u0644 \u0646\u0642\u0644\u06cc\u0647",
+    "IndexNameEnglish": "Retail trade, except of motor vehicles",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "65986638607018835"
+  },
+  {
+    "IndexID": 134,
+    "IndexName": "\u0627\u0637\u0644\u0627\u0639\u0627\u062a \u0648 \u0627\u0631\u062a\u0628\u0627\u0637\u0627\u062a",
+    "IndexNameEnglish": "Information and communication",
+    "IndexGroupID": 2,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a",
+    "IndexTseCode": "18780171241610744"
+  },
+  {
+    "IndexID": 428,
+    "IndexName": "\u0634\u0627\u062e\u0635 \u06a9\u0644 \u0647\u0645 \u0648\u0632\u0646 \u0641\u0631\u0627\u0628\u0648\u0631\u0633",
+    "IndexNameEnglish": "OTC Overal Index (Weight)",
+    "IndexGroupID": 3,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0647\u0627\u06cc \u0641\u0631\u0627\u0628\u0648\u0631\u0633",
+    "IndexTseCode": "3454456635278563"
+  },
+  {
+    "IndexID": 429,
+    "IndexName": "\u0686\u0648\u0628 \u0641\u0631\u0627\u0628\u0648\u0631\u0633",
+    "IndexNameEnglish": "OTC Manufacture of wood and of products of wood",
+    "IndexGroupID": 4,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a \u0641\u0631\u0627\u0628\u0648\u0631\u0633",
+    "IndexTseCode": "7694150664765911"
+  },
+  {
+    "IndexID": 430,
+    "IndexName": "\u0641\u0646\u06cc \u0645\u0647\u0646\u062f\u0633\u06cc \u0641\u0631\u0627\u0628\u0648\u0631\u0633",
+    "IndexNameEnglish": "OTC Engineering and other technical activities",
+    "IndexGroupID": 4,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a \u0641\u0631\u0627\u0628\u0648\u0631\u0633",
+    "IndexTseCode": "11599352365626742"
+  },
+  {
+    "IndexID": 431,
+    "IndexName": "\u0634\u0627\u062e\u0635 \u0642\u06cc\u0645\u062a \u0641\u0631\u0627\u0628\u0648\u0631\u0633",
+    "IndexNameEnglish": "OTC Price Index",
+    "IndexGroupID": 3,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0647\u0627\u06cc \u0641\u0631\u0627\u0628\u0648\u0631\u0633",
+    "IndexTseCode": "16385144332417446"
+  },
+  {
+    "IndexID": 432,
+    "IndexName": "\u0634\u0627\u062e\u0635 \u0642\u06cc\u0645\u062a \u0647\u0645 \u0648\u0632\u0646 \u0641\u0631\u0627\u0628\u0648\u0631\u0633",
+    "IndexNameEnglish": "OTC Price Index (Same Weight)",
+    "IndexGroupID": 3,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0647\u0627\u06cc \u0641\u0631\u0627\u0628\u0648\u0631\u0633",
+    "IndexTseCode": "24779787662870476"
+  },
+  {
+    "IndexID": 433,
+    "IndexName": "\u0644\u0627\u0633\u062a\u06cc\u06a9 \u0641\u0631\u0627\u0628\u0648\u0631\u0633",
+    "IndexNameEnglish": "OTC Manufacture of rubber and plastics products",
+    "IndexGroupID": 4,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a \u0641\u0631\u0627\u0628\u0648\u0631\u0633",
+    "IndexTseCode": "29471826302648725"
+  },
+  {
+    "IndexID": 434,
+    "IndexName": "\u0645\u0627\u0634\u06cc\u0646 \u0622\u0644\u0627\u062a \u0641\u0631\u0627\u0628\u0648\u0631\u0633",
+    "IndexNameEnglish": "OTC Manufacture of machinery and equipment n.e.c.",
+    "IndexGroupID": 4,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a \u0641\u0631\u0627\u0628\u0648\u0631\u0633",
+    "IndexTseCode": "29763883614455544"
+  },
+  {
+    "IndexID": 436,
+    "IndexName": "\u062f\u0633\u062a\u06af\u0627\u0647 \u0647\u0627\u06cc \u0628\u0631\u0642\u06cc \u0641\u0631\u0627\u0628\u0648\u0631\u0633",
+    "IndexNameEnglish": "OTC Manufacture of electrical machinery and apparatus n.e.c.",
+    "IndexGroupID": 4,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a \u0641\u0631\u0627\u0628\u0648\u0631\u0633",
+    "IndexTseCode": "17294951120469927"
+  },
+  {
+    "IndexID": 437,
+    "IndexName": "\u0634\u0627\u062e\u0635 \u0628\u0627\u0632\u0627\u0631 \u067e\u0627\u06cc\u0647 \u0641\u0631\u0627\u0628\u0648\u0631\u0633",
+    "IndexNameEnglish": "Paye Index",
+    "IndexGroupID": 3,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0647\u0627\u06cc \u0641\u0631\u0627\u0628\u0648\u0631\u0633",
+    "IndexTseCode": "62535800667941010"
+  },
+  {
+    "IndexID": 447,
+    "IndexName": "\u0627\u0631\u06a9\u0627\u0646 \u0648 \u0646\u0647\u0627\u062f\u0647\u0627\u06cc \u0645\u0627\u0644\u06cc \u0641\u0631\u0627\u0628\u0648\u0631\u0633",
+    "IndexNameEnglish": "OTC BazarhayeMali",
+    "IndexGroupID": 4,
+    "IndexGrpName": "\u0634\u0627\u062e\u0635 \u0635\u0646\u0639\u062a \u0641\u0631\u0627\u0628\u0648\u0631\u0633",
+    "IndexTseCode": "61953785757685638"
+  }
+]

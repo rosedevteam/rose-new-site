@@ -13,7 +13,10 @@ class JobOfferController extends Controller
         $this->seo()->setTitle('همکاری با ما');
         $jobOffers = JobOffer::where('status', 'active')->get();
 
-        $categories = Category::where('type', 'joboffer')->get();
+        $categories = Category::where('type', 'joboffer')
+            ->whereHas('jobOffers', function ($query) {
+                $query->where('status', 'active');
+            })->get();
 
         return view('joboffer::front.index', compact('jobOffers', 'categories'));
     }
