@@ -154,7 +154,6 @@ class DatabaseSeeder extends Seeder
             'view-users',
             'edit-users',
             'create-users',
-            'delete-users',
             'view-comments',
             'edit-comments',
             'delete-comments',
