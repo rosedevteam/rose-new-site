@@ -298,7 +298,9 @@
                                 <img src="{{ $product->image }}" alt="">
                             </div>
                             <div class="desc-wrapper">
-                                <h3 class="title">{{ $product->title }}</h3>
+                                <a class="h3" href="{{route('products.show' , $product)}}">
+                                    {{$product->title}}
+                                </a>
                                 <p class="desc">{{ $product->short_description }}
                                 </p>
                             </div>

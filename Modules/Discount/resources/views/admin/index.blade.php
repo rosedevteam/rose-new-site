@@ -85,9 +85,6 @@
                                     colspan="1" style="width: 10%" aria-sort="ascending">کد
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 10%;">نوع
-                                </th>
-                                <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 10%;">مقدار
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
@@ -114,15 +111,9 @@
                                         {{ $discount->code }}
                                 </span>
                                     </td>
-                                    <td>
-                                <span class="fw-semibold">
-                                    {{ $discount->type == 'amount' ? 'مقدار' : 'درصد' }}
-                                </span>
-                                    </td>
                                     <td><span
-                                            class="fw-semibold">{{ $discount->amount }}@if($discount->type ==  'percentage')
-                                                %
-                                            @endif</span></td>
+                                            class="fw-semibold">{{ number_format($discount->amount) }}
+                                        </span></td>
                                     <td>@can('view-users')
                                             <a href="{{ route('admin.users.edit', $discount->user) }}"
                                                class="text-body text-truncate">{{ $discount->user->name() }}</a>

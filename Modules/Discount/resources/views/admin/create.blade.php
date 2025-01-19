@@ -28,11 +28,10 @@
                                 </select>
                             </div>
                             <div class="mb-3 col-md-3">
-                                <label class="form-label" for="type">نوع</label>
-                                <select class="form-select" id="type" name="type">
-                                    <option value="amount">مقدار</option>
-                                    <option value="percentage">درصد</option>
-                                </select>
+                                <label class="form-label" for="expires_at">تاریخ انقضا</label>
+                                <input type="text" class="date-picker form-control" name="expires_at"
+                                       value="{{ old("expires_at") }}"
+                                       autocomplete="off">
                             </div>
                         </div>
                         <div class="row">
@@ -40,12 +39,6 @@
                                 <label class="form-label" for="amount">مقدار</label>
                                 <input class="form-control" id="amount" name="amount" autocomplete="off"
                                        value="{{ old('amount') }}">
-                            </div>
-                            <div class="mb-3 col-md-3">
-                                <label class="form-label" for="expires_at">تاریخ انقضا</label>
-                                <input type="text" class="date-picker form-control" name="expires_at"
-                                       value="{{ old("expires_at") }}"
-                                       autocomplete="off">
                             </div>
                             <div class="mb-3 col-md-3">
                                 <label class="form-label" for="limit">محدودیت استفاده</label>
@@ -102,6 +95,15 @@
             });
         });
     </script>
-    <x-admin::tinymce/>
-    <x-admin::filemanager-btn/>
+    <script src="/assets/admin/js/autonumeric/autonumeric.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const amount = new AutoNumeric('#amount', {
+                digitGroupSeparator: ',',
+                minimumValue: '0',
+                unformatOnSubmit: true,
+                decimalPlaces: 0,
+            });
+        });
+    </script>
 @endpush

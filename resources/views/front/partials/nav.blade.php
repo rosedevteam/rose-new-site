@@ -200,7 +200,7 @@
                             <div class="product product-widget  pb-3" style="border-bottom: solid #e7e7e7 1px">
                                 <figure class="product-main">
                                     <a href="products/{{$cart['product']->slug}}">
-                                        <img src="{{$cart['product']->image}}" class="product-main-image">
+                                        <img alt="" src="{{$cart['product']->image}}" class="product-main-image">
                                     </a>
                                 </figure>
                                 <div class="product-details">

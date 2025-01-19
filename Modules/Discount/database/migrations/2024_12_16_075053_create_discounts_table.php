@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('code');
-            $table->enum('type', ['amount', 'percentage']);
+            $table->enum('type', ['amount', 'percentage'])->default('amount');
             $table->integer('amount')->nullable();
             $table->boolean('is_active')->default(false);
             $table->timestamp('expires_at');
