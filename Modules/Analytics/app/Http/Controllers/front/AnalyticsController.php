@@ -56,7 +56,7 @@ class AnalyticsController extends Controller
         $legalTrades = LegalTrade::where('com_ID', $coId);
         if (self::shouldApiCall($legalTrades)) {
             $legalTrades->delete();
-            $newTrade = ApiClient::trades($coId);
+            $newTrade = ApiClient::legalTrades($coId);
             foreach ($newTrade as $trade) {
                 LegalTrade::create($trade);
             }
@@ -69,7 +69,7 @@ class AnalyticsController extends Controller
         $indexValues = IndexValue::where('indexID', $indexId);
         if (self::shouldApiCall($indexValues)) {
             $indexValues->delete();
-            $newIndex = ApiClient::trades($indexId);
+            $newIndex = ApiClient::indexValues($indexId);
             foreach ($newIndex as $indexValue) {
                 IndexValue::create($indexValue);
             }
@@ -82,7 +82,7 @@ class AnalyticsController extends Controller
         $bidAsks = BidAsk::where('coID', $coId);
         if (self::shouldApiCall($bidAsks)) {
             $bidAsks->delete();
-            $newBidAsks = ApiClient::trades($coId);
+            $newBidAsks = ApiClient::bidAsk($coId);
             foreach ($newBidAsks as $bidAsk) {
                 BidAsk::create($bidAsk);
             }

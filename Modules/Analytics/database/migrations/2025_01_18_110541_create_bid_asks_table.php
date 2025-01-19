@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->boolean('precedencyRight');
             $table->string('tseCode');
             $table->string('tseCIsinCode');
+            $table->string('coSymbol');
             $table->string('coName');
             $table->string('recordNumber');
             $table->string('dateTime');

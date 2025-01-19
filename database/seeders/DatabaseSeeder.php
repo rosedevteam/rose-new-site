@@ -329,7 +329,7 @@ class DatabaseSeeder extends Seeder
     private function seedPosts()
     {
         $json = \File::get(database_path() . '/posts.json');
-        $data = json_decode($json, true);
+        $data = json_decode($json, true, flags: JSON_UNESCAPED_UNICODE);
 
         foreach ($data as $item) {
             Post::create([
@@ -646,7 +646,7 @@ class DatabaseSeeder extends Seeder
     private function seedCompanies()
     {
         $json = \File::get(database_path() . '/companies.json');
-        $data = json_decode($json, true, JSON_UNESCAPED_UNICODE);
+        $data = json_decode($json, true, flags: JSON_UNESCAPED_UNICODE);
 
         foreach ($data as $item) {
             Company::create($item);
@@ -656,7 +656,7 @@ class DatabaseSeeder extends Seeder
     private function seedIndices()
     {
         $json = \File::get(database_path() . '/indices.json');
-        $data = json_decode($json, true, JSON_UNESCAPED_UNICODE);
+        $data = json_decode($json, true, flags: JSON_UNESCAPED_UNICODE);
 
         foreach ($data as $item) {
             Index::create($item);

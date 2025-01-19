@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->string('industryId')->nullable();
             $table->string('dateTimeGre');
             $table->string('dateTime');
-            $table->string('openingValues');
+            $table->string('openingValue');
             $table->string('lastValue');
             $table->string('maxValue');
             $table->string('minValue');
