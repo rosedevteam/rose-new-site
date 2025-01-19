@@ -324,14 +324,37 @@
                                     <p>{{ $product->duration }}</p>
                                 </div>
                             </div>
-                            <div class="price-wrapper">
-                                @if(!$product->sale_price)
-                                    <p class="sale-price">{{ number_format($product->price) }}</p>
+                            @if($product->is_free)
+                                <p class="text-decoration-none fw-bold text-black">رایگان</p>
+                            @else
+                                @if($product->isOnSale())
+                                    @php
+                                        $discount_percent = (($product->price - $product->sale_price) / $product->price) * 100
+                                    @endphp
+                                    <div class="price-wrapper">
+                                        <p class="price">
+                                            {{number_format($product->price)}}
+                                            تومان
+                                        </p>
+                                        <p class="sale-price">
+                                            {{number_format($product->sale_price)}}
+                                            تومان
+                                        </p>
+
+                                        <span class="discount-label">
+                                                {{round($discount_percent )}} %
+                                                تخفیف
+                                            </span>
+                                    </div>
                                 @else
-                                    <p class="price">{{ number_format($product->price) }}</p>
-                                    <p class="sale-price">{{ number_format($product->sale_price) }}</p>
+                                    <div class="price-wrapper">
+                                        <p class="price text-decoration-none fw-bold text-black">
+                                            {{number_format($product->price)}}
+                                            تومان
+                                        </p>
+                                    </div>
                                 @endif
-                            </div>
+                            @endif
                             <a href="{{ route('products.show', $product) }}" class="btn btn-default">ثبت نام</a>
                         </div>
                     </div>

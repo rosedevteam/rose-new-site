@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('spot_player_key')->nullable();
             $table->string('duration')->nullable();
+            $table->boolean('is_free')->default(0);
             $table->timestamps();
         });
     }
