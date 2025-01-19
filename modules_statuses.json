@@ -20,5 +20,6 @@
     "Podcast": true,
     "Cart": true,
     "Channel": true,
-    "Analytics": true
+    "Analytics": true,
+    "Profile": true
 }

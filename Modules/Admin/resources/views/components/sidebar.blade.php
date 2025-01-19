@@ -57,40 +57,40 @@
                 </a>
             </li>
         @endcan
-            @can('view-podcasts')
-                <li @class(["menu-item", 'active' => $route == 'podcasts'])>
-                    <a href="{{ route("admin.podcasts.index") }}" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-podcast"></i>
-                        <div data-i18n="پادکست ها">پادکست ها</div>
-                    </a>
-                </li>
-            @endcan
-            @can('view-discounts')
-                <li @class(["menu-item", 'active' => $route == 'discounts'])>
-                    <a href="{{ route("admin.discounts.index") }}" class="menu-link">
-                        <i class="menu-icon tf-icons bx bxs-offer"></i>
-                        <div data-i18n="تخفیف ها">تخفیف ها</div>
-                    </a>
-                </li>
-            @endcan
+        @can('view-podcasts')
+            <li @class(["menu-item", 'active' => $route == 'podcasts'])>
+                <a href="{{ route("admin.podcasts.index") }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-podcast"></i>
+                    <div data-i18n="پادکست ها">پادکست ها</div>
+                </a>
+            </li>
+        @endcan
+        @can('view-discounts')
+            <li @class(["menu-item", 'active' => $route == 'discounts'])>
+                <a href="{{ route("admin.discounts.index") }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bxs-offer"></i>
+                    <div data-i18n="تخفیف ها">تخفیف ها</div>
+                </a>
+            </li>
+        @endcan
         @can('view-daily-reports')
-                <li @class(["menu-item", 'active' => $route == 'dailyreports'])>
+            <li @class(["menu-item", 'active' => $route == 'dailyreports'])>
                 <a href="{{ route("admin.dailyreports.index") }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-chart"></i>
                     <div data-i18n="گزارش روزانه بازار">گزارش روزانه بازار</div>
                 </a>
             </li>
         @endcan
-            @can('view-student-reports')
-                <li @class(["menu-item", 'active' => $route == 'studentreports'])>
-                    <a href="{{ route("admin.studentreports.index") }}" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-abacus"></i>
-                        <div data-i18n="تحلیل ها">تحلیل ها</div>
-                    </a>
-                </li>
-            @endcan
+        @can('view-student-reports')
+            <li @class(["menu-item", 'active' => $route == 'studentreports'])>
+                <a href="{{ route("admin.studentreports.index") }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-abacus"></i>
+                    <div data-i18n="تحلیل ها">تحلیل ها</div>
+                </a>
+            </li>
+        @endcan
         @can('view-job-offers')
-                <li @class(["menu-item", 'active' => $route == 'joboffers'])>
+            <li @class(["menu-item", 'active' => $route == 'joboffers'])>
                 <a href="{{ route("admin.joboffers.index") }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bxl-linkedin"></i>
                     <div data-i18n="فرصت های شغلی">فرصت های شغلی</div>
@@ -98,29 +98,29 @@
             </li>
         @endcan
         @can('view-job-applications')
-                <li @class(["menu-item", 'active' => $route == 'jobapplications'])>
+            <li @class(["menu-item", 'active' => $route == 'jobapplications'])>
                 <a href="{{ route("admin.jobapplications.index") }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-receipt"></i>
                     <div data-i18n="رزومه های ارسال شده">رزومه های ارسال شده</div>
                 </a>
             </li>
         @endcan
-            @can('view-menus')
-                <li @class(["menu-item", 'active' => $route == 'menus'])>
-                    <a href="{{ route("admin.menus.index") }}" class="menu-link">
+        @can('view-menus')
+            <li @class(["menu-item", 'active' => $route == 'menus'])>
+                <a href="{{ route("admin.menus.index") }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-menu"></i>
                     <div data-i18n="منو">منو</div>
                 </a>
             </li>
         @endcan
-            @can('view-categories')
-                <li @class(["menu-item", 'active' => $route == 'categories'])>
-                    <a href="{{ route("admin.categories.index") }}" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-category"></i>
-                        <div data-i18n="دسته بندی ها">دسته بندی ها</div>
-                    </a>
-                </li>
-            @endcan
+        @can('view-categories')
+            <li @class(["menu-item", 'active' => $route == 'categories'])>
+                <a href="{{ route("admin.categories.index") }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-category"></i>
+                    <div data-i18n="دسته بندی ها">دسته بندی ها</div>
+                </a>
+            </li>
+        @endcan
         @can('view-logs')
             <li @class(["menu-item", 'active' => $route == 'logs'])>
                 <a href="{{ route("admin.logs.index") }}" class="menu-link">
@@ -129,13 +129,30 @@
                 </a>
             </li>
         @endcan
-            @can('manage-channels')
-                <li @class(["menu-item", 'active' => $route == 'channels'])>
-                    <a href="{{ route("admin.channels.index") }}" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-file"></i>
-                        <div data-i18n="کانال ها">کانال ها</div>
-                    </a>
-                </li>
-            @endcan
+        @can('manage-channels')
+            <li @class(["menu-item", 'active' => $route == 'channels'])>
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-message-square-dots"></i>
+                    <div>کانال ها</div>
+                </a>
+                <ul class="menu-sub">
+                    @can('add-channel')
+                        <li @class(["menu-item", 'active' => $route == 'channels.create'])>
+                            <a href="{{route('admin.channels.create')}}" class="menu-link">
+                                <div>افزودن کانال جدید</div>
+                            </a>
+                        </li>
+                    @endcan
+
+
+                    <li @class(["menu-item", 'active' => $route == 'channels.index'])>
+                        <a href="{{route('admin.channels.index')}}" class="menu-link">
+                            <div>همه کانال ها</div>
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+        @endcan
     </ul>
 </aside>
