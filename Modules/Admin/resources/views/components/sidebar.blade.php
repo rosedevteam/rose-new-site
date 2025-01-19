@@ -36,7 +36,7 @@
         @can('view-orders')
             <li @class(["menu-item", 'active' => $route == 'orders'])>
                 <a href="{{ route("admin.orders.index") }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-food-menu"></i>
+                    <i class="menu-icon tf-icons bx bx-receipt"></i>
                     <div data-i18n="سفارش ها">سفارش ها</div>
                 </a>
             </li>
@@ -100,7 +100,7 @@
         @can('view-job-applications')
                 <li @class(["menu-item", 'active' => $route == 'jobapplications'])>
                 <a href="{{ route("admin.jobapplications.index") }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-receipt"></i>
+                    <i class="menu-icon tf-icons bx bx-food-menu"></i>
                     <div data-i18n="رزومه های ارسال شده">رزومه های ارسال شده</div>
                 </a>
             </li>
@@ -124,7 +124,7 @@
             @can('manage-channels')
                 <li @class(["menu-item", 'active' => $route == 'channels'])>
                     <a href="{{ route("admin.channels.index") }}" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-file"></i>
+                        <i class="menu-icon tf-icons bx bx-broadcast"></i>
                         <div data-i18n="کانال ها">کانال ها</div>
                     </a>
                 </li>
