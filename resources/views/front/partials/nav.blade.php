@@ -91,7 +91,7 @@
 
 
 <!--Start Of Mobile Menu-->
-<div class="offcanvas offcanvas-start p-3" data-bs-scroll="true" tabindex="-1" id="mobileMenu"
+<div class="offcanvas offcanvas-start p-3" data-bs-scroll="true" tabindex="-1" id="mobileMenu" style="overflow: auto"
      aria-labelledby="offcanvasWithBothOptionsLabel">
 
     <div class="offcanvas-header justify-content-between ">
