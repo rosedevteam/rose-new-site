@@ -503,7 +503,7 @@ class DatabaseSeeder extends Seeder
         Menu::factory()->create([
             'title' => 'دوره های آموزشی',
             'user_id' => 1,
-            'slug' => "products",
+            'slug' => "/products",
             'parent_id' => 2,
             'order' => 0,
             'icon' => 'graduate-hat-square.svg',
@@ -512,7 +512,7 @@ class DatabaseSeeder extends Seeder
         Menu::factory()->create([
             'title' => 'بازنشستگی در ۷ سال',
             'user_id' => 1,
-            'slug' => "retirement-in-7-years",
+            'slug' => "/retirement-in-7-years",
             'parent_id' => 2,
             'order' => 1,
             'icon' => 'target-goal.svg',
@@ -521,7 +521,7 @@ class DatabaseSeeder extends Seeder
         Menu::factory()->create([
             'title' => 'وبلاگ',
             'user_id' => 1,
-            'slug' => "blog",
+            'slug' => "/blog",
             'parent_id' => 3,
             'order' => 0,
             'icon' => 'programming-code-list.svg',
@@ -530,7 +530,7 @@ class DatabaseSeeder extends Seeder
         Menu::factory()->create([
             'title' => 'پادکست',
             'user_id' => 1,
-            'slug' => "podcast",
+            'slug' => "/podcast",
             'parent_id' => 3,
             'order' => 1,
             'icon' => 'headphones.svg',
@@ -539,7 +539,7 @@ class DatabaseSeeder extends Seeder
         Menu::factory()->create([
             'title' => 'درباره ما',
             'user_id' => 1,
-            'slug' => "about",
+            'slug' => "/about",
             'parent_id' => 6,
             'order' => 1,
             'icon' => 'News-Bookmark-1.svg',
@@ -548,7 +548,7 @@ class DatabaseSeeder extends Seeder
         Menu::factory()->create([
             'title' => 'همکاری با ما',
             'user_id' => 1,
-            'slug' => "همکاری-با-ما",
+            'slug' => "/همکاری-با-ما",
             'parent_id' => 6,
             'order' => 2,
             'icon' => 'star-review-1.svg',
@@ -557,7 +557,7 @@ class DatabaseSeeder extends Seeder
         Menu::factory()->create([
             'title' => 'تماس با ما',
             'user_id' => 1,
-            'slug' => "contact",
+            'slug' => "/contact",
             'parent_id' => 6,
             'order' => 3,
             'icon' => 'Headphones-Customer-support-1.svg',
@@ -566,7 +566,7 @@ class DatabaseSeeder extends Seeder
         Menu::factory()->create([
             'title' => 'هم مسیر',
             'user_id' => 1,
-            'slug' => "ham-masir",
+            'slug' => "/ham-masir",
             'parent_id' => 7,
             'order' => 1,
             'icon' => 'crystal.svg',
