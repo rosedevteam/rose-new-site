@@ -121,14 +121,6 @@
                     </a>
                 </li>
             @endcan
-        @can('view-logs')
-            <li @class(["menu-item", 'active' => $route == 'logs'])>
-                <a href="{{ route("admin.logs.index") }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-file"></i>
-                    <div data-i18n="لاگ">لاگ</div>
-                </a>
-            </li>
-        @endcan
             @can('manage-channels')
                 <li @class(["menu-item", 'active' => $route == 'channels'])>
                     <a href="{{ route("admin.channels.index") }}" class="menu-link">
@@ -137,5 +129,13 @@
                     </a>
                 </li>
             @endcan
+        @can('view-logs')
+            <li @class(["menu-item", 'active' => $route == 'logs'])>
+                <a href="{{ route("admin.logs.index") }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-file"></i>
+                    <div data-i18n="لاگ">لاگ</div>
+                </a>
+            </li>
+        @endcan
     </ul>
 </aside>

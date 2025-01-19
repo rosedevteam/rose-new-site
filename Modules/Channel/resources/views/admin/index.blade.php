@@ -34,10 +34,11 @@
                                             <div class="flex-shrink-0 avatar">
 
                                                 @if($channel->avatar)
-                                                    <img class="avatar-initial rounded-circle bg-label-success"
+                                                    <img class="avatar-initial rounded-circle bg-label-success" alt=""
                                                          src="{{$channel->avatar}}">
                                                 @else
-                                                    <span class="avatar-initial rounded-circle bg-label-success">کانال</span>
+                                                    <span
+                                                        class="avatar-initial rounded-circle bg-label-success">کانال</span>
                                                 @endif
 
                                             </div>
@@ -90,15 +91,15 @@
 
                         <div class="chat-wrapper-ts">
                             <div class="d-lg-none">
-                                @foreach($channels as $channel)
-                                    <li class="chat-contact-list-item" onclick="getChannel({{$channel->id}})">
+                                @foreach($channels as $c)
+                                    <li class="chat-contact-list-item" onclick="getChannel({{$c->id}})">
                                         <a class="d-flex align-items-center">
 
                                             <div class="flex-shrink-0 avatar">
 
-                                                @if($channel->avatar)
-                                                    <img class="avatar-initial rounded-circle bg-label-success"
-                                                         src="{{$channel->avatar}}">
+                                                @if($c->avatar)
+                                                    <img class="avatar-initial rounded-circle bg-label-success" alt=""
+                                                         src="{{$c->avatar}}">
                                                 @else
                                                     <span
                                                         class="avatar-initial rounded-circle bg-label-success">کانال</span>
@@ -107,15 +108,15 @@
                                             </div>
                                             <div class="chat-contact-info flex-grow-1 ms-3">
                                                 <h6 class="chat-contact-name text-truncate m-0">
-                                                    {{$channel->title}}
+                                                    {{$c->title}}
                                                 </h6>
                                                 <p class="chat-contact-status text-truncate mb-0 text-muted">
-                                                    {{$channel->description}}
+                                                    {{$c->description}}
                                                 </p>
                                                 {{--                                        @dd($channel->users->where('phone' , '09391277002')->first())--}}
                                                 @can('view-channel-members-count')
                                                     <p class="chat-contact-status text-truncate mb-0 text-muted">
-                                                        {{$channel->users->count()}}
+                                                        {{$c->users->count()}}
                                                         عضو
                                                     </p>
                                                 @else
@@ -139,13 +140,13 @@
                                                 </small>
                                             </div>
                                             <small
-                                                class="text-muted mb-auto">{{\Hekmatinasser\Verta\Verta::instance($channel->updated_at)->formatJalaliDate()}}</small>
+                                                class="text-muted mb-auto">{{\Hekmatinasser\Verta\Verta::instance($c->updated_at)->formatJalaliDate()}}</small>
                                         </a>
                                     </li>
                                 @endforeach
                             </div>
                             <div class="alert alert-solid-dark mb-0 m-3" role="alert">
-                                <h6 class="alert-heading mb-1"> {{auth()->user()->first_name . ' ' . auth()->user()->last_name}}
+                                <h6 class="alert-heading mb-1"> {{auth()->user()->name()}}
                                     عزیز
                                     سلام، خدا قوت! </h6>
                                 برای مشاهده پیام های کانال، روی یکی از کانال هایی که عضو هستید کلیک کنید...
@@ -203,10 +204,11 @@
                                                                 data-bs-dismiss="modal">
                                                             بستن
                                                         </button>
-                                                                                                        <button type="button" class="btn btn-primary"
-                                                                                                                onclick="sendFile({{$channel->id}})" id="sendFileButton">ارسال
-                                                                                                            فایل
-                                                                                                        </button>
+                                                        <button type="button" class="btn btn-primary"
+                                                                onclick="sendFile()"
+                                                                id="sendFileButton">ارسال
+                                                            فایل
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>

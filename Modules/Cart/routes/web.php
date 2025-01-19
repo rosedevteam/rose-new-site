@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Cart\Http\Controllers\CartController;
+use Modules\Cart\Http\Controllers\front\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +14,9 @@ use Modules\Cart\Http\Controllers\CartController;
 |
 */
 
-Route::prefix('cart')->group(function () {
-    Route::get('/' , [\Modules\Cart\Http\Controllers\front\CartController::class , 'cart'])->name('cart.show');
-    Route::post('/add/{product}' , [\Modules\Cart\Http\Controllers\front\CartController::class , 'addToCart'])->name('cart.add');
-    Route::patch('/quantity/change' , 'CartController@quantityChange')->name('cart.quantity.change');
-    Route::delete('/delete/{cart}' , [\Modules\Cart\Http\Controllers\front\CartController::class , 'deleteFromCart'])->name('cart.destroy');
+Route::prefix('cart')->controller(CartController::class)->group(function () {
+    Route::get('/', 'cart')->name('cart.show');
+    Route::post('/add/{product}', 'addToCart')->name('cart.add');
+    Route::patch('/quantity/change', 'quantityChange')->name('cart.quantity.change');
+    Route::delete('/delete/{cart}', 'deleteFromCart')->name('cart.destroy');
 });
