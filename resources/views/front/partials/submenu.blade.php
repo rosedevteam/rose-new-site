@@ -11,13 +11,14 @@
                         {{$menu->subtitle}}
                     </p>
                 </div>
-            @endif
+            @else
             <div class="sub-menu-title">
                 <h5>{{$menu->title}}</h5>
                 <p class="subtitle">
                     {{$menu->subtitle}}
                 </p>
             </div>
+            @endif
         </a>
     </li>
 @endforeach
