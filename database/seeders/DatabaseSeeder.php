@@ -615,7 +615,7 @@ class DatabaseSeeder extends Seeder
             'type' => 'amount',
             'amount' => 1000000,
             'is_active' => 1,
-            'limit' => 5,
+            'limit' => 6,
             'expires_at' => now()->addDays(3),
         ]);
         $discount->products()->attach(Product::all());
