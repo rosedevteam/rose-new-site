@@ -47,8 +47,9 @@ class AnalyticsController extends Controller
             foreach ($newTrade as $trade) {
                 Trade::create($trade);
             }
+            $trades = Trade::where('coID', $coId);
         }
-        return Trade::where('coID', $coId)->get()->toJson(JSON_UNESCAPED_UNICODE);
+        return $trades->get()->toJson(JSON_UNESCAPED_UNICODE);
     }
 
     public function legalTrades($coId)
@@ -56,12 +57,13 @@ class AnalyticsController extends Controller
         $legalTrades = LegalTrade::where('com_ID', $coId);
         if (self::shouldApiCall($legalTrades)) {
             $legalTrades->delete();
-            $newTrade = ApiClient::trades($coId);
+            $newTrade = ApiClient::legalTrades($coId);
             foreach ($newTrade as $trade) {
                 LegalTrade::create($trade);
             }
+            $legalTrades = LegalTrade::where('com_ID', $coId);
         }
-        return LegalTrade::where('com_ID', $coId)->get()->toJson(JSON_UNESCAPED_UNICODE);
+        return $legalTrades->get()->toJson(JSON_UNESCAPED_UNICODE);
     }
 
     public function indexValues($indexId)
@@ -69,12 +71,13 @@ class AnalyticsController extends Controller
         $indexValues = IndexValue::where('indexID', $indexId);
         if (self::shouldApiCall($indexValues)) {
             $indexValues->delete();
-            $newIndex = ApiClient::trades($indexId);
+            $newIndex = ApiClient::indexValues($indexId);
             foreach ($newIndex as $indexValue) {
                 IndexValue::create($indexValue);
             }
+            $indexValues = IndexValue::where('indexID', $indexId);
         }
-        return IndexValue::where('indexID', $indexId)->get()->toJson(JSON_UNESCAPED_UNICODE);
+        return $indexValues->get()->toJson(JSON_UNESCAPED_UNICODE);
     }
 
     public function bidAsk($coId)
@@ -82,12 +85,13 @@ class AnalyticsController extends Controller
         $bidAsks = BidAsk::where('coID', $coId);
         if (self::shouldApiCall($bidAsks)) {
             $bidAsks->delete();
-            $newBidAsks = ApiClient::trades($coId);
+            $newBidAsks = ApiClient::bidAsk($coId);
             foreach ($newBidAsks as $bidAsk) {
                 BidAsk::create($bidAsk);
             }
+            $bidAsks = BidAsk::where('coID', $coId);
         }
-        return BidAsk::where('coID', $coId)->get()->toJson(JSON_UNESCAPED_UNICODE);
+        return $bidAsks->get()->toJson(JSON_UNESCAPED_UNICODE);
     }
 
     private static function shouldApiCall($builderQuery)

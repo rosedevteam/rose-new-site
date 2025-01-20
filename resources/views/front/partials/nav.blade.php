@@ -36,14 +36,14 @@
                                     </li>
                                 @else
                                     <li>
-                                        <a href="/">
+                                        <a href="{{ $menu->slug }}">
                                              {{$menu->title}}
                                             <i class="bi bi-chevron-down"></i>
                                         </a>
 
                                         <!--Submenu menu-->
                                         <ul class="submenu p-0 m-0">
-                                            @include('front.partials.submenu' , ['menus' => $menu->children])
+                                            @include('front.partials.submenu' , ['menus' => $menu->children, 'icon' => true])
                                         </ul>
                                     </li>
                                 @endif
@@ -91,12 +91,12 @@
 
 
 <!--Start Of Mobile Menu-->
-<div class="offcanvas offcanvas-start p-3" data-bs-scroll="true" tabindex="-1" id="mobileMenu"
+<div class="offcanvas offcanvas-start p-3" data-bs-scroll="true" tabindex="-1" id="mobileMenu" style="overflow: auto"
      aria-labelledby="offcanvasWithBothOptionsLabel">
 
     <div class="offcanvas-header justify-content-between ">
         <div class="logo">
-            <img src="assets/front/images/logo.svg" width="156" alt="مجموعه آموزشی رز">
+            <img src="/assets/front/images/logo.svg" width="156" alt="مجموعه آموزشی رز">
         </div>
         <svg data-bs-dismiss="offcanvas" aria-label="Close" xmlns="http://www.w3.org/2000/svg" width="29" height="28"
              viewBox="0 0 29 28" fill="none">
@@ -113,37 +113,29 @@
         <div class="menu">
 
             <ul class="rose-menu-mobile p-0">
-                <!--Simple menu-->
-                <li>
-                    <a href="/">
-                        صفحه اصلی
-                    </a>
-                </li>
-                <li>
-                    <a href="/">
-                        دوره ها
-                    </a>
-                </li>
-                <li>
-                    <a href="/">
-                        گزارش روزانه
-                    </a>
-                </li>
-                <li class="item-with-submenu">
-                    <a href="#">
-                        دوره ها
-                        <i class="bi bi-chevron-down"></i>
-                    </a>
-
-                    <!--Submenu menu-->
-                    <ul class="submenu p-0">
+                @foreach($menus as $menu)
+                    @if(!$menu->children->count())
+                        <!--Simple menu-->
                         <li>
-                            <a class="sub-menu-item" href="#">
-                                دوره های آموزشی
+                            <a href="{{$menu->slug }}">
+                                {{$menu->title}}
                             </a>
                         </li>
-                    </ul>
-                </li>
+                    @else
+                        <li class="item-with-submenu">
+                            <a href="{{ $menu->slug }}">
+                                {{$menu->title}}
+                                <i class="bi bi-chevron-down"></i>
+                            </a>
+
+                            <!--Submenu menu-->
+                            <ul class="submenu p-0 m-0">
+                                @include('front.partials.submenu' , ['menus' => $menu->children, 'icon'=> false])
+                            </ul>
+                        </li>
+                    @endif
+
+                @endforeach
 
             </ul>
         </div>
@@ -200,7 +192,7 @@
                             <div class="product product-widget  pb-3" style="border-bottom: solid #e7e7e7 1px">
                                 <figure class="product-main">
                                     <a href="products/{{$cart['product']->slug}}">
-                                        <img src="{{$cart['product']->image}}" class="product-main-image">
+                                        <img alt="" src="{{$cart['product']->image}}" class="product-main-image">
                                     </a>
                                 </figure>
                                 <div class="product-details">

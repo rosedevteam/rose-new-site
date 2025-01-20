@@ -68,7 +68,12 @@ class User extends \Illuminate\Foundation\Auth\User
 
     public function studentReports()
     {
-        return $this->hasMany(StudentReport::class);
+        return $this->hasMany(StudentReport::class, 'student_id');
+    }
+
+    public function adminStudentReports()
+    {
+        return $this->hasMany(StudentReport::class, 'user_id');
     }
 
     public function comments()

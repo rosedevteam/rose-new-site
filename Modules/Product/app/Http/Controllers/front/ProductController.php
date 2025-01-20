@@ -34,7 +34,7 @@ class ProductController extends Controller
 
         $products = $products->paginate(9)->withQueryString();
 
-        return view('product::front.all', [
+        return view('product::front.index', [
             "products" => $products,
             'category' => $category,
             'search' => $search,

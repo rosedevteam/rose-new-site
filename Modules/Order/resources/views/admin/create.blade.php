@@ -44,9 +44,9 @@
                                             <label for="select2Basic" class="form-label">موبایل کاربر</label>
                                             <select name="user_id" id="select2Basic" class="form-select select2" required>
                                                 <option value="">انتخاب کنید</option>
-                                                @foreach(\App\Models\User::all() as $user)
+                                                @foreach(\Modules\User\Models\User::all() as $user)
                                                     <option
-                                                        value="{{$user->id}}" {{old('user_id') == $user->id ? 'selected' : ''}}>{{$user->phone . ' | ' . $user->first_name . ' ' .$user->last_name}}</option>
+                                                        value="{{$user->id}}" {{old('user_id') == $user->id ? 'selected' : ''}}>{{$user->phone . ' | ' . $user->name()}}</option>
                                                 @endforeach
                                             </select>
                                         </div>

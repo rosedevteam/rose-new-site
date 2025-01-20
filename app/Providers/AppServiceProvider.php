@@ -26,7 +26,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Model::unguard();
-        Collection::macro('paginate', function ($perPage, $total = null, $page = null, $pageName = 'page'): LengthAwarePaginator {
+
+        Collection::macro('paginate', function($perPage, $total = null, $page = null, $pageName = 'page'): LengthAwarePaginator {
             $page = $page ?: LengthAwarePaginator::resolveCurrentPage($pageName);
 
             return new LengthAwarePaginator(
@@ -40,7 +41,6 @@ class AppServiceProvider extends ServiceProvider
                 ]
             );
         });
-
         Paginator::defaultView('vendor.pagination.rose-pagination');
 
         $menus = Menu::with('children')

@@ -69,13 +69,13 @@
                     <p><strong>نماد ها</strong></p>
                     <a href="{{ route('about') }}" class="mt-4">
                         <img data-lazyloaded="1"
-                             src="assets/front/images/enamad.png" width="125"
+                             src="/assets/front/images/enamad.png" width="125"
                              height="136"
                              data-src="assets/front/images/enamad.png"
                              class="attachment-full size-full wp-image-26673 entered litespeed-loaded" alt=""
                              data-ll-status="loaded">
                         <noscript><img width="125" height="136"
-                                       src="assets/front/images/enamad.png"
+                                       src="/assets/front/images/enamad.png"
                                        class="attachment-full size-full wp-image-26673" alt=""/></noscript>
                     </a>
                 </div>

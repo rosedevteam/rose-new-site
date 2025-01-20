@@ -63,14 +63,25 @@
                                        required>
                             </div>
                             <div class="mb-3">
+                                <label class="form-label" for="select2Basic">دانشپذیر</label>
+                                <select name="student_id" id="select2Basic" class="form-select select2"
+                                        form="create-item" required>
+                                    <option value="">انتخاب کنید</option>
+                                    @foreach(\Modules\User\Models\User::all() as $user)
+                                        <option
+                                            value="{{$user->id}}" {{old('user_id') == $user->id ? 'selected' : ''}}>{{$user->phone . ' | ' . $user->name()}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3">
                                 <label class="form-label" for="status">وضعیت</label>
                                 <select class="form-select" name="status" id="status" form="create-item">
                                     <option
-                                            value="approved" {{ old('status') == 'approved' ? 'selected' : '' }}>
+                                        value="approved" {{ old('status') == 'approved' ? 'selected' : '' }}>
                                         تایید شده
                                     </option>
                                     <option
-                                            value="rejected" {{ old('status') == 'rejected' ? 'selected' : '' }}>رد
+                                        value="rejected" {{ old('status') == 'rejected' ? 'selected' : '' }}>رد
                                         شده
                                     </option>
                                     <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>

@@ -77,9 +77,9 @@
                                     style="width: 10%;">تاریخ ساخت
                                 </th>
                                 @can('edit-categories')
-                                <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 2%;">عملیات
-                                </th>
+                                    <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                                        style="width: 2%;">عملیات
+                                    </th>
                                 @endcan
                             </tr>
                             </thead>
@@ -109,25 +109,25 @@
                                         @endcan</td>
                                     <td>{{ verta($category->created_at)->formatJalaliDateTime() }}</td>
                                     @can('edit-categories')
-                                    <td>
-                                        <div class="d-flex gap-3 text-nowrap">
-                                            @can('edit-categories')
-                                                <button class="btn btn-sm btn-info" data-bs-target="#edit-modal"
-                                                        data-bs-toggle="modal"
-                                                        data-name="{{ $category->name }}"
-                                                        data-slug="{{ $category->archive_slug }}"
-                                                        data-id="{{ $category->id }}"
-                                                        data-parent="{{ $category->parent_id }}"
-                                                        data-type="{{ $category->type }}"
-                                                        id="edit-button">
-                                                    ویرایش
-                                                </button>
-                                            @endcan
-                                            @can('delete-categories')
-                                                <x-admin::deletebutton data-id="{{ $category->id }}"/>
-                                            @endcan
-                                        </div>
-                                    </td>
+                                        <td>
+                                            <div class="d-flex gap-3 text-nowrap">
+                                                @can('edit-categories')
+                                                    <button class="btn btn-sm btn-info" data-bs-target="#edit-modal"
+                                                            data-bs-toggle="modal"
+                                                            data-name="{{ $category->name }}"
+                                                            data-slug="{{ $category->archive_slug }}"
+                                                            data-id="{{ $category->id }}"
+                                                            data-parent="{{ $category->parent_id }}"
+                                                            data-type="{{ $category->type }}"
+                                                            id="edit-button">
+                                                        ویرایش
+                                                    </button>
+                                                @endcan
+                                                @can('delete-categories')
+                                                    <x-admin::deletebutton data-id="{{ $category->id }}"/>
+                                                @endcan
+                                            </div>
+                                        </td>
                                     @endcan
                                 </tr>
                             @endforeach
@@ -194,53 +194,60 @@
                     </div>
                 @endcan
             </div>
-            <x-admin::deletemodal/>
-            <div class="modal fade" id="edit-modal" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content p-3 p-md-5">
-                        <div class="modal-body">
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            <div class="text-center mb-4 mt-0 mt-md-n2">
-                                <h3 class="secondary-font">ویرایش دسته بندی</h3>
+            @can('delete-categories')
+                <x-admin::deletemodal/>
+            @endcan
+            @can('edit-categories')
+                <div class="modal fade" id="edit-modal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content p-3 p-md-5">
+                            <div class="modal-body">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                <div class="text-center mb-4 mt-0 mt-md-n2">
+                                    <h3 class="secondary-font">ویرایش دسته بندی</h3>
+                                </div>
+                                <form id="edit-form" class="row g-3"
+                                      method="POST">
+                                    @csrf
+                                    @method('PATCH')
+                                    <div class="row">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="name_edit">نام</label>
+                                            <input type="text" class="form-control" id="name_edit" name="name_edit"
+                                                   value=""
+                                                   required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="parent_id_edit">دسته بندی مادر</label>
+                                            <select id="parent_id_edit" name="parent_id_edit" class="form-select">
+                                                <option value="">ندارد</option>
+                                                @foreach($parents as $c)
+                                                    <option value="{{ $c->id }}" class="form-control"
+                                                            data-type="{{ $c->type }}">{{ $c->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <input type="hidden" value="" id="type_edit" name="type_edit">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="archive_slug_edit">آدرس آرشیو</label>
+                                            <input type="text" class="form-control" id="archive_slug_edit"
+                                                   name="archive_slug_edit" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 text-center mt-4">
+                                        <button type="submit" class="btn btn-primary me-sm-3 me-1">ثبت</button>
+                                        <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
+                                                aria-label="Close">
+                                            انصراف
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
-                            <form id="edit-form" class="row g-3"
-                                  method="POST">
-                                @csrf
-                                @method('PATCH')
-                                <div class="mb-3">
-                                    <label class="form-label" for="name_edit">نام</label>
-                                    <input type="text" class="form-control" id="name_edit" name="name_edit" value=""
-                                           required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label" for="parent_id_edit">دسته بندی مادر</label>
-                                    <select id="parent_id_edit" name="parent_id_edit" class="form-select">
-                                        <option value="">ندارد</option>
-                                        @foreach($parents as $c)
-                                            <option value="{{ $c->id }}" class="form-control"
-                                                    data-type="{{ $c->type }}">{{ $c->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <input type="hidden" value="" id="type_edit" name="type_edit">
-                                <div class="mb-3">
-                                    <label class="form-label" for="archive_slug_edit">آدرس آرشیو</label>
-                                    <input type="text" class="form-control" id="archive_slug_edit"
-                                           name="archive_slug_edit" value="">
-                                </div>
-                                <div class="col-12 text-center mt-4">
-                                    <button type="submit" class="btn btn-primary me-sm-3 me-1">ثبت</button>
-                                    <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
-                                            aria-label="Close">
-                                        انصراف
-                                    </button>
-                                </div>
-                            </form>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endcan
         </div>
         <div class="content-backdrop fade"></div>
     </div>

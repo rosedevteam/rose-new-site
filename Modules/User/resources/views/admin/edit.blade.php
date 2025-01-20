@@ -204,7 +204,7 @@
                                         <input type="text" id="last_name" name="last_name"
                                                class="form-control" value="{{ $user->last_name }}">
                                     </div>
-                                    <div class="col-12 col-md-6">
+                                    <div class="col-lg col-md-6">
                                         <label class="form-label" for="email">ایمیل</label>
                                         <input type="text" id="email" name="email"
                                                class="form-control text-start" value="{{ $user->email }}"

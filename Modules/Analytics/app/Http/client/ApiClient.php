@@ -21,7 +21,7 @@ class ApiClient
 
     private static function token()
     {
-        return Cache::remember('nadpco-api-token', 60 * 24, function () {
+        return Cache::remember('nadpco-api-token', 60 * 60 * 24, function () {
             $response = Http::withBasicAuth(
                 config('services.nadpco_api.username'),
                 config('services.nadpco_api.password'),

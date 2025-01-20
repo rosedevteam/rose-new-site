@@ -66,6 +66,11 @@
                                        required>
                             </div>
                             <div class="mb-3">
+                                <label class="form-label" for="student">دانشپذیر</label>
+                                <input name="student" class="form-control"
+                                       value="{{ $studentreport->student->phone . " | " . $studentreport->student->name() }}">
+                            </div>
+                            <div class="mb-3">
                                 <label class="form-label" for="status">وضعیت</label>
                                 <select class="form-select" name="status" id="status" form="edit-item">
                                     <option

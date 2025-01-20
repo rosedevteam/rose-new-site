@@ -57,7 +57,6 @@ class DiscountController extends Controller
 
         $data = request()->validate([
             'code' => 'bail|required|string|unique:discounts,code',
-            'type' => 'bail|required|string|in:amount,percentage',
             'is_active' => 'bail|required|integer|in:0,1',
             'amount' => 'bail|required|string',
             'products.*' => 'bail|required|integer|exists:products,id',
@@ -69,7 +68,6 @@ class DiscountController extends Controller
             $data['expires_at'] = self::formatDate($data['expires_at']);
             $discount = Discount::create([
                 'code' => $data['code'],
-                'type' => $data['type'],
                 'is_active' => $data['is_active'],
                 'amount' => $data['amount'],
                 'expires_at' => $data['expires_at'],
@@ -122,7 +120,6 @@ class DiscountController extends Controller
         }
         $data = $data->validate([
             'code' => 'bail|nullable|string|unique:discounts,code',
-            'type' => 'bail|required|string|in:amount,percentage',
             'is_active' => 'bail|required|integer|in:0,1',
             'amount' => 'bail|required|string',
             'products.*' => 'bail|required|integer|exists:products,id',
@@ -135,7 +132,6 @@ class DiscountController extends Controller
             $before = Discount::with('products:id,title')->find($discount->id)->toArray();
             $discount->update([
                 'code' => $data['code'] ?: $discount->code,
-                'type' => $data['type'],
                 'is_active' => $data['is_active'],
                 'expires_at' => $data['expires_at'],
                 'amount' => $data['amount'],
@@ -169,6 +165,5 @@ class DiscountController extends Controller
             return back();
         }
     }
-
 
 }

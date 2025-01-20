@@ -77,7 +77,7 @@
                             <thead>
                             <tr>
                                 <th aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width: 10%" aria-sort="ascending">نویسنده
+                                    colspan="1" style="width: 10%" aria-sort="ascending">دانشپذیر
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 10%;">تحلیل
@@ -107,8 +107,8 @@
                                     <td class="sorting_1">
                                         @can('view-users')
                                                 <a class="text-truncate text-body"
-                                                   href="{{ route('admin.users.edit', $report->user) }}"><span
-                                                        class="fw-semibold">{{ $report->user->name() }}</span></a>
+                                                   href="{{ route('admin.users.edit', $report->student) }}"><span
+                                                        class="fw-semibold">{{ $report->student->name() }}</span></a>
                                         @else
                                             {{ $report->user->name() }}
                                         @endcan
