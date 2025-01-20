@@ -51,8 +51,8 @@
                 <div>پیشخوان</div>
             </a>
         </li>
-        <li class="menu-item @if(URL::current() == route('profile.orders')) active @endif">
-            <a href="{{route('profile.orders')}}" class="menu-link">
+        <li class="menu-item @if(URL::current() == route('profile.courses')) active @endif">
+            <a href="{{route('profile.courses')}}" class="menu-link">
                 <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M15 9.5H17" stroke="#737887" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                     <path d="M7 17.5H9" stroke="#737887" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -65,6 +65,39 @@
                     <path d="M11 4.5H19" stroke="#737887" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
                 <div>دوره های من</div>
+            </a>
+        </li>
+
+        <li class="menu-item @if(URL::current() == route('profile.orders')) active @endif">
+            <a href="{{route('profile.orders')}}" class="menu-link">
+                <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M19.0029 10.4992H12.5352C12.2008 10.4992 11.8884 10.3322 11.7028 10.054L10.2993 7.9441C10.1133 7.66465 9.79958 7.49708 9.46391 7.49791H4.99705C3.89202 7.49791 2.99622 8.39372 2.99622 9.49875V19.5029C2.99622 20.6079 3.89202 21.5037 4.99705 21.5037H19.0029C20.1079 21.5037 21.0037 20.6079 21.0037 19.5029V12.5C21.0037 11.395 20.1079 10.4992 19.0029 10.4992Z" stroke="#737887" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M4.99707 7.49791V5.49708C4.99707 4.39205 5.89287 3.49625 6.9979 3.49625H17.0021C18.1071 3.49625 19.0029 4.39205 19.0029 5.49708V10.4992" stroke="#737887" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                <div>سفارش های من</div>
+            </a>
+        </li>
+
+        <li class="menu-item @if(URL::current() == route('profile.referrals')) active @endif">
+            <a href="{{route('profile.referrals')}}" class="menu-link">
+                <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_2924_38508)">
+                        <path d="M5 6.77778L12.1667 2L19.3333 6.77778V18.7222L12.1667 23.5L5 18.7222V6.77778Z" stroke="#737887" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M8.58203 8.56912L12.1654 5.58301L15.7487 8.56912V17.1293L12.1654 19.9163L8.58203 17.1293V8.56912Z" stroke="#737887" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M5 6.77734L8.58333 8.56901" stroke="#737887" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M12.168 2V5.58333" stroke="#737887" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M5 18.7223L8.58333 16.9307" stroke="#737887" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M12.168 23.5003V19.917" stroke="#737887" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M19.3333 18.7223L15.75 16.9307" stroke="#737887" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M15.75 8.56901L19.3333 6.77734" stroke="#737887" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </g>
+                    <defs>
+                        <clipPath id="clip0_2924_38508">
+                            <rect width="24" height="24" fill="white" transform="translate(0 0.5)"></rect>
+                        </clipPath>
+                    </defs>
+                </svg>
+                <div>رز کلاب</div>
             </a>
         </li>
     </ul>

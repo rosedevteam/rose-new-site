@@ -21,5 +21,7 @@
     "Cart": true,
     "Channel": true,
     "Analytics": true,
-    "Profile": true
+    "Profile": true,
+    "Referral": true,
+    "Score": true
 }

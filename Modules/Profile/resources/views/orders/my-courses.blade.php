@@ -3,23 +3,13 @@
 @section('content')
 
     <div class="panel-title-box d-flex justify-content-between flex-column flex-sm-row align-items-sm-center">
-        <div class="mb-3 mb-sm-0">
-            <h3>مجموعه آموزشی رز</h3>
-            <h2>دوره های من</h2>
-        </div>
+        <h4 class="breadcrumb-wrapper">
+            <span class="text-muted fw-light">حساب کاربری /</span> دوره های من
+        </h4>
 
         <div class="d-flex align-items-center gap-3 flex-column-reverse flex-sm-row ">
-            <a role="button" data-bs-toggle="modal" data-bs-target="#download-spotplayer" class="spotplayer-link">
-                <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M15.5603 11.6106L12.0028 15.1681L8.44531 11.6106" stroke="#6611DE" stroke-width="1.5"
-                          stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M12.0002 4.4967V15.1681" stroke="#6611DE" stroke-width="1.5" stroke-linecap="round"
-                          stroke-linejoin="round"/>
-                    <path
-                        d="M20.0028 16.9457C20.0028 18.9104 18.41 20.5032 16.4453 20.5032H7.55358C5.58883 20.5032 3.99609 18.9104 3.99609 16.9457"
-                        stroke="#6611DE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-
+            <a role="button" data-bs-toggle="modal" data-bs-target="#download-spotplayer" class="btn btn-link">
+                <i class="bx bx-sm bx-download me-3"></i>
                 دانلود اسپات پلیر
             </a>
             <a href="#" class="btn btn-primary btn-lg spotplayer text-center">
@@ -100,40 +90,30 @@
     <div id="courses" class="row g-3">
         @if($products->count())
             @foreach($products as $product)
-                <div class=" col-md-6 col-12">
-                    <div class="course-holder flex-column flex-lg-row">
-                        <div class="course-thumb">
-                            <img src="{{$product->image}}" alt="">
-                        </div>
-                        <div class="details d-flex flex-grow-1 justify-content-around flex-column flex-lg-row">
-                            <div class="d-flex flex-column w-100 flex-grow-1">
-                                <h3 class="course-title-th">عنوان دوره</h3>
-                                <p class="desc">{{$product->title}}</p>
-                            </div>
-                            <div class="d-flex flex-column w-100 flex-grow-1">
+                <div class="col-md-6 col-lg-3 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <img src="{{$product->image}}" alt="" class="w-100 mb-3" style="border-radius: 5px !important;">
+                            <h5 class="card-title">{{$product->title}}</h5>
+                            @if($product->is_free)
+                                <div class="d-flex desc gap-3 justify-content-center">
+                                    <a href="{{route('products.show' , $product)}}" class="btn btn-primary w-100"
+                                       target="_blank">
+                                        مشاهده دوره
+                                    </a>
+                                </div>
 
-                                @if($product->is_free)
-                                    <h3 class="course-title-th">مشاهده دوره</h3>
-                                    <div class="d-flex ps-3 pe-3 desc gap-3 justify-content-center">
-                                        <a href="{{route('products.show' , $product)}}" class="btn btn-primary "
-                                           target="_blank">
-                                            مشاهده دوره
-                                        </a>
-                                    </div>
+                            @else
+                                <div class="d-flex desc gap-3 justify-content-center">
+                                    <input type="hidden" id="clipboard-{{$product->id}}"
+                                           value="{{$product->spot_player_key}}">
+                                    <button class="btn btn-success w-100"
+                                            onclick="copyToClipboard($('#clipboard-{{$product->id}}'))">
+                                        کپی لایسنس
+                                    </button>
+                                </div>
 
-                                @else
-                                    <h3 class="course-title-th">لایسنس اسپات پلیر</h3>
-                                    <div class="d-flex ps-3 pe-3 desc gap-3 justify-content-center">
-                                        <input type="hidden" id="clipboard-{{$product->id}}"
-                                               value="{{$product->spot_player_key}}">
-                                        <button class="btn btn-primary "
-                                                onclick="copyToClipboard($('#clipboard-{{$product->id}}'))">
-                                            کپی لایسنس
-                                        </button>
-                                        @endif
-
-                                    </div>
-                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>

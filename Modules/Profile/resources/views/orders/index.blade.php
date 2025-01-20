@@ -3,71 +3,54 @@
 @section('content')
 
     <div class="panel-title-box d-flex justify-content-between flex-column flex-sm-row align-items-sm-center">
-        <div class="mb-3 mb-sm-0">
-            <h3>مجموعه آموزشی رز</h3>
-            <h2>سفارش های من</h2>
-        </div>
+        <h4 class="breadcrumb-wrapper">
+            <span class="text-muted fw-light">حساب کاربری /</span> سفارش های من
+        </h4>
+
     </div>
+    <div class="card">
+        <div class="table-responsive text-nowrap">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>شماره سفارش</th>
+                    <th>تاریخ</th>
+                    <th>مبلغ</th>
+                    <th>وضعیت</th>
+                </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                @foreach($orders as $order)
+                    <tr>
+                        <td>#{{$order->id}}</td>
+                        <td>{{Verta::instance($order->created_at)->formatJalaliDate()}}</td>
+                        <td>
+                            {{number_format($order->price)}}
+                            تومان
+                        </td>
+                        <td>
+                            @switch($order->status)
+                                @case('completed')
+                                    <span class="badge bg-success">تکمیل شده</span>
+                                @break
+                                @case('pending')
+                                    <span class="badge bg-info">در حال انجام</span>
+                                    @break
+                                @case('cancelled')
+                                    <span class="badge bg-danger">لغو شده</span>
+                                    @break
+                                @case('returned')
+                                    <span class="badge bg-secondary">عودت داده شده</span>
+                                    @break
+                            @endswitch
 
-
-    {{--  Courses  --}}
-    <div id="courses" class="row g-3">
-        @php
-        $userProducts = auth()->user()->orders()->with('products')->get()->pluck('products.*.id')->flatten()->unique()->toArray()
-        @endphp
-
-        <div class=" col-md-6 col-12">
-            <div class="course-holder flex-column flex-lg-row">
-                <div class="course-thumb">
-                    <img src="${item.image.src}" alt="">
-                </div>
-                <div class="details d-flex flex-grow-1 justify-content-around flex-column flex-lg-row">
-                    <div class="d-flex flex-column w-100 flex-grow-1">
-                        <h3 class="course-title-th">عنوان دوره</h3>
-                        <p class="desc">${item.name}</p>
-                    </div>
-                    <div class="d-flex flex-column w-100 flex-grow-1">
-                        <h3 class="course-title-th">مشاهده دوره</h3>
-                        <div class="d-flex ps-3 pe-3 desc gap-3 justify-content-center">
-                            <button onclick="getProductPermalink(${item.product_id} , ${userId})" class="btn btn-primary " target="_blank">
-                                مشاهده دوره
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{--  Courses end  --}}
-
-
-
-
-    <div class="panel-title-box my-5">
-        <div class="title-wrapper mb-4">
-            <h3>همیشه درحال یادگیری باش!</h3>
-            <h2>دوره های مجموعه آموزشی رز</h2>
-        </div>
-        <div class="row rose-courses my-2">
-            <div class="row">
-                @php
-                    $userProducts = auth()->user()->orders()->with('products')->get()->pluck('products.*.id')->flatten()->unique()->toArray();
-                @endphp
-                @foreach(\Modules\Product\Models\Product::where('status' , 'public')->get() as $product)
-                    <div class="col-md-3 course-item @if(!in_array($product->id , $userProducts)) false @endif">
-                        @if(!in_array($product->id , $userProducts))
-                            <p class="label">دانشجوی دوره نیستید</p>
-                        @endif
-                        <a href="{{route('products.show' , $product)}}">
-                            <img
-                                src="{{$product->image}}"
-                                width="100%" style="border-radius: 10px;">
-                        </a>
-                    </div>
+                        </td>
+                    </tr>
                 @endforeach
-            </div>
 
+
+                </tbody>
+            </table>
         </div>
     </div>
-
 @stop

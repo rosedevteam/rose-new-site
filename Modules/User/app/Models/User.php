@@ -17,6 +17,9 @@ use Modules\Order\Models\Order;
 use Modules\Podcast\Models\Podcast;
 use Modules\Post\Models\Post;
 use Modules\Product\Models\Product;
+use Modules\Referral\Models\Referral;
+use Modules\Referral\Models\ReferralUser;
+use Modules\Score\Models\Score;
 use Modules\StudentReport\Models\StudentReport;
 use Modules\User\Database\Factories\UserFactory;
 use Modules\Wallet\Models\Wallet;
@@ -129,6 +132,21 @@ class User extends \Illuminate\Foundation\Auth\User
     public function channelMessages()
     {
         return $this->hasMany(Message::class);
+    }
+
+    public function referal()
+    {
+        return $this->hasOne(Referral::class);
+    }
+
+    public function scores()
+    {
+        return $this->hasMany(Score::class);
+    }
+
+    public function referal_user()
+    {
+        return $this->hasOne(ReferralUser::class , 'used_by');
     }
 
     protected static function newFactory()

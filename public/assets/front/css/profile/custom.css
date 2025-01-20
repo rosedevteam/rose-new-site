@@ -185,19 +185,6 @@
     }
 }
 
-.badge.bg-success {
-    background: #5BD7BC !important;
-    border-radius: 5px;
-    font-size: 15px;
-    padding: 10px 14px;
-}
-
-.badge.bg-danger {
-    background: rgba(255, 102, 129, 1) !important;
-    border-radius: 5px;
-    font-size: 15px;
-    padding: 10px 14px;
-}
 
 .btn.btn-outline-dark.btn-outline-dark-rose {
     color: #737887;
@@ -806,4 +793,9 @@
 
 .swal2-container {
     z-index: 99999; !important;
+}
+
+
+#students-reports-carousel .swiper-button-next, .swiper-button-prev{
+    display:none;
 }

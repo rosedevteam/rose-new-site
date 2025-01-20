@@ -106,10 +106,12 @@
                                         </div>
                                         <div class="col-md-8">
                                             <div class="card-body">
-                                                <h5 class="card-title mb-3">{{$post->title}}</h5>
+                                                <a href="{{route('posts.show' , $post)}}">
+                                                    <h5 class="card-title mb-3">{{$post->title}}</h5>
+                                                </a>
                                                 <p class="card-text mb-n1"><small class="text-muted">
                                                         {{Verta::instance($post->created_at)->formatJalaliDate()}}
-                                                         </small></p>
+                                                    </small></p>
                                             </div>
                                         </div>
                                     </div>
@@ -124,7 +126,50 @@
                 <div class="swiper-button-prev swiper-button-white custom-icon"></div>
             </div>
         </div>
-    </div>
 
+        <div class="col-md-6 mb-4">
+            <h6 class="text-white mt-3 ">تحلیل های دانشپذیران</h6>
+            <div class="swiper" id="students-reports-carousel">
+                <div class="swiper-wrapper">
+
+                    @foreach(\Modules\StudentReport\Models\StudentReport::where('status' , 'approved')->latest()->take(5)->get() as $report)
+                        <div class="swiper-slide">
+                            <div class="col-md">
+                                <div class="card mb-3">
+                                    <div class="row g-0">
+
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                                <h5 class="card-title mb-3">{{$report->company}}</h5>
+                                                <p class="card-text mb-n1"><small class="text-muted">
+                                                        نویسنده:
+                                                        {{$report->student->name()}}
+                                                    </small></p>
+                                                <p class="card-text mb-n1"><small class="text-muted">
+                                                        تاریخ تحلیل:
+                                                        {{$report->date}}
+                                                    </small></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 d-flex align-items-center justify-content-center">
+                                            <a href="{{route('studentreport.show' , $report)}}" class="badge bg-label-success rounded p-2" download>
+                                                <i class="bx bx-download bx-sm"></i>
+                                                 دانلود
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    @endforeach
+
+                </div>
+                <div class="swiper-button-next swiper-button-white custom-icon"></div>
+                <div class="swiper-button-prev swiper-button-white custom-icon"></div>
+            </div>
+        </div>
+    </div>
 
 @endsection
