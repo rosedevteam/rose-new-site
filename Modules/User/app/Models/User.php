@@ -47,12 +47,12 @@ class User extends \Illuminate\Foundation\Auth\User
 
     public function creator()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 
     public function createdUsers()
     {
-        return $this->hasMany(User::class, 'user_id');
+        return $this->hasMany(User::class, 'creator_id');
     }
 
     public function otpCodes()
