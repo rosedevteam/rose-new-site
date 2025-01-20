@@ -26,20 +26,20 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Model::unguard();
-        Collection::macro('paginate', function($perPage, $total = null, $page = null, $pageName = 'page'): LengthAwarePaginator {
-        $page = $page ?: LengthAwarePaginator::resolveCurrentPage($pageName);
+        Collection::macro('paginate', function ($perPage, $total = null, $page = null, $pageName = 'page'): LengthAwarePaginator {
+            $page = $page ?: LengthAwarePaginator::resolveCurrentPage($pageName);
 
-        return new LengthAwarePaginator(
-            $this->forPage($page, $perPage)->values(),
-            $total ?: $this->count(),
-            $perPage,
-            $page,
-            [
-                'path' => LengthAwarePaginator::resolveCurrentPath(),
-                'pageName' => $pageName,
-            ]
-        );
-    });
+            return new LengthAwarePaginator(
+                $this->forPage($page, $perPage)->values(),
+                $total ?: $this->count(),
+                $perPage,
+                $page,
+                [
+                    'path' => LengthAwarePaginator::resolveCurrentPath(),
+                    'pageName' => $pageName,
+                ]
+            );
+        });
 
         Paginator::defaultView('vendor.pagination.rose-pagination');
 

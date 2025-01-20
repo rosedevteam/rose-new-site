@@ -15,7 +15,7 @@
         @php
         $userProducts = auth()->user()->orders()->with('products')->get()->pluck('products.*.id')->flatten()->unique()->toArray()
         @endphp
-{{--        @foreach(auth()->user()->) @endforeach--}}
+
         <div class=" col-md-6 col-12">
             <div class="course-holder flex-column flex-lg-row">
                 <div class="course-thumb">
@@ -39,5 +39,35 @@
         </div>
     </div>
     {{--  Courses end  --}}
+
+
+
+
+    <div class="panel-title-box my-5">
+        <div class="title-wrapper mb-4">
+            <h3>همیشه درحال یادگیری باش!</h3>
+            <h2>دوره های مجموعه آموزشی رز</h2>
+        </div>
+        <div class="row rose-courses my-2">
+            <div class="row">
+                @php
+                    $userProducts = auth()->user()->orders()->with('products')->get()->pluck('products.*.id')->flatten()->unique()->toArray();
+                @endphp
+                @foreach(\Modules\Product\Models\Product::where('status' , 'public')->get() as $product)
+                    <div class="col-md-3 course-item @if(!in_array($product->id , $userProducts)) false @endif">
+                        @if(!in_array($product->id , $userProducts))
+                            <p class="label">دانشجوی دوره نیستید</p>
+                        @endif
+                        <a href="{{route('products.show' , $product)}}">
+                            <img
+                                src="{{$product->image}}"
+                                width="100%" style="border-radius: 10px;">
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+
+        </div>
+    </div>
 
 @stop

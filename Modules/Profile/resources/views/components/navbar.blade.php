@@ -8,12 +8,7 @@
         <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
             <ul class="navbar-nav flex-row align-items-center justify-content-end justify-content-lg-between">
                 <li>
-                    <a href="{{route('index')}}" class="back-to-core-website d-none d-lg-block">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M4.47998 11.9805H19.47" stroke="#737887" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M13.4829 5.98828L19.5199 12.0003L13.4829 18.0123" stroke="#737887" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-
+                    <a href="{{route('index')}}" class="back-to-core-website d-none d-lg-block btn btn-m btn-white ">
                         بازگشت به سایت
                     </a>
                 </li>
@@ -42,13 +37,14 @@
                     </div>
                     <li class="nav-item navbar-dropdown dropdown-user dropdown">
                         <a class="nav-link dropdown-toggle hide-arrow d-flex gap-2" href="javascript:void(0);" data-bs-toggle="dropdown">
-                            <div class="flex-grow-1">
-                                <span class="fw-semibold d-block">{{auth()->user()->first_name . ' ' .auth()->user()->last_name}}</span>
-                                <small class="color-default">{{auth()->user()->phone}}</small>
-                            </div>
                             <div class="avatar">
-                                <img src="/assets/img/avatar-rose.png" alt class="rounded-circle">
+                                <img src="/assets/front/images/user-avatar.png" alt class="rounded-circle">
                             </div>
+                            <div class="flex-grow-1">
+                                <span class="fw-semibold d-block text-white">{{auth()->user()->first_name . ' ' .auth()->user()->last_name}}</span>
+                                <small class="text-muted">{{auth()->user()->phone}}</small>
+                            </div>
+
 
                         </a>
                     </li>

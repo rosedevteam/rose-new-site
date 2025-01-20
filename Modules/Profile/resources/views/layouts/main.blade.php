@@ -20,8 +20,8 @@
     <link rel="stylesheet" href="/assets/front/vendor/fonts/flag-icons.css">
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="/assets/front/vendor/css/rtl/core.css" class="template-customizer-core-css">
-    <link rel="stylesheet" href="/assets/front/vendor/css/rtl/theme-default.css" class="template-customizer-theme-css">
+    <link rel="stylesheet" href="/assets/front/vendor/css/rtl/core-dark.css" class="template-customizer-core-css">
+    <link rel="stylesheet" href="/assets/front/vendor/css/rtl/theme-bordered-dark.css" class="template-customizer-theme-css">
     <link rel="stylesheet" href="/assets/front/css/demo.css">
     <link rel="stylesheet" href="/assets/front/vendor/css/rtl/rtl.css">
 
@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="/assets/front/vendor/libs/typeahead-js/typeahead.css">
     <link rel="stylesheet" href="/assets/front/vendor/libs/apex-charts/apex-charts.css">
     <link rel="stylesheet" href='/assets/vendor/sweetalert/sweetalert2.css'>
+    <link rel="stylesheet" href="/assets/front/vendor/libs/swiper/swiper.css">
 
     @stack('css')
 
@@ -68,7 +69,6 @@
                                 <path d="M4.47998 11.9805H19.47" stroke="#737887" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M13.4829 5.98828L19.5199 12.0003L13.4829 18.0123" stroke="#737887" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-
                             بازگشت به سایت
                         </a>
                     </div>
@@ -108,14 +108,16 @@
 <script src="/assets/front/vendor/libs/i18n/i18n.js"></script>
 <script src="/assets/front/vendor/libs/typeahead-js/typeahead.js"></script>
 <script src="/assets/vendor/axios/axios.min.js"></script>
-
+<script src="/assets/front/vendor/libs/swiper/swiper.js"></script>
 <script src="/assets/front/vendor/js/menu.js"></script>
+
 <!-- endbuild -->
 
 <!-- Vendors JS -->
 @stack('vendor')
 
 <!-- Main JS -->
+<script src="/assets/front/js/profile/custom.js"></script>
 <script src="/assets/front/js/profile/main.js"></script>
 
 <!-- Page JS -->

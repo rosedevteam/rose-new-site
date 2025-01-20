@@ -6,11 +6,11 @@
                 @foreach($studentReports as $studentReport)
                     <div class="col col-md-4 pb-4">
                         <div class="card border-1 ">
-                            <div class="row mx-4 my-3 no-gutters">
-                                <div class="col align-content-center">
+                            <div class="d-flex align-items-center justify-content-around p-4">
+                                <div>
                                     <img alt="" src="/assets/front/images/Frame.svg">
                                 </div>
-                                <div class="col">
+                                <div>
                                     <p class="fw-bold">{{ $studentReport->company }}</p>
                                     <p>نام دانشپذیر: {{ $studentReport->user->name() }}</p>
                                     <p>تاریخ تحلیل: {{ $studentReport->date }}</p>

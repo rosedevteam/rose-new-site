@@ -140,24 +140,7 @@
             @endforeach
         @else
             <div class="alert alert-danger rose-danger mb-5" role="alert">
-                <p>
-                    <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                              d="M17 21.5H7C5.895 21.5 5 20.605 5 19.5V11.5C5 10.395 5.895 9.5 7 9.5H17C18.105 9.5 19 10.395 19 11.5V19.5C19 20.605 18.105 21.5 17 21.5Z"
-                              stroke="#E92C56" stroke-width="1.5" stroke-linecap="round"
-                              stroke-linejoin="round"/>
-                        <path d="M12 17.59V15" stroke="#E92C56" stroke-width="1.5" stroke-linecap="round"
-                              stroke-linejoin="round"/>
-                        <path
-                            d="M12.5303 13.7197C12.8232 14.0126 12.8232 14.4874 12.5303 14.7803C12.2374 15.0732 11.7626 15.0732 11.4697 14.7803C11.1768 14.4874 11.1768 14.0126 11.4697 13.7197C11.7626 13.4268 12.2374 13.4268 12.5303 13.7197"
-                            stroke="#E92C56" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round"/>
-                        <path
-                            d="M8 9.5V7.5V7.5C8 5.291 9.791 3.5 12 3.5V3.5C14.209 3.5 16 5.291 16 7.5V7.5V9.5"
-                            stroke="#E92C56" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round"/>
-                    </svg>
+                <p class="m-0">
                     هنوز دوره ای ثبت نام نکرده اید
                 </p>
             </div>
