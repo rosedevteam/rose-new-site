@@ -16,14 +16,4 @@ class WalletController extends Controller
         return view('wallet::admin.edit', compact('wallet', 'transactions'));
     }
 
-    public static function updateWalletBalance(?Wallet $wallet = null)
-    {
-        if ($wallet) {
-            $wallet->calculateBalance();
-        } else {
-            foreach (Wallet::all() as $wallet) {
-                $wallet->calculateBalance();
-            }
-        }
-    }
 }
