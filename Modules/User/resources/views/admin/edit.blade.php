@@ -65,10 +65,18 @@
                                             class="d-inline-block">{{ verta($user->created_at)->formatJalaliDatetime() }}</span>
                                     </li>
                                     <li class="mb-3">
-                                        <span class="fw-bold me-2">تاریخ آخرین آپدیت اکانت:</span>
+                                        <span class="fw-bold me-2">تاریخ آخرین ویرایش اکانت:</span>
                                         <span
                                             class="d-inline-block">{{ verta($user->updated_at)->formatJalaliDatetime() }}</span>
                                     </li>
+                                    @if($user->creator)
+                                        <li class="mb-3">
+                                            <span class="fw-bold me-2">ساخته شده توسط: </span>
+                                            <span
+                                                class="d-inline-block"><a class="text-body"
+                                                                          href="{{ route('admin.users.edit', $user->creator) }}">{{ $user->creator->name() }}</a></span>
+                                        </li>
+                                    @endif
                                 </ul>
                                 <div class="d-flex justify-content-center pt-3">
                                     @if($canEdit)
