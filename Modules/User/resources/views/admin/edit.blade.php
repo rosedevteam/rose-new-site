@@ -81,7 +81,7 @@
                                            data-bs-target="#deleteUser" data-bs-toggle="modal">حذف کاربر</a>
                                         @endif
                                     @if($canSetRole)
-                                        <a href="javascript:;" class="btn btn-label-slack"
+                                            <a href="javascript:;" class="btn btn-label-dribbble"
                                            data-bs-target="#setRole" data-bs-toggle="modal">ویرایش نقش</a>
                                     @endif
                                 </div>
@@ -298,7 +298,7 @@
                                         @endforeach
                                     </select>
                                     <div class="col-12 text-center mt-4">
-                                        <button type="submit" class="btn btn-label-slack me-sm-3 me-1">ویرایش نقش
+                                        <button type="submit" class="btn btn-label-dribbble me-sm-3 me-1">ویرایش نقش
                                         </button>
                                         <button type="reset" class="btn btn-label-secondary"
                                                 data-bs-dismiss="modal"

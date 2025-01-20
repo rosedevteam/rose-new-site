@@ -24,4 +24,13 @@ class Wallet extends Model
     {
         return $this->hasMany(WalletTransaction::class);
     }
+
+    public function calculateBalance()
+    {
+        $transactions = $this->transactions()->get();
+        $credit = $transactions->where('type', 'credit')->sum('amount');
+        $debit = $transactions->where('type', 'debit')->sum('amount');
+        $this->balance = $credit - $debit;
+        $this->save();
+    }
 }
