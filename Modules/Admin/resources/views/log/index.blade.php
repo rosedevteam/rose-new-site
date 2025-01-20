@@ -74,7 +74,7 @@
                                     </td>
                                     <td>
                                 <span class="fw-semibold">
-                                    <a href="{{ route('admin.users.show', $log->causer) }}"
+                                    <a href="{{ route('admin.users.edit', $log->causer) }}"
                                        class="text-truncate text-body">
                                     {{ $log->causer->name() }}</a>
                                 </span>

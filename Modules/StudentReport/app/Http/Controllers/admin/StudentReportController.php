@@ -50,6 +50,7 @@ class StudentReportController extends Controller
             'analysis' => 'bail|required|file',
             'description' => 'nullable',
             'status' => 'required|in:approved,rejected,pending',
+            'student_id' => 'required|exists:users,id',
         ]);
         try {
 
@@ -63,7 +64,7 @@ class StudentReportController extends Controller
                 'analysis' => $name,
                 'description' => $validData['description'],
                 'status' => $validData['status'],
-
+                'student_id' => $validData['student_id'],
             ]);
             $after = $analysis->toArray();
 
@@ -146,7 +147,7 @@ class StudentReportController extends Controller
             ]);
             $after = $studentreport->toArray();
 
-            self::log($studentreport, compact('before', 'after'), 'ویرایش پست');
+            self::log($studentreport, compact('before', 'after'), 'ویرایش تحلیل');
             alert()->success('موفق', 'تحلیل با موفقیت ویرایش شد');
 
             return redirect(route('admin.studentreports.edit', $studentreport));

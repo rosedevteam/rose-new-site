@@ -12,7 +12,8 @@ return new class extends Migration {
     {
         Schema::create('student_reports', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->nullable()->default(null)->constrained('users');
+            $table->foreignId('student_id')->constrained('users');
             $table->string('analysis');
             $table->string('date');
             $table->string('company');
