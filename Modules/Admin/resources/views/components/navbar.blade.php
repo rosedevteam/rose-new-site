@@ -8,6 +8,11 @@
 
         <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
             <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <li class="nav-item me-2 me-xl-0">
+                    <a class="nav-link style-switcher-toggle hide-arrow" href="javascript:void(0);">
+                        <i class="bx bx-sm"></i>
+                    </a>
+                </li>
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                     <a class="nav-link dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                         <div class="avatar avatar-md me-2">

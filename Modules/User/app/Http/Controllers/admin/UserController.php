@@ -98,6 +98,7 @@ class UserController extends Controller
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
                 'phone' => $data['phone'],
+                'creator_id' => auth()->user()->id,
             ]);
 
             $user->assignRole('مشتری');

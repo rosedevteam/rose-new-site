@@ -48,6 +48,16 @@ class User extends \Illuminate\Foundation\Auth\User
         return $this->first_name . " " . $this->last_name;
     }
 
+    public function creator()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function createdUsers()
+    {
+        return $this->hasMany(User::class, 'creator_id');
+    }
+
     public function otpCodes()
     {
         return $this->hasMany(OtpCode::class);

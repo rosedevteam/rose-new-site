@@ -145,7 +145,7 @@
                         <div class="modal-content">
                             <div class="modal-body">
                                 <div class="text-center mb-4 mt-0 mt-md-n2">
-                                    <h3 class="secondary-font">ساخت تراکنش</h3>
+                                    <h3 class="secondary-font">ویرایش تراکنش</h3>
                                 </div>
                                 <form id="edit-transaction-form" action="" method="post">
                                     @csrf

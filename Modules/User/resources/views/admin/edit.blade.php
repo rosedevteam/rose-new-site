@@ -65,10 +65,18 @@
                                             class="d-inline-block">{{ verta($user->created_at)->formatJalaliDatetime() }}</span>
                                     </li>
                                     <li class="mb-3">
-                                        <span class="fw-bold me-2">تاریخ آخرین آپدیت اکانت:</span>
+                                        <span class="fw-bold me-2">تاریخ آخرین ویرایش اکانت:</span>
                                         <span
                                             class="d-inline-block">{{ verta($user->updated_at)->formatJalaliDatetime() }}</span>
                                     </li>
+                                    @if($user->creator)
+                                        <li class="mb-3">
+                                            <span class="fw-bold me-2">ساخته شده توسط: </span>
+                                            <span
+                                                class="d-inline-block"><a class="text-body"
+                                                                          href="{{ route('admin.users.edit', $user->creator) }}">{{ $user->creator->name() }}</a></span>
+                                        </li>
+                                    @endif
                                 </ul>
                                 <div class="d-flex justify-content-center pt-3">
                                     @if($canEdit)
@@ -81,7 +89,7 @@
                                            data-bs-target="#deleteUser" data-bs-toggle="modal">حذف کاربر</a>
                                         @endif
                                     @if($canSetRole)
-                                        <a href="javascript:;" class="btn btn-label-slack"
+                                            <a href="javascript:;" class="btn btn-label-dribbble"
                                            data-bs-target="#setRole" data-bs-toggle="modal">ویرایش نقش</a>
                                     @endif
                                 </div>
@@ -298,7 +306,7 @@
                                         @endforeach
                                     </select>
                                     <div class="col-12 text-center mt-4">
-                                        <button type="submit" class="btn btn-label-slack me-sm-3 me-1">ویرایش نقش
+                                        <button type="submit" class="btn btn-label-dribbble me-sm-3 me-1">ویرایش نقش
                                         </button>
                                         <button type="reset" class="btn btn-label-secondary"
                                                 data-bs-dismiss="modal"

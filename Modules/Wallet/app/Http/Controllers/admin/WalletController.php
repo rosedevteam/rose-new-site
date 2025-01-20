@@ -15,4 +15,5 @@ class WalletController extends Controller
 
         return view('wallet::admin.edit', compact('wallet', 'transactions'));
     }
+
 }
