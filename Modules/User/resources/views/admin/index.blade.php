@@ -170,7 +170,7 @@
                                 </span>
                                     </td>
                                     <td><span class="fw-semibold">{{ $user->phone }}</span></td>
-                                    <td>{{ number_format($user->wallet->balance) }}</td>
+                                    <td>{{ number_format($user->wallet->balance) }} تومان</td>
                                     <td>
                                         @foreach($user->getRoleNames() as $role)
                                             <span @class(['badge', 'bg-primary' => $role == 'مشتری', 'bg-reddit' => $role == 'ادمین', 'bg-info' => $role == 'نویسنده', 'bg-instagram' => $role == 'پشتیبان', 'bg-success' => $role == 'super-admin'])>{{ $role }}</span>
