@@ -32,12 +32,13 @@ class DatabaseSeeder extends Seeder
         $this->seedMenu();
         $this->seedCategories();
         $this->seedDiscounts();
-        $this->seedIndices();
+//        $this->seedIndices();
 //        $this->seedCompanies();
     }
 
     private function seedUsersAndPermissions()
     {
+        // permission format: {action}-{model}
         Permission::create(['name' => 'admin-panel']);
         //
         Permission::create(['name' => 'view-users']);
@@ -127,6 +128,7 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'view-channel-members-count']);
 
         $customer = Role::create(['name' => 'مشتری']);
+        $admin = Role::create(['name' => 'ادمین']);
         $superAdmin = Role::create(['name' => 'super-admin']);
 
         $superAdmin->givePermissionTo(Permission::all());
@@ -141,6 +143,8 @@ class DatabaseSeeder extends Seeder
             'avatar' => null,
         ]);
 
+        $user1->assignRole($admin);
+
         $user2 = User::factory()->create([
             'first_name' => 'writer',
             'password' => bcrypt('writer'),
@@ -151,6 +155,8 @@ class DatabaseSeeder extends Seeder
             'avatar' => null,
         ]);
 
+        $user2->assignRole($customer);
+
         $user3 = User::factory()->create([
             'first_name' => 'support',
             'password' => bcrypt('support'),
@@ -160,6 +166,7 @@ class DatabaseSeeder extends Seeder
             'birthday' => null,
             'avatar' => null,
         ]);
+        $user3->assignRole($customer);
 
         $user4 = User::factory()->create([
             'first_name' => 'customer',
@@ -170,6 +177,8 @@ class DatabaseSeeder extends Seeder
             'birthday' => null,
             'avatar' => null,
         ]);
+        $user4->assignRole($customer);
+
 
         $user5 = User::factory()->create([
             'first_name' => 'ارشیا',
