@@ -1,5 +1,6 @@
-
 import fa from '/assets/admin/js/grapesjs/fa.js';
+
+const adminPrefix = $("meta[name='admin-prefix']").attr("content");
 
 const editor = grapesjs.init({
     storageManager:false,
@@ -125,7 +126,7 @@ editor.Commands.add
         {
             var page_id = document.getElementById('page-id');
             sender && sender.set('active', 0); // turn off the button
-            window.location.replace('/kara-fa');
+            window.location.replace(`/${adminPrefix}`);
         }
     });
 
@@ -151,7 +152,7 @@ editor.Commands.add
             var htmldata = editor.getHtml();
             var cssdata = editor.getCss();
             var pagebuilder_id = $('#pagebuilder_id').val();
-            axios.patch(`/kara-fa/pagebuilder/${pagebuilder_id}` , {
+            axios.patch(`/${adminPrefix}/pagebuilder/${pagebuilder_id}`, {
                 content: htmldata
             })
                 .then(res => success(res))

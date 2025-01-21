@@ -3,6 +3,8 @@ $('.chat-history-footer').hide()
 const minutes = document.querySelector('.minutes');
 const seconds = document.querySelector('.seconds');
 
+const adminPrefix = $("meta[name='admin-prefix']").attr("content");
+
 let startTime;
 let interval;
 
@@ -207,7 +209,7 @@ function getChannel(id) {
         return config
     });
 
-    getChannelRequest.get(`/kara-fa/channels/get/${id}` , {
+    getChannelRequest.get(`/${adminPrefix}/channels/get/${id}`, {
         params: {
             page : channelMessagesPage
         }
@@ -401,7 +403,7 @@ function loadMoreMessages(e , pages) {
                 });
                 return config
             });
-            getChannelMessagesListRequest.get(`/kara-fa/channels/get/${channelId}`, {
+            getChannelMessagesListRequest.get(`/${adminPrefix}/channels/get/${channelId}`, {
                 params: {
                     page: channelMessagesPage
                 }
@@ -954,7 +956,7 @@ function showChannelDetails(id) {
         });
         return config
     });
-    showChannelDetailsRequest.get(`/kara-fa/channel/get/users/${id}`, {
+    showChannelDetailsRequest.get(`/${adminPrefix}/channel/get/users/${id}`, {
         params: {
             page: channelUsersPage
         }

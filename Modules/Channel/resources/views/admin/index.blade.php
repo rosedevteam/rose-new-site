@@ -34,7 +34,7 @@
 
                                                 @if($channel->avatar)
                                                     <img class="avatar-initial rounded-circle bg-label-success" alt=""
-                                                         src="{{$channel->avatar}}">
+                                                         src="/uploads/{{$channel->avatar}}">
                                                 @else
                                                     <span
                                                         class="avatar-initial rounded-circle bg-label-success">کانال</span>
@@ -48,7 +48,6 @@
                                                 <p class="chat-contact-status text-truncate mb-0 text-muted">
                                                     {{$channel->description}}
                                                 </p>
-                                                {{--                                        @dd($channel->users->where('phone' , '09391277002')->first())--}}
                                                 @can('view-channel-members-count')
                                                     <p class="chat-contact-status text-truncate mb-0 text-muted">
                                                         {{$channel->users->count()}}
@@ -112,7 +111,6 @@
                                                 <p class="chat-contact-status text-truncate mb-0 text-muted">
                                                     {{$c->description}}
                                                 </p>
-                                                {{--                                        @dd($channel->users->where('phone' , '09391277002')->first())--}}
                                                 @can('view-channel-members-count')
                                                     <p class="chat-contact-status text-truncate mb-0 text-muted">
                                                         {{$c->users->count()}}

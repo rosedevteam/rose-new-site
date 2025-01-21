@@ -214,10 +214,10 @@
                     document.getElementById('edit-transaction-form').action = route;
                 }
                 if (event.target.matches('#delete-button')) {
+                    const adminPrefix = $("meta[name='admin-prefix']").attr("content");
                     const id = event.target.getAttribute('data-id');
                     const deleteForm = document.getElementById('deleteForm');
-                    deleteForm.action = `/kara-fa/wallettransactions/${id}`;
-                    //todo admin panel prefix is hardcoded in js
+                    deleteForm.action = `/${adminPrefix}/wallettransactions/${id}`;
                 }
             });
             const amount = new AutoNumeric('#amount', {
