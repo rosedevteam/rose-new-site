@@ -15,7 +15,7 @@ if (!function_exists('getEditRouteByType')) {
         $type = getClassName($type);
 
         // return empty for models that don't have edit pages
-        if (in_array($type, ['Category', 'DailyReport', 'Menu', 'Podcast'])) {
+        if (in_array($type, ['Category', 'Role', 'DailyReport', 'Menu', 'Podcast'])) {
             return "";
         }
         if ($type == "WalletTransaction") {
@@ -118,4 +118,13 @@ if (!function_exists('sendVerifySms')) {
         }
 
     }
+}
+
+if (!function_exists('translatePermission')) {
+    function translatePermission($permission)
+    {
+        // todo
+        return $permission;
+    }
+
 }

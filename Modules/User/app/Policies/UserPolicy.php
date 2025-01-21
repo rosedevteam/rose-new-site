@@ -48,7 +48,7 @@ class UserPolicy
 
     public function setRole(User $user, User $model)
     {
-        if (!$user->hasPermissionTo('set-roles')) {
+        if (!$user->hasPermissionTo('assign-roles')) {
             return false;
         }
         if ($model->hasRole('super-admin')) {

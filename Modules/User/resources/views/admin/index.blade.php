@@ -172,9 +172,7 @@
                                     <td><span class="fw-semibold">{{ $user->phone }}</span></td>
                                     <td>{{ number_format($user->wallet->balance) }} تومان</td>
                                     <td>
-                                        @foreach($user->getRoleNames() as $role)
-                                            <span @class(['badge', 'bg-primary' => $role == 'مشتری', 'bg-reddit' => $role == 'ادمین', 'bg-info' => $role == 'نویسنده', 'bg-instagram' => $role == 'پشتیبان', 'bg-success' => $role == 'super-admin'])>{{ $role }}</span>
-                                        @endforeach
+                                        <span>{{ $user->role() }}</span>
                                     </td>
                                     <td>{{ verta($user->created_at)->formatJalaliDateTime() }}</td>
                                     @can('edit-users')

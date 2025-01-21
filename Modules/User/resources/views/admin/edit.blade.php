@@ -16,9 +16,7 @@
                                 <div class="d-flex align-items-center flex-column">
                                     <div class="user-info text-center bg-">
                                         <h5 class="mb-2">{{ $user->first_name . ' ' . $user->last_name }}</h5>
-                                        @foreach($user->getRoleNames() as $role)
-                                            <span @class(['badge', 'bg-primary' => $role == 'مشتری', 'bg-reddit' => $role == 'ادمین', 'bg-info' => $role == 'نویسنده', 'bg-instagram' => $role == 'پشتیبان', 'bg-success' => $role == 'super-admin'])>{{ $role }}</span>
-                                        @endforeach
+                                        <span>{{ $user->role() }}</span>
                                     </div>
                                 </div>
                             </div>

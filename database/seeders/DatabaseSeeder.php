@@ -113,7 +113,9 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'create-wallet-transactions']);
         Permission::create(['name' => 'delete-wallet-transactions']);
         //
-        Permission::create(['name' => 'set-roles']);
+        Permission::create(['name' => 'manage-roles']);
+        Permission::create(['name' => 'assign-roles']);
+        //
         Permission::create(['name' => 'view-logs']);
         //
         Permission::create(['name' => 'edit-page']);
@@ -121,7 +123,7 @@ class DatabaseSeeder extends Seeder
         //
         Permission::create(['name' => 'manage-channels']);
         Permission::create(['name' => 'edit-subscriptions']);
-        Permission::create(['name' => 'add-channel']);
+        Permission::create(['name' => 'create-channels']);
         Permission::create(['name' => 'view-channel-members-count']);
 
         $customer = Role::create(['name' => 'مشتری']);
