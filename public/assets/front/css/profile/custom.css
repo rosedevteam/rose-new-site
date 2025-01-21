@@ -232,7 +232,6 @@
 }
 
 .wallet-transactions {
-    border: solid 1px #E7EAF2;
     border-radius: 10px;
     padding: 2rem
 }
@@ -327,7 +326,7 @@
 
 .score-exchange-wrapper {
     flex: 1;
-    border: solid 1px #E7EAF2;
+    border: solid 1px #e7eaf236;
     border-radius: 10px;
     width: 100%;
 }
@@ -340,9 +339,7 @@
 }
 
 .score-exchange-wrapper .score-wrapper-box.header {
-    background: #F7F9FE;
-
-    border-bottom: solid 1px #E7EAF2;
+    border-bottom: solid 1px #e7eaf236;
 }
 
 .score-exchange-wrapper .score-wrapper-box.header h3 {
@@ -413,7 +410,6 @@
 .numberstyle-qty {
     position: relative;
     border-radius: 6px;
-    background-color: #ffffff;
     overflow: hidden;
 }
 
@@ -718,6 +714,13 @@
     background: #555;
 }
 
+.row-eq-height {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display:         flex;
+}
+
 .share-hammasir li {
     background: #fff;
     border-radius: 50%;
@@ -727,7 +730,7 @@
 }
 
 .referral-code-box {
-    background: url(/assets/img/gift-pattern.svg) , linear-gradient(45deg, #FFCF4A 0%, #F8B806 100%);
+    background: url(/assets/front/images/gift-pattern.svg) , linear-gradient(45deg, #FFCF4A 0%, #F8B806 100%);
     background-repeat: no-repeat;
     background-position: top;
     background-size: cover;

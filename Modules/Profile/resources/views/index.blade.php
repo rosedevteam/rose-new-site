@@ -122,8 +122,6 @@
                     @endforeach
 
                 </div>
-                <div class="swiper-button-next swiper-button-white custom-icon"></div>
-                <div class="swiper-button-prev swiper-button-white custom-icon"></div>
             </div>
         </div>
 
@@ -166,8 +164,51 @@
                     @endforeach
 
                 </div>
-                <div class="swiper-button-next swiper-button-white custom-icon"></div>
-                <div class="swiper-button-prev swiper-button-white custom-icon"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row my-5">
+
+        <div class="col-md-6 mb-4">
+            <h6 class="text-white mt-3 ">گزارش روزانه بازار</h6>
+            <div class="swiper" id="daily-reports-carousel">
+                <div class="swiper-wrapper">
+
+                    @foreach(\Modules\DailyReport\Models\DailyReport::latest(5)->get() as $dailyReport)
+                        <div class="swiper-slide">
+                            <div class="col-md">
+                                <div class="card mb-3">
+                                    <div class="row g-0">
+
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                                <h5 class="card-title mb-3">
+                                                    گزارش روزانه بازار
+                                                </h5>
+                                                <p class="card-text mb-n1"><small class="text-muted">
+                                                        تاریخ گزارش:
+                                                        {{$dailyReport->title}}
+                                                    </small></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 d-flex align-items-center justify-content-center">
+                                            <a href="{{route('dailyreports.show' , $dailyReport)}}" class="badge bg-label-success rounded p-2" download>
+                                                <i class="bx bx-download bx-sm"></i>
+                                                دانلود
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    @endforeach
+
+                </div>
+
             </div>
         </div>
     </div>

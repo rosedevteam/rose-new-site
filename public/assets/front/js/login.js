@@ -387,6 +387,10 @@ function createEnterNameLastNameForm() {
                                 <label for="last_name" class="form-label mt-4">نام خانوادگی</label>
                                 <input type="text" id="last_name" name="last_name" class="form-control" required>
                             </div>
+                            <div class="mb-3">
+                                <label for="referral_code" class="form-label mt-4"> کد معرف (اختیاری)</label>
+                                <input type="text" id="referral_code" name="referral_code" class="form-control">
+                            </div>
             <button type="submit" class="btn btn-default w-100">ورود </button>
 
                         </form>
@@ -399,7 +403,8 @@ function updateUser(phone) {
         axios.post(`register`, {
             first_name: $('#first_name').val(),
             last_name: $('#last_name').val(),
-            phone: phone
+            phone: phone,
+            referral_code: $('#referral_code').val()
         })
             .then(function (res) {
                 const Toast = Swal.mixin({

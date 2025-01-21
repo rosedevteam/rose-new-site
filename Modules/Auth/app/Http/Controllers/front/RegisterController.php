@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use Modules\Auth\Models\RegisterOtp;
+use Modules\Referral\Models\Referral;
+use Modules\Referral\Notifications\ReferralAfterRegister;
 use Modules\User\Models\User;
 
 class RegisterController extends Controller
@@ -20,8 +22,6 @@ class RegisterController extends Controller
             if (RegisterOtp::where('phone', $validData['phone'])->exists()) {
                 RegisterOtp::where('phone', $validData['phone'])->first()->delete();
             }
-
-
 
             $code = \Modules\Auth\Models\RegisterOtp::create([
                 'otp' => mt_rand(100000, 999999),
@@ -102,14 +102,49 @@ class RegisterController extends Controller
             $validData = $request->validate([
                 'first_name' => 'required',
                 'last_name' => 'required',
-                'phone' => 'required'
+                'phone' => 'required',
+                'referral_code' => 'nullable',
             ]);
-
-            $user = User::create($validData);
+            $user = User::create(\Arr::except($validData, ['referral_code']));
 
             $user->assignRole('مشتری');
 
+            if (isset($validData['referral_code'])) {
+                if ($referral = Referral::where('code', $validData['referral_code'])->first()) {
+                    if($referral->usages->count() < 10) {
+                        try {
+                            $usage = $referral->usages()->create([
+                                'used_by' => $user->id,
+                                'signed_up' => 1
+                            ]);
+
+                            $score = $referral->user->scores()->create([
+                                'score' => 500,
+                                'log' => "تکمیل ثبت نام با کد معرف شما",
+                                'type' => 'credit'
+                            ]);
+
+                            $referral->user->notify(new ReferralAfterRegister(
+                                $referral->user->phone,
+                                $referral->user->name(),
+                                config('services.referral_scores.score_after_register')
+                            ));
+                        }catch (\Exception $exception) {
+                            return response()->json([
+                                'success' => false,
+                                'message' => $exception->getMessage(),
+                            ] , 400);
+                        }
+
+                    }
+                }else {
+                    throw new \Exception('کد معرف صحیح نمیباشد');
+                }
+            }
+
+
             auth()->login($user);
+
 
             return response()->json([
                 'success' => true,
@@ -121,7 +156,7 @@ class RegisterController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => $exception->getMessage(),
-            ]);
+            ] , 400);
         }
     }
 }

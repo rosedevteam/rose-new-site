@@ -149,7 +149,7 @@ class User extends \Illuminate\Foundation\Auth\User
         return $this->hasMany(Message::class);
     }
 
-    public function referal()
+    public function referral()
     {
         return $this->hasOne(Referral::class);
     }
@@ -159,7 +159,7 @@ class User extends \Illuminate\Foundation\Auth\User
         return $this->hasMany(Score::class);
     }
 
-    public function referal_user()
+    public function referral_usage()
     {
         return $this->hasOne(ReferralUser::class , 'used_by');
     }

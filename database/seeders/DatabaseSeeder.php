@@ -13,6 +13,7 @@ use Modules\Order\Models\Order;
 use Modules\Payment\Models\Payment;
 use Modules\Post\Models\Post;
 use Modules\Product\Models\Product;
+use Modules\Referral\Models\Referral;
 use Modules\User\Models\User;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -129,9 +130,42 @@ class DatabaseSeeder extends Seeder
 
         $customer = Role::create(['name' => 'مشتری']);
         $admin = Role::create(['name' => 'ادمین']);
+        $writer = Role::create(['name' => 'نویسنده']);
+        $support = Role::create(['name' => 'پشتیبان']);
         $superAdmin = Role::create(['name' => 'super-admin']);
 
+        $admin->givePermissionTo(Permission::all());
         $superAdmin->givePermissionTo(Permission::all());
+
+        $writer->givePermissionTo([
+            'admin-panel',
+            'view-daily-reports',
+            'create-daily-reports',
+            'delete-daily-reports',
+            'edit-daily-reports',
+            'view-posts',
+            'edit-posts',
+            'create-posts',
+            'delete-posts',
+            'view-products',
+            'edit-products',
+            'create-products',
+            'delete-products',
+        ]);
+
+        $support->givePermissionTo([
+            'admin-panel',
+            'view-users',
+            'edit-users',
+            'create-users',
+            'view-comments',
+            'edit-comments',
+            'delete-comments',
+            'view-orders',
+            'edit-orders',
+            'create-orders',
+            'delete-orders',
+        ]);
 
         $user1 = User::factory()->create([
             'first_name' => 'فرشاد',
@@ -155,7 +189,7 @@ class DatabaseSeeder extends Seeder
             'avatar' => null,
         ]);
 
-        $user2->assignRole($customer);
+        $user2->assignRole($writer);
 
         $user3 = User::factory()->create([
             'first_name' => 'support',
@@ -166,7 +200,8 @@ class DatabaseSeeder extends Seeder
             'birthday' => null,
             'avatar' => null,
         ]);
-        $user3->assignRole($customer);
+
+        $user3->assignRole($support);
 
         $user4 = User::factory()->create([
             'first_name' => 'customer',
@@ -177,8 +212,8 @@ class DatabaseSeeder extends Seeder
             'birthday' => null,
             'avatar' => null,
         ]);
-        $user4->assignRole($customer);
 
+        $user4->assignRole($customer);
 
         $user5 = User::factory()->create([
             'first_name' => 'ارشیا',
@@ -634,5 +669,37 @@ class DatabaseSeeder extends Seeder
         foreach ($data as $item) {
             Index::create($item);
         }
+    }
+
+    private function seedReferral()
+    {
+        $referral = Referral::factory()->create([
+            'user_id' => 1,
+            'code' => rand(1000 , 9999),
+            'limit' => 10
+        ]);
+        $referral1 = Referral::factory()->create([
+            'user_id' => 2,
+            'code' => rand(1000 , 9999),
+            'limit' => 10
+        ]);
+        $referral2 = Referral::factory()->create([
+            'user_id' => 3,
+            'code' => rand(1000 , 9999),
+            'limit' => 10
+        ]);
+
+        $referral->usages()->create([
+            'referral_id' => 1,
+            'used_by' => 4,
+            'signed_up' => 1,
+            'has_bought' => 0
+        ]);
+        $referral->usages()->create([
+            'referral_id' => 1,
+            'used_by' => 5,
+            'signed_up' => 1,
+            'has_bought' => 0
+        ]);
     }
 }
