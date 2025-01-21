@@ -12,7 +12,7 @@
                                 </div>
                                 <div>
                                     <p class="fw-bold">{{ $studentReport->company }}</p>
-                                    <p>نام دانشپذیر: {{ $studentReport->user->name() }}</p>
+                                    <p>نام دانشپذیر: {{ $studentReport->student->name() }}</p>
                                     <p>تاریخ تحلیل: {{ $studentReport->date }}</p>
                                     <a href="{{ urldecode(route('studentreport.show', $studentReport)) }}"
                                        class="btn btn-default-outline">
