@@ -15,10 +15,13 @@ if (!function_exists('getEditRouteByType')) {
         $type = getClassName($type);
 
         // return empty for models that don't have edit pages
-        if (in_array($type, ['Category', 'DailyReport', 'Menu', 'WalletTransaction', 'Podcast'])) {
+        if (in_array($type, ['Category', 'DailyReport', 'Menu', 'Podcast'])) {
             return "";
         }
-        // todo fix transaction/podcast log
+        if ($type == "WalletTransaction") {
+            $type = "Wallet";
+            $id = \Modules\Wallet\Models\WalletTransaction::find($id)->wallet->id;
+        }
 
         return route('admin.' . strtolower($type) . 's.edit', $id, false);
     }
@@ -82,6 +85,10 @@ if (!function_exists('getModelTitleByType')) {
 
             case 'StudentReport':
                 $name = \Modules\StudentReport\Models\StudentReport::find($id)?->date ?: "";
+                break;
+
+            case 'WalletTransaction':
+                $name = \Modules\Wallet\Models\WalletTransaction::find($id)?->wallet?->user?->name() ?: "";
                 break;
 
         }
