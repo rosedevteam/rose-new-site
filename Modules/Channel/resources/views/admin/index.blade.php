@@ -9,7 +9,6 @@
 @endpush
 
 @section('content')
-    <a href="{{route('admin.channels.create')}}">dd</a>
     <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
             <div class="app-chat card overflow-hidden">

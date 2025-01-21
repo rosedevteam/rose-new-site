@@ -11,6 +11,7 @@
     </div>
     @php
         $route = explode('.', Route::currentRouteName())[1];
+        $route2 = explode('.', Route::currentRouteName())[2];
     @endphp
     <div class="menu-divider mt-0"></div>
 
@@ -36,7 +37,7 @@
         @can('view-orders')
             <li @class(["menu-item", 'active' => $route == 'orders'])>
                 <a href="{{ route("admin.orders.index") }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-food-menu"></i>
+                    <i class="menu-icon tf-icons bx bx-receipt"></i>
                     <div data-i18n="سفارش ها">سفارش ها</div>
                 </a>
             </li>
@@ -100,7 +101,7 @@
         @can('view-job-applications')
             <li @class(["menu-item", 'active' => $route == 'jobapplications'])>
                 <a href="{{ route("admin.jobapplications.index") }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-receipt"></i>
+                    <i class="menu-icon tf-icons bx bx-food-menu"></i>
                     <div data-i18n="رزومه های ارسال شده">رزومه های ارسال شده</div>
                 </a>
             </li>
@@ -121,31 +122,21 @@
                 </a>
             </li>
         @endcan
-        @can('view-logs')
-            <li @class(["menu-item", 'active' => $route == 'logs'])>
-                <a href="{{ route("admin.logs.index") }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-file"></i>
-                    <div data-i18n="لاگ">لاگ</div>
-                </a>
-            </li>
-        @endcan
         @can('manage-channels')
-            <li @class(["menu-item", 'active' => $route == 'channels'])>
+                <li @class(["menu-item", 'active open' => $route == 'channels'])>
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <i class="menu-icon tf-icons bx bx-message-square-dots"></i>
                     <div>کانال ها</div>
                 </a>
                 <ul class="menu-sub">
                     @can('add-channel')
-                        <li @class(["menu-item", 'active' => $route == 'channels.create'])>
+                        <li @class(["menu-item", 'active' => $route == 'channels' && $route2 == "create"])>
                             <a href="{{route('admin.channels.create')}}" class="menu-link">
                                 <div>افزودن کانال جدید</div>
                             </a>
                         </li>
                     @endcan
-
-
-                    <li @class(["menu-item", 'active' => $route == 'channels.index'])>
+                    <li @class(["menu-item", 'active' => $route == 'channels' && $route2 == "index"])>
                         <a href="{{route('admin.channels.index')}}" class="menu-link">
                             <div>همه کانال ها</div>
                         </a>
@@ -154,5 +145,13 @@
                 </ul>
             </li>
         @endcan
+            @can('view-logs')
+                <li @class(["menu-item", 'active' => $route == 'logs'])>
+                    <a href="{{ route("admin.logs.index") }}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-file"></i>
+                        <div data-i18n="لاگ">لاگ</div>
+                    </a>
+                </li>
+            @endcan
     </ul>
 </aside>
