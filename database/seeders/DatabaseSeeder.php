@@ -13,6 +13,7 @@ use Modules\Order\Models\Order;
 use Modules\Payment\Models\Payment;
 use Modules\Post\Models\Post;
 use Modules\Product\Models\Product;
+use Modules\Referral\Models\Referral;
 use Modules\User\Models\User;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -33,6 +34,7 @@ class DatabaseSeeder extends Seeder
         $this->seedCategories();
         $this->seedDiscounts();
         $this->seedIndices();
+        $this->seedReferral();
 //        $this->seedCompanies();
     }
 
@@ -665,5 +667,37 @@ class DatabaseSeeder extends Seeder
         foreach ($data as $item) {
             Index::create($item);
         }
+    }
+
+    private function seedReferral()
+    {
+        $referral = Referral::factory()->create([
+            'user_id' => 1,
+            'code' => rand(1000 , 9999),
+            'limit' => 10
+        ]);
+        $referral1 = Referral::factory()->create([
+            'user_id' => 2,
+            'code' => rand(1000 , 9999),
+            'limit' => 10
+        ]);
+        $referral2 = Referral::factory()->create([
+            'user_id' => 3,
+            'code' => rand(1000 , 9999),
+            'limit' => 10
+        ]);
+
+        $referral->usages()->create([
+            'referral_id' => 1,
+            'used_by' => 4,
+            'signed_up' => 1,
+            'has_bought' => 0
+        ]);
+        $referral->usages()->create([
+            'referral_id' => 1,
+            'used_by' => 5,
+            'signed_up' => 1,
+            'has_bought' => 0
+        ]);
     }
 }

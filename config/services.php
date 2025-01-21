@@ -41,6 +41,7 @@ return [
 
     'sms' => [
         'api' => env('SMS_API'),
+        'referral_after_register_template' => env('SMS_REFERRAL_AFTER_REGISTER'),
     ],
 
     'spotplayer' => [
@@ -55,5 +56,10 @@ return [
         'username' => env('NADPCO_API_USERNAME'),
         'password' => env('NADPCO_API_PASSWORD'),
         'token' => env('NADPCO_API_TOKEN'),
+    ],
+
+    'referral_scores' => [
+        'score_after_register' => env('SCORE_AFTER_REGISTER'),
+        'score_after_complete_order' => env('SCORE_AFTER_ORDER')
     ]
 ];
