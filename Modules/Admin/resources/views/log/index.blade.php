@@ -132,6 +132,7 @@
                                     </a>
                                 </div>
                             </div>
+                            {{-- todo better format to view properties --}}
                             <div class="row">
                                 <div class="col">
                                     <label for="properties">جزییات: </label>

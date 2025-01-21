@@ -81,10 +81,10 @@
                                     style="width: 5%;">وضعیت
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 10%;">نویسنده
+                                    style="width: 5%;">نویسنده
                                 </th>
                                 <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                                    style="width: 10%;">تاریخ ساخت
+                                    style="width: 5%;">تاریخ ساخت
                                 </th>
                                 @can('edit-products')
                                     <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
@@ -135,7 +135,7 @@
                                             {{ $product->user->name() }}
                                         @endcan
                                     </td>
-                                    <td>{{ verta($product->created_at)->formatJalaliDate() }}</td>
+                                    <td>{{ verta($product->created_at)->formatJalaliDateTime() }}</td>
                                     @can('edit-products')
                                         <td>
                                             <div class="d-flex gap-3 text-nowrap">

@@ -11,7 +11,7 @@
     </div>
     @php
         $route = explode('.', Route::currentRouteName())[1];
-        $route2 = explode('.', Route::currentRouteName())[2];
+        $route2 = explode('.', Route::currentRouteName())[2] ?? "";
     @endphp
     <div class="menu-divider mt-0"></div>
 
