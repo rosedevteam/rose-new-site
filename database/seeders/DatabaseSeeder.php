@@ -127,43 +127,9 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'view-channel-members-count']);
 
         $customer = Role::create(['name' => 'مشتری']);
-        $admin = Role::create(['name' => 'ادمین']);
-        $writer = Role::create(['name' => 'نویسنده']);
-        $support = Role::create(['name' => 'پشتیبان']);
         $superAdmin = Role::create(['name' => 'super-admin']);
 
-        $admin->givePermissionTo(Permission::all());
         $superAdmin->givePermissionTo(Permission::all());
-
-        $writer->givePermissionTo([
-            'admin-panel',
-            'view-daily-reports',
-            'create-daily-reports',
-            'delete-daily-reports',
-            'edit-daily-reports',
-            'view-posts',
-            'edit-posts',
-            'create-posts',
-            'delete-posts',
-            'view-products',
-            'edit-products',
-            'create-products',
-            'delete-products',
-        ]);
-
-        $support->givePermissionTo([
-            'admin-panel',
-            'view-users',
-            'edit-users',
-            'create-users',
-            'view-comments',
-            'edit-comments',
-            'delete-comments',
-            'view-orders',
-            'edit-orders',
-            'create-orders',
-            'delete-orders',
-        ]);
 
         $user1 = User::factory()->create([
             'first_name' => 'فرشاد',
@@ -175,8 +141,6 @@ class DatabaseSeeder extends Seeder
             'avatar' => null,
         ]);
 
-        $user1->assignRole($admin);
-
         $user2 = User::factory()->create([
             'first_name' => 'writer',
             'password' => bcrypt('writer'),
@@ -186,8 +150,6 @@ class DatabaseSeeder extends Seeder
             'birthday' => null,
             'avatar' => null,
         ]);
-
-        $user2->assignRole($writer);
 
         $user3 = User::factory()->create([
             'first_name' => 'support',
@@ -199,8 +161,6 @@ class DatabaseSeeder extends Seeder
             'avatar' => null,
         ]);
 
-        $user3->assignRole($support);
-
         $user4 = User::factory()->create([
             'first_name' => 'customer',
             'password' => bcrypt('customer'),
@@ -210,8 +170,6 @@ class DatabaseSeeder extends Seeder
             'birthday' => null,
             'avatar' => null,
         ]);
-
-        $user4->assignRole($customer);
 
         $user5 = User::factory()->create([
             'first_name' => 'ارشیا',

@@ -94,15 +94,14 @@
                                         <tbody>
                                         <tr>
                                             <td class="text-nowrap">
-                                                دسترسی مدیریت
-                                                <i class="bx bx-info-circle bx-xs" data-bs-toggle="tooltip"
-                                                   data-bs-placement="top"
-                                                   title="Allows a full access to the system"></i>
+                                                دسترسی پنل
                                             </td>
                                             <td>
-                                                <div class="form-check mb-0">
-                                                    <input class="form-check-input" type="checkbox" id="selectAll">
-                                                    <label class="form-check-label" for="selectAll"> انتخاب همه </label>
+                                                <div class="form-check me-3 me-lg-5 mb-0 mt-0">
+                                                    <input class="form-check-input" name="permissions[]"
+                                                           value="admin-panel" type="checkbox">
+                                                    <label
+                                                        class="form-check-label"></label>
                                                 </div>
                                             </td>
                                         </tr>
@@ -168,6 +167,19 @@
                                 <div class="table-responsive">
                                     <table class="table table-flush-spacing">
                                         <tbody>
+                                        <tr>
+                                            <td class="text-nowrap">
+                                                دسترسی پنل
+                                            </td>
+                                            <td>
+                                                <div class="form-check me-3 me-lg-5 mb-0 mt-0">
+                                                    <input class="form-check-input" name="edit-permissions[]"
+                                                           value="admin-panel" type="checkbox">
+                                                    <label
+                                                        class="form-check-label"></label>
+                                                </div>
+                                            </td>
+                                        </tr>
                                         @foreach($permissions as $key => $permission)
                                             <tr>
                                                 <td class="text-nowrap">{{ translatePermission($key) }}</td>
