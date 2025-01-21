@@ -2,6 +2,7 @@
     <div class="container">
         <!--  nav  -->
         <header>
+            {{--            todo make navbar fixed --}}
             <nav class="rose-nav">
                 <div class="d-flex align-items-center justify-content-between position-relative">
                     <div class="mobile-menu-icon">

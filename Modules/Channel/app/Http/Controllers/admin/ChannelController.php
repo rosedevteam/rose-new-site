@@ -3,6 +3,7 @@
 namespace Modules\Channel\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\traits\Upload;
 use Artesaos\SEOTools\Traits\SEOTools;
 use Hekmatinasser\Verta\Verta;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ use Modules\User\Models\User;
 class ChannelController extends Controller
 {
     //todo fix channel module , send message,file,voice etc
-    use SEOTools;
+    use SEOTools, Upload;
 
     public function index()
     {
@@ -46,7 +47,7 @@ class ChannelController extends Controller
         $channelAvatar = null;
         if (isset($validData['avatar'])) {
             //upload channel avatar : uploader() function in app/http/Helpers.php
-            $channelAvatar = "/images/channels/" . uploader($request, 'avatar', 'images/channels');
+            $channelAvatar = $this->uploadFile($validData['avatar'], 'channels/avatar');
         }
 
         //create new channel with data

@@ -1,10 +1,8 @@
-{{--<script src="https://cdn.tiny.cloud/1/t6gsuwemfyzbh6oifmteyfsxczlig5oxso5lmfq8llnk58dy/tinymce/7/tinymce.min.js"--}}
-{{--        referrerpolicy="origin"></script>--}}
 <script src="/assets/admin/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
     const isDarkMode = getComputedStyle(document.documentElement).getPropertyValue('color-scheme').trim() === 'dark'
     tinymce.init({
-        selector: '#adminEditor', // Replace this CSS selector to match the placeholder element for TinyMCE
+        selector: '#adminEditor',
         plugins: 'preview importcss searchreplace autolink autosave save directionality  visualblocks visualchars fullscreen image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons lists',
         toolbar: 'undo redo | bold italic underline strikethrough | fontsizeselect formatselect | alignleft aligncenter alignright alignjustify numlist bullist | outdent indent | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl',
         language: 'fa',

@@ -1,4 +1,3 @@
-
 import fa from '/assets/admin/js/grapesjs/fa.js';
 
 const editor = grapesjs.init({
@@ -137,7 +136,8 @@ editor.Commands.add
             var htmldata = editor.getHtml();
             var cssdata = editor.getCss();
             var page_id = document.getElementById('page-id');
-            axios.post(`/kara-fa/pagebuilder` , {
+            const adminPrefix = $("meta[name='admin-prefix']").attr("content");
+            axios.post(`/${adminPrefix}/pagebuilder`, {
                 content: htmldata,
                 pagebuilder_type: $('#pagebuilder_type').val(),
                 pagebuilder_id: $('#pagebuilder_id').val(),

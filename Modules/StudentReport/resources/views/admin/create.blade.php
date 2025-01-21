@@ -69,7 +69,7 @@
                                     <option value="">انتخاب کنید</option>
                                     @foreach(\Modules\User\Models\User::all() as $user)
                                         <option
-                                            value="{{$user->id}}" {{old('user_id') == $user->id ? 'selected' : ''}}>{{$user->phone . ' | ' . $user->name()}}</option>
+                                            value="{{$user->id}}" {{old('student_id') == $user->id ? 'selected' : ''}}>{{$user->phone . ' | ' . $user->name()}}</option>
                                     @endforeach
                                 </select>
                             </div>

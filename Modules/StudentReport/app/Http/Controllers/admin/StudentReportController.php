@@ -58,13 +58,14 @@ class StudentReportController extends Controller
             $name = 'student-report-' . now()->timestamp . "." . request()->file('analysis')->extension();
             request()->file('analysis')->storeAs('student-reports', $name);
 
-            $analysis = auth()->user()->studentReports()->create([
+            $analysis = StudentReport::create([
                 'company' => $validData['company'],
                 'date' => $this->convertNums($validData['date']),
                 'analysis' => $name,
                 'description' => $validData['description'],
                 'status' => $validData['status'],
                 'student_id' => $validData['student_id'],
+                'user_id' => auth()->user()->id,
             ]);
             $after = $analysis->toArray();
 
