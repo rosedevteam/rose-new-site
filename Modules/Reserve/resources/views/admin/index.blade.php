@@ -1,6 +1,7 @@
 @extends('admin::layouts.main')
 
 @push('css')
+    <link rel="stylesheet" href="/assets/admin/vendor/libs/select2/select2.css">
     <link rel="stylesheet" href="/assets/admin/js/datepicker/persian-datepicker.min.css">
 @endpush
 
@@ -215,7 +216,7 @@
             </div>
 
 
-            <div class="offcanvas offcanvas-start" tabindex="-1" id="filters" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="filters" aria-labelledby="offcanvasExampleLabel">
                 <div class="offcanvas-header">
                     <h5 class="offcanvas-title" id="offcanvasExampleLabel">فیلتر ها</h5>
                     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
@@ -227,14 +228,16 @@
                         <input type="hidden" name="export" id="export" value="0">
 
                         <div class="mb-3">
-                            <label for="products" class="form-label-sm my-1">دوره ها</label>
-                            <select id="products" name="products[]" class="select2 products form-select"
-                                    multiple>
-                                @foreach(\Modules\Product\Models\Product::all() as $product)
-                                    <option value="{{$product->id}}"
-                                            @if(request('products')) @if(in_array($product->id , request('products'))) selected @endif @endif>{{$product->title}}</option>
-                                @endforeach
-                            </select>
+                            <label for="select2Primary" class="form-label">دوره ها</label>
+                            <div class="select2-primary">
+                                <select id="select2Primary" name="products[]" class="select2 form-select"
+                                        multiple>
+                                    @foreach(\Modules\Product\Models\Product::all() as $product)
+                                        <option value="{{$product->id}}"
+                                                @if(request('products')) @if(in_array($product->id , request('products'))) selected @endif @endif>{{$product->title}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
 
                         <div class="row mb-2">
@@ -262,7 +265,7 @@
             {{$reserves->appends(['search' => request('search'), 'products' => request('products') , 'from' => request('from') , 'to' => request('to')])}}
         </div>
     </div>
-@stop
+@endsection
 
 @section('vendor')
     <script src="/assets/admin/js/datepicker/persian-date.min.js"></script>
@@ -273,5 +276,11 @@
     {{--    <script src="/admin/assets/js/product/remove.js"></script>--}}
     {{--    <script src="/admin/assets/js/product/edit.js"></script>--}}
     {{--    <script src="/admin/assets/js/product/all.js"></script>--}}
-@stop
+@endsection
 
+
+@push('script')
+    <script src="/assets/admin/vendor/libs/select2/select2.js"></script>
+    <script src="/assets/admin/vendor/libs/select2/i18n/fa.js"></script>
+    <script src="/assets/admin/js/forms-selects.js"></script>
+@endpush
