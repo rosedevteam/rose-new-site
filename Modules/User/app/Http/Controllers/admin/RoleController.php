@@ -13,7 +13,7 @@ class RoleController extends Controller
     {
         Gate::authorize('manage-roles');
         try {
-            $roles = Role::where('name', '!=', 'super-admin')->with('permissions')->get();
+            $roles = Role::with('permissions')->get();
             $permissions = Permission::all()->groupBy(function ($item) {
                 return explode('-', $item->name, 2)[1];
             })->map(function ($item) {

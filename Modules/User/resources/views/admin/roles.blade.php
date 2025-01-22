@@ -35,6 +35,9 @@
                                 <th aria-controls="DataTables_Table_0" rowspan="1"
                                     colspan="1" style="width: 10%" aria-sort="ascending">عنوان
                                 </th>
+                                <th aria-controls="DataTables_Table_0" rowspan="1"
+                                    colspan="1" style="width: 5%" aria-sort="ascending">تعداد کاربران
+                                </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 2%;">جزییات
                                 </th>
@@ -51,18 +54,21 @@
                                             </div>
                                         </div>
                                     </td>
+                                    <td>{{ $role->users->count() }}</td>
                                     <td>
-                                        <div class="d-flex gap-3 text-nowrap">
-                                            <button class="btn btn-sm btn-info" data-bs-target="#editRoleModal"
-                                                    data-bs-toggle="modal"
-                                                    data-name="{{ $role->name }}"
-                                                    data-permissions="{{ json_encode($role->permissions->pluck('name')->toArray()) }}"
-                                                    data-route="{{ route('admin.roles.update', $role) }}"
-                                                    id="edit-button">
-                                                ویرایش
-                                            </button>
-                                            <x-admin::deletebutton data-id="{{ $role->id }}"/>
-                                        </div>
+                                        @if($role->name != 'super-admin')
+                                            <div class="d-flex gap-3 text-nowrap">
+                                                <button class="btn btn-sm btn-info" data-bs-target="#editRoleModal"
+                                                        data-bs-toggle="modal"
+                                                        data-name="{{ $role->name }}"
+                                                        data-permissions="{{ json_encode($role->permissions->pluck('name')->toArray()) }}"
+                                                        data-route="{{ route('admin.roles.update', $role) }}"
+                                                        id="edit-button">
+                                                    ویرایش
+                                                </button>
+                                                <x-admin::deletebutton data-id="{{ $role->id }}"/>
+                                            </div>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
