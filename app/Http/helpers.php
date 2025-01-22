@@ -15,7 +15,7 @@ if (!function_exists('getEditRouteByType')) {
         $type = getClassName($type);
 
         // return empty for models that don't have edit pages
-        if (in_array($type, ['Category', 'DailyReport', 'Menu', 'Podcast'])) {
+        if (in_array($type, ['Category', 'Role', 'DailyReport', 'Menu', 'Podcast'])) {
             return "";
         }
         if ($type == "WalletTransaction") {

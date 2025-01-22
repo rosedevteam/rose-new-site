@@ -33,98 +33,100 @@ class DatabaseSeeder extends Seeder
         $this->seedMenu();
         $this->seedCategories();
         $this->seedDiscounts();
-        $this->seedIndices();
-        $this->seedReferral();
+//        $this->seedIndices();
 //        $this->seedCompanies();
     }
 
     private function seedUsersAndPermissions()
     {
+        // permission format: {action}-{model}
         Permission::create(['name' => 'admin-panel']);
         //
         Permission::create(['name' => 'view-users']);
-        Permission::create(['name' => 'edit-users']);
         Permission::create(['name' => 'create-users']);
+        Permission::create(['name' => 'edit-users']);
         Permission::create(['name' => 'delete-users']);
         //
         Permission::create(['name' => 'view-billings']);
-        Permission::create(['name' => 'edit-billings']);
         Permission::create(['name' => 'create-billings']);
+        Permission::create(['name' => 'edit-billings']);
         Permission::create(['name' => 'delete-billings']);
         //
         Permission::create(['name' => 'view-daily-reports']);
-        Permission::create(['name' => 'edit-daily-reports']);
         Permission::create(['name' => 'create-daily-reports']);
+        Permission::create(['name' => 'edit-daily-reports']);
         Permission::create(['name' => 'delete-daily-reports']);
         //
         Permission::create(['name' => 'view-posts']);
-        Permission::create(['name' => 'edit-posts']);
         Permission::create(['name' => 'create-posts']);
+        Permission::create(['name' => 'edit-posts']);
         Permission::create(['name' => 'delete-posts']);
+        //
+        Permission::create(['name' => 'view-products']);
+        Permission::create(['name' => 'create-products']);
+        Permission::create(['name' => 'edit-products']);
+        Permission::create(['name' => 'delete-products']);
+        //
+        Permission::create(['name' => 'view-job-offers']);
+        Permission::create(['name' => 'create-job-offers']);
+        Permission::create(['name' => 'edit-job-offers']);
+        Permission::create(['name' => 'delete-job-offers']);
+        //
+        Permission::create(['name' => 'view-categories']);
+        Permission::create(['name' => 'create-categories']);
+        Permission::create(['name' => 'edit-categories']);
+        Permission::create(['name' => 'delete-categories']);
+        //
+        Permission::create(['name' => 'view-orders']);
+        Permission::create(['name' => 'create-orders']);
+        Permission::create(['name' => 'edit-orders']);
+        Permission::create(['name' => 'delete-orders']);
+        //
+        Permission::create(['name' => 'view-menus']);
+        Permission::create(['name' => 'create-menus']);
+        Permission::create(['name' => 'edit-menus']);
+        Permission::create(['name' => 'delete-menus']);
+        //
+        Permission::create(['name' => 'view-discounts']);
+        Permission::create(['name' => 'create-discounts']);
+        Permission::create(['name' => 'edit-discounts']);
+        Permission::create(['name' => 'delete-discounts']);
+        //
+        Permission::create(['name' => 'view-podcasts']);
+        Permission::create(['name' => 'create-podcasts']);
+        Permission::create(['name' => 'edit-podcasts']);
+        Permission::create(['name' => 'delete-podcasts']);
+        //
+        Permission::create(['name' => 'view-student-reports']);
+        Permission::create(['name' => 'create-student-reports']);
+        Permission::create(['name' => 'edit-student-reports']);
+        Permission::create(['name' => 'delete-student-reports']);
+        //
+        Permission::create(['name' => 'view-wallet-transactions']);
+        Permission::create(['name' => 'create-wallet-transactions']);
+        Permission::create(['name' => 'edit-wallet-transactions']);
+        Permission::create(['name' => 'delete-wallet-transactions']);
         //
         Permission::create(['name' => 'view-comments']);
         Permission::create(['name' => 'edit-comments']);
         Permission::create(['name' => 'delete-comments']);
         //
-        Permission::create(['name' => 'view-products']);
-        Permission::create(['name' => 'edit-products']);
-        Permission::create(['name' => 'create-products']);
-        Permission::create(['name' => 'delete-products']);
-        //
-        Permission::create(['name' => 'view-job-offers']);
-        Permission::create(['name' => 'edit-job-offers']);
-        Permission::create(['name' => 'create-job-offers']);
-        Permission::create(['name' => 'delete-job-offers']);
-        //
-        Permission::create(['name' => 'view-categories']);
-        Permission::create(['name' => 'edit-categories']);
-        Permission::create(['name' => 'create-categories']);
-        Permission::create(['name' => 'delete-categories']);
-        //
         Permission::create(['name' => 'view-job-applications']);
         Permission::create(['name' => 'edit-job-applications']);
         Permission::create(['name' => 'delete-job-applications']);
         //
-        Permission::create(['name' => 'view-orders']);
-        Permission::create(['name' => 'edit-orders']);
-        Permission::create(['name' => 'create-orders']);
-        Permission::create(['name' => 'delete-orders']);
-        //
-        Permission::create(['name' => 'view-menus']);
-        Permission::create(['name' => 'edit-menus']);
-        Permission::create(['name' => 'create-menus']);
-        Permission::create(['name' => 'delete-menus']);
-        //
-        Permission::create(['name' => 'view-discounts']);
-        Permission::create(['name' => 'edit-discounts']);
-        Permission::create(['name' => 'create-discounts']);
-        Permission::create(['name' => 'delete-discounts']);
-        //
-        Permission::create(['name' => 'view-podcasts']);
-        Permission::create(['name' => 'edit-podcasts']);
-        Permission::create(['name' => 'create-podcasts']);
-        Permission::create(['name' => 'delete-podcasts']);
-        //
-        Permission::create(['name' => 'view-student-reports']);
-        Permission::create(['name' => 'edit-student-reports']);
-        Permission::create(['name' => 'create-student-reports']);
-        Permission::create(['name' => 'delete-student-reports']);
-        //
-        Permission::create(['name' => 'view-wallet-transactions']);
-        Permission::create(['name' => 'edit-wallet-transactions']);
-        Permission::create(['name' => 'create-wallet-transactions']);
-        Permission::create(['name' => 'delete-wallet-transactions']);
-        //
-        Permission::create(['name' => 'set-roles']);
-        Permission::create(['name' => 'view-logs']);
-        //
         Permission::create(['name' => 'edit-page']);
         Permission::create(['name' => 'create-page']);
         //
+        Permission::create(['name' => 'manage-roles']);
+        Permission::create(['name' => 'assign-roles']);
+        //
+        Permission::create(['name' => 'view-logs']);
+        //
         Permission::create(['name' => 'manage-channels']);
-        Permission::create(['name' => 'edit-subscriptions']);
-        Permission::create(['name' => 'add-channel']);
+        Permission::create(['name' => 'create-channels']);
         Permission::create(['name' => 'view-channel-members-count']);
+        Permission::create(['name' => 'edit-subscriptions']);
 
         $customer = Role::create(['name' => 'مشتری']);
         $admin = Role::create(['name' => 'ادمین']);

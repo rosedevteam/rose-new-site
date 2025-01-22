@@ -212,6 +212,12 @@
                     document.getElementById('edit-type').value = type;
                     document.getElementById('edit-description').value = description;
                     document.getElementById('edit-transaction-form').action = route;
+                    const editAmount = new AutoNumeric('#edit-amount', {
+                        digitGroupSeparator: ',',
+                        minimumValue: '0',
+                        unformatOnSubmit: true,
+                        decimalPlaces: 0,
+                    });
                 }
                 if (event.target.matches('#delete-button')) {
                     const adminPrefix = $("meta[name='admin-prefix']").attr("content");
@@ -221,12 +227,6 @@
                 }
             });
             const amount = new AutoNumeric('#amount', {
-                digitGroupSeparator: ',',
-                minimumValue: '0',
-                unformatOnSubmit: true,
-                decimalPlaces: 0,
-            });
-            const editAmount = new AutoNumeric('#edit-amount', {
                 digitGroupSeparator: ',',
                 minimumValue: '0',
                 unformatOnSubmit: true,

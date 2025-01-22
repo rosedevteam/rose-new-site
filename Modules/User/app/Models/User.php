@@ -43,6 +43,11 @@ class User extends \Illuminate\Foundation\Auth\User
 
     }
 
+    public function role()
+    {
+        return $this->getRoleNames()->first();
+    }
+
     public function name(): string
     {
         return $this->first_name . " " . $this->last_name;

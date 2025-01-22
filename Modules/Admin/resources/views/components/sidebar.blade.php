@@ -129,7 +129,7 @@
                     <div>کانال ها</div>
                 </a>
                 <ul class="menu-sub">
-                    @can('add-channel')
+                    @can('create-channels')
                         <li @class(["menu-item", 'active' => $route == 'channels' && $route2 == "create"])>
                             <a href="{{route('admin.channels.create')}}" class="menu-link">
                                 <div>افزودن کانال جدید</div>
@@ -145,6 +145,14 @@
                 </ul>
             </li>
         @endcan
+            @can('manage-roles')
+                <li @class(["menu-item", 'active' => $route == 'roles'])>
+                    <a href="{{ route("admin.roles.index") }}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-lock"></i>
+                        <div data-i18n="نقش ها">نقش ها</div>
+                    </a>
+                </li>
+            @endcan
             @can('view-logs')
                 <li @class(["menu-item", 'active' => $route == 'logs'])>
                     <a href="{{ route("admin.logs.index") }}" class="menu-link">
