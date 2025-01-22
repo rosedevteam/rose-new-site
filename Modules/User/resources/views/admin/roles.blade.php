@@ -295,8 +295,9 @@
             case 'logs': $permission = 'لاگ'; break;
             case 'page': $permission = 'صفحه ساز'; break;
             case 'channels': $permission = 'کانال ها'; break;
-            case 'subscriptions': $permission = 'اشتراک'; break;
+            case 'channel-subscriptions': $permission = 'اشتراک های کانال'; break;
             case 'channel-members-count': $permission = 'تعداد اعضای کانال ها'; break;
+            case 'subscriptions': $permission = 'اشتراک ها'; break;
         }
         return $permission;
     }

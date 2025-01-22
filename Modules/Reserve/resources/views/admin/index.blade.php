@@ -268,14 +268,15 @@
 @endsection
 
 @section('vendor')
+    {{--    todo fix datepicker--}}
     <script src="/assets/admin/js/datepicker/persian-date.min.js"></script>
     <script src="/assets/admin/js/datepicker/persian-datepicker.min.js"></script>
     <script src="/assets/aadmin/js/axios.js"></script>
     <script src="/assets/admin/js/search.js"></script>
-    {{--    <script src="/admin/assets/js/product/create.js"></script>--}}
-    {{--    <script src="/admin/assets/js/product/remove.js"></script>--}}
-    {{--    <script src="/admin/assets/js/product/edit.js"></script>--}}
-    {{--    <script src="/admin/assets/js/product/all.js"></script>--}}
+    <script src="/assets/admin/js/product/all.js"></script>
+    <script src="/assets/admin/js/product/create.js"></script>
+    <script src="/assets/admin/js/product/edit.js"></script>
+    <script src="/assets/admin/js/product/remove.js"></script>
 @endsection
 
 

@@ -153,6 +153,27 @@
                 </ul>
             </li>
         @endcan
+            @can('manage-subscriptions')
+                <li @class(["menu-item", 'active open' => $route == 'subscriptions'])>
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-money-withdraw"></i>
+                        <div>اشتراک ها</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li @class(["menu-item", 'active' => $route == 'subscriptions'])>
+                            <a href="{{route('admin.subscriptions.index')}}" class="menu-link">
+                                <div>اشتراک ها</div>
+                            </a>
+                        </li>
+                        <li @class(["menu-item", 'active' => $route == 'telegrams'])>
+                            <a href="{{route('admin.telegrams.index')}}" class="menu-link">
+                                <div>کانال تلگرام</div>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+            @endcan
             @can('manage-roles')
                 <li @class(["menu-item", 'active' => $route == 'roles'])>
                     <a href="{{ route("admin.roles.index") }}" class="menu-link">

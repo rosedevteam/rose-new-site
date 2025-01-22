@@ -121,14 +121,16 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'manage-roles']);
         Permission::create(['name' => 'assign-roles']);
         //
-        Permission::create(['name' => 'view-reserves']);
-        //
-        Permission::create(['name' => 'view-logs']);
-        //
         Permission::create(['name' => 'manage-channels']);
         Permission::create(['name' => 'create-channels']);
         Permission::create(['name' => 'view-channel-members-count']);
-        Permission::create(['name' => 'edit-subscriptions']);
+        Permission::create(['name' => 'edit-channel-subscriptions']);
+        //
+        Permission::create(['name' => 'manage-subscriptions']);
+        //
+        Permission::create(['name' => 'view-reserves']);
+        //
+        Permission::create(['name' => 'view-logs']);
 
         $customer = Role::create(['name' => 'مشتری']);
         $admin = Role::create(['name' => 'ادمین']);
