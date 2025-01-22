@@ -5,6 +5,7 @@ namespace Modules\Reserve\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Product\Models\Product;
+use Modules\User\Models\User;
 
 class Reserve extends Model
 {
@@ -14,7 +15,12 @@ class Reserve extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsTo(Product::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
 }

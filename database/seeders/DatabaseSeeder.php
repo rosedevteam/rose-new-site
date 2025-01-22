@@ -129,6 +129,7 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'manage-subscriptions']);
         //
         Permission::create(['name' => 'view-reserves']);
+        Permission::create(['name' => 'send-reserves-notifications']);
         //
         Permission::create(['name' => 'view-logs']);
 

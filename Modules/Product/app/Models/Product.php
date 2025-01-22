@@ -15,6 +15,7 @@ use Modules\Metadata\Models\Metadata;
 use Modules\Order\Models\Order;
 use Modules\PageBuilder\Models\PageBuilder;
 use Modules\Product\Database\Factories\ProductFactory;
+use Modules\Reserve\Models\Reserve;
 use Modules\User\Models\User;
 
 class Product extends Model
@@ -88,6 +89,11 @@ class Product extends Model
     public function channels()
     {
         return $this->belongsToMany(Channel::class);
+    }
+
+    public function reserves()
+    {
+        return $this->hasMany(Reserve::class);
     }
 
     protected static function newFactory(): ProductFactory

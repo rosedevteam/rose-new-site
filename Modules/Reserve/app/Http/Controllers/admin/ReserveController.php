@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\traits\ConvertNums;
 use Gate;
 use Maatwebsite\Excel\Facades\Excel;
+use Modules\Product\Models\Product;
 use Modules\Reserve\Models\Reserve;
+use Modules\Reserve\Notifications\NotifyProductAvailable;
 use Verta;
 
 class ReserveController extends Controller
@@ -59,5 +61,21 @@ class ReserveController extends Controller
         $newDate = \Hekmatinasser\Verta\Facades\Verta::jalaliToGregorian(intval($expire_date[0]), intval($expire_date[1]), intval($expire_date[2]));
         return verta(implode('/', $newDate))->datetime();
 
+    }
+
+    public function notifyAvailable(Product $product)
+    {
+        Gate::authorize('send-reserves-notifications');
+        try {
+            $reserves = $product->reserves();
+            foreach ($reserves as $reserve) {
+                $reserve->user->notify(new NotifyProductAvailable($reserve->user->phone, $product->title));
+            }
+            alert()->success('موفق', 'با موفقیت ارسال شد');
+            return back();
+        } catch (\Throwable $th) {
+            alert()->error($th->getMessage());
+            return back();
+        }
     }
 }

@@ -13,18 +13,11 @@ return new class extends Migration {
 
         Schema::create('reserves', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('lastname');
-            $table->string('phone');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
             $table->string('know');
             $table->timestamps();
         });
-
-        Schema::create('product_reserve', function (Blueprint $table) {
-            $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
-            $table->foreignId('reserve_id')->constrained('reserves')->cascadeOnDelete();
-        });
-
     }
 
     /**
