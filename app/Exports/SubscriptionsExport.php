@@ -5,7 +5,7 @@ namespace App\Exports;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 
-class SubscribtionsExport implements FromView
+class SubscriptionsExport implements FromView
 {
 
     private $subs;
@@ -18,7 +18,7 @@ class SubscribtionsExport implements FromView
 
     public function view(): View
     {
-        return view('subscribtion::backend.export', [
+        return view('subscription::backend.subscriptionExport', [
             'subs' => $this->subs
         ]);
     }

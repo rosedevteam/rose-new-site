@@ -5,7 +5,7 @@ namespace App\Exports;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 
-class TelegramCahnnelExport implements FromView
+class TelegramChannelExport implements FromView
 {
     private $telegrams;
 
@@ -17,7 +17,7 @@ class TelegramCahnnelExport implements FromView
 
     public function view(): View
     {
-        return view('subscribtion::backend.telegram.export', [
+        return view('subscription::backend.telegramExport', [
             'telegrams' => $this->telegrams
         ]);
     }
