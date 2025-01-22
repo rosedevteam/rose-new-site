@@ -121,6 +121,8 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'manage-roles']);
         Permission::create(['name' => 'assign-roles']);
         //
+        Permission::create(['name' => 'view-reserves']);
+        //
         Permission::create(['name' => 'view-logs']);
         //
         Permission::create(['name' => 'manage-channels']);

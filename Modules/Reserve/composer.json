@@ -1,0 +1,29 @@
+{
+    "name": "nwidart/reserve",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Reserve\\": "app/",
+            "Modules\\Reserve\\Database\\Factories\\": "database/factories/",
+            "Modules\\Reserve\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Reserve\\Tests\\": "tests/"
+        }
+    }
+}
