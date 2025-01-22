@@ -11,4 +11,5 @@ Route::prefix('roles')->controller(RoleController::class)->group(function () {
     Route::get('/', 'index')->name('roles.index');
     Route::post('/', 'store')->name('roles.store');
     Route::patch('/{role}', 'update')->name('roles.update');
+    Route::delete('/{role}', 'destroy')->name('roles.destroy');
 });

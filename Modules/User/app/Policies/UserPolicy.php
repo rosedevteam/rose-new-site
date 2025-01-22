@@ -48,16 +48,16 @@ class UserPolicy
 
     public function setRole(User $user, User $model)
     {
-        if (!$user->hasPermissionTo('assign-roles')) {
-            return false;
-        }
-        if ($model->hasRole('super-admin')) {
+        if (!$user->hasPermissionTo('assign-roles') ||
+            $model->hasRole('super-admin') ||
+            $user->id == $model->id
+        ) {
             return false;
         }
         if ($user->hasRole('super-admin')) {
             return true;
         }
-        if ($model->hasRole('ادمین')) {
+        if ($model->hasPermissionTo('assign-roles')) {
             return false;
         }
         return true;

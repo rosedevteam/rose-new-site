@@ -119,12 +119,3 @@ if (!function_exists('sendVerifySms')) {
 
     }
 }
-
-if (!function_exists('translatePermission')) {
-    function translatePermission($permission)
-    {
-        // todo
-        return $permission;
-    }
-
-}

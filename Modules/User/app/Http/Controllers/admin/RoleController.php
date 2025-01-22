@@ -35,12 +35,12 @@ class RoleController extends Controller
         Gate::authorize('manage-roles');
         $validData = request()->validate([
             'roleName' => 'required',
-            'permissions' => 'required|array',
+            'permissions' => 'array',
             'permissions.*' => 'exists:permissions,name'
         ]);
         try {
             $role = Role::create(['name' => $validData['roleName']]);
-            $role->syncPermissions($validData['permissions']);
+            $role->syncPermissions($validData['permissions'] ?? []);
             $after = $role->toArray();
             $this->log($role, compact('after'), 'ساخت نقش');
 
@@ -69,6 +69,23 @@ class RoleController extends Controller
             $this->log($role, compact('before', 'after'), 'ویرایش نقش');
 
             alert()->success('موفق', 'نقش با موفقیت ویرایش شد');
+            return back();
+        } catch (\Throwable $th) {
+            alert()->error($th->getMessage());
+            return back();
+        }
+    }
+
+    public function destroy(Role $role)
+    {
+        Gate::authorize('manage-roles');
+        if ($role->name == 'super-admin') abort(403);
+        try {
+            $before = $role->toArray();
+            $role->delete();
+
+            $this->log(null, compact('before'), 'حذف نقش');
+            alert()->success('موفق', 'نقش با موفقیت حذف شد');
             return back();
         } catch (\Throwable $th) {
             alert()->error($th->getMessage());

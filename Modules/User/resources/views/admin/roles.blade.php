@@ -30,6 +30,9 @@
                             <thead>
                             <tr>
                                 <th aria-controls="DataTables_Table_0" rowspan="1"
+                                    colspan="1" style="width: 1%" aria-sort="ascending">آیدی
+                                </th>
+                                <th aria-controls="DataTables_Table_0" rowspan="1"
                                     colspan="1" style="width: 10%" aria-sort="ascending">عنوان
                                 </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
@@ -40,6 +43,7 @@
                             <tbody>
                             @foreach($roles as $role)
                                 <tr>
+                                    <td>{{ $role->id }}</td>
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="d-flex flex-column">
@@ -57,6 +61,7 @@
                                                     id="edit-button">
                                                 ویرایش
                                             </button>
+                                            <x-admin::deletebutton data-id="{{ $role->id }}"/>
                                         </div>
                                     </td>
                                 </tr>
@@ -169,7 +174,7 @@
                                         <tbody>
                                         <tr>
                                             <td class="text-nowrap">
-                                                دسترسی پنل
+                                                دسترسی پنل ادمین
                                             </td>
                                             <td>
                                                 <div class="form-check me-3 me-lg-5 mb-0 mt-0">
@@ -217,6 +222,7 @@
                 </div>
             </div>
         </div>
+            <x-admin::deletemodal/>
         <div class="content-backdrop fade"></div>
     </div>
 
@@ -229,6 +235,7 @@
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/FormValidation.min.js"></script>
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js"></script>
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
+    <x-admin::deletemodalscript model="roles"/>
 @endpush
 
 @push('script')
@@ -252,3 +259,39 @@
         });
     </script>
 @endpush
+
+@php
+    function translatePermission($permission)
+    {
+        switch($permission) {
+            case 'view': $permission = 'مشاهده'; break;
+            case 'edit': $permission = 'ویرایش'; break;
+            case 'delete': $permission = 'حذف'; break;
+            case 'create': $permission = 'ساخت'; break;
+            case 'manage': $permission = 'مدیریت'; break;
+            case 'assign': $permission = 'انتصاب'; break;
+            case 'users': $permission = 'کاربران'; break;
+            case 'billings': $permission = 'اطلاعات صورتحساب'; break;
+            case 'daily-reports': $permission = 'گزارش روزانه'; break;
+            case 'posts': $permission = 'پست ها'; break;
+            case 'comments': $permission = 'نظرات'; break;
+            case 'products': $permission = 'دوره ها'; break;
+            case 'job-offers': $permission = 'فرصت های شغلی'; break;
+            case 'categories': $permission = 'دسته بندی ها'; break;
+            case 'job-applications': $permission = 'رزومه ها'; break;
+            case 'orders': $permission = 'سفارش ها'; break;
+            case 'menus': $permission = 'منو ها'; break;
+            case 'discounts': $permission = 'تخفیف ها'; break;
+            case 'podcasts': $permission = 'پادکست ها'; break;
+            case 'student-reports': $permission = 'تحلیل های دانشپذیران'; break;
+            case 'wallet-transactions': $permission = 'تراکنش ها کیف پول'; break;
+            case 'roles': $permission = 'نقش ها'; break;
+            case 'logs': $permission = 'لاگ'; break;
+            case 'page': $permission = 'صفحه ساز'; break;
+            case 'channels': $permission = 'کانال ها'; break;
+            case 'subscriptions': $permission = 'اشتراک'; break;
+            case 'channel-members-count': $permission = 'تعداد اعضای کانال ها'; break;
+        }
+        return $permission;
+    }
+@endphp
