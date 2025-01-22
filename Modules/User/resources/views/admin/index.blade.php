@@ -188,13 +188,13 @@
                                         <div class="col">
                                             <label class="form-label" for="from">از</label>
                                             <input type="text" class="date-picker form-control" name="from" id="from"
-                                                   value="{{ old("from") }}"
+                                                   value="{{ $from ? verta($from)->formatJalaliDate() : "" }}"
                                                    autocomplete="off">
                                         </div>
                                         <div class="col">
                                             <label class="form-label" for="to">تا</label>
                                             <input type="text" class="date-picker form-control" name="to" id="to"
-                                                   value="{{ old("to") }}"
+                                                   value="{{ $to ? verta($to)->formatJalaliDate() : ""}}"
                                                    autocomplete="off">
                                         </div>
                                     </div>
@@ -203,6 +203,7 @@
                                         <div class="col">
                                             <label for="wallet_balance" class="form-label">موجودی: </label>
                                             <input name="wallet_balance" id="wallet_balance"
+                                                   value="{{ $wallet_balance }}"
                                                    class="form-control">
                                         </div>
                                         <div class="col">
@@ -216,6 +217,7 @@
                                             </select>
                                         </div>
                                     </div>
+                                    {{--                                    todo finish search by order--}}
                                     <div class="row">
                                         <label for="order_select2" class="form-label">محصولات سفارش:</label>
                                         <div class="select2-primary">
@@ -249,11 +251,14 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label for="orderStatus" class="form-label">به جز:</label>
-                                        <div class="select2-primary">
-                                            <select id="orderStatus" class="select2 form-select" name="orderStatus">
+                                        <label for="orderStatus" class="form-label">وضعیت پرداخت:</label>
+                                        <div class="">
+                                            <select id="orderStatus" class="form-select" name="orderStatus">
                                                 <option value="all">همه</option>
-                                                <option value="all">همه</option>
+                                                <option value="has_order">دارای سفارش (رایگان و پولی)</option>
+                                                <option value="has_free_order">دارای سفارش رایگان</option>
+                                                <option value="had_paid_order">دارای سفارش پرداخت شده</option>
+                                                <option value="without_order">بدون سفارش</option>
                                             </select>
                                         </div>
                                     </div>
@@ -348,7 +353,6 @@
                 initialValue: false,
                 format: 'YYYY/MM/DD',
                 autoClose: true,
-                minDate: new persianDate(),
                 timePicker: {
                     enabled: true,
                     meridian: {

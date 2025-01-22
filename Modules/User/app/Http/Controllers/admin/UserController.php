@@ -11,6 +11,7 @@ use Modules\Product\Models\Product;
 use Modules\User\Models\Billing;
 use Modules\User\Models\User;
 use Spatie\Permission\Models\Role;
+use Verta;
 
 class UserController extends Controller
 {
@@ -27,6 +28,8 @@ class UserController extends Controller
             $wallet_balance = request('wallet_balance');
             $wallet_search_type = request('wallet_search_type');
             $productQuery = request('products');
+            $from = request('from');
+            $to = request('to');
 
             $products = Product::all();
             $roles = Role::all()->select('name', 'id');
@@ -38,11 +41,10 @@ class UserController extends Controller
                     return $query->where('role_id', $role_id);
                 });
             }
-            if ($search) {
-                $users = $users->where('first_name', 'like', '%' . $search . '%')
-                    ->orWhere('last_name', 'like', '%' . $search . '%')
-                    ->orWhere('email', 'like', '%' . $search . '%')
-                    ->orWhere('phone', 'like', '%' . $search . '%');
+            if ($from || $to) {
+                $to = Verta::parseFormat('Y/m/d', $to ?: verta()->format('Y/m/d'));
+                $from = Verta::parseFormat('Y/m/d', $from ?: verta()->subYears(100)->format('Y/m/d'));
+                $users = $users->whereBetween('created_at', [$from, $to]);
             }
             if ($wallet_balance) {
                 $users = $users->whereHas('wallet', function ($query) use ($wallet_balance, $wallet_search_type) {
@@ -59,6 +61,12 @@ class UserController extends Controller
                     };
                 });
             }
+            if ($search) {
+                $users = $users->where('first_name', 'like', '%' . $search . '%')
+                    ->orWhere('last_name', 'like', '%' . $search . '%')
+                    ->orWhere('email', 'like', '%' . $search . '%')
+                    ->orWhere('phone', 'like', '%' . $search . '%');
+            }
 
             $users = $users->orderBy($sort_by, $sort_direction);
             $users = $users->paginate($count)->withQueryString();
@@ -74,7 +82,9 @@ class UserController extends Controller
                 'wallet_balance',
                 'wallet_search_type',
                 'products',
-                'productQuery'
+                'productQuery',
+                'from',
+                'to',
             ));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
