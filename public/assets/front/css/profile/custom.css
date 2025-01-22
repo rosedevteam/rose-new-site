@@ -771,15 +771,14 @@
 }
 
 .score-nav {
-    background: #FEF8E6;
+    background: #fef8e62b;
     padding: .6rem 1.8rem;
     border-radius: 5px;
     border: solid 1px #F8B806;
-    color: #737887;
 }
 
 .score-nav a {
-    color: #737887 !important;
+    color: #fff !important;
 }
 
 .app-chat-history.bg-body {

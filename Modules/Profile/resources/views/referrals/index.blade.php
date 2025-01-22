@@ -23,7 +23,6 @@
             </div>
         @endif
 
-        {{--        <div class="lock-screen"></div>--}}
         <div class="row">
             <div class="col-md-9">
                 <div class="panel-title-box d-flex align-items-center justify-content-between">
@@ -35,7 +34,7 @@
             <div class="col-md-3">
                 <div class="progress referral_persons_progress" style="direction: ltr;">
                     <div class="progress-bar" role="progressbar"
-                         style="width: @if(auth()->user()->referal) {{auth()->user()->referal->referral_user->count() * 10}}@endif%"
+                         style="width: @if(auth()->user()->referral) {{auth()->user()->referral->usages->count() * 10}}@endif%"
                          aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
 
@@ -43,8 +42,8 @@
                     <div class="right">
                         <p class="m-0 fw-bold">تعداد افراد دعوت شده</p>
                         <p class="subtitle m-0">
-                            @if(auth()->user()->referal && auth()->user()->orders()->where('price' , '<>' , 0)->count())
-                                {{10 - auth()->user()->referal->referral_user->count()}}
+                            @if(auth()->user()->referral && auth()->user()->orders()->where('price' , '<>' , 0)->count())
+                                {{10 - auth()->user()->referral->usages->count()}}
                             @else
                                 0
                             @endif
@@ -54,8 +53,8 @@
                         </p>
                     </div>
                     <p>
-                        @if(auth()->user()->referal && auth()->user()->orders()->where('price' , '<>' , 0)->count())
-                            {{auth()->user()->referal->referral_user->count()}}
+                        @if(auth()->user()->referral && auth()->user()->orders()->where('price' , '<>' , 0)->count())
+                            {{auth()->user()->referral->usages->count()}}
                         @else
                             0
                         @endif
@@ -196,14 +195,14 @@
                                 <input name="referral" type="text" id="referral" style="font-size: 16px; flex: 1;background: transparent;border: none;padding: 0; font-weight:
                                 600"
                                        class="form-control referral-code text-left text-white"
-                                       placeholder="@if(auth()->user()->referal) {{auth()->user()->referal->code}}@endif"
+                                       placeholder="@if(auth()->user()->referral) {{auth()->user()->referral->code}}@endif"
                                        dir="ltr"
-                                       value="@if(auth()->user()->referal){{auth()->user()->referal->code}}@endif">
+                                       value="@if(auth()->user()->referral){{auth()->user()->referral->code}}@endif">
 
                             </div>
                         </div>
                         <button class="btn btn-primary w-100 flex-0 rose-copy-referral-code-desc mb-2" style="flex: 0"
-                                @if(auth()->user()->referal) onclick="copyToClipboardReferralDesc('{{auth()->user()->referal->code}}')" @endif>
+                                @if(auth()->user()->referral) onclick="copyToClipboardReferralDesc('{{auth()->user()->referral->code}}')" @endif>
                             <svg width="24" height="24" class="me-2" viewBox="0 0 24 24" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <rect x="7" y="6.99805" width="14.0058" height="14.0058" rx="2" stroke="white"
@@ -214,7 +213,7 @@
                             کپی متن دعوت
                         </button>
                         <button class="btn btn-primary w-100 flex-0 rose-copy-referral-code" style="flex: 0"
-                                @if(auth()->user()->referal) onclick="copyToClipboardReferral('{{auth()->user()->referal->code}}')" @endif>
+                                @if(auth()->user()->referral) onclick="copyToClipboardReferral('{{auth()->user()->referral->code}}')" @endif>
                             کپی کد
                         </button>
 
@@ -322,7 +321,10 @@ $score = $credits - $debits;
                         <h3 class="mb-0 text-muted">موجودی کیف پول</h3>
                         <div class="my-score-wrapper d-flex">
 
-                            <p class="score mb-0 subtitle m-0">0</p>
+                            <p class="score mb-0 subtitle m-0" id="wallet-balance-exchange-box">
+                                {{number_format(auth()->user()->wallet->balance)}}
+                            تومان
+                            </p>
                             <div class="icon ms-2">
                                 <img src="/assets/img/wallet.svg" alt="">
                             </div>
@@ -354,7 +356,7 @@ $score = $credits - $debits;
                 </div>
 
             </div>
-            <button class="btn btn-primary w-100 flex-0 mt-3"  style="flex: 0; @if(!auth()->user()->referal) filter: grayscale(1); @endif" id="exchange-submit" disabled
+            <button class="btn btn-primary w-100 flex-0 mt-3" id="exchange-submit" disabled
                     onclick="exchangeScore()">تبدیل
             </button>
         </div>

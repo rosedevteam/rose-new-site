@@ -37,7 +37,7 @@
                         <div class="content-left">
                             <span class="secondary-font fw-medium">کیف پول من</span>
                             <div class="d-flex align-items-baseline mt-2">
-                                <h4 class="mb-0 me-2">  {{auth()->user()->wallet->balance}}</h4>
+                                <h4 class="mb-0 me-2">  {{number_format(auth()->user()->wallet->balance)}}</h4>
                                 <small class="text-success">تومان</small>
                             </div>
                             <small>مجموع موجودی کیف پول</small>
@@ -56,10 +56,10 @@
                         <div class="content-left">
                             <span class="secondary-font fw-medium">کانال جامع بررسی سهام</span>
                             <div class="d-flex align-items-baseline mt-2">
-                                <h4 class="mb-0 me-2"> اشتراک فعالی ندارید</h4>
+                                <h4 class="mb-0 me-2"> ۰ روز</h4>
                                 {{--                            <small class="text-success">تومان</small>--}}
                             </div>
-                            <small>روز های باقی مانده اشتراک کانال شما</small>
+                            <small>روز های باقی مانده اشتراک </small>
                         </div>
                         <span class="badge bg-label-info rounded p-2">
                           <i class="bx bx-user-plus bx-sm"></i>

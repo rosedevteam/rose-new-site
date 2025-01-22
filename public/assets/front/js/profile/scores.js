@@ -131,25 +131,55 @@ $('#score-exchange').change(function () {
 
 function exchangeScore() {
     console.log($('#score-exchange').val())
-    axios({
-        method: 'post',
-        url: `/score/exchange-score`,
-        data: {
-            score: $('#score-exchange').val(),
-        }
+    axios.post('/profile/scores/exchange' , {
+        score: $('#score-exchange').val()
     })
         .then(function (res) {
-            location.reload();
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: res.data.message
+            });
+            $('#wallet-balance-exchange-box').html(`
+            ${res.data.balance.toLocaleString()}
+            `)
+
+            $('#score-exchange').val(0)
+            $('#converted-price').html('0 تومان')
+            $('#exchange-submit').prop('disabled' , true)
             $.unblockUI();
         })
         .catch(function (error) {
-            toastr.error(error.response.data.message, 'خطا')
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "error",
+                title: error.response.message
+            });
             $.unblockUI();
         })
 }
 
 function copyToClipboardReferral(element) {
-    console.log(element)
     var $temp = $("<input>");
     $("body").append($temp);
     $temp.val(element).select();
