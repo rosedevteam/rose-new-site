@@ -67,7 +67,7 @@ class ReserveController extends Controller
     {
         Gate::authorize('send-reserves-notifications');
         try {
-            $reserves = $product->reserves();
+            $reserves = $product->reserves()->where('is_notified', 0)->get();
             foreach ($reserves as $reserve) {
                 $reserve->user->notify(new NotifyProductAvailable($reserve->user->phone, $product->title));
             }

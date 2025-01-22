@@ -13,6 +13,7 @@
         }
     </style>
     <link rel="stylesheet" href="/assets/admin/vendor/libs/select2/select2.css">
+    <link rel="stylesheet" href="/assets/admin/js/datepicker/persian-datepicker.min.css">
 @endpush
 
 @section('content')
@@ -22,87 +23,6 @@
         @endif
             <div class="flex-grow-1 p-3y">
                 <div class="card mx-4">
-                <div class="card-header border-bottom">
-                    <h5 class="card-title">فیلتر جستجو</h5>
-                    <form action="{{ route('admin.users.index') }}" method="GET">
-                        <div
-                            class="d-flex justify-content-start align-items-center row py-3 gap-1 gap-md-0 primary-font">
-                            <div class="col-md-3">
-                                <label for="search" class="form-label">جستجو: </label>
-                                <div id="search" class="search-input">
-                                    <input type="search" name="search" value="{{ $search }}" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <label for="wallet_balance" class="form-label">موجودی کیف پول: </label>
-                                <div id="wallet_balance" class="search-input">
-                                    <input type="search" name="wallet_balance" value="{{ $wallet_balance }}"
-                                           class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <label for="wallet_search_type" class="form-label">کیف پول های: </label>
-                                <select id="wallet_search_type" name="wallet_search_type"
-                                        class="form-select text-capitalize">
-                                    <option value=">=" selected>بیشتر</option>
-                                    <option value="<=" {{ $wallet_search_type == "<=" ? 'selected' : '' }}>کمتر</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="select2Primary" class="form-label">دوره ها: </label>
-                                <div class="select2-primary">
-                                    <select id="select2Primary" class="select2 form-select" name="products[]" multiple>
-                                        @foreach($products as $product)
-                                            <option
-                                                value="{{ $product->id }}" {{ in_array($product->id, $productQuery ?: []) ? 'selected' : '' }}>{{ $product->title }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <label for="role" class="form-label">نقش: </label>
-                                <select id="role" name="role" class="form-select text-capitalize">
-                                    <option value="" selected>همه نقش ها</option>
-                                    @foreach($roles as $role)
-                                        @if($role['name'] == 'super-admin')
-                                            @continue
-                                        @endif
-                                        <option
-                                            value="{{ $role['id'] }}" {{ $role_id == $role['id'] ? 'selected' : ''}}>{{ $role['name'] }}</option>
-                                    @endforeach
-                                </select></div>
-                            <div class="col-md-2">
-                                <label for="sort_by" class="form-label">ترتیب بر اساس: </label>
-                                <select id="sort_by" name="sort_by" class="form-select text-capitalize">
-                                    <option value="created_at" selected>تاریخ ثبت نام</option>
-                                    <option value="first_name" {{ $sort_by == 'first_name' ? 'selected' : '' }}>نام
-                                    </option>
-                                    <option value="last_name" {{ $sort_by == 'last_name' ? 'selected' : '' }}>نام
-                                        خانوادگی
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="col-md-2">
-                                <label for="sort_direction" class="form-label">نوع ترتیب: </label>
-                                <select id="sort_direction" name="sort_direction" class="form-select text-capitalize">
-                                    <option value="desc" selected>نزولی</option>
-                                    <option value="asc" {{ $sort_direction == 'asc' ? 'selected' : '' }}>صعودی</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2">
-                                <label for="count" class="form-label">تعداد: </label>
-                                <select id="count" name="count" class="form-select text-capitalize">
-                                    <option value="50" selected>50</option>
-                                    <option value="100" {{ $count == "100" ? 'selected' : '' }}>100</option>
-                                </select>
-                            </div>
-                            <div class="col-md-1">
-                                <button id="submit" type="submit" class="btn btn-primary mt-4 data-submit">جستجو
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
                 <div class="card-datatable table-responsive">
                     <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
                         @can('create-users')
@@ -111,7 +31,19 @@
                                     <div
                                         class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
                                         <div class="dt-buttons btn-group flex-wrap">
-                                            <button class="btn btn-secondary add-new btn-primary ms-2"
+                                            <button class="btn add-new btn-secondary"
+                                                    aria-controls="DataTables_Table_0" type="button"
+                                                    data-bs-toggle="offcanvas"
+                                                    data-bs-target="#offcanvasSearch"><span><i
+                                                        class="bx bx-filter me-0 me-lg-2"></i><span
+                                                        class="d-none d-lg-inline-block">فیلتر</span></span>
+                                            </button>
+                                            <a class="btn btn-info down-btn" href=""
+                                               aria-controls="DataTables_Table_0" type="button"><span><i
+                                                        class="bx bx-plus me-0 me-lg-2"></i><span
+                                                        class="d-none d-lg-inline-block">اکسپورت</span></span>
+                                            </a>
+                                            <button class="btn add-new btn-primary"
                                                     aria-controls="DataTables_Table_0" type="button"
                                                     data-bs-toggle="offcanvas"
                                                     data-bs-target="#offcanvasAddUser"><span><i
@@ -235,6 +167,152 @@
                         </div>
                     </div>
                 @endcan
+                    <div class="offcanvas offcanvas-end" id="offcanvasSearch">
+                        <div class="offcanvas-header border-bottom">
+                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body mx-0 flex-grow-0">
+                            <form action="{{ route('admin.users.index') }}" method="GET">
+                                <div
+                                    class="d-flex justify-content-start align-items-center row py-3 gap-1 gap-md-0 primary-font">
+                                    <div class="row">
+                                        <label for="search" class="form-label">جستجو: </label>
+                                        <div id="search" class="search-input">
+                                            <input type="search" name="search" value="{{ $search }}"
+                                                   class="form-control">
+                                        </div>
+                                    </div>
+                                    <label class="mt-2" for="createdSearch">بازه تاریخ عضویت</label>
+                                    <div class="row" id="createdSearch">
+                                        <div class="col">
+                                            <label class="form-label" for="from">از</label>
+                                            <input type="text" class="date-picker form-control" name="from" id="from"
+                                                   value="{{ old("from") }}"
+                                                   autocomplete="off">
+                                        </div>
+                                        <div class="col">
+                                            <label class="form-label" for="to">تا</label>
+                                            <input type="text" class="date-picker form-control" name="to" id="to"
+                                                   value="{{ old("to") }}"
+                                                   autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <label for="walletSearch" class="mt-2">کیف پول</label>
+                                    <div class="row" id="walletSearch">
+                                        <div class="col">
+                                            <label for="wallet_balance" class="form-label">موجودی: </label>
+                                            <input name="wallet_balance" id="wallet_balance"
+                                                   class="form-control">
+                                        </div>
+                                        <div class="col">
+                                            <label for="wallet_search_type" class="form-label">کیف پول های: </label>
+                                            <select id="wallet_search_type" name="wallet_search_type"
+                                                    class="form-select text-capitalize">
+                                                <option value=">=" selected>بیشتر</option>
+                                                <option value="<=" {{ $wallet_search_type == "<=" ? 'selected' : '' }}>
+                                                    کمتر
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label for="order_select2" class="form-label">محصولات سفارش:</label>
+                                        <div class="select2-primary">
+                                            <select id="order_select2" class="select2 form-select" name="products[]"
+                                                    multiple>
+                                                @foreach($products as $product)
+                                                    <option
+                                                        value="{{ $product->id }}" {{ in_array($product->id, $productQuery ?: []) ? 'selected' : '' }}>{{ $product->title }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="form-check ms-3">
+                                            <input type="checkbox" name="exact" id="exact" value="1"
+                                                   class="form-check-input">
+                                            <span class="form-check-label">فقط همین محصولات</span>
+                                        </label>
+                                    </div>
+                                    <div class="row">
+                                        <label for="except_select2" class="form-label">به جز:</label>
+                                        <div class="select2-primary">
+                                            <select id="except_select2" class="select2 form-select"
+                                                    name="except_products[]"
+                                                    multiple>
+                                                @foreach($products as $product)
+                                                    <option
+                                                        value="{{ $product->id }}" {{ in_array($product->id, $productQuery ?: []) ? 'selected' : '' }}>{{ $product->title }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label for="orderStatus" class="form-label">به جز:</label>
+                                        <div class="select2-primary">
+                                            <select id="orderStatus" class="select2 form-select" name="orderStatus">
+                                                <option value="all">همه</option>
+                                                <option value="all">همه</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="role" class="form-label">نقش: </label>
+                                            <select id="role" name="role" class="form-select text-capitalize">
+                                                <option value="" selected>همه نقش ها</option>
+                                                @foreach($roles as $role)
+                                                    @if($role['name'] == 'super-admin')
+                                                        @continue
+                                                    @endif
+                                                    <option
+                                                        value="{{ $role['id'] }}" {{ $role_id == $role['id'] ? 'selected' : ''}}>{{ $role['name'] }}</option>
+                                                @endforeach
+                                            </select></div>
+                                        <div class="col">
+                                            <label for="sort_by" class="form-label">ترتیب بر اساس: </label>
+                                            <select id="sort_by" name="sort_by" class="form-select text-capitalize">
+                                                <option value="created_at" selected>تاریخ ثبت نام</option>
+                                                <option
+                                                    value="first_name" {{ $sort_by == 'first_name' ? 'selected' : '' }}>
+                                                    نام
+                                                </option>
+                                                <option
+                                                    value="last_name" {{ $sort_by == 'last_name' ? 'selected' : '' }}>
+                                                    نام
+                                                    خانوادگی
+                                                </option>
+                                            </select></div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="sort_direction" class="form-label">نوع ترتیب: </label>
+                                            <select id="sort_direction" name="sort_direction"
+                                                    class="form-select text-capitalize">
+                                                <option value="desc" selected>نزولی</option>
+                                                <option value="asc" {{ $sort_direction == 'asc' ? 'selected' : '' }}>
+                                                    صعودی
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <label for="count" class="form-label">تعداد: </label>
+                                            <select id="count" name="count" class="form-select text-capitalize">
+                                                <option value="50" selected>50</option>
+                                                <option value="100" {{ $count == "100" ? 'selected' : '' }}>100</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button id="submit" type="submit" class="btn btn-primary mt-4 data-submit">جستجو
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
             </div>
             <x-admin::deletemodal/>
         </div>
@@ -249,11 +327,42 @@
     <script src="/assets/admin/vendor/libs/datatables-bs5/i18n/fa.js"></script>
     <script src="/assets/admin/vendor/libs/select2/select2.js"></script>
     <script src="/assets/admin/vendor/libs/select2/i18n/fa.js"></script>
-    <script src="/assets/admin/js/forms-selects.js"></script>
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/FormValidation.min.js"></script>
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js"></script>
     <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave.js"></script>
     <script src="/assets/admin/vendor/libs/cleavejs/cleave-phone.js"></script>
     <x-admin::deletemodalscript model="users"/>
+    <script src="/assets/admin/js/autonumeric/autonumeric.min.js"></script>
+    <script src="/assets/admin/js/datepicker/persian-date.min.js"></script>
+    <script src="/assets/admin/js/datepicker/persian-datepicker.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            const amount = new AutoNumeric('#wallet_balance', {
+                digitGroupSeparator: ',',
+                minimumValue: '0',
+                unformatOnSubmit: true,
+                decimalPlaces: 0,
+            });
+            $(".date-picker").persianDatepicker({
+                initialValue: false,
+                format: 'YYYY/MM/DD',
+                autoClose: true,
+                minDate: new persianDate(),
+                timePicker: {
+                    enabled: true,
+                    meridian: {
+                        enabled: false,
+                    },
+                    second: {
+                        enabled: false,
+                    },
+                },
+            });
+        });
+        $('#except_select2').select2()
+        $('#order_select2').select2()
+    </script>
+    <script src="/assets/admin/vendor/libs/select2/select2.js"></script>
+    <script src="/assets/admin/vendor/libs/select2/i18n/fa.js"></script>
 @endpush

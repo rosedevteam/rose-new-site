@@ -18,7 +18,7 @@ class UsersExport implements FromView
 
     public function view(): View
     {
-        return view('user::backend.export', [
+        return view('user::admin.export', [
             'users' => $this->users
         ]);
     }
