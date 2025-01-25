@@ -133,12 +133,12 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'view-reserves']);
         Permission::create(['name' => 'sendSMS-reserves']);
         //
-        Permission::create(['name' => 'view-logs']);
-        Permission::create(['name' => 'edit-subscriptions']);
-        //
         Permission::create(['name' => 'view-carts']);
         //
         Permission::create(['name' => 'view-statistics']);
+        //
+        Permission::create(['name' => 'view-logs']);
+        //
 
         $customer = Role::create(['name' => 'مشتری']);
         $admin = Role::create(['name' => 'ادمین']);
