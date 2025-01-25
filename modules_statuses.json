@@ -23,5 +23,7 @@
     "Analytics": true,
     "Profile": true,
     "Referral": true,
-    "Score": true
+    "Score": true,
+    "Reserve": true,
+    "Subscription": true
 }

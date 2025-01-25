@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="content-wrapper">
-        <div class="container-xxl flex-grow-1 container-p-y">
-            <div class="card">
+        <div class="flex-grow-1 p-3y">
+            <div class="card mx-4">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
                     <form action="{{ route('admin.orders.index') }}" method="GET">

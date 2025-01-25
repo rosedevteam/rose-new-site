@@ -40,6 +40,16 @@
                                         سئو
                                     </button>
                                 </li>
+                                @can('send-reserves-notifications')
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" data-bs-toggle="tab"
+                                                data-bs-target="#form-tabs-reserve"
+                                                role="tab"
+                                                aria-selected="true">
+                                            رزرو
+                                        </button>
+                                    </li>
+                                @endcan
                             </ul>
                         </div>
 
@@ -106,6 +116,23 @@
                                                   name="meta_description">{{ $product->metadata?->description }}</textarea>
                                     </div>
                                 </div>
+                                @can('send-reserves-notifications')
+                                    <div class="tab-pane fade" id="form-tabs-reserve" role="tabpanel">
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label" for="title">تعداد رزرو</label>
+                                                <input type="text" id="title"
+                                                       class="form-control" value="{{ $product->reserves->count() }}">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <button type="submit" class="btn btn-primary mt-4 d-flex" id="notify"
+                                                        form="notify-form">ارسال اس ام اس
+                                                    موجود بودن محصول
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endcan
                             </div>
                         </form>
                     </div>
@@ -322,8 +349,6 @@
                                        class="btn btn-primary w-100">ویرایشگر زنده</a>
                                 @endif
 
-                                {{--                                @dd($product->pagebuilder)--}}
-
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="comment_status">کامنت</label>
@@ -454,32 +479,35 @@
                 </div>
             </div>
         </div>
-            @endsection
+    </div>
 
-            @push('script')
-                <x-admin::tinymce/>
-                <x-admin::filemanager-btn/>
-                <script src="/assets/admin/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-                <script src="/assets/vendor/sweetalert/sweetalert2.js"></script>
-                <script src="/assets/admin/js/products/edit.js"></script>
-                <script src="/assets/admin/vendor/libs/select2/select2.js"></script>
-                <script src="/assets/admin/vendor/libs/select2/i18n/fa.js"></script>
-                <script src="/assets/admin/js/forms-selects.js"></script>
-                <script src="/assets/admin/js/autonumeric/autonumeric.min.js"></script>
-                <script>
-                    document.addEventListener('DOMContentLoaded', () => {
-                        const price = new AutoNumeric('#price', {
-                            digitGroupSeparator: ',',
-                            minimumValue: '0',
-                            unformatOnSubmit: true,
-                            decimalPlaces: 0,
-                        });
-                        const salePrice = new AutoNumeric('#sale_price', {
-                            digitGroupSeparator: ',',
-                            minimumValue: '0',
-                            unformatOnSubmit: true,
-                            decimalPlaces: 0,
-                        });
-                    });
-                </script
-    @endpush
+    <form action="{{ route('admin.reserves.notifyAvailable', $product) }}" method="POST" id="notify-form">@csrf</form>
+@endsection
+
+@push('script')
+    <x-admin::tinymce/>
+    <x-admin::filemanager-btn/>
+    <script src="/assets/admin/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
+    <script src="/assets/vendor/sweetalert/sweetalert2.js"></script>
+    <script src="/assets/admin/js/products/edit.js"></script>
+    <script src="/assets/admin/vendor/libs/select2/select2.js"></script>
+    <script src="/assets/admin/vendor/libs/select2/i18n/fa.js"></script>
+    <script src="/assets/admin/js/forms-selects.js"></script>
+    <script src="/assets/admin/js/autonumeric/autonumeric.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const price = new AutoNumeric('#price', {
+                digitGroupSeparator: ',',
+                minimumValue: '0',
+                unformatOnSubmit: true,
+                decimalPlaces: 0,
+            });
+            const salePrice = new AutoNumeric('#sale_price', {
+                digitGroupSeparator: ',',
+                minimumValue: '0',
+                unformatOnSubmit: true,
+                decimalPlaces: 0,
+            });
+        });
+    </script
+@endpush

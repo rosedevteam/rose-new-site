@@ -50,6 +50,14 @@
                 </a>
             </li>
         @endcan
+            @can('view-reserves')
+                <li @class(["menu-item", 'active' => $route == 'reserves'])>
+                    <a href="{{ route("admin.reserves.index") }}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-menu"></i>
+                        <div data-i18n="رزرو ها">رزرو ها</div>
+                    </a>
+                </li>
+            @endcan
         @can('view-products')
             <li @class(["menu-item", 'active' => $route == 'products'])>
                 <a href="{{ route("admin.products.index") }}" class="menu-link">
@@ -131,7 +139,7 @@
             </li>
         @endcan
         @can('manage-channels')
-            <li @class(["menu-item", 'active open' => $route == 'channels'])>
+                <li @class(["menu-item", 'active open' => $route == 'channels'])>
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <i class="menu-icon tf-icons bx bx-message-square-dots"></i>
                     <div>کانال ها</div>
@@ -153,17 +161,38 @@
                 </ul>
             </li>
         @endcan
-        @can('manage-roles')
-            <li @class(["menu-item", 'active' => $route == 'roles'])>
-                <a href="{{ route("admin.roles.index") }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-lock"></i>
-                    <div data-i18n="نقش ها">نقش ها</div>
-                </a>
+            @can('manage-subscriptions')
+                <li @class(["menu-item", 'active open' => $route == 'subscriptions'])>
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-money-withdraw"></i>
+                        <div>اشتراک ها</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li @class(["menu-item", 'active' => $route == 'subscriptions'])>
+                            <a href="{{route('admin.subscriptions.index')}}" class="menu-link">
+                                <div>اشتراک ها</div>
+                            </a>
+                        </li>
+                        <li @class(["menu-item", 'active' => $route == 'telegrams'])>
+                            <a href="{{route('admin.telegrams.index')}}" class="menu-link">
+                                <div>کانال تلگرام</div>
+                            </a>
+                        </li>
+
+                </ul>
             </li>
         @endcan
-        @can('view-logs')
-            <li @class(["menu-item", 'active' => $route == 'logs'])>
-                <a href="{{ route("admin.logs.index") }}" class="menu-link">
+            @can('manage-roles')
+                <li @class(["menu-item", 'active' => $route == 'roles'])>
+                    <a href="{{ route("admin.roles.index") }}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-lock"></i>
+                        <div data-i18n="نقش ها">نقش ها</div>
+                    </a>
+                </li>
+            @endcan
+            @can('view-logs')
+                <li @class(["menu-item", 'active' => $route == 'logs'])>
+                    <a href="{{ route("admin.logs.index") }}" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-file"></i>
                         <div data-i18n="لاگ">لاگ</div>
                     </a>

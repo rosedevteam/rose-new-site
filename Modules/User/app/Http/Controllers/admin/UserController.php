@@ -88,7 +88,7 @@ class UserController extends Controller
 
         $data = $request->validate([
             'first_name' => 'bail|string|max:255',
-            'last_name' => 'bail|string|max:255',
+            'last_name' => 'bail|nullable|string|max:255',
             "phone" => ['bail', 'required', 'string', 'unique:users,phone', 'regex:/^09[0|1|2|3][0-9]{8}$/'],
         ]);
 

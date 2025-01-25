@@ -6,8 +6,8 @@
         @if($errors->any())
             <div class="alert alert-danger" style="padding-right: 80px">{{ $errors->first() }}</div>
         @endif
-        <div class="container-xxl flex-grow-1 container-p-y">
-            <div class="card">
+            <div class="flex-grow-1 p-3y">
+                <div class="card mx-4">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
                     <form action="{{ route('admin.categories.index') }}" method="GET">

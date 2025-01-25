@@ -1,0 +1,11 @@
+{
+    "name": "Reserve",
+    "alias": "reserve",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Reserve\\Providers\\ReserveServiceProvider"
+    ],
+    "files": []
+}
