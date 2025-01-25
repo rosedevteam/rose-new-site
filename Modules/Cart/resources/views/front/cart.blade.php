@@ -199,7 +199,8 @@
                             @auth
                                 <button type="button" class="w-100 btn btn-default" disabled>پرداخت</button>
                             @else
-                                <a  class="btn btn-default w-100" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">
+                                <a class="btn btn-default w-100" type="button" data-bs-toggle="modal"
+                                   data-bs-target="#loginModal">
                                     ورود جهت تسویه حساب
                                 </a>
                             @endauth
@@ -210,4 +211,19 @@
             </div>
         </div>
     @stop
+    @section('footer')
+        @guest
+            <script type="text/javascript">
+                window.onload = () => {
+                    const myModal = new bootstrap.Modal('#loginModal' , {
+                        keyboard: false,
+                        backdrop: 'static'
+                    });
+
+                    myModal.show();
+                }
+            </script>
+        @endguest
+    @stop
+
 @endcomponent

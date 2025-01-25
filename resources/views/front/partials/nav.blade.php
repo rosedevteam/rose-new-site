@@ -104,11 +104,11 @@
                                                 <a href="{{route('profile.orders')}}">سفارش های من</a>
                                             </li>
                                             <li class="py-3">
-                                                <form action="{{route('logout')}}" method="post">
+                                                <form action="{{route('logout')}}" method="post" id="logout">
                                                     @csrf
                                                     @method('post')
-                                                    <input type="submit" value="خروج">
                                                 </form>
+                                                <a role="button" onclick="document.getElementById('logout').submit()">خروج</a>
                                             </li>
                                         </ul>
                                     </li>
