@@ -40,7 +40,7 @@
                                         سئو
                                     </button>
                                 </li>
-                                @can('send-reserves-notifications')
+                                @can('sendSMS-reserves')
                                     <li class="nav-item" role="presentation">
                                         <button class="nav-link" data-bs-toggle="tab"
                                                 data-bs-target="#form-tabs-reserve"
@@ -116,7 +116,7 @@
                                                   name="meta_description">{{ $product->metadata?->description }}</textarea>
                                     </div>
                                 </div>
-                                @can('send-reserves-notifications')
+                                @can('sendSMS-reserves')
                                     <div class="tab-pane fade" id="form-tabs-reserve" role="tabpanel">
                                         <div class="row g-3">
                                             <div class="col-md-6">

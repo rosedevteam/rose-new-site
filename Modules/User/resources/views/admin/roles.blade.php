@@ -276,7 +276,7 @@
             case 'create': $permission = 'ساخت'; break;
             case 'manage': $permission = 'مدیریت'; break;
             case 'assign': $permission = 'انتصاب'; break;
-            case 'send': $permission = 'ارسال'; break;
+            case 'sendSMS': $permission = 'ارسال اس ام اس'; break;
             //
             case 'users': $permission = 'کاربران'; break;
             case 'billings': $permission = 'اطلاعات صورتحساب'; break;
@@ -301,7 +301,6 @@
             case 'channel-members-count': $permission = 'تعداد اعضای کانال ها'; break;
             case 'subscriptions': $permission = 'اشتراک ها'; break;
             case 'reserves': $permission = 'رزرو ها'; break;
-            case 'reserves-notifications': $permission = 'اس ام اس رزرو ها'; break;
         }
         return $permission;
     }
