@@ -8,7 +8,8 @@
                     <div class="mobile-menu-icon">
                         <a data-bs-toggle="offcanvas" data-bs-target="#mobileMenu"
                            aria-controls="mobileMenu">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
                                 <path d="M17.5031 4.99887H2.4968" stroke="#323232" stroke-width="1.25"
                                       stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M5.83152 10.0008H17.5031" stroke="#323232" stroke-width="1.25"
@@ -38,7 +39,7 @@
                                 @else
                                     <li>
                                         <a href="{{ $menu->slug }}">
-                                             {{$menu->title}}
+                                            {{$menu->title}}
                                             <i class="bi bi-chevron-down"></i>
                                         </a>
 
@@ -55,17 +56,20 @@
 
                     <div class="left d-flex align-items-center justify-content-between gap-3">
                         <div class="header-cart" id="cart-icon">
-                            <span class="rose-cart-counter" data-counter="0">{{\Modules\Cart\Classes\Helpers\Cart::instance(config('services.cart.cookie-name'))->all()->count()}}</span>
+                            <span class="rose-cart-counter"
+                                  data-counter="0">{{\Modules\Cart\Classes\Helpers\Cart::instance(config('services.cart.cookie-name'))->all()->count()}}</span>
                             <a href="#" type="button" data-bs-toggle="offcanvas" data-bs-target="#side-cart-modal"
                                aria-controls="offcanvasWithBothOptions">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"
                                      fill="none">
-                                    <path d="M8.99902 10.2849C8.99902 11.9425 10.3427 13.2862 12.0003 13.2862V13.2862C13.6578 13.2862 15.0015 11.9425 15.0015 10.2849"
-                                          stroke="#323232" stroke-width="1.28571" stroke-linecap="round"
-                                          stroke-linejoin="round"></path>
-                                    <path d="M8.99902 7.71247V7.28372C8.99902 5.62618 10.3427 4.28247 12.0003 4.28247V4.28247C13.6578 4.28247 15.0015 5.62618 15.0015 7.28372V7.71247"
-                                          stroke="#323232" stroke-width="1.28571" stroke-linecap="round"
-                                          stroke-linejoin="round"></path>
+                                    <path
+                                        d="M8.99902 10.2849C8.99902 11.9425 10.3427 13.2862 12.0003 13.2862V13.2862C13.6578 13.2862 15.0015 11.9425 15.0015 10.2849"
+                                        stroke="#323232" stroke-width="1.28571" stroke-linecap="round"
+                                        stroke-linejoin="round"></path>
+                                    <path
+                                        d="M8.99902 7.71247V7.28372C8.99902 5.62618 10.3427 4.28247 12.0003 4.28247V4.28247C13.6578 4.28247 15.0015 5.62618 15.0015 7.28372V7.71247"
+                                        stroke="#323232" stroke-width="1.28571" stroke-linecap="round"
+                                        stroke-linejoin="round"></path>
                                     <path fill-rule="evenodd" clip-rule="evenodd"
                                           d="M7.25335 7.7124C6.34774 7.7124 5.59823 8.41658 5.54174 9.32042L5.14815 15.618C5.0817 16.6811 5.45767 17.7244 6.187 18.5007C6.91633 19.2771 7.93414 19.7174 8.99933 19.7174H15.0015C16.0667 19.7174 17.0846 19.2771 17.8139 18.5007C18.5432 17.7244 18.9192 16.6811 18.8528 15.618L18.4592 9.32042C18.4027 8.41657 17.6532 7.7124 16.7475 7.7124H7.25335Z"
                                           stroke="#323232" stroke-width="1.28571" stroke-linecap="round"
@@ -75,9 +79,46 @@
                             </a>
                         </div>
                         @auth
-                            {{auth()->user()->name()}}
+                            <div class="menu">
+                                <ul class="rose-menu m-0 p-0">
+                                    <li class="item-with-submenu">
+                                        <a href="#">
+                                            {{auth()->user()->name()}}
+                                            <i class="bi bi-chevron-down"></i>
+                                        </a>
+
+                                        <!--Submenu menu-->
+                                        <ul class="submenu p-0 m-0" style="width: 220px">
+                                            <li class="d-flex align-items-center justify-content-between">
+                                                <p>کیف پول:</p>
+                                                <strong>{{number_format(auth()->user()->wallet->balance)}}</strong>
+                                                <hr>
+                                            </li>
+                                            <li class="py-3">
+                                                <a href="{{route('profile.index')}}">حساب کاربری</a>
+                                            </li>
+                                            <li class="py-3">
+                                                <a href="{{route('profile.courses')}}">دوره های من</a>
+                                            </li>
+                                            <li class="py-3">
+                                                <a href="{{route('profile.orders')}}">سفارش های من</a>
+                                            </li>
+                                            <li class="py-3">
+                                                <form action="{{route('logout')}}" method="post">
+                                                    @csrf
+                                                    @method('post')
+                                                    <input type="submit" value="خروج">
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+
+                            </div>
+
                         @else
-                            <a  class="btn btn-default" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            <a class="btn btn-default" type="button" data-bs-toggle="modal"
+                               data-bs-target="#loginModal">
                                 ورود / ثبت نام
                             </a>
                         @endauth

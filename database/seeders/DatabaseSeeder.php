@@ -121,6 +121,8 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'manage-roles']);
         Permission::create(['name' => 'assign-roles']);
         //
+        Permission::create(['name' => 'view-logs']);
+        //
         Permission::create(['name' => 'manage-channels']);
         Permission::create(['name' => 'create-channels']);
         Permission::create(['name' => 'view-channel-members-count']);
@@ -132,6 +134,9 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'sendSMS-reserves']);
         //
         Permission::create(['name' => 'view-logs']);
+        Permission::create(['name' => 'edit-subscriptions']);
+        //
+        Permission::create(['name' => 'view-carts']);
         //
         Permission::create(['name' => 'view-statistics']);
 

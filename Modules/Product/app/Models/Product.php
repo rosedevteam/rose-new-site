@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Modules\Cart\Models\Cart;
 use Modules\Category\Models\Category;
 use Modules\Channel\Models\Channel;
 use Modules\Comment\Models\Comment;
@@ -91,6 +92,10 @@ class Product extends Model
         return $this->belongsToMany(Channel::class);
     }
 
+    public function cart()
+    {
+        return $this->belongsToMany(Cart::class);
+    }
     public function reserves()
     {
         return $this->hasMany(Reserve::class);

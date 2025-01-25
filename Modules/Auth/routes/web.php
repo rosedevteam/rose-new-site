@@ -14,9 +14,4 @@ Route::prefix('register')->group(function () {
 });
 
 
-//Route::controller(\Modules\Auth\Http\Controllers\front\AuthController::class)->middleware('auth')->group(function () {
-////token
-//    Route::get("/token", [\Modules\Auth\Http\Controllers\front\TokenController::class, 'show'])->name('login.token');
-//    Route::post("/token", [\Modules\Auth\Http\Controllers\front\TokenController::class, 'token'])->name('login.token.send');
-//
-//});
+Route::post('/logout', [\Modules\Auth\Http\Controllers\AuthController::class, 'logout'])->name('logout');

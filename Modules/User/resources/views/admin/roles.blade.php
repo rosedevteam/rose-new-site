@@ -299,6 +299,7 @@
             case 'channels': $permission = 'کانال ها'; break;
             case 'channel-subscriptions': $permission = 'اشتراک های کانال'; break;
             case 'channel-members-count': $permission = 'تعداد اعضای کانال ها'; break;
+            case 'carts': $permission = 'سبد خرید ها'; break;
             case 'subscriptions': $permission = 'اشتراک ها'; break;
             case 'reserves': $permission = 'رزرو ها'; break;
             case 'statistics': $permission = 'آمار'; break;

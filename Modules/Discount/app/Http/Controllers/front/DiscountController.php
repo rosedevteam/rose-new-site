@@ -9,8 +9,6 @@ use Modules\Discount\Models\Discount;
 
 class DiscountController extends Controller
 {
-    //todo complete discount system
-
     public function check(Request $request)
     {
 

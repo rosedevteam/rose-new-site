@@ -4,6 +4,7 @@ namespace Modules\Auth\Http\Controllers\front;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 use Modules\Auth\Models\OtpCode;
 use Modules\Auth\Models\RegisterOtp;
@@ -110,4 +111,6 @@ class LoginController extends Controller
             ] , 400);
         }
     }
+
+
 }

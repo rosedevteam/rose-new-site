@@ -17,12 +17,12 @@
                 <div class="d-flex align-items-center justify-content-between gap-2">
                     <div class="score-nav">
                         <a href="#" class="d-flex">
-{{--                            @php--}}
-{{--                                $credits = array_sum(auth()->user()->scores->where('type' , 'credit')->map(function ($score) {return $score->score;})->toArray());--}}
-{{--    $debits = array_sum(auth()->user()->scores->where('type' , 'debit')->map(function ($score) {return $score->score;})->toArray());--}}
-{{--    $score = $credits - $debits;--}}
-{{--                            @endphp--}}
-{{--                            {{number_format($score)}}--}}
+                            @php
+                                $credits = array_sum(auth()->user()->scores->where('type' , 'credit')->map(function ($score) {return $score->score;})->toArray());
+    $debits = array_sum(auth()->user()->scores->where('type' , 'debit')->map(function ($score) {return $score->score;})->toArray());
+    $score = $credits - $debits;
+                            @endphp
+                            {{number_format($score)}}
                             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <rect width="18" height="18" fill="url(#pattern0_3016_33134)"/>
                                 <defs>

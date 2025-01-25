@@ -3,6 +3,7 @@
 namespace Modules\Auth\Http\Controllers\front;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use Modules\Auth\Models\RegisterOtp;
@@ -96,52 +97,69 @@ class RegisterController extends Controller
         }
     }
 
+    public function checkReferralCode(Request $request)
+    {
+        try {
+            $validData = $request->validate([
+                'referral_code' => 'required'
+            ]);
+
+            $referral = Referral::where('code', $validData['referral_code'])->first();
+
+            return response()->json([
+                'success' => true,
+                'referral_code' => $referral,
+                'message' => 'کد معرف با موفقیت ثبت شد'
+            ]);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'success' => false,
+                'message' => $exception->getMessage(),
+            ], 400);
+        }
+    }
+
     public function register(Request $request)
     {
+
         try {
             $validData = $request->validate([
                 'first_name' => 'required',
                 'last_name' => 'required',
                 'phone' => 'required',
-                'referral_code' => 'nullable',
+                'referral_code' => 'nullable'
             ]);
+
+            if (!is_null($validData['referral_code'])) {
+                $referral = Referral::where('code', $validData['referral_code'])->first();
+
+                if (!$referral) {
+                    throw new \Exception('کد معرف صحیح نمیباشد', 400);
+                }
+            }
+
             $user = User::create(\Arr::except($validData, ['referral_code']));
 
             $user->assignRole('مشتری');
 
-            if (isset($validData['referral_code'])) {
-                if ($referral = Referral::where('code', $validData['referral_code'])->first()) {
-                    if($referral->usages->count() < 10) {
-                        try {
-                            $usage = $referral->usages()->create([
-                                'used_by' => $user->id,
-                                'signed_up' => 1
-                            ]);
-
-                            $score = $referral->user->scores()->create([
-                                'score' => 500,
-                                'log' => "تکمیل ثبت نام با کد معرف شما",
-                                'type' => 'credit'
-                            ]);
-
-                            $referral->user->notify(new ReferralAfterRegister(
-                                $referral->user->phone,
-                                $referral->user->name(),
-                                config('services.referral_scores.score_after_register')
-                            ));
-                        }catch (\Exception $exception) {
-                            return response()->json([
-                                'success' => false,
-                                'message' => $exception->getMessage(),
-                            ] , 400);
-                        }
-
-                    }
-                }else {
-                    throw new \Exception('کد معرف صحیح نمیباشد');
+            if (!is_null($validData['referral_code'])) {
+                if ($referral->usages->count() < 10) {
+                    $referral->usages()->create([
+                        'used_by' => $user->id,
+                        'signed_up' => 1
+                    ]);
+                    $referral->user->scores()->create([
+                        'score' => 500,
+                        'log' => "تکمیل ثبت نام با کد معرف شما",
+                        'type' => 'credit'
+                    ]);
+                    $referral->user->notify(new ReferralAfterRegister(
+                        $referral->user->phone,
+                        $referral->user->first_name,
+                        config('services.referral_scores.score_after_register')
+                    ));
                 }
             }
-
 
             auth()->login($user);
 
@@ -156,7 +174,9 @@ class RegisterController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => $exception->getMessage(),
-            ] , 400);
+            ], 400);
         }
     }
+
+
 }

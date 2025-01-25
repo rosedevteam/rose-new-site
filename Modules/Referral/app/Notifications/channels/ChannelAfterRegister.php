@@ -12,7 +12,7 @@ class ChannelAfterRegister
             $data = $notification->toChannelAfterRegister($notifiable);
             $receptor = $data['phone'];
             $token = $data['name'];
-            $score = $data['score'];
+            $token2 = $data['score'];
 
             $template= 'ReferralAfterRegister';
             //Send null for tokens not defined in the template
@@ -20,7 +20,9 @@ class ChannelAfterRegister
 
             $kavenegar = new KavenegarApi(config('services.sms.api'));
 
-            $res = $kavenegar->VerifyLookup($receptor, $token , $score , '' , $template);
+            $kavenegar->VerifyLookup($receptor, $token , $token2 , '' , $template);
+
+
         }
         catch(\Kavenegar\Exceptions\ApiException $e){
             // در صورتی که خروجی وب سرویس 200 نباشد این خطا رخ می دهد

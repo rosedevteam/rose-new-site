@@ -164,8 +164,13 @@
                                 </li>
 
                             </ul>
-                            <hr>
-                            <h3 class="color-default mb-3 ">کانال تلگرام</h3>
+
+                            {{--todo : make this feature after data import--}}
+                            @if(\Modules\Cart\Classes\Helpers\Cart::all()->pluck('product.title')->contains('دوره تخصصی FIS'))
+                                @include('cart::front.components.channel')
+
+                            @endif
+
                             <hr>
                             <h3 class="color-default mb-3 ">روش پرداخت</h3>
                             <div class="payments">

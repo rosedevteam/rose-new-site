@@ -5,6 +5,7 @@ namespace Modules\User\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Modules\Auth\Models\OtpCode;
+use Modules\Cart\Models\Cart;
 use Modules\Channel\Models\Channel;
 use Modules\Channel\Models\Message;
 use Modules\Comment\Models\Comment;
@@ -162,6 +163,11 @@ class User extends \Illuminate\Foundation\Auth\User
     public function referral_usage()
     {
         return $this->hasOne(ReferralUser::class , 'used_by');
+    }
+
+    public function cart()
+    {
+        return $this->hasOne(Cart::class);
     }
 
     protected static function newFactory()
