@@ -32,6 +32,7 @@ class UserController extends Controller
             $exact = request('exact', false);
             $productQuery = request('products');
             $except_products = request('except_products');
+            $orderType = request('orderType');
             $orderStatus = request('orderStatus');
 
             $products = Product::all();
@@ -58,7 +59,12 @@ class UserController extends Controller
                 });
             }
             if ($orderStatus) {
-                switch ($orderStatus) {
+                $users = $users->whereHas('orders', function ($query) use ($orderStatus) {
+                    return $query->where('status', $orderStatus);
+                });
+            }
+            if ($orderType) {
+                switch ($orderType) {
                     case 'has_orders':
                         $users = $users->whereHas('orders');
                         break;
@@ -77,17 +83,21 @@ class UserController extends Controller
                         break;
                 }
             }
-            if ($productQuery) {
-                if ($exact) {
-                    $users = $users->whereHas('products', function ($query) use ($productQuery) {
-                        return $query->where('id', $productQuery);
+            if ($exact) {
+                $users = $users->whereHas('orders', function ($query) use ($productQuery) {
+                    return $query->whereHas('products', function ($query) use ($productQuery) {
+                        return $query->where($productQuery);
                     });
-                } else {
-                    $users = $users->whereHas('products', function ($query) use ($productQuery) {
-                        foreach ($productQuery as $product) {
-                            $query->where('id', $product);
-                        }
-                        return $query;
+                });
+            } else {
+                if ($except_products) {
+                    $users = $users->whereDoesntHave('orders.products', function ($query) use ($except_products) {
+                        $query->whereIn('products.id', $except_products);
+                    });
+                }
+                if ($productQuery) {
+                    $users = $users->whereHas('orders.products', function ($query) use ($productQuery) {
+                        return $query->whereIn('products.id', $productQuery);
                     });
                 }
             }
@@ -115,9 +125,10 @@ class UserController extends Controller
                 'from',
                 'to',
                 'productQuery',
-                'orderStatus',
+                'orderType',
                 'except_products',
-                'exact'
+                'exact',
+                'orderStatus'
             ));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());
