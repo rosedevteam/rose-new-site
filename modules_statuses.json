@@ -25,5 +25,6 @@
     "Referral": true,
     "Score": true,
     "Reserve": true,
-    "Subscription": true
+    "Subscription": true,
+    "Statistics": true
 }

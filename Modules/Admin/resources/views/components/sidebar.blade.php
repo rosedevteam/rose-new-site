@@ -174,6 +174,41 @@
                     </ul>
                 </li>
             @endcan
+            @can('view-statistics')
+                <li @class(["menu-item", 'active open' => $route == 'statistics'])>
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-chart"></i>
+                        <div>آمار و نمودار ها</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li @class(["menu-item", 'active' => $route == 'statistics' && $route2 == 'orders'])>
+                            <a href="{{route('admin.statistics.orders')}}" class="menu-link">
+                                <div>گزارشات فروش</div>
+                            </a>
+                        </li>
+                        <li @class(["menu-item", 'active' => $route == 'statistics' && $route2 == 'registers'])>
+                            <a href="{{route('admin.statistics.registers')}}" class="menu-link">
+                                <div>گزارشات ثبت نام ها</div>
+                            </a>
+                        </li>
+                        <li @class(["menu-item", 'active' => $route == 'statistics' && $route2 == 'carts'])>
+                            <a href="{{route('admin.statistics.carts')}}" class="menu-link">
+                                <div>گزارشات سبد خرید ها</div>
+                            </a>
+                        </li>
+                        <li @class(["menu-item", 'active' => $route == 'statistics' && $route2 == 'reserves'])>
+                            <a href="{{route('admin.statistics.reserves')}}" class="menu-link">
+                                <div>گزارشات رزرو ها</div>
+                            </a>
+                        </li>
+                        <li @class(["menu-item", 'active' => $route == 'statistics' && $route2 == 'telegrams'])>
+                            <a href="{{route('admin.statistics.telegrams')}}" class="menu-link">
+                                <div>گزارشات کانال تلگرام</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            @endcan
             @can('manage-roles')
                 <li @class(["menu-item", 'active' => $route == 'roles'])>
                     <a href="{{ route("admin.roles.index") }}" class="menu-link">

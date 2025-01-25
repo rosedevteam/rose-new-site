@@ -132,6 +132,8 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'sendSMS-reserves']);
         //
         Permission::create(['name' => 'view-logs']);
+        //
+        Permission::create(['name' => 'view-statistics']);
 
         $customer = Role::create(['name' => 'مشتری']);
         $admin = Role::create(['name' => 'ادمین']);
