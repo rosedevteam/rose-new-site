@@ -10,17 +10,23 @@
             <ul class="navbar-nav flex-row align-items-center ms-auto">
                 <li class="nav-item me-2 me-xl-0">
                     <a class="nav-link style-switcher-toggle hide-arrow" href="javascript:void(0);">
-                        <i class="bx bx-sm"></i>
+                        <i class="bx bx-sm" style="font-size: 2rem !important;"></i>
                     </a>
                 </li>
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                     <a class="nav-link dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                        <div class="avatar avatar-md me-2">
-                            @if(!is_null(auth()->user()->avatar))
-                                <img src="{{ auth()->user()->avatar }}" alt class="rounded-circle">
-                            @else
-                                <i class="bx bx-user mt-3"></i>
-                            @endif
+                        <div class="avatar avatar-md me-2 d-flex align-items-center justify-content-center">
+                            <div class="avatar avatar-online">
+{{--                                <strong>{{auth()->user()->name()}}</strong>--}}
+{{--                                <span class="badge bg-secondary">{{auth()->user()->role()}}</span>--}}
+                                <img src="/assets/admin/img/avatars/user.png" alt="" class="rounded-circle">
+
+                            </div>
+{{--                            @if(!is_null(auth()->user()->avatar))--}}
+{{--                                <img src="{{ auth()->user()->avatar }}" alt class="rounded-circle">--}}
+{{--                            @else--}}
+{{--                                <i class="bx bx-user mt-3"></i>--}}
+{{--                            @endif--}}
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
@@ -44,7 +50,7 @@
                             <div class="dropdown-divider"></div>
                         </li>
                         <li>
-                            <form id="logout" action="{{ route('admin.logout') }}" method="POST">
+                            <form id="logout" action="{{ route('logout') }}" method="POST">
                                 @csrf
                                 <button type="submit" class="dropdown-item">
                                     <i class="bx bx-power-off me-2"></i>

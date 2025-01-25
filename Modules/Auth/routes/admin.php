@@ -13,5 +13,3 @@ Route::controller(AuthController::class)->middleware('admin-login')->group(funct
     Route::post("/token", [TokenController::class, 'token'])->name('login.token.send');
 
 });
-
-Route::post('/logout', 'AuthController@logout')->middleware('admin')->name('logout');

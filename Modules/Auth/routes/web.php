@@ -14,4 +14,3 @@ Route::prefix('register')->group(function () {
 });
 
 
-Route::post('/logout', [\Modules\Auth\Http\Controllers\AuthController::class, 'logout'])->name('logout');
