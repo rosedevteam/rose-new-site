@@ -11,6 +11,7 @@ use Modules\Product\Models\Product;
 use Modules\User\Models\Billing;
 use Modules\User\Models\User;
 use Spatie\Permission\Models\Role;
+use Verta;
 
 class UserController extends Controller
 {
@@ -26,9 +27,12 @@ class UserController extends Controller
             $count = request('count', 50);
             $wallet_balance = request('wallet_balance');
             $wallet_search_type = request('wallet_search_type');
-            $productQuery = request('products');
             $from = request('from');
             $to = request('to');
+            $exact = request('exact', false);
+            $productQuery = request('products');
+            $except_products = request('except_products');
+            $orderStatus = request('orderStatus');
 
             $products = Product::all();
             $roles = Role::all()->select('name', 'id');
@@ -41,25 +45,51 @@ class UserController extends Controller
                 });
             }
             if ($to) {
-                $users = $users->where('created_at', '<=', $to);
+                $to2 = Verta::parseFormat('Y/m/d', $to)->toCarbon();
+                $users = $users->where('created_at', '<=', $to2);
             }
             if ($from) {
-                $users = $users->where('created_at', '>=', $from);
+                $from2 = Verta::parseFormat('Y/m/d', $from)->toCarbon();
+                $users = $users->where('created_at', '>=', $from2);
             }
             if ($wallet_balance) {
                 $users = $users->whereHas('wallet', function ($query) use ($wallet_balance, $wallet_search_type) {
                     return $query->where('balance', $wallet_search_type, $wallet_balance);
                 });
             }
-            if ($productQuery) {
-                $users = $users->whereHas('orders', function ($query) use ($productQuery) {
-                    $query->where('status', 'completed');
-                    foreach ($productQuery as $product) {
-                        $query->whereHas('products', function ($query) use ($product) {
-                            $query->where('product_id', $product);
+            if ($orderStatus) {
+                switch ($orderStatus) {
+                    case 'has_orders':
+                        $users = $users->whereHas('orders');
+                        break;
+                    case 'just_free_orders':
+                        $users = $users->whereHas('orders', function ($query) {
+                            $query->where('price', 0);
                         });
-                    };
-                });
+                        break;
+                    case 'just_non_free_orders':
+                        $users = $users->whereHas('orders', function ($query) {
+                            $query->where('price', '>', 0);
+                        });
+                        break;
+                    case 'without_orders':
+                        $users = $users->whereDoesntHave('orders');
+                        break;
+                }
+            }
+            if ($productQuery) {
+                if ($exact) {
+                    $users = $users->whereHas('products', function ($query) use ($productQuery) {
+                        return $query->where('id', $productQuery);
+                    });
+                } else {
+                    $users = $users->whereHas('products', function ($query) use ($productQuery) {
+                        foreach ($productQuery as $product) {
+                            $query->where('id', $product);
+                        }
+                        return $query;
+                    });
+                }
             }
             if ($search) {
                 $users = $users->where('first_name', 'like', '%' . $search . '%')
@@ -82,9 +112,12 @@ class UserController extends Controller
                 'wallet_balance',
                 'wallet_search_type',
                 'products',
-                'productQuery',
                 'from',
                 'to',
+                'productQuery',
+                'orderStatus',
+                'except_products',
+                'exact'
             ));
         } catch (\Throwable $th) {
             alert()->error("خطا", $th->getMessage());

@@ -276,6 +276,8 @@
             case 'create': $permission = 'ساخت'; break;
             case 'manage': $permission = 'مدیریت'; break;
             case 'assign': $permission = 'انتصاب'; break;
+            case 'send': $permission = 'ارسال'; break;
+            //
             case 'users': $permission = 'کاربران'; break;
             case 'billings': $permission = 'اطلاعات صورتحساب'; break;
             case 'daily-reports': $permission = 'گزارش روزانه'; break;
@@ -298,6 +300,8 @@
             case 'channel-subscriptions': $permission = 'اشتراک های کانال'; break;
             case 'channel-members-count': $permission = 'تعداد اعضای کانال ها'; break;
             case 'subscriptions': $permission = 'اشتراک ها'; break;
+            case 'reserves': $permission = 'رزرو ها'; break;
+            case 'reserves-notifications': $permission = 'اس ام اس رزرو ها'; break;
         }
         return $permission;
     }

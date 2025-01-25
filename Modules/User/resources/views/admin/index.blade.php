@@ -169,6 +169,7 @@
                 @endcan
                     <div class="offcanvas offcanvas-end" id="offcanvasSearch">
                         <div class="offcanvas-header border-bottom">
+                            <h6 id="offcanvasAddUserLabel" class="offcanvas-title">فیلتر</h6>
                             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                                     aria-label="Close"></button>
                         </div>
@@ -183,22 +184,20 @@
                                                    class="form-control">
                                         </div>
                                     </div>
-                                    <label class="mt-2" for="createdSearch">بازه تاریخ عضویت</label>
                                     <div class="row" id="createdSearch">
                                         <div class="col">
-                                            <label class="form-label" for="from">از</label>
+                                            <label class="form-label" for="from">عضویت از:</label>
                                             <input type="text" class="date-picker form-control" name="from" id="from"
-                                                   value="{{ $from ? verta($from)->formatJalaliDate() : "" }}"
+                                                   value="{{ $from }}"
                                                    autocomplete="off">
                                         </div>
                                         <div class="col">
-                                            <label class="form-label" for="to">تا</label>
+                                            <label class="form-label" for="to">تا:</label>
                                             <input type="text" class="date-picker form-control" name="to" id="to"
-                                                   value="{{ $to ? verta($to)->formatJalaliDate() : ""}}"
+                                                   value="{{ $to }}"
                                                    autocomplete="off">
                                         </div>
                                     </div>
-                                    <label for="walletSearch" class="mt-2">کیف پول</label>
                                     <div class="row" id="walletSearch">
                                         <div class="col">
                                             <label for="wallet_search_type" class="form-label">کیف پول های: </label>
@@ -219,9 +218,9 @@
                                     </div>
                                     {{--                                    todo finish search by order--}}
                                     <div class="row">
-                                        <label for="order_select2" class="form-label">محصولات سفارش:</label>
+                                        <label for="products" class="form-label">محصولات سفارش:</label>
                                         <div class="select2-primary">
-                                            <select id="order_select2" class="select2 form-select" name="products[]"
+                                            <select id="products" class="select2 form-select" name="products[]"
                                                     multiple>
                                                 @foreach($products as $product)
                                                     <option
@@ -232,33 +231,46 @@
                                     </div>
                                     <div class="row">
                                         <label class="form-check ms-3">
-                                            <input type="checkbox" name="exact" id="exact" value="1"
+                                            <input type="checkbox" name="exact" id="exact" value="1" @if($exact) checked
+                                                   @endif
                                                    class="form-check-input">
                                             <span class="form-check-label">فقط همین محصولات</span>
                                         </label>
                                     </div>
                                     <div class="row">
-                                        <label for="except_select2" class="form-label">به جز:</label>
+                                        <label for="except_products" class="form-label">به جز:</label>
                                         <div class="select2-primary">
-                                            <select id="except_select2" class="select2 form-select"
+                                            <select id="except_products" class="select2 form-select"
                                                     name="except_products[]"
                                                     multiple>
                                                 @foreach($products as $product)
                                                     <option
-                                                        value="{{ $product->id }}" {{ in_array($product->id, $productQuery ?: []) ? 'selected' : '' }}>{{ $product->title }}</option>
+                                                        value="{{ $product->id }}" {{ in_array($product->id, $except_products ?: []) ? 'selected' : '' }}>{{ $product->title }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label for="orderStatus" class="form-label">وضعیت پرداخت:</label>
+                                        <label for="orderStatus" class="form-label">وضعیت سفارش ها:</label>
                                         <div class="">
                                             <select id="orderStatus" class="form-select" name="orderStatus">
-                                                <option value="all">همه</option>
-                                                <option value="has_order">دارای سفارش (رایگان و پولی)</option>
-                                                <option value="has_free_order">دارای سفارش رایگان</option>
-                                                <option value="had_paid_order">دارای سفارش پرداخت شده</option>
-                                                <option value="without_order">بدون سفارش</option>
+                                                <option value="" selected>همه</option>
+                                                <option
+                                                    value="has_orders" {{ $orderStatus == 'has_orders' ? 'selected' : '' }}>
+                                                    دارای سفارش (رایگان و پولی)
+                                                </option>
+                                                <option
+                                                    value="just_free_orders"{{ $orderStatus == 'just_free_orders' ? 'selected' : '' }} >
+                                                    دارای سفارش رایگان
+                                                </option>
+                                                <option
+                                                    value="just_non_free_orders"{{ $orderStatus == 'just_non_free_orders' ? 'selected' : '' }} >
+                                                    دارای سفارش پرداخت شده
+                                                </option>
+                                                <option
+                                                    value="without_orders"{{ $orderStatus == 'without_orders' ? 'selected' : '' }} >
+                                                    بدون سفارش
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -288,7 +300,8 @@
                                                     نام
                                                     خانوادگی
                                                 </option>
-                                            </select></div>
+                                            </select>
+                                        </div>
                                     </div>
 
                                     <div class="row">
@@ -311,7 +324,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-1">
-                                        <button id="submit" type="submit" class="btn btn-primary mt-4 data-submit">جستجو
+                                        <button id="submit" type="submit" class="btn btn-primary mt-4 data-submit">فیلتر
                                         </button>
                                     </div>
                                 </div>
@@ -341,6 +354,11 @@
     <script src="/assets/admin/js/autonumeric/autonumeric.min.js"></script>
     <script src="/assets/admin/js/datepicker/persian-date.min.js"></script>
     <script src="/assets/admin/js/datepicker/persian-datepicker.min.js"></script>
+    <script src="/assets/admin/vendor/libs/select2/select2.js"></script>
+    <script src="/assets/admin/vendor/libs/select2/i18n/fa.js"></script>
+@endpush
+
+@push('script')
     <script type="text/javascript">
         $(document).ready(function () {
             const amount = new AutoNumeric('#wallet_balance', {
@@ -363,10 +381,16 @@
                     },
                 },
             });
+            const products = $('#products')
+            products.select2({
+                placeholder: 'انتخاب',
+                dropdownParent: products.parent()
+            })
+            const exceptProducts = $('#except_products')
+            exceptProducts.select2({
+                placeholder: 'انتخاب',
+                dropdownParent: exceptProducts.parent()
+            })
         });
-        $('#except_select2').select2()
-        $('#order_select2').select2()
     </script>
-    <script src="/assets/admin/vendor/libs/select2/select2.js"></script>
-    <script src="/assets/admin/vendor/libs/select2/i18n/fa.js"></script>
 @endpush

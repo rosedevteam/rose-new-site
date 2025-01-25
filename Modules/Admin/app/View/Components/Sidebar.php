@@ -1,4 +1,3 @@
-<?php
 
 namespace Modules\Admin\View\Components;
 
