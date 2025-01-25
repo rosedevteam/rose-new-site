@@ -121,7 +121,7 @@
                                         <div class="row g-3">
                                             <div class="col-md-6">
                                                 <label class="form-label" for="title">تعداد رزرو</label>
-                                                <input type="text" id="title"
+                                                <input type="text" id="title" readonly
                                                        class="form-control" value="{{ $product->reserves->count() }}">
                                             </div>
                                             <div class="col-md-6">

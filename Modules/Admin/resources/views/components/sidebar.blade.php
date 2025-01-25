@@ -45,7 +45,7 @@
             @can('view-reserves')
                 <li @class(["menu-item", 'active' => $route == 'reserves'])>
                     <a href="{{ route("admin.reserves.index") }}" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-menu"></i>
+                        <i class="menu-icon tf-icons bx bx-library"></i>
                         <div data-i18n="رزرو ها">رزرو ها</div>
                     </a>
                 </li>

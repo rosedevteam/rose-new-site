@@ -67,10 +67,11 @@ class ReserveController extends Controller
     {
         Gate::authorize('send-reserves-notifications');
         try {
-            $reserves = $product->reserves()->where('is_notified', 0)->get();
+            $reserves = $product->reserves()->where('is_notified', 0);
             foreach ($reserves as $reserve) {
                 $reserve->user->notify(new NotifyProductAvailable($reserve->user->phone, $product->title));
             }
+            $reserves->update(['is_notified' => 1]);
             alert()->success('موفق', 'با موفقیت ارسال شد');
             return back();
         } catch (\Throwable $th) {
