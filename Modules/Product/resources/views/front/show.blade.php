@@ -55,7 +55,22 @@
                                         class="d-flex flex-wrap justify-content-center justify-content-lg-between w-100 align-items-center my-4 my-lg-0">
 
                                         <!--Add To Cart Button-->
-                                        <a role="button" class="btn btn-default" id="add-to-cart" data-product="{{$product->id}}">ثبت نام در دوره</a>
+
+                                        @auth
+                                            @php
+                                                $userProducts = auth()->user()->orders()->where('status' , 'completed')->with('products')->get()->pluck('products.*.id')->flatten()->unique()->toArray();
+                                            @endphp
+                                            @if(!in_array($product->id , $userProducts))
+                                                <a role="button" class="btn btn-default" id="add-to-cart"
+                                                   data-product="{{$product->id}}">ثبت نام در دوره</a>
+                                            @else
+                                                <a role="button" class="btn btn-default">شما دانشجوی این دوره هستید</a>
+                                            @endif
+                                        @else
+                                            <a role="button" class="btn btn-default" id="add-to-cart"
+                                               data-product="{{$product->id}}">ثبت نام در دوره</a>
+                                        @endauth
+
                                         <!--Add To Cart Button End-->
 
                                         <input type="hidden" name="pr-quantity" id="pr-quantity" value="1">

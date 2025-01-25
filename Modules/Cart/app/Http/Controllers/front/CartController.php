@@ -47,6 +47,23 @@ class CartController extends Controller
                         return $cart['product']->price * $cart['quantity'];
                     }
                 });
+
+                if (auth()->check()) {
+                    $userCart = auth()->user()->cart;
+                    if (is_null($userCart)) {
+                        $userCart = auth()->user()->cart()->create([
+                            'total' => $totalPrice,
+                            'is_notified' => 0
+                        ]);
+                        $userCart->products()->attach(Cart::all()->pluck('product.id')->toArray());
+                    } else {
+                        auth()->user()->cart()->update([
+                            'total' => $totalPrice
+                        ]);
+                        $userCart->products()->sync(Cart::all()->pluck('product.id')->toArray());
+                    }
+                }
+
                 return response()->json([
                     'success' => true,
                     'message' => 'محصول مورد نظر به سبد خرید اضافه شد',
@@ -61,7 +78,7 @@ class CartController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => $exception->getMessage()
-            ] , 400);
+            ], 400);
         }
 
     }
@@ -200,18 +217,37 @@ class CartController extends Controller
                     return $cart['product']->price * $cart['quantity'];
                 }
             });
+
+
+            if (auth()->check()) {
+                $userCart = auth()->user()->cart;
+                if (!is_null($userCart)) {
+                    if ($cart->all()->count()) {
+                        auth()->user()->cart()->update([
+                            'total' => $totalPrice
+                        ]);
+                        $userCart->products()->sync(Cart::all()->pluck('product.id')->toArray());
+                    }else {
+                        $userCart->delete();
+                    }
+
+                }
+            }
+
+
             return response()->json([
                 'success' => true,
                 'total' => $totalPrice,
                 'count' => $cart->all()->count(),
+                'discount' => (bool)$cart->getDiscount(),
                 'is_cart_discountable' => $cart->isCartDiscountable(),
                 'message' => 'محصول با موفقیت از سبد خرید حذف شد'
-            ] , 200);
-        }catch(\Exception $exception) {
+            ], 200);
+        } catch (\Exception $exception) {
             return response()->json([
                 'success' => false,
                 'message' => $exception->getMessage()
-            ] , 400);
+            ], 400);
         }
     }
 }

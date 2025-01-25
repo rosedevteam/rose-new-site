@@ -42,6 +42,14 @@
                 </a>
             </li>
         @endcan
+        @can('view-carts')
+            <li @class(["menu-item", 'active' => $route == 'carts'])>
+                <a href="{{ route("admin.carts.index") }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-shopping-bag"></i>
+                    <div data-i18n="سبد خرید ها">سبد خرید ها</div>
+                </a>
+            </li>
+        @endcan
         @can('view-products')
             <li @class(["menu-item", 'active' => $route == 'products'])>
                 <a href="{{ route("admin.products.index") }}" class="menu-link">
@@ -123,7 +131,7 @@
             </li>
         @endcan
         @can('manage-channels')
-                <li @class(["menu-item", 'active open' => $route == 'channels'])>
+            <li @class(["menu-item", 'active open' => $route == 'channels'])>
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <i class="menu-icon tf-icons bx bx-message-square-dots"></i>
                     <div>کانال ها</div>
@@ -145,17 +153,17 @@
                 </ul>
             </li>
         @endcan
-            @can('manage-roles')
-                <li @class(["menu-item", 'active' => $route == 'roles'])>
-                    <a href="{{ route("admin.roles.index") }}" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-lock"></i>
-                        <div data-i18n="نقش ها">نقش ها</div>
-                    </a>
-                </li>
-            @endcan
-            @can('view-logs')
-                <li @class(["menu-item", 'active' => $route == 'logs'])>
-                    <a href="{{ route("admin.logs.index") }}" class="menu-link">
+        @can('manage-roles')
+            <li @class(["menu-item", 'active' => $route == 'roles'])>
+                <a href="{{ route("admin.roles.index") }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-lock"></i>
+                    <div data-i18n="نقش ها">نقش ها</div>
+                </a>
+            </li>
+        @endcan
+        @can('view-logs')
+            <li @class(["menu-item", 'active' => $route == 'logs'])>
+                <a href="{{ route("admin.logs.index") }}" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-file"></i>
                         <div data-i18n="لاگ">لاگ</div>
                     </a>

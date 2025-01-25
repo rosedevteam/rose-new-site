@@ -297,6 +297,7 @@
             case 'channels': $permission = 'کانال ها'; break;
             case 'subscriptions': $permission = 'اشتراک'; break;
             case 'channel-members-count': $permission = 'تعداد اعضای کانال ها'; break;
+            case 'carts': $permission = 'سبد خرید ها'; break;
         }
         return $permission;
     }
