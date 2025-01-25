@@ -11,7 +11,6 @@ use Modules\Product\Models\Product;
 use Modules\User\Models\Billing;
 use Modules\User\Models\User;
 use Spatie\Permission\Models\Role;
-use Verta;
 
 class UserController extends Controller
 {
@@ -41,10 +40,11 @@ class UserController extends Controller
                     return $query->where('role_id', $role_id);
                 });
             }
-            if ($from || $to) {
-                $to = Verta::parseFormat('Y/m/d', $to ?: verta()->format('Y/m/d'));
-                $from = Verta::parseFormat('Y/m/d', $from ?: verta()->subYears(100)->format('Y/m/d'));
-                $users = $users->whereBetween('created_at', [$from, $to]);
+            if ($to) {
+                $users = $users->where('created_at', '<=', $to);
+            }
+            if ($from) {
+                $users = $users->where('created_at', '>=', $from);
             }
             if ($wallet_balance) {
                 $users = $users->whereHas('wallet', function ($query) use ($wallet_balance, $wallet_search_type) {

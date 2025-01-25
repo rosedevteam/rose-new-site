@@ -201,20 +201,20 @@
                                     <label for="walletSearch" class="mt-2">کیف پول</label>
                                     <div class="row" id="walletSearch">
                                         <div class="col">
+                                            <label for="wallet_search_type" class="form-label">کیف پول های: </label>
+                                            <select id="wallet_search_type" name="wallet_search_type"
+                                                    class="form-select text-capitalize">
+                                                <option value=">=" selected>بیشتر از</option>
+                                                <option value="<=" {{ $wallet_search_type == "<=" ? 'selected' : '' }}>
+                                                    کمتر از
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
                                             <label for="wallet_balance" class="form-label">موجودی: </label>
                                             <input name="wallet_balance" id="wallet_balance"
                                                    value="{{ $wallet_balance }}"
                                                    class="form-control">
-                                        </div>
-                                        <div class="col">
-                                            <label for="wallet_search_type" class="form-label">کیف پول های: </label>
-                                            <select id="wallet_search_type" name="wallet_search_type"
-                                                    class="form-select text-capitalize">
-                                                <option value=">=" selected>بیشتر</option>
-                                                <option value="<=" {{ $wallet_search_type == "<=" ? 'selected' : '' }}>
-                                                    کمتر
-                                                </option>
-                                            </select>
                                         </div>
                                     </div>
                                     {{--                                    todo finish search by order--}}
