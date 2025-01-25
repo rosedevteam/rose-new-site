@@ -34,7 +34,7 @@
                                             <div>
                                                 <p class="mb-0 text-muted text-nowrap">تعداد کل کاربران</p>
                                                 <small class="fw-semibold text-nowrap">
-                                                    {{number_format(\Modules\User\Models\User::all()->count())}}
+                                                    {{number_format(\Modules\Cart\Models\Cart::all()->count())}}
                                                     کاربر
                                                 </small>
                                             </div>

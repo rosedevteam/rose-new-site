@@ -16,7 +16,7 @@ axios.interceptors.request.use(function (config) {
 
     return config
 });
-axios.get('all')
+axios.get('carts/all')
     .then(function (response) {
         Highcharts.dateFormats = {
             'a': function (ts) {
