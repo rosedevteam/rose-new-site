@@ -75,7 +75,7 @@ class OrderController extends Controller
         ]);
 
         try {
-            $validData['created_at'] = self::formatDate($validData['created_at']);
+            $validData['created_at'] = self::formatDateTime($validData['created_at']);
 
             $total = 0;
 
@@ -165,7 +165,7 @@ class OrderController extends Controller
 
         try {
 
-            $validData['created_at'] = self::formatDate($validData['created_at']);
+            $validData['created_at'] = self::formatDateTime($validData['created_at']);
 
             $total = 0;
 

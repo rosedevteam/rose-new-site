@@ -32,6 +32,10 @@
                                         <span>{{ $user->email }}</span>
                                     </li>
                                     <li class="mb-3">
+                                        <span class="fw-bold me-2">تاریخ تولد:</span>
+                                        <span>{{ $user?->birthday }}</span>
+                                    </li>
+                                    <li class="mb-3">
                                         <span class="fw-bold me-2">کیف پول:</span>
                                         <span>{{ number_format($user->wallet->balance) }}<a class="ms-5"
                                                                              href="{{ route('admin.wallets.edit', $user->wallet) }}"><i

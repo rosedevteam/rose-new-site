@@ -3,15 +3,10 @@
 namespace Modules\Profile\Http\Controllers\front;
 
 use App\Http\Controllers\Controller;
-use Artesaos\SEOTools\Traits\SEOTools;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-    use SEOTools;
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $this->seo()->setTitle('حساب کاربری');

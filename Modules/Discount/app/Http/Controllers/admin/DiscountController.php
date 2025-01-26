@@ -65,7 +65,7 @@ class DiscountController extends Controller
         ]);
         try {
 
-            $data['expires_at'] = self::formatDate($data['expires_at']);
+            $data['expires_at'] = self::formatDateTime($data['expires_at']);
             $discount = Discount::create([
                 'code' => $data['code'],
                 'is_active' => $data['is_active'],
@@ -127,7 +127,7 @@ class DiscountController extends Controller
             'limit' => 'bail|required|string|numeric',
         ]);
         try {
-            $data['expires_at'] = self::formatDate($data['expires_at']);
+            $data['expires_at'] = self::formatDateTime($data['expires_at']);
 
             $before = Discount::with('products:id,title')->find($discount->id)->toArray();
             $discount->update([
