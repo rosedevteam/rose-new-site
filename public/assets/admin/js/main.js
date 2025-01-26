@@ -597,4 +597,9 @@ if (typeof $ !== 'undefined') {
       });
     }
   });
+    const exitButton = $('.exit-button');
+    new bootstrap.Tooltip(exitButton, {
+        title: "خروج",
+        fallbackPlacements: ['bottom'],
+    })
 }
