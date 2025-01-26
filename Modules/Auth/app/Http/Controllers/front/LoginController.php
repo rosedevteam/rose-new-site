@@ -3,16 +3,20 @@
 namespace Modules\Auth\Http\Controllers\front;
 
 use App\Http\Controllers\Controller;
+use App\traits\CartTools;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 use Modules\Auth\Models\OtpCode;
 use Modules\Auth\Models\RegisterOtp;
 use Modules\Auth\Notifications\OtpNotification;
+use Modules\Cart\Classes\Helpers\Cart;
 use Modules\User\Models\User;
 
 class LoginController extends Controller
 {
+    use CartTools;
+
     public function auth(Request $request)
     {
         try {
@@ -90,9 +94,27 @@ class LoginController extends Controller
                 //return back and show error to user
                 throw new \Exception('کد وارد شده صحیح نمیباشد' , 400);
             } else {
+                $cart = Cart::instance(config('services.cart.cookie-name'));
 
+                $totalPrice = $cart->all()->sum(function ($cart) {
+                    if (!is_null($cart['product']->sale_price)) {
+                        return $cart['product']->sale_price * $cart['quantity'];
+                    } else {
+                        return $cart['product']->price * $cart['quantity'];
+                    }
+                });
                 //login user by ID
                 auth()->loginUsingId($user->id);
+
+                //check if user has cart
+                if (auth()->check()) {
+                    $userCart = auth()->user()->cart;
+                    if (is_null($userCart)) {
+                        self::addCartToDatabase($cart , $totalPrice);
+                    } else {
+                        self::editCartToDatabase($cart , $totalPrice , $userCart);
+                    }
+                }
 
                 //remove otp code from codes table
                 $user->otpCodes()->delete();

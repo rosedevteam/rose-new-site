@@ -3,6 +3,7 @@
 namespace Modules\Cart\Http\Controllers\front;
 
 use App\Http\Controllers\Controller;
+use App\traits\CartTools;
 use Artesaos\SEOTools\Traits\SEOTools;
 use Illuminate\Http\Request;
 use Modules\Cart\Classes\Helpers\Cart;
@@ -10,7 +11,9 @@ use Modules\Product\Models\Product;
 
 class CartController extends Controller
 {
-    use SEOTools;
+    //todo add trait for create new cart in database
+
+    use SEOTools,CartTools;
 
     public function cart()
     {
@@ -40,6 +43,7 @@ class CartController extends Controller
                     ],
                     $product
                 );
+
                 $totalPrice = Cart::all()->sum(function ($cart) {
                     if (!is_null($cart['product']->sale_price)) {
                         return $cart['product']->sale_price * $cart['quantity'];
@@ -51,16 +55,9 @@ class CartController extends Controller
                 if (auth()->check()) {
                     $userCart = auth()->user()->cart;
                     if (is_null($userCart)) {
-                        $userCart = auth()->user()->cart()->create([
-                            'total' => $totalPrice,
-                            'is_notified' => 0
-                        ]);
-                        $userCart->products()->attach(Cart::all()->pluck('product.id')->toArray());
+                        self::addCartToDatabase($cart , $totalPrice);
                     } else {
-                        auth()->user()->cart()->update([
-                            'total' => $totalPrice
-                        ]);
-                        $userCart->products()->sync(Cart::all()->pluck('product.id')->toArray());
+                       self::editCartToDatabase($cart , $totalPrice , $userCart);
                     }
                 }
 
@@ -223,10 +220,7 @@ class CartController extends Controller
                 $userCart = auth()->user()->cart;
                 if (!is_null($userCart)) {
                     if ($cart->all()->count()) {
-                        auth()->user()->cart()->update([
-                            'total' => $totalPrice
-                        ]);
-                        $userCart->products()->sync(Cart::all()->pluck('product.id')->toArray());
+                        self::editCartToDatabase($cart , $totalPrice, $userCart);
                     }else {
                         $userCart->delete();
                     }

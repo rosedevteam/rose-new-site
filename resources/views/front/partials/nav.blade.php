@@ -91,7 +91,10 @@
                                         <ul class="submenu p-0 m-0" style="width: 220px">
                                             <li class="d-flex align-items-center justify-content-between">
                                                 <p>کیف پول:</p>
-                                                <strong>{{number_format(auth()->user()->wallet->balance)}}</strong>
+                                                <strong>
+                                                    {{number_format(auth()->user()->wallet->balance)}}
+                                                تومان
+                                                </strong>
                                                 <hr>
                                             </li>
                                             <li class="py-3">
