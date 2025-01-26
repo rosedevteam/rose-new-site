@@ -34,7 +34,7 @@ class CategoryController extends Controller
                 $categories = $categories->where('type', $type);
             }
 
-            $categories = $categories->orderBy('created_at', 'desc')->paginate(50);
+            $categories = $categories->orderBy('created_at', 'desc')->paginate(500);
             return view('category::admin.index', compact('categories', 'type', 'types', 'parents'));
         } catch (\Throwable $th) {
             alert()->error('خطا', $th->getMessage());

@@ -17,19 +17,11 @@
                     <a class="nav-link dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                         <div class="avatar avatar-md me-2 d-flex align-items-center justify-content-center">
                             <div class="avatar avatar-online">
-{{--                                <strong>{{auth()->user()->name()}}</strong>--}}
-{{--                                <span class="badge bg-secondary">{{auth()->user()->role()}}</span>--}}
                                 <img src="/assets/admin/img/avatars/user.png" alt="" class="rounded-circle">
-
                             </div>
-{{--                            @if(!is_null(auth()->user()->avatar))--}}
-{{--                                <img src="{{ auth()->user()->avatar }}" alt class="rounded-circle">--}}
-{{--                            @else--}}
-{{--                                <i class="bx bx-user mt-3"></i>--}}
-{{--                            @endif--}}
                         </div>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
                         <li>
                             <a class="dropdown-item" href="{{ route("admin.users.edit", auth()->user()) }}">
                                 <div class="d-flex align-items-center">
@@ -41,7 +33,7 @@
                                     <div class="flex-grow-1">
                                         <span
                                             class="fw-semibold d-block">{{ auth()->user()->name() }}</span>
-                                        <small>{{ auth()->user()->getRoleNames()[0] }}</small>
+                                        <small>{{ auth()->user()->role() }}</small>
                                     </div>
                                 </div>
                             </a>
@@ -59,6 +51,10 @@
                             </form>
                         </li>
                     </ul>
+                </li>
+                <li>
+                    <span class="fw-semibold d-block">{{ auth()->user()->name() }}</span>
+                    <small>{{ auth()->user()->role() }}</small>
                 </li>
             </ul>
         </div>
