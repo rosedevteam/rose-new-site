@@ -179,9 +179,9 @@
     border: solid 1px #e7e7e7;
     padding: 1rem;
     border-radius: 10px;">
-                                            <label class="form-check-label custom-option-content" for="use-wallet">
+                                            <label class="form-check-label custom-option-content" for="use_wallet">
                                                 <span class="d-flex">
-                                                       <input class="form-check-input" name="use-wallet" type="checkbox" value="" id="use-wallet" >
+                                                       <input class="form-check-input" name="use_wallet" type="checkbox" value="true" id="use_wallet" form="payment">
                                                 <span class="custom-option-header">
                                                     <span class="h4 mb-0 me-2 d-flex flex-column gap-3">استفاده از کیف پول
                                                        <small class="option-text h5">
@@ -211,9 +211,10 @@
                                 </div>
                             </div>
                             @auth
-                                <form action="{{route('payment.do')}}">
-                                    <button type="button" class="w-100 btn btn-default">پرداخت</button>
-
+                                <form action="{{route('payment.do')}}" method="post" id="payment">
+                                    @csrf
+                                    @method('post')
+                                    <button type="submit" class="w-100 btn btn-default">پرداخت</button>
                                 </form>
                             @else
                                 <a class="btn btn-default w-100" type="button" data-bs-toggle="modal"

@@ -177,7 +177,7 @@ return [
             'apiPaymentUrl' => 'https://pec.shaparak.ir/NewIPG/',
             'apiVerificationUrl' => 'https://pec.shaparak.ir/NewIPGServices/Confirm/ConfirmService.asmx?wsdl',
             'merchantId' => '32P3Uo03114IrrVB67v5',
-            'callbackUrl' => route('payment.callback'),
+            'callbackUrl' => '',
             'description' => 'payment using parsian',
             'currency' => 'T', //Can be R, T (Rial, Toman)
         ],

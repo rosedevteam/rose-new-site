@@ -4,109 +4,90 @@ namespace Modules\Payment\Http\Controllers\front;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Modules\Cart\Models\Cart;
+use Mockery\Exception;
+use Modules\Cart\Classes\Helpers\Cart;
+use Modules\Order\Models\Order;
 
 class PaymentController extends Controller
 {
     public function payment(Request $request)
     {
-        $cookieCart = Cart::instance(config('services.cart.cookie-name'));
-        $cartItems = $cookieCart->all();
+        try {
+            $validData = $request->validate([
+                'use_wallet' => 'nullable'
+            ]);
 
-        if ($cartItems->count()) {
-            $totalPrice = $cookieCart->all()->sum(function($item) {
-                if (!is_null($item['product']->sale_price)) {
-                    return ($item['product']->sale_price);
-                } else {
-                    return  ($item['product']->price);
+            $cookieCart = Cart::instance(config('services.cart.cookie-name'));
+            $cartItems = $cookieCart->all();
+
+            if ($cartItems->count()) {
+                $totalPrice = $cookieCart->all()->sum(function($item) {
+                    if (!is_null($item['product']->sale_price)) {
+                        return ($item['product']->sale_price);
+                    } else {
+                        return  ($item['product']->price);
+                    }
+                });
+
+
+                if (\Modules\Cart\Classes\Helpers\Cart::isCartDiscountable()) {
+                    $discount = \Modules\Cart\Classes\Helpers\Cart::getDiscount();
+                    $totalPrice = $totalPrice - $discount->amount;
                 }
-            });
 
-            dd($totalPrice);
+                $orderItems = $cartItems->mapWithKeys(function ($cart) {
+                    return [$cart['product']->id => ['quantity' => $cart['quantity'], 'price' => $cart['price']]];
+                });
 
-            if (\Modules\Cart\Classes\Helpers\Cart::isCartDiscountable()) {
-                $discount = \Modules\Cart\Classes\Helpers\Cart::getDiscount();
-                $totalPrice = $totalPrice - $discount->amount;
+                if(isset($validData['use_wallet'])) {
+                    if (auth()->user()->wallet->balance >= 30000) {
+                        if (auth()->user()->wallet->balance < $totalPrice) {
+
+                            $wallet_transaction = auth()->user()->wallet->transactions()->create([
+                                'description' => 'کسر بابت خرید',
+                                'type' => 'debit',
+                                'amount' => auth()->user()->wallet->balance,
+                            ]);
+
+                            $totalPrice = $totalPrice - $wallet_transaction->amount;
+
+                            $order = auth()->user()->orders()->create([
+                                'price' => $totalPrice,
+                                'status' => 'pending',
+                                'wallet_transaction_id' => $wallet_transaction->id,
+                            ]);
+
+                            $order->products()->attach($orderItems);
+
+                        }
+
+                    }else{
+                        throw new Exception('کیف پول شما کمتر از 30.000 تومان است');
+                    }
+
+                }else {
+
+                    $order = auth()->user()->orders()->create([
+                        'price' => $totalPrice,
+                        'status' => 'pending'
+                    ]);
+
+                    $order->products()->attach($orderItems);
+
+                }
+
+
+
+                $cookieCart->flush();
+
+//            return view('payment::cardToCard' , compact('order'));
             }
-
-            $orderItems = $cartItems->mapWithKeys(function ($cart) {
-
-                return [$cart['product']->id => ['quantity' => $cart['quantity'], 'price' => $cart['price']]];
-            });
-
-            dd($orderItems);
-
-            if ($request->input('address-id') && $request->input('address')){
-                $request->request->remove('address-id');
-            }
-
-            if (!$request->input('address-id')) {
-                $validData = $request->validate([
-                    'name' => 'required',
-                    'last_name' => 'required',
-                    'company' => 'nullable',
-                    'city' => 'required',
-                    'address' => 'required',
-                    'address-id' => 'nullable',
-                    'postal_code' => 'required' , 'regex:\b(?!(\d)\1{3})[13-9]{4}[1346-9][013-9]{5}\b',
-                    'notes' => 'nullable',
-                    'shipping' => 'required'
-                ]);
-                $address = auth()->user()->addresses()->create([
-                    'city_id' => $validData['city'],
-                    'address' => $validData['address'],
-                    'postal_code' => $validData['postal_code']
-                ]);
-                auth()->user()->update([
-                    'name' => $validData['name'],
-                    'last_name' => $validData['last_name'],
-                ]);
-                $order = auth()->user()->orders()->create([
-                    'status' => 'unpaid',
-                    'price' => $price,
-                    'shipping_id' => $validData['shipping'],
-                    'address_id' => $address->id,
-                    'notes' => $validData['notes'],
-                    'order_code' => rand(1000 , 9999),
-                ]);
-            }else {
-                $validData = $request->validate([
-                    'address-id' => 'nullable',
-                    'note' => 'nullable',
-                    'shipping' => 'required',
-                    'notes' => 'nullable'
-                ]);
-                $address = Address::whereId($validData['address-id'])->first();
-                $order = auth()->user()->orders()->create([
-                    'status' => 'unpaid',
-                    'price' => $price,
-                    'shipping_id' => $validData['shipping'],
-                    'address_id' => $address->id,
-                    'order_code' => rand(1000 , 9999),
-                    'notes' => $validData['notes']
-                ]);
-            }
-
-            $order->products()->attach($orderItems);
-            $cookieCart->flush();
-
-            $admins = User::where('is_admin' , 1)->get();
-
-            foreach ($admins as $admin) {
-                $order->notify(new NewOrderAdminNotification(
-                    $admin->phone ,
-                    $order->order_code ,
-                    $order->price ,
-                    $order->user->name ,
-                    $order->address->city->name ,
-                    $order->shipping->label
-                ));
-            }
-            return view('payment::cardToCard' , compact('order'));
+        }catch (\Exception $exception){
+            alert()->error('خطا', $exception->getMessage());
+            return back();
         }
 
-        alert()->error('خطا', 'متاسفانه مشکلی در ثبت سفارش شما پیش آمده، لطفا دوباره تلاش کنید');
-        return back();
+
     }
 
     public function callback(Request $request)
