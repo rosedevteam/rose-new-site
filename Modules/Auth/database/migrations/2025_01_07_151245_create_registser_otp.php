@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('otp');
             $table->string('phone');
             $table->timestamp('expired_at');
+            $table->boolean('is_verified')->default(false);
             $table->timestamps();
         });
     }

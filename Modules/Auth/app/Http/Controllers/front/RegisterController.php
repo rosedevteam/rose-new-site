@@ -3,7 +3,6 @@
 namespace Modules\Auth\Http\Controllers\front;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use Modules\Auth\Models\RegisterOtp;
@@ -66,6 +65,7 @@ class RegisterController extends Controller
                 return redirect(route('index'));
             }
 
+            // todo check is verified
             $code = RegisterOtp::verifyCode($request->session()->get('auth')['code_id'], $validData['otp']);
 
             //check auth session exists

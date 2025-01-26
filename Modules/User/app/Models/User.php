@@ -12,7 +12,6 @@ use Modules\Comment\Models\Comment;
 use Modules\DailyReport\Models\DailyReport;
 use Modules\Discount\Models\Discount;
 use Modules\Discount\Models\DiscountRecord;
-use Modules\Discount\Models\DiscountUse;
 use Modules\Menu\Models\Menu;
 use Modules\Order\Models\Order;
 use Modules\Podcast\Models\Podcast;
@@ -65,9 +64,9 @@ class User extends \Illuminate\Foundation\Auth\User implements JwtSubject
         return $this->hasMany(User::class, 'creator_id');
     }
 
-    public function otpCodes()
+    public function otpCode()
     {
-        return $this->hasMany(OtpCode::class);
+        return $this->hasOne(OtpCode::class);
     }
 
     public function billing()
