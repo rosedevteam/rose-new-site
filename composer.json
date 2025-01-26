@@ -18,7 +18,8 @@
         "realrashid/sweet-alert": "^7.2",
         "shetabit/payment": "^5.8",
         "spatie/laravel-activitylog": "^4.9",
-        "spatie/laravel-permission": "^6.10"
+        "spatie/laravel-permission": "^6.10",
+        "tymon/jwt-auth": "^2.1"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.2",

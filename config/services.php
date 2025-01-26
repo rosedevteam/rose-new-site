@@ -61,5 +61,9 @@ return [
     'referral_scores' => [
         'score_after_register' => env('SCORE_AFTER_REGISTER'),
         'score_after_complete_order' => env('SCORE_AFTER_ORDER')
+    ],
+
+    'api' => [
+        'prefix' => env('API_PREFIX', 'api/v1'),
     ]
 ];

@@ -26,9 +26,10 @@ use Modules\User\Database\Factories\UserFactory;
 use Modules\Wallet\Models\Wallet;
 use Modules\Wallet\Models\WalletTransaction;
 use Spatie\Permission\Traits\HasRoles;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
-class User extends \Illuminate\Foundation\Auth\User
+class User extends \Illuminate\Foundation\Auth\User implements JwtSubject
 {
     use HasFactory, HasRoles, Notifiable;
 
@@ -173,5 +174,15 @@ class User extends \Illuminate\Foundation\Auth\User
     protected static function newFactory()
     {
         return UserFactory::new();
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }

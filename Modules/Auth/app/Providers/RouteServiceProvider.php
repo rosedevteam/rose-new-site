@@ -47,6 +47,14 @@ class RouteServiceProvider extends ServiceProvider
      *
      * These routes are typically stateless.
      */
+    protected function mapApiRoutes(): void
+    {
+        Route::middleware('api')
+            ->prefix(config('services.api.prefix'))
+            ->name('api.')
+            ->group(module_path($this->name, '/routes/api.php'));
+    }
+
     protected function mapAdminRoutes(): void
     {
         Route::middleware('web')
