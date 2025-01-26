@@ -39,11 +39,11 @@
                                                         class="bx bx-filter me-0 me-lg-2"></i><span
                                                         class="d-none d-lg-inline-block">فیلتر</span></span>
                                             </button>
-                                            <a class="btn btn-info down-btn" href=""
+                                            <button class="btn btn-info down-btn" href=""
                                                aria-controls="DataTables_Table_0" type="button"><span><i
                                                         class="bx bx-plus me-0 me-lg-2"></i><span
                                                         class="d-none d-lg-inline-block">اکسپورت</span></span>
-                                            </a>
+                                            </button>
                                             <button class="btn add-new btn-primary"
                                                     aria-controls="DataTables_Table_0" type="button"
                                                     data-bs-toggle="offcanvas"

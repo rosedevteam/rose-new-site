@@ -10,7 +10,7 @@
 
 @section('content')
     <div class="content-wrapper">
-        <div class="flex-grow-1 p-3y">
+        <div class="flex-grow-1 mx-3">
             <div class="app-chat card overflow-hidden">
                 <div class="row g-0">
 
