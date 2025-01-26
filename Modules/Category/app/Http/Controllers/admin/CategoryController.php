@@ -3,7 +3,7 @@
 namespace Modules\Category\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\traits\Slug;
+use App\Traits\Slug;
 use Gate;
 use Illuminate\Http\Request;
 use Modules\Category\Models\Category;

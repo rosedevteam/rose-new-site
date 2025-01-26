@@ -3,7 +3,7 @@
 namespace Modules\Order\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\traits\FormatDate;
+use App\Traits\FormatDate;
 use Gate;
 use Illuminate\Http\Request;
 use Modules\Order\Models\Order;

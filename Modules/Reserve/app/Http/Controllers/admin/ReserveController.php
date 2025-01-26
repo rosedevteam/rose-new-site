@@ -4,7 +4,7 @@ namespace Modules\Reserve\Http\Controllers\admin;
 
 use App\Exports\ReserveExport;
 use App\Http\Controllers\Controller;
-use App\traits\ConvertNums;
+use App\Traits\ConvertNums;
 use Gate;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\Product\Models\Product;

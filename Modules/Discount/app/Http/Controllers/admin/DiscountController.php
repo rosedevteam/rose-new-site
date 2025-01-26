@@ -3,7 +3,7 @@
 namespace Modules\Discount\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\traits\FormatDate;
+use App\Traits\FormatDate;
 use Gate;
 use Modules\Discount\Models\Discount;
 use Modules\Product\Models\Product;
