@@ -10,7 +10,7 @@ return [
     | You can switch to a different driver at runtime.
     |
     */
-    'default' => 'zarinpal',
+    'default' => 'parsian',
 
     /*
     |--------------------------------------------------------------------------
@@ -176,8 +176,8 @@ return [
             'apiPurchaseUrl' => 'https://pec.shaparak.ir/NewIPGServices/Sale/SaleService.asmx?wsdl',
             'apiPaymentUrl' => 'https://pec.shaparak.ir/NewIPG/',
             'apiVerificationUrl' => 'https://pec.shaparak.ir/NewIPGServices/Confirm/ConfirmService.asmx?wsdl',
-            'merchantId' => '',
-            'callbackUrl' => 'http://yoursite.com/path/to',
+            'merchantId' => '32P3Uo03114IrrVB67v5',
+            'callbackUrl' => route('payment.callback'),
             'description' => 'payment using parsian',
             'currency' => 'T', //Can be R, T (Rial, Toman)
         ],

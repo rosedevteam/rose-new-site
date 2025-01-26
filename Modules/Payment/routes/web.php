@@ -14,6 +14,7 @@ use Modules\Payment\Http\Controllers\PaymentController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('payment', PaymentController::class)->names('payment');
+Route::prefix('payment')->middleware('auth')->group(function() {
+    Route::post('/' , [\Modules\Payment\Http\Controllers\front\PaymentController::class , 'payment'])->name('payment.do');
+    Route::get('/callback' , [\Modules\Payment\Http\Controllers\front\PaymentController::class , 'callback'])->name('payment.callback');
 });
