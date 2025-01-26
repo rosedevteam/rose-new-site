@@ -400,7 +400,7 @@ function createEnterNameLastNameForm() {
 function updateUser(phone) {
     $('#updateUser').submit(function (e) {
         e.preventDefault();
-        axios.post(`register`, {
+        axios.post(`/register`, {
             first_name: $('#first_name').val(),
             last_name: $('#last_name').val(),
             phone: phone,
