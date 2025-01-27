@@ -90,7 +90,7 @@ class PaymentController extends Controller
                         'status' => 0
                     ]);
 
-//                    $cookieCart->flush();
+                    $cookieCart->flush();
 
                 })->pay()->render();
 
@@ -109,7 +109,7 @@ class PaymentController extends Controller
     {
         try {
             $payment = \Modules\Payment\Models\Payment::where('resnumber', $request->Authority)->firstOrFail();
-
+            $order = $payment->order;
             // $payment->order->price
             $receipt = Payment::amount($payment->order->price)->transactionId($request->Authority)->verify();
 
@@ -117,28 +117,37 @@ class PaymentController extends Controller
                 'status' => 1
             ]);
 
-            $spot_keys = $payment->order->products->where('spot_player_key' , '<>' , null)->pluck('spot_player_key')->toArray();
+            $spot_keys = $order->products->where('spot_player_key' , '<>' , null)->pluck('spot_player_key')->toArray();
+
 
             $spot_response = createSpotPlayerLicence(
                 auth()->user()->name(),
                 $spot_keys,
-                $payment->order->user->phone);
+                $order->user->phone);
+
             $spot = json_decode($spot_response->getContent(), true);
+
+            auth()->user()->scores()->create([
+               'score' => $order->price / 1000,
+                'log' => "بابت ثبت سفارش به شماره #$order->id",
+                'type' => 'credit'
+            ]);
+
             if ($spot_response->getStatusCode() == 200) {
-                $payment->order()->update([
+                $order->update([
                     'status' => 'completed',
                     'spot_player_id' => $spot['id'],
                     'spot_player_licence' => $spot['key'],
                     'spot_player_log' => $spot['message'],
-                    'spot_player_watermark' => $payment->order->user->phone
+                    'spot_player_watermark' => $order->user->phone
 
                 ]);
             } else {
-                $payment->order()->update(
+                $order->update(
                     [
                         'status' => 'pending',
                         'spot_player_log' => $spot['message'],
-                        'spot_player_watermark' => $payment->order->user->phone,
+                        'spot_player_watermark' => $order->user->phone,
                     ]);
 
             }
@@ -154,18 +163,18 @@ class PaymentController extends Controller
              * getMessage method, returns a suitable message that can be used in user interface.
              **/
 
-            if ($payment->order->walletTransaction) {
+            if ($order->walletTransaction) {
                 auth()->user()->wallet->transactions()->create([
                     'description' => 'بازگشت به کیف پول به علت پرداخت ناموفق',
                     'type' => 'credit',
-                    'amount' => $payment->order->walletTransaction->amount,
+                    'amount' => $order->walletTransaction->amount,
                 ]);
             }
             $payment->update([
                 'status' => 0
             ]);
 
-            $payment->order()->update([
+            $order->update([
                 'status' => 'cancelled'
             ]);
 
