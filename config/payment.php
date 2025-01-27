@@ -24,7 +24,7 @@ return [
     */
     'drivers' => [
         'local' => [
-            'callbackUrl' => '/callback',
+            'callbackUrl' => 'payment/callback',
             'title' => 'درگاه پرداخت تست',
             'description' => 'این درگاه *صرفا* برای تست صحت روند پرداخت و لغو پرداخت میباشد',
             'orderLabel' => 'شماره سفارش',
@@ -176,8 +176,8 @@ return [
             'apiPurchaseUrl' => 'https://pec.shaparak.ir/NewIPGServices/Sale/SaleService.asmx?wsdl',
             'apiPaymentUrl' => 'https://pec.shaparak.ir/NewIPG/',
             'apiVerificationUrl' => 'https://pec.shaparak.ir/NewIPGServices/Confirm/ConfirmService.asmx?wsdl',
-            'merchantId' => '',
-            'callbackUrl' => 'http://yoursite.com/path/to',
+            'merchantId' => '32P3Uo03114IrrVB67v5',
+            'callbackUrl' => '',
             'description' => 'payment using parsian',
             'currency' => 'T', //Can be R, T (Rial, Toman)
         ],
@@ -359,9 +359,9 @@ return [
             'zaringateApiPaymentUrl' => 'https://www.zarinpal.com/pg/StartPay/:authority/ZarinGate',
             'zaringateApiVerificationUrl' => 'https://ir.zarinpal.com/pg/services/WebGate/wsdl',
 
-            'mode' => 'normal', // can be normal, sandbox, zaringate
-            'merchantId' => '',
-            'callbackUrl' => 'http://yoursite.com/path/to',
+            'mode' => 'sandbox', // can be normal, sandbox, zaringate
+            'merchantId' => '1239e44d-6244-428b-a44b-acb0dc5d8327',
+            'callbackUrl' => '/payment/callback',
             'description' => 'payment using zarinpal',
             'currency' => 'T', //Can be R, T (Rial, Toman)
         ],

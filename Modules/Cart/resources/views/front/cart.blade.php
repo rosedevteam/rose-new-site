@@ -168,14 +168,39 @@
                             {{--todo : make this feature after data import--}}
                             @if(\Modules\Cart\Classes\Helpers\Cart::all()->pluck('product.title')->contains('دوره تخصصی FIS'))
                                 @include('cart::front.components.channel')
-
                             @endif
 
                             <hr>
-                            <h3 class="color-default mb-3 ">روش پرداخت</h3>
+                            <h3 class="color-default mb-3 ">درگاه پرداخت</h3>
                             <div class="payments">
+                                @auth
+                                    @if(auth()->user()->wallet->balance > 0)
+                                        <div class="d-flex" style="    width: 100%;
+    border: solid 1px #e7e7e7;
+    padding: 1rem;
+    border-radius: 10px;">
+                                            <label class="form-check-label custom-option-content" for="use_wallet">
+                                                <span class="d-flex">
+                                                       <input class="form-check-input" name="use_wallet" type="checkbox" value="true" id="use_wallet" form="payment">
+                                                <span class="custom-option-header">
+                                                    <span class="h4 mb-0 me-2 d-flex flex-column gap-3">استفاده از کیف پول
+                                                       <small class="option-text h5">
+                                                           موجودی:
+                                                        {{number_format(auth()->user()->wallet->balance)}}
+                                                                        تومان
+                                                    </small>
+                                                    </span>
+                                                  </span>
+                                                </span>
+
+                                            </label>
+                                        </div>
+
+                                    @endif
+                                @endauth
+
                                 <div class='col'>
-                                    <input type="radio" name="imgbackground" id="img3" class="d-none imgbgchk" value="">
+                                    <input type="radio" name="parsian" id="gateway" class="d-none imgbgchk" checked>
                                     <label for="img3">
                                         <img src="{{asset('assets/front/images/parsian.png')}}" alt="Image 3">
                                         <div class="d-flex flex-column  gap-2">
@@ -184,20 +209,13 @@
                                         </div>
                                     </label>
                                 </div>
-                                <div class='col'>
-                                    <input type="radio" name="imgbackground" id="img4" class="d-none imgbgchk" value="">
-                                    <label for="img4">
-                                        <img src="{{asset('assets/front/images/wallet.svg')}}" alt="Image 4">
-                                        <div class="d-flex flex-column">
-                                            <p class="fw-bold">کیف پول</p>
-                                            <p class="fw-light">موجودی: 582.000 تومان</p>
-                                        </div>
-
-                                    </label>
-                                </div>
                             </div>
                             @auth
-                                <button type="button" class="w-100 btn btn-default" disabled>پرداخت</button>
+                                <form action="{{route('payment.do')}}" method="post" id="payment">
+                                    @csrf
+                                    @method('post')
+                                    <button type="submit" class="w-100 btn btn-default">پرداخت</button>
+                                </form>
                             @else
                                 <a class="btn btn-default w-100" type="button" data-bs-toggle="modal"
                                    data-bs-target="#loginModal">

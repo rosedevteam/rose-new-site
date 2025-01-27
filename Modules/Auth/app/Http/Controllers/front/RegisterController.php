@@ -3,15 +3,19 @@
 namespace Modules\Auth\Http\Controllers\front;
 
 use App\Http\Controllers\Controller;
+use App\traits\CartTools;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use Modules\Auth\Models\RegisterOtp;
+use Modules\Cart\Classes\Helpers\Cart;
 use Modules\Referral\Models\Referral;
 use Modules\Referral\Notifications\ReferralAfterRegister;
 use Modules\User\Models\User;
 
 class RegisterController extends Controller
 {
+    use CartTools;
     public function auth(Request $request)
     {
         try {
@@ -163,6 +167,25 @@ class RegisterController extends Controller
 
             auth()->login($user);
 
+            $cart = Cart::instance(config('services.cart.cookie-name'));
+
+            $totalPrice = $cart->all()->sum(function ($cart) {
+                if (!is_null($cart['product']->sale_price)) {
+                    return $cart['product']->sale_price * $cart['quantity'];
+                } else {
+                    return $cart['product']->price * $cart['quantity'];
+                }
+            });
+
+            //check if user has cart
+            if (auth()->check()) {
+                $userCart = auth()->user()->cart;
+                if (is_null($userCart)) {
+                    self::addCartToDatabase($cart , $totalPrice);
+                } else {
+                    self::editCartToDatabase($cart , $totalPrice , $userCart);
+                }
+            }
 
             return response()->json([
                 'success' => true,
