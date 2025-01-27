@@ -10,7 +10,7 @@ return [
     | You can switch to a different driver at runtime.
     |
     */
-    'default' => 'parsian',
+    'default' => 'zarinpal',
 
     /*
     |--------------------------------------------------------------------------
@@ -24,7 +24,7 @@ return [
     */
     'drivers' => [
         'local' => [
-            'callbackUrl' => '/callback',
+            'callbackUrl' => 'payment/callback',
             'title' => 'درگاه پرداخت تست',
             'description' => 'این درگاه *صرفا* برای تست صحت روند پرداخت و لغو پرداخت میباشد',
             'orderLabel' => 'شماره سفارش',
@@ -359,9 +359,9 @@ return [
             'zaringateApiPaymentUrl' => 'https://www.zarinpal.com/pg/StartPay/:authority/ZarinGate',
             'zaringateApiVerificationUrl' => 'https://ir.zarinpal.com/pg/services/WebGate/wsdl',
 
-            'mode' => 'normal', // can be normal, sandbox, zaringate
-            'merchantId' => '',
-            'callbackUrl' => 'http://yoursite.com/path/to',
+            'mode' => 'sandbox', // can be normal, sandbox, zaringate
+            'merchantId' => '1239e44d-6244-428b-a44b-acb0dc5d8327',
+            'callbackUrl' => '/payment/callback',
             'description' => 'payment using zarinpal',
             'currency' => 'T', //Can be R, T (Rial, Toman)
         ],

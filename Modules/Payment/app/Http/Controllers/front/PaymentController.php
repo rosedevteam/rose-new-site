@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use Mockery\Exception;
 use Modules\Cart\Classes\Helpers\Cart;
 use Modules\Order\Models\Order;
+use Modules\Product\Models\Product;
+use Shetabit\Multipay\Exceptions\InvalidPaymentException;
+use Shetabit\Multipay\Invoice;
+use Shetabit\Payment\Facade\Payment;
 
 class PaymentController extends Controller
 {
@@ -21,11 +25,11 @@ class PaymentController extends Controller
             $cartItems = $cookieCart->all();
 
             if ($cartItems->count()) {
-                $totalPrice = $cookieCart->all()->sum(function($item) {
+                $totalPrice = $cookieCart->all()->sum(function ($item) {
                     if (!is_null($item['product']->sale_price)) {
                         return ($item['product']->sale_price);
                     } else {
-                        return  ($item['product']->price);
+                        return ($item['product']->price);
                     }
                 });
 
@@ -35,11 +39,13 @@ class PaymentController extends Controller
                     $totalPrice = $totalPrice - $discount->amount;
                 }
 
-                $orderItems = $cartItems->mapWithKeys(function ($cart) {
-                    return [$cart['product']->id => ['quantity' => $cart['quantity'], 'price' => $cart['price']]];
+
+                $orderItems = $cartItems->map(function ($cart) {
+                    return $cart['product']->id;
                 });
 
-                if(isset($validData['use_wallet'])) {
+
+                if (isset($validData['use_wallet'])) {
                     if (auth()->user()->wallet->balance >= 30000) {
                         if (auth()->user()->wallet->balance < $totalPrice) {
 
@@ -48,7 +54,6 @@ class PaymentController extends Controller
                                 'type' => 'debit',
                                 'amount' => auth()->user()->wallet->balance,
                             ]);
-
                             $totalPrice = $totalPrice - $wallet_transaction->amount;
 
                             $order = auth()->user()->orders()->create([
@@ -61,11 +66,11 @@ class PaymentController extends Controller
 
                         }
 
-                    }else{
+                    } else {
                         throw new Exception('کیف پول شما کمتر از 30.000 تومان است');
                     }
 
-                }else {
+                } else {
 
                     $order = auth()->user()->orders()->create([
                         'price' => $totalPrice,
@@ -76,14 +81,24 @@ class PaymentController extends Controller
 
                 }
 
+                $invoice = (new Invoice())->amount($totalPrice);
 
+                return Payment::callbackUrl(route('payment.callback'))->purchase($invoice, function ($driver, $transactionId) use ($order, $cookieCart, $invoice) {
 
-                $cookieCart->flush();
+                    $order->payments()->create([
+                        'resnumber' => $invoice->getTransactionId(),
+                        'status' => 0
+                    ]);
 
-//            return view('payment::cardToCard' , compact('order'));
+//                    $cookieCart->flush();
+
+                })->pay()->render();
+
+            } else {
+                throw new Exception('سبد خرید شما خالی است');
             }
-        }catch (\Exception $exception){
-            alert()->error('خطا', $exception->getMessage());
+        } catch (\Exception $exception) {
+            toast()->error('خطا', $exception->getMessage());
             return back();
         }
 
@@ -93,27 +108,44 @@ class PaymentController extends Controller
     public function callback(Request $request)
     {
         try {
-            $payment = Payment::where('resnumber', $request->Authority)->firstOrFail();
+            $payment = \Modules\Payment\Models\Payment::where('resnumber', $request->Authority)->firstOrFail();
+
             // $payment->order->price
-            $receipt = ShetabitPayment::amount($payment->order->price)->transactionId($request->Authority)->verify();
+            $receipt = Payment::amount($payment->order->price)->transactionId($request->Authority)->verify();
 
             $payment->update([
                 'status' => 1
             ]);
 
-            foreach ($payment->order->products as $product) {
-                if (!is_null($product->inventory)) {
-                    $product->update([
-                        'inventory' => $product->inventory - $product->pivot->quantity
-                    ]);
-                }
-            }
-            $payment->order()->update([
-                'status' => 'paid'
-            ]);
+            $spot_keys = $payment->order->products->where('spot_player_key' , '<>' , null)->pluck('spot_player_key')->toArray();
 
-            alert()->success('پرداخت شما موفق بود');
-            return redirect(route('profile.orders'));
+            $spot_response = createSpotPlayerLicence(
+                auth()->user()->name(),
+                $spot_keys,
+                $payment->order->user->phone);
+            $spot = json_decode($spot_response->getContent(), true);
+            if ($spot_response->getStatusCode() == 200) {
+                $payment->order()->update([
+                    'status' => 'completed',
+                    'spot_player_id' => $spot['id'],
+                    'spot_player_licence' => $spot['key'],
+                    'spot_player_log' => $spot['message'],
+                    'spot_player_watermark' => $payment->order->user->phone
+
+                ]);
+            } else {
+                $payment->order()->update(
+                    [
+                        'status' => 'pending',
+                        'spot_player_log' => $spot['message'],
+                        'spot_player_watermark' => $payment->order->user->phone,
+                    ]);
+
+            }
+
+
+            toast()->success('تبریک! پرداخت شما با موفقیت انجام شد');
+            return redirect(route('profile.courses'));
 
         } catch (InvalidPaymentException $exception) {
             /**
@@ -121,7 +153,23 @@ class PaymentController extends Controller
              * We can catch the exception to handle invalid payments.
              * getMessage method, returns a suitable message that can be used in user interface.
              **/
-            alert()->error($exception->getMessage());
+
+            if ($payment->order->walletTransaction) {
+                auth()->user()->wallet->transactions()->create([
+                    'description' => 'بازگشت به کیف پول به علت پرداخت ناموفق',
+                    'type' => 'credit',
+                    'amount' => $payment->order->walletTransaction->amount,
+                ]);
+            }
+            $payment->update([
+                'status' => 0
+            ]);
+
+            $payment->order()->update([
+                'status' => 'cancelled'
+            ]);
+
+            toast()->error($exception->getMessage());
             return redirect(route('profile.orders'));
         }
     }

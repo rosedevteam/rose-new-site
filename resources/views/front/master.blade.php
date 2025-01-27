@@ -71,6 +71,6 @@
 <script src="{{asset('assets/front/js/app.js')}}"></script>
 
 @yield('footer')
-
+@include('sweetalert::alert')
 </body>
 </html>

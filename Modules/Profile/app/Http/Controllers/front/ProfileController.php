@@ -27,6 +27,7 @@ class ProfileController extends Controller
 
     public function myCourses()
     {
+        //todo map orders to send licence with products
         $this->seo()->setTitle('حساب کاربری');
         $products = auth()->user()->orders()->where('status' , 'completed')->with('products')->get()->pluck('products')->flatten()->unique('id');
         return view('profile::orders.my-courses' , compact('products'));

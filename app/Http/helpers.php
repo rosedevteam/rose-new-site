@@ -119,3 +119,63 @@ if (!function_exists('sendVerifySms')) {
 
     }
 }
+
+if (!function_exists('createSpotPlayerLicence')) {
+    function createSpotPlayerLicence($name, $courses, $watermarks)
+    {
+        function filter($a): array
+        {
+            return array_filter($a, function ($v) {
+                return !is_null($v);
+            });
+        }
+
+        function requestSpot($u, $o = null)
+        {
+            $api_key = config('services.spotplayer.api');
+            curl_setopt_array($c = curl_init(), [
+                CURLOPT_URL => $u,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_CUSTOMREQUEST => $o ? 'POST' : 'GET',
+                CURLOPT_SSL_VERIFYHOST => false,
+                CURLOPT_SSL_VERIFYPEER => false,
+                CURLOPT_FOLLOWLOCATION => false,
+                CURLOPT_HTTPHEADER => ['$API: ' . $api_key, '$LEVEL: -1', 'content-type: application/json'],
+            ]);
+            if ($o) curl_setopt($c, CURLOPT_POSTFIELDS, json_encode(filter($o)));
+            $json = json_decode(curl_exec($c), true);
+            curl_close($c);
+            if (is_array($json) && ($ex = @$json['ex'])) throw new \Exception($ex['msg']);
+            return $json;
+        }
+
+        function license($name, $courses, $watermarks, $test = true)
+        {
+            return requestSpot('https://panel.spotplayer.ir/license/edit/', [
+                'test' => false,
+                'name' => $name,
+                'course' => $courses,
+                'watermark' => ['texts' => array_map(function ($w) {
+                    return ['text' => $w];
+                }, $watermarks)]
+            ]);
+        }
+
+        try {
+            $L = license($name, $courses, [$watermarks], false);
+            return response()->json([
+                'status' => 'success',
+                'id' => ($LID = $L['_id']),
+                'key' => $L['key'],
+                'url' => 'https://dl.spotplayer.ir/' . $L['url'],
+                'message' => 'لایسنس با موفقیت ایجاد شد'
+            ], 200);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 400);
+        }
+
+    }
+}
