@@ -21,6 +21,16 @@ class CartController extends Controller
 
         $cookieCart = Cart::instance(config('services.cart.cookie-name'));
 
+        if(auth()->check()) {
+            $userProducts = auth()->user()->orders()->where('status' , 'completed')->with('products')->get()->pluck('products.*.id')->flatten()->unique()->toArray();
+            $productsThatUserHaveAlready = array_intersect($userProducts , $cookieCart->all()->pluck('product.id' , 'id')->toArray());
+
+            foreach ($productsThatUserHaveAlready as $product) {
+                $item = $cookieCart->all()->where('product.id' , $product)->first();
+                $cookieCart->delete($item['id']);
+                toast()->error('توجه' , 'محصولاتی که قبلا در آن ثبت نام کردید از سبد شما حذف شدند');
+            }
+        }
         return view('cart::front.cart', compact('cookieCart'));
     }
 

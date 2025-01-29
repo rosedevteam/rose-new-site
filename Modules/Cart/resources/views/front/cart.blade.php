@@ -10,8 +10,8 @@
                             <div class="cart">
                                 <h3 class="color-default mb-3 ">جزئیات سفارش</h3>
                                 <div class="cart-page-inner">
-                                    @if(\Modules\Cart\Classes\Helpers\Cart::instance(config('services.cart.cookie-name'))->all()->count() > 0)
-                                        @foreach(\Modules\Cart\Classes\Helpers\Cart::instance(config('services.cart.cookie-name'))->all() as $item)
+                                    @if($cookieCart->all()->count() > 0)
+                                        @foreach($cookieCart->all() as $item)
                                             @if(isset($item['product']))
                                                 @php
                                                     $product = $item['product'];
@@ -121,20 +121,20 @@
                         <div class="bg-white br-default p-4">
                             <h3 class="color-default mb-3 ">اطلاعات پرداخت</h3>
                             @php
-                                $totalPrice = \Modules\Cart\Classes\Helpers\Cart::all()->sum(function($item) {
+                                $totalPrice = $cookieCart->all()->sum(function($item) {
                                     if (!is_null($item['product']->sale_price)) {
                                             return ($item['product']->sale_price);
                                         } else {
                                             return  ($item['product']->price);
                                         }
                                 });
-                                if (\Modules\Cart\Classes\Helpers\Cart::isCartDiscountable()) {
-                                    $discount = \Modules\Cart\Classes\Helpers\Cart::getDiscount();
+                                if ($cookieCart->isCartDiscountable()) {
+                                    $discount = $cookieCart->getDiscount();
                                     $totalPrice = $totalPrice - $discount->amount;
                                 }
                             @endphp
                             <div class="discount-form-wrapper">
-                                @if($discount = \Modules\Cart\Classes\Helpers\Cart::getDiscount())
+                                @if($discount = $cookieCart->getDiscount())
                                     <div class="discount-info">
                                         <div
                                             class="d-flex align-items-center justify-content-between mb-3 title fw-bold">
@@ -166,7 +166,7 @@
                             </ul>
 
                             {{--todo : make this feature after data import--}}
-                            @if(\Modules\Cart\Classes\Helpers\Cart::all()->pluck('product.title')->contains('دوره تخصصی FIS'))
+                            @if($cookieCart->all()->pluck('product.title')->contains('دوره تخصصی FIS'))
                                 @include('cart::front.components.channel')
                             @endif
 
