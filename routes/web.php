@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Auth\Http\Controllers\AuthController;
 
 
 Route::view('/', 'index')->name('index');
@@ -12,4 +13,4 @@ Route::view('/ham-masir', 'ham-masir')->name('ham-masir');
 //
 
 
-Route::post('logout', [\Modules\Auth\Http\Controllers\AuthController::class, 'logout'])->name('logout');
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');

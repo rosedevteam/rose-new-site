@@ -28,7 +28,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
-class User extends \Illuminate\Foundation\Auth\User implements JwtSubject
+class User extends \Illuminate\Foundation\Auth\User
 {
     use HasFactory, HasRoles, Notifiable;
 
@@ -64,7 +64,7 @@ class User extends \Illuminate\Foundation\Auth\User implements JwtSubject
         return $this->hasMany(User::class, 'creator_id');
     }
 
-    public function otpCode()
+    public function otpCodes()
     {
         return $this->hasOne(OtpCode::class);
     }
@@ -173,15 +173,5 @@ class User extends \Illuminate\Foundation\Auth\User implements JwtSubject
     protected static function newFactory()
     {
         return UserFactory::new();
-    }
-
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    public function getJWTCustomClaims()
-    {
-        return [];
     }
 }

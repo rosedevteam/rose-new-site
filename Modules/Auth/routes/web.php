@@ -12,5 +12,3 @@ Route::prefix('register')->group(function () {
     Route::post("token", [\Modules\Auth\Http\Controllers\front\RegisterController::class, 'token']);
     Route::post("/", [\Modules\Auth\Http\Controllers\front\RegisterController::class, 'register']);
 });
-
-

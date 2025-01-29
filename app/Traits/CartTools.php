@@ -1,8 +1,6 @@
 <?php
 
-namespace App\traits;
-
-use Modules\Cart\Classes\Helpers\Cart;
+namespace App\Traits;
 
 trait CartTools
 {

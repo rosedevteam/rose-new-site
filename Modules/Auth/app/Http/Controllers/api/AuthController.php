@@ -3,175 +3,165 @@
 namespace Modules\Auth\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use Modules\Auth\Models\OtpCode;
-use Modules\Auth\Models\RegisterOtp;
-use Modules\Auth\Notifications\OtpNotification;
+use Modules\Auth\Models\Otp;
 use Modules\User\Models\User;
 
 class AuthController extends Controller
 {
     public function up()
     {
-        // todo disable app api from admin panel
-        return response()->json([
-            'up' => true
+        // todo
+        $up = true;
+
+        $response = response()->json([
+            'up' => $up,
+            'auth' => null,
         ]);
+
+        if ($up) $response['auth'] = auth()->check();
+
+        return $response;
     }
 
     public function auth()
     {
         try {
-            $credentials = request()->validate([
+            $validData = request()->validate([
                 'phone' => ['required', 'regex:/^09[0|1|2|3][0-9]{8}$/']
             ]);
-            $user = User::where('phone', $credentials['phone'])->first();
 
-            if ($user) return self::loginPhone($user);
-            else return self::registerPhone($credentials['phone']);
+            $code = Otp::where('phone', $validData['phone'])->first();
+
+            // when a previous code exists and is not expired
+            if ($code && $code->expires_at >= now()) {
+                return response()->json([
+                    'error' => null,
+                ]);
+            }
+
+            // delete the previous code if exists
+            $code?->delete();
+
+            $code = Otp::create([
+                'phone' => $validData['phone'],
+                'expires_at' => now()->addMinutes(2),
+                'otp' => mt_rand(100000, 999999),
+            ]);
+
+            sendVerifySms($code->phone, $code->otp);
+
+            return response()->json([
+                'error' => null,
+            ]);
 
         } catch (\Throwable $th) {
             return response()->json([
-                'success' => false,
-                'message' => $th->getMessage(),
+                'error' => $th->getMessage()
             ], 400);
         }
     }
 
-    private function loginPhone($user)
-    {
-        $code = OtpCode::generateCode($user);
-
-        $user->notify(new OtpNotification($user->phone, $code));
-
-        return response()->json([
-            'success' => true,
-            'registered' => true,
-            'message' => 'کد با موفقیت ارسال شد',
-        ]);
-    }
-
-    private function registerPhone($phone)
-    {
-        if ($prevCode = RegisterOtp::where('phone', $phone)->exists())
-            $prevCode->first()->delete();
-
-        $code = RegisterOtp::create([
-            'otp' => mt_rand(100000, 999999),
-            'phone' => $phone,
-            'expired_at' => now()->addMinutes(2)
-        ]);
-
-        sendVerifySms($phone, $code->otp);
-
-        return response()->json([
-            'success' => true,
-            'registered' => false,
-            'message' => 'کد با موفقیت ارسال شد',
-        ]);
-    }
-
-    public function tokenLogin()
+    public function token()
     {
         try {
-            $credentials = request()->validate([
-                'phone' => 'required|exists:users,phone',
-                'otp' => 'required',
+            $validData = request()->validate([
+                'phone' => "required|exists:otps,phone",
+                'otp' => "required",
             ]);
-            $user = User::where('phone', $credentials['phone'])->first();
 
-            if ($user->otpCode == $credentials['otp']) {
-                $token = auth()->loginUsingId($user->id);
+            $code = Otp::where('phone', $validData['phone'])->first();
 
-                $this->respondWithToken($token);
-
-            } else {
-                throw new \Exception('کد اشتباه است');
+            // throw if expired
+            if ($code->expires_at < now()) {
+                throw new \Exception("code expired");
             }
-        } catch (\Throwable $th) {
-            return response()->json([
-                'success' => false,
-                'message' => $th->getMessage(),
-            ]);
-        }
-    }
 
-    public function tokenRegister()
-    {
-        try {
-            $credentials = request()->validate([
-                'phone' => 'required|exists:register_otp,phone',
-                'otp' => 'required',
-            ]);
-            $code = RegisterOtp::where('phone', $credentials['phone'])->first();
+            // throw if wrong code
+            if ($code->otp != $validData['otp']) {
+                throw new \Exception("wrong code");
+            }
 
-            if ($code->otp == $credentials['otp']) {
-                $code->update([
-                    'is_verified' => true,
-                ]);
+            $user = User::where('phone', $validData['phone'])->first();
+
+            if ($user) {
+                // login if user exists
+                auth()->login($user);
+
+                $token = $user->createToken($validData['phone'])->plainTextToken;
+
+                $code->delete();
+
                 return response()->json([
-                    'success' => true,
-                    'registered' => false,
-                    'message' => null
+                    'token' => $token,
+                    'is_registered' => true,
+                    'error' => null,
                 ]);
-            } else {
-                throw new \Exception('کد اشتباه است');
             }
+
+            // goto register if user doesnt exist
+            $code->update(['is_verified' => 1]);
+
+            return response()->json([
+                'token' => null,
+                "is_registered" => false,
+                'error' => null,
+            ]);
+
         } catch (\Throwable $th) {
             return response()->json([
-                'success' => false,
-                'message' => $th->getMessage(),
-            ]);
+                'error' => $th->getMessage(),
+                'token' => null,
+                'is_registered' => null,
+            ], 400);
         }
     }
 
     public function register()
     {
         try {
-            $credentials = request()->validate([
-                'phone' => 'required|exists:register_otp,phone',
-                'full_name' => 'required',
-                'last_name' => 'required',
-                'birthday' => 'required',
+            $validData = request()->validate([
+                'phone' => "exists:otps,phone",
+                'first_name' => "required",
+                'last_name' => "required",
+                'referral_code' => "nullable",
             ]);
 
-            $code = RegisterOtp::where('phone', $credentials['phone'])->first();
-            if (!$code->is_verified) throw new \Exception();
+            $code = Otp::Where('phone', $validData['phone'])->first();
 
-            $user = User::create($credentials);
+            // throw if phone is not verified
+            if (!$code->is_verified) {
+                throw new \Exception("not verified");
+            }
 
-            $token = auth()->loginUsingId($user->id);
+            $user = create([
+                'phone' => $validData['phone'],
+                'first_name' => $validData['first_name'],
+                'last_name' => $validData['last_name'],
+            ]);
 
-            return $this->respondWithToken($token);
+            auth()->login($user);
+
+            $code->delete();
+
+            $token = $user->createToken($validData['phone'])->plainTextToken;
+
+            return response()->json([
+                'token' => $token,
+                'error' => null,
+            ]);
+
         } catch (\Throwable $th) {
             return response()->json([
-                'success' => false,
-                'message' => $th->getMessage(),
-            ]);
+                'error' => $th->getMessage(),
+                'token' => null,
+            ], 400);
         }
-    }
-
-    public function refresh()
-    {
-        return $this->respondWithToken(auth()->refresh());
     }
 
     public function logout()
     {
-        auth()->logout();
+        auth()->user()->tokens()->delete();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'خروج با موفقیت انجام شد'
-        ]);
-    }
-
-    protected function respondWithToken($token)
-    {
-        return response()->json([
-            'success' => true,
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
-        ]);
+        return response()->json();
     }
 }
