@@ -28,10 +28,10 @@ class CartController extends Controller
             foreach ($productsThatUserHaveAlready as $product) {
                 $item = $cookieCart->all()->where('product.id' , $product)->first();
                 $cookieCart->delete($item['id']);
-                toast()->error('توجه' , 'محصولاتی که قبلا در آن ثبت نام کردید از سبد شما حذف شدند');
+                $message = 'محصولاتی که قبلا در آن ثبت نام کردید از سبد شما حذف شدند';
             }
         }
-        return view('cart::front.cart', compact('cookieCart'));
+        return view('cart::front.cart', compact('cookieCart'))->with('message' , $message);
     }
 
 

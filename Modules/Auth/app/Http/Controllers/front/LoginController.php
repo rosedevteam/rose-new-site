@@ -95,7 +95,6 @@ class LoginController extends Controller
                 throw new \Exception('کد وارد شده صحیح نمیباشد' , 400);
             } else {
                 $cart = Cart::instance(config('services.cart.cookie-name'));
-
                 $totalPrice = $cart->all()->sum(function ($cart) {
                     if (!is_null($cart['product']->sale_price)) {
                         return $cart['product']->sale_price * $cart['quantity'];
