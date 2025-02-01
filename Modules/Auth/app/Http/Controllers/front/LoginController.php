@@ -3,9 +3,8 @@
 namespace Modules\Auth\Http\Controllers\front;
 
 use App\Http\Controllers\Controller;
-use App\traits\CartTools;
+use App\Traits\CartTools;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 use Modules\Auth\Models\OtpCode;
 use Modules\Auth\Models\RegisterOtp;

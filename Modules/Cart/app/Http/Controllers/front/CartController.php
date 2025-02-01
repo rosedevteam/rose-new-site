@@ -3,7 +3,7 @@
 namespace Modules\Cart\Http\Controllers\front;
 
 use App\Http\Controllers\Controller;
-use App\traits\CartTools;
+use App\Traits\CartTools;
 use Artesaos\SEOTools\Traits\SEOTools;
 use Illuminate\Http\Request;
 use Modules\Cart\Classes\Helpers\Cart;

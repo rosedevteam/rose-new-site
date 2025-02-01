@@ -25,7 +25,6 @@ use Modules\User\Database\Factories\UserFactory;
 use Modules\Wallet\Models\Wallet;
 use Modules\Wallet\Models\WalletTransaction;
 use Spatie\Permission\Traits\HasRoles;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
 class User extends \Illuminate\Foundation\Auth\User
