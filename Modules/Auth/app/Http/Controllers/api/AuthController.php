@@ -13,17 +13,17 @@ class AuthController extends Controller
         // todo
         $up = true;
 
-        $response = response()->json([
-            'up' => $up,
-            'auth' => null,
-        ]);
-
-        if ($up) $response['auth'] = auth()->check();
-
-        return $response;
+        return response()->json(compact('up'));
     }
 
     public function auth()
+    {
+        return response()->json([
+            'auth' => auth()->check(),
+        ]);
+    }
+
+    public function send()
     {
         try {
             $validData = request()->validate([
