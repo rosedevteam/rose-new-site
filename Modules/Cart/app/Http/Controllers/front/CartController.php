@@ -21,6 +21,8 @@ class CartController extends Controller
 
         $cookieCart = Cart::instance(config('services.cart.cookie-name'));
 
+        $message = null;
+
         if(auth()->check()) {
             $userProducts = auth()->user()->orders()->where('status' , 'completed')->with('products')->get()->pluck('products.*.id')->flatten()->unique()->toArray();
             $productsThatUserHaveAlready = array_intersect($userProducts , $cookieCart->all()->pluck('product.id' , 'id')->toArray());

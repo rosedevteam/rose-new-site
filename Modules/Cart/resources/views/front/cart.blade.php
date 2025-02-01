@@ -4,6 +4,12 @@
             <div class="container">
                 <input type="hidden" name="cart-name" value="{{config('services.cart.cookie-name')}}" id="cart-name">
                 <div class="row rose-py-7">
+                    @if($message)
+                        <div class="alert alert-warning" role="alert" dir="rtl">
+                            {{$message}}
+                        </div>
+                    @endif
+
                     <div class="col-md-8">
 
                         <div class="bg-white br-default p-4">
