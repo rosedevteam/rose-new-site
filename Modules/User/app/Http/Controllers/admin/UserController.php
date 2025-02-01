@@ -266,7 +266,7 @@ class UserController extends Controller
             ]);
             $role = Role::where('id', $data['role_id'])->first()->name;
             if ($role == 'super-admin') {
-                return back();
+                abort(403);
             }
 
             $before = $user->getRoleNames();

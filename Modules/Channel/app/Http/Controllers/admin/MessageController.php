@@ -3,7 +3,7 @@
 namespace Modules\Channel\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\traits\Upload;
+use App\Traits\Upload;
 use Hekmatinasser\Verta\Facades\Verta;
 use Illuminate\Http\Request;
 use Modules\Channel\Models\Channel;

@@ -3,7 +3,7 @@
 namespace Modules\Order\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\traits\FormatDate;
+use App\Traits\FormatDate;
 use Gate;
 use Illuminate\Http\Request;
 use Modules\Order\Models\Order;
@@ -75,7 +75,7 @@ class OrderController extends Controller
         ]);
 
         try {
-            $validData['created_at'] = self::formatDate($validData['created_at']);
+            $validData['created_at'] = self::formatDateTime($validData['created_at']);
 
             $total = 0;
 
@@ -165,7 +165,7 @@ class OrderController extends Controller
 
         try {
 
-            $validData['created_at'] = self::formatDate($validData['created_at']);
+            $validData['created_at'] = self::formatDateTime($validData['created_at']);
 
             $total = 0;
 

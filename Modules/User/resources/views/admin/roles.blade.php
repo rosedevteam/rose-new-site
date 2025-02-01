@@ -5,7 +5,7 @@
         @if($errors->any())
             <div class="alert alert-danger" style="padding-right: 80px">{{ $errors->first() }}</div>
         @endif
-        <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="flex-grow-1 mx-4">
             <div class="card">
                 <div class="card-datatable table-responsive">
                     <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
@@ -74,6 +74,7 @@
                             @endforeach
                             </tbody>
                         </table>
+                        {{ $roles->links() }}
                     </div>
 
                 </div>

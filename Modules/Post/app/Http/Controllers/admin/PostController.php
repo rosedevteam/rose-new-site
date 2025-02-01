@@ -3,8 +3,8 @@
 namespace Modules\Post\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\traits\Slug;
-use App\traits\Upload;
+use App\Traits\Slug;
+use App\Traits\Upload;
 use Gate;
 use Illuminate\Http\Request;
 use Modules\Post\Models\Post;

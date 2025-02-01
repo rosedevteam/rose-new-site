@@ -31,6 +31,7 @@
                                     <div
                                         class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
                                         <div class="dt-buttons btn-group flex-wrap">
+                                            <span class="me-4">{{ number_format($users->total()) }} آیتم</span>
                                             <button class="btn add-new btn-secondary"
                                                     aria-controls="DataTables_Table_0" type="button"
                                                     data-bs-toggle="offcanvas"
@@ -38,11 +39,11 @@
                                                         class="bx bx-filter me-0 me-lg-2"></i><span
                                                         class="d-none d-lg-inline-block">فیلتر</span></span>
                                             </button>
-                                            <a class="btn btn-info down-btn" href=""
+                                            <button class="btn btn-info down-btn" href=""
                                                aria-controls="DataTables_Table_0" type="button"><span><i
                                                         class="bx bx-plus me-0 me-lg-2"></i><span
                                                         class="d-none d-lg-inline-block">اکسپورت</span></span>
-                                            </a>
+                                            </button>
                                             <button class="btn add-new btn-primary"
                                                     aria-controls="DataTables_Table_0" type="button"
                                                     data-bs-toggle="offcanvas"
@@ -216,7 +217,6 @@
                                                    class="form-control">
                                         </div>
                                     </div>
-                                    {{--                                    todo finish search by order--}}
                                     <div class="row">
                                         <label for="products" class="form-label">محصولات سفارش:</label>
                                         <div class="select2-primary">
@@ -378,8 +378,6 @@
     <script src="/assets/admin/js/autonumeric/autonumeric.min.js"></script>
     <script src="/assets/admin/js/datepicker/persian-date.min.js"></script>
     <script src="/assets/admin/js/datepicker/persian-datepicker.min.js"></script>
-    <script src="/assets/admin/vendor/libs/select2/select2.js"></script>
-    <script src="/assets/admin/vendor/libs/select2/i18n/fa.js"></script>
 @endpush
 
 @push('script')

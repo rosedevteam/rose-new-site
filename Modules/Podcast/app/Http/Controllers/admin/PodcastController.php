@@ -3,7 +3,7 @@
 namespace Modules\Podcast\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\traits\Upload;
+use App\Traits\Upload;
 use Gate;
 use Modules\Podcast\Models\Podcast;
 

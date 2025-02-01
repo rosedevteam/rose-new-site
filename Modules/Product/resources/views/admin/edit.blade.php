@@ -121,13 +121,13 @@
                                         <div class="row g-3">
                                             <div class="col-md-6">
                                                 <label class="form-label" for="title">تعداد رزرو</label>
-                                                <input type="text" id="title" readonly
-                                                       class="form-control" value="{{ $product->reserves->count() }}">
+                                                <p id="title">{{ $product->reserves->count() }}</p>
                                             </div>
                                             <div class="col-md-6">
                                                 <button type="submit" class="btn btn-primary mt-4 d-flex" id="notify"
+                                                        @if(!$product->reserves->count()) disabled @endif
                                                         form="notify-form">ارسال اس ام اس
-                                                    موجود بودن محصول
+                                                    موجود بودن محصول به افراد رزرو کرده
                                                 </button>
                                             </div>
                                         </div>

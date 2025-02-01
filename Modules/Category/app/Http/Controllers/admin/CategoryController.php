@@ -3,7 +3,7 @@
 namespace Modules\Category\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\traits\Slug;
+use App\Traits\Slug;
 use Gate;
 use Illuminate\Http\Request;
 use Modules\Category\Models\Category;
@@ -34,7 +34,7 @@ class CategoryController extends Controller
                 $categories = $categories->where('type', $type);
             }
 
-            $categories = $categories->orderBy('created_at', 'desc')->paginate(50);
+            $categories = $categories->orderBy('created_at', 'desc')->paginate(500);
             return view('category::admin.index', compact('categories', 'type', 'types', 'parents'));
         } catch (\Throwable $th) {
             alert()->error('خطا', $th->getMessage());

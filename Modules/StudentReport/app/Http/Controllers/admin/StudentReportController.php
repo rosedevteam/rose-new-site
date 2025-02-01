@@ -3,7 +3,7 @@
 namespace Modules\StudentReport\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\traits\ConvertNums;
+use App\Traits\ConvertNums;
 use Gate;
 use Illuminate\Http\Request;
 use Modules\StudentReport\Models\StudentReport;

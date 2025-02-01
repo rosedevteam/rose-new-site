@@ -106,9 +106,9 @@
                                     colspan="1" style="width: 10%" aria-sort="ascending">تاریخ ثبت
                                 </th>
                                 @can('edit-orders')
-                                <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width: 5%" aria-sort="ascending">جزییات
-                                </th>
+                                    <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                        colspan="1" style="width: 5%" aria-sort="ascending">جزییات
+                                    </th>
                                 @endcan
                             </tr>
                             </thead>
@@ -118,27 +118,22 @@
                                     <td>
                                         @can('view-users')
                                             <a href="{{ route('admin.users.edit', $order->user->first()) }}"
-                                       class="text-body text-truncate"><span
-                                            class="fw-semibold">{{ $order->user->name() }}</span> </a>
+                                               class="text-body text-truncate"><span
+                                                    class="fw-semibold">{{ $order->user->name() }}</span> </a>
                                         @else
                                             {{ $order->user->name() }}
                                         @endcan
                                     </td>
                                     <td>
-                                        @php
-                                            $len = count($order->products()->get())-1;
-                                            $i = 0
-                                        @endphp
                                         @foreach($order->products()->get() as $product)
                                             @can('view-products')
                                                 <a href="{{ route('admin.products.edit', $product) }}"
-                                               class="text-body text-truncate"><span
-                                                    class="fw-semibold">{{ $product->title . ($i != $len ? "، " : "") }}</span></a>
+                                                   class="text-body text-truncate"><span
+                                                        class="badge bg bg-secondary">{{ $product->title }}</span></a>
                                             @else
                                                 <span
-                                                    class="fw-semibold">{{ $product->title . ($i != $len ? "، " : "") }}</span>
+                                                    class="badge bg bg-secondary">{{ $product->title }}</span>
                                             @endcan
-                                            @php $i++ @endphp
                                         @endforeach
                                     </td>
                                     <td>{{ number_format($order->price) }}
@@ -179,17 +174,17 @@
                                         </div>
                                     </td>
                                     @can('edit-orders')
-                                    <td>
-                                        <div class="d-flex gap-3 text-nowrap">
-                                            <a href="{{ route('admin.orders.edit', $order) }}"
-                                               class="btn btn-sm btn-info">
-                                                ویرایش
-                                            </a>
-                                            @can('delete-orders')
-                                                <x-admin::deletebutton data-id="{{ $order->id }}"/>
-                                            @endcan
-                                        </div>
-                                    </td>
+                                        <td>
+                                            <div class="d-flex gap-3 text-nowrap">
+                                                <a href="{{ route('admin.orders.edit', $order) }}"
+                                                   class="btn btn-sm btn-info">
+                                                    ویرایش
+                                                </a>
+                                                @can('delete-orders')
+                                                    <x-admin::deletebutton data-id="{{ $order->id }}"/>
+                                                @endcan
+                                            </div>
+                                        </td>
                                     @endcan
                                 </tr>
                             @endforeach

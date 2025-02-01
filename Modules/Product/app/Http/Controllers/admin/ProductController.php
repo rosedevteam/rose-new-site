@@ -3,7 +3,7 @@
 namespace Modules\Product\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\traits\Slug;
+use App\Traits\Slug;
 use Gate;
 use Illuminate\Support\Arr;
 use Modules\Product\Models\Product;

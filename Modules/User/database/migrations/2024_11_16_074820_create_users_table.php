@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('phone')->unique();
             $table->string('email')->unique()->nullable();
             $table->string('password')->nullable();
-            $table->timestamp('birthday')->nullable();
+            $table->string('birthday')->nullable()->default(null);
             $table->string('avatar')->nullable();
             $table->rememberToken();
             $table->timestamps();

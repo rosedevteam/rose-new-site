@@ -3,7 +3,7 @@
 namespace Modules\JobApplication\Http\Controllers\front;
 
 use App\Http\Controllers\Controller;
-use App\traits\Upload;
+use App\Traits\Upload;
 use Illuminate\Validation\Rules\File;
 use Modules\JobApplication\Models\JobApplication;
 

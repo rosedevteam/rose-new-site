@@ -3,7 +3,7 @@
 namespace Modules\DailyReport\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\traits\ConvertNums;
+use App\Traits\ConvertNums;
 use Gate;
 use Illuminate\Validation\Rules\File;
 use Modules\DailyReport\Models\DailyReport;

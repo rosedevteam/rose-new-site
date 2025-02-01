@@ -10,7 +10,6 @@
             <div class="alert alert-danger" style="padding-right: 80px">{{ $errors->first() }}</div>
         @endif
         <div class="flex-grow-1 p-3y">
-            {{$subs->appends(['search' => request('search'),])}}
             <!-- subs List Table -->
             <div class="card mx-4">
                 <div class="row p-3">
@@ -180,11 +179,10 @@
 
                         </tbody>
                     </table>
-
+                    {{ $subs->links() }}
                 </div>
 
             </div>
-            {{$subs->appends(['search' => request('search'),])}}
         </div>
     </div>
 @stop

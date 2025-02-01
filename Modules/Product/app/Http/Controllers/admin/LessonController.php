@@ -3,7 +3,7 @@
 namespace Modules\Product\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\traits\Upload;
+use App\Traits\Upload;
 use Modules\Product\Models\Lesson;
 use Modules\Product\Models\Product;
 

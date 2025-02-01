@@ -5,7 +5,7 @@
         @if($errors->any())
             <div class="alert alert-danger" style="padding-right: 80px">{{ $errors->first() }}</div>
         @endif
-        <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="flex-grow-1 mx-4">
             <div class="card">
                 <div class="card-header border-bottom">
                     <div class="col d-flex justify-content-between">

@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="content-wrapper">
-        <div class="flex-grow px-3">
+        <div class="flex-grow mx-4">
             <div class="col-xl-12 col-12 mb-4">
                 <div class="card h-100">
                     <div class="row row-bordered m-0">

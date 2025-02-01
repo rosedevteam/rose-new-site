@@ -12,7 +12,6 @@
             <div class="alert alert-danger" style="padding-right: 80px">{{ $errors->first() }}</div>
         @endif
         <div class="flex-grow-1 p-3y">
-            {{$reserves->appends(['search' => request('search'),'filter' => request('filter'), 'products' => request('products') , 'from' => request('from') , 'to' => request('to')])}}
             <!-- Users List Table -->
             <div class="card mx-4">
                 <div class="row p-3">
@@ -210,6 +209,7 @@
 
                         </tbody>
                     </table>
+                    {{ $reserves->links() }}
 
                 </div>
 
@@ -243,15 +243,16 @@
                         <div class="row mb-2">
                             <div class="col-md-6">
                                 <label for="from" class="form-label-sm my-1"> از تاریخ </label>
-                                <input type="text" class="form-control mb-2" name="from" id="from" autocomplete="off"
+                                <input type="text" class="date-picker form-control mb-2" name="from" id="from"
+                                       autocomplete="off"
                                        placeholder="از تاریخ" value="{{request('from')}}">
 
                             </div>
                             <div class="col-md-6">
                                 <label for="to" class="form-label-sm my-1"> تا تاریخ </label>
-                                <input type="text" class="form-control mb-2" name="to" id="to" autocomplete="off"
+                                <input type="text" class="date-picker form-control mb-2" name="to" id="to"
+                                       autocomplete="off"
                                        placeholder="تا تاریخ" value="{{request('to')}}">
-
                             </div>
                         </div>
 
@@ -262,15 +263,11 @@
                 </div>
             </div>
 
-            {{$reserves->appends(['search' => request('search'), 'products' => request('products') , 'from' => request('from') , 'to' => request('to')])}}
         </div>
     </div>
 @endsection
 
 @section('vendor')
-    {{--    todo fix datepicker--}}
-    <script src="/assets/admin/js/datepicker/persian-date.min.js"></script>
-    <script src="/assets/admin/js/datepicker/persian-datepicker.min.js"></script>
     <script src="/assets/aadmin/js/axios.js"></script>
     <script src="/assets/admin/js/search.js"></script>
     <script src="/assets/admin/js/product/all.js"></script>
@@ -279,9 +276,28 @@
     <script src="/assets/admin/js/product/remove.js"></script>
 @endsection
 
-
 @push('script')
     <script src="/assets/admin/vendor/libs/select2/select2.js"></script>
     <script src="/assets/admin/vendor/libs/select2/i18n/fa.js"></script>
     <script src="/assets/admin/js/forms-selects.js"></script>
+    <script src="/assets/admin/js/datepicker/persian-date.min.js"></script>
+    <script src="/assets/admin/js/datepicker/persian-datepicker.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".date-picker").persianDatepicker({
+                initialValue: false,
+                format: 'YYYY/MM/DD',
+                autoClose: true,
+                timePicker: {
+                    enabled: true,
+                    meridian: {
+                        enabled: false,
+                    },
+                    second: {
+                        enabled: false,
+                    },
+                },
+            });
+        });
+    </script>
 @endpush
