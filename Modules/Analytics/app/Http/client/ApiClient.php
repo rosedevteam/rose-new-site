@@ -2,92 +2,56 @@
 
 namespace Modules\Analytics\Http\client;
 
-use Cache;
 use Http;
-use Illuminate\Http\Client\ConnectionException;
+use Modules\Analytics\Models\Company;
 
 class ApiClient
 {
-    private const url = "https://data3.nadpco.com/api/";
+    private const url = "https://apis.sourcearena.ir/api/";
 
-    private static function getToken()
+    public function all()
     {
-        $token = Cache::get('nadpco-api-token');
-        if (!$token) {
-            $token = self::token();
-        }
-        return $token;
-    }
+        try {
+            $response = Http::get(self::url, [
+                'token' => config('services.sourcearena.token'),
+                'all' => '',
+                'type' => '2',
+            ]);
 
-    private static function token()
-    {
-        return Cache::remember('nadpco-api-token', 60 * 60 * 24, function () {
-            $response = Http::withBasicAuth(
-                config('services.nadpco_api.username'),
-                config('services.nadpco_api.password'),
-            )->post(self::url . 'v2/Token');
-            if ($response->status() == 200) {
-                return json_decode($response->body(), true)['token'];
+            $data = json_decode($response->body(), true);
+
+            foreach ($data as $item) {
+                Company::upsert([
+                    'name' => $item['name'],
+                    'full_name' => $item['full_name'],
+                    'first_price' => $item['first_price'],
+                    'close_price' => $item['close_price'],
+                    'close_price_change' => $item['close_price_change'],
+                    'close_price_change_percent' => $item['close_price_change_percent'],
+                    'final_price' => $item['final_price'],
+                    'final_price_change' => $item['final_price_change'],
+                    'final_price_change_percent' => $item['final_price_change_percent'],
+                    'yesterday_price' => $item['yesterday_price'],
+                    'trade_number' => $item['trade_number'],
+                    'trade_volume' => $item['trade_volume'],
+                    'trade_value' => $item['trade_value'],
+                    'market_value' => $item['market_value'],
+                    'all_stocks' => $item['all_stocks'],
+                    'real_buy_volume' => $item['real_buy_volume'],
+                    'co_buy_volume' => $item['co_buy_volume'],
+                    'real_sell_volume' => $item['real_sell_volume'],
+                    'co_sell_volume' => $item['co_sell_volume'],
+                    'real_buy_count' => $item['real_buy_count'],
+                    'co_buy_count' => $item['co_buy_count'],
+                    'real_sell_count' => $item['real_sell_count'],
+                    'co_sell_count' => $item['co_sell_count'],
+                    'eps' => $item['eps'],
+                    'p_e' => $item['P:E'],
+                ]);
             }
-            return "";
-        });
-    }
 
-    public static function companies()
-    {
-        return json_decode(Http::get(self::url . '/v3/BaseInfo/Companies'), true);
-    }
-
-    public static function indices()
-    {
-        return json_decode(Http::get('https://data.nadpco.com/v1/baseInfo/Indices'), true);
-    }
-
-    public static function trades($id)
-    {
-        try {
-            $response = Http::withToken(self::getToken())
-                ->withQueryParameters(['companyId' => $id])
-                ->get(self::url . '/v3/TS/RealTimeTradesToday');
-            return json_decode($response->body(), true);
-        } catch (ConnectionException $e) {
-            dd($e->getMessage());
-        }
-    }
-
-    public static function legalTrades($id)
-    {
-        try {
-            $response = Http::withToken(self::getToken())
-                ->withQueryParameters(['companyId' => $id])
-                ->get(self::url . '/v3/TS/RealTimeRealLegalTradesToday');
-            return json_decode($response->body(), true);
-        } catch (ConnectionException $e) {
-            dd($e->getMessage());
-        }
-    }
-
-    public static function indexValues($id)
-    {
-        try {
-            $response = Http::withToken(self::getToken())
-                ->withQueryParameters(['indexId' => $id])
-                ->get(self::url . '/v3/TS/RealTimeIndexValuesToday');
-            return json_decode($response->body(), true);
-        } catch (ConnectionException $e) {
-            dd($e->getMessage());
-        }
-    }
-
-    public static function bidAsk($id)
-    {
-        try {
-            $response = Http::withToken(self::getToken())
-                ->withQueryParameters(['companyId' => $id])
-                ->get(self::url . '/v3/TS/RealTimeBidAskToday');
-            return json_decode($response->body(), true);
-        } catch (ConnectionException $e) {
-            dd($e->getMessage());
+        } catch (\Throwable $th) {
+            dd($th);
         }
     }
 }

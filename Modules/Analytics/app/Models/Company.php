@@ -7,9 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 // use Modules\Analytics\Database\Factories\CompanyFactory;
 
-class company extends Model
+class Company extends Model
 {
     use HasFactory;
 
-    protected $guarded;
+    /**
+     * The attributes that are mass assignable.
+     */
+    protected $fillable = [];
+
+    // protected static function newFactory(): CompanyFactory
+    // {
+    //     // return CompanyFactory::new();
+    // }
 }
