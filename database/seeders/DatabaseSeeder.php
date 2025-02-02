@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 use Modules\Analytics\Models\company;
 use Modules\Analytics\Models\index;
 use Modules\Category\Models\Category;
@@ -15,6 +16,7 @@ use Modules\Post\Models\Post;
 use Modules\Product\Models\Product;
 use Modules\Referral\Models\Referral;
 use Modules\User\Models\User;
+use phpDocumentor\Reflection\File;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
@@ -28,11 +30,11 @@ class DatabaseSeeder extends Seeder
         $this->seedPosts();
         $this->seedProducts();
         $this->seedOrders();
-        $this->seedPayments();
+//        $this->seedPayments();
         $this->seedComments();
         $this->seedMenu();
         $this->seedCategories();
-        $this->seedDiscounts();
+//        $this->seedDiscounts();
 //        $this->seedIndices();
 //        $this->seedCompanies();
     }
@@ -221,108 +223,30 @@ class DatabaseSeeder extends Seeder
 
     private function seedProducts()
     {
-        $product1 = Product::factory()->create([
-            'title' => "دوره تخصصی FIS",
-            'user_id' => 1,
-            'price' => 11000000,
-            'short_description' => "",
-            'sale_price' => 5460000,
-            'content' => "test",
-            'status' => 'public',
-            'comment_status' => 1,
-            'image' => "",
-            'slug' => "dore-fis",
-            'duration' => '+۴۰ ساعت',
-            'spot_player_key' => '619636a27ff03979c37fc360'
-        ]);
-        $product2 = Product::factory()->create([
-            'title' => "مسیر ثروت ساز با آموزش طلا و نقره",
-            'user_id' => 1,
-            'price' => 3000000,
-            'short_description' => "",
-            'sale_price' => 1299000,
-            'content' => "",
-            'status' => 'draft',
-            'comment_status' => 0,
-            'image' => "",
-            'slug' => "masir-servat-saz",
-            'duration' => '+۴۰ ساعت',
-            'spot_player_key' => '6210b0b5637d0950ee5ea2bb'
-        ]);
-        $product3 = Product::factory()->create([
-            'title' => "مینی دوره مدیریت بحران مالی",
-            'user_id' => 1,
-            'price' => 0,
-            'short_description' => "شسذهل",
-            'sale_price' => null,
-            'content' => "",
-            'status' => 'public',
-            'comment_status' => 1,
-            'image' => "asdijbnag",
-            'slug' => "modirat-mali",
-            'duration' => '+۴۰ ساعت',
-            'spot_player_key' => null
-        ]);
-        $product4 = Product::factory()->create([
-            'title' => "دوره حسابدار نخبه",
-            'user_id' => 1,
-            'price' => 13000000,
-            'short_description' => "نه تنها در کشور ما بلکه در تمامی کشورهای دنیا ، افرادی  که اگاهی و دانش در مسائل مالی دارند از درآمد بالایی برخوردارند و  مجموعه آموزشی رز مفتخر است به صورت کامل و جامع …",
-            'sale_price' => 4599000,
-            'content' => "",
-            'status' => 'public',
-            'comment_status' => 1,
-            'image' => "",
-            'slug' => "hesabdar-nokhbe",
-            'duration' => '+۴۰ ساعت',
-            'spot_player_key' => '635faca3dc6fbb9779bf0164'
-        ]);
+        $file = \File::get(database_path() . '/products.json');
+        $products = json_decode($file, true, JSON_UNESCAPED_UNICODE);
 
-        $product5 = Product::factory()->create([
-            'title' => "دوره تخصصی FAC ( بنیادی ارز دیجیتال )",
-            'user_id' => 1,
-            'price' => 13000000,
-            'short_description' => "نه تنها در کشور ما بلکه در تمامی کشورهای دنیا ، افرادی  که اگاهی و دانش در مسائل مالی دارند از درآمد بالایی برخوردارند و  مجموعه آموزشی رز مفتخر است به صورت کامل و جامع …",
-            'sale_price' => 4360000,
-            'content' => "",
-            'status' => 'draft',
-            'comment_status' => 1,
-            'image' => "",
-            'slug' => "fac-course",
-            'duration' => '+۴۰ ساعت',
-            'spot_player_key' => null
-        ]);
-
-        $product6 = Product::factory()->create([
-            'title' => "دوره جامع بنیادی بورس (FIS + افزایش سرمایه)",
-            'user_id' => 1,
-            'price' => 17950000,
-            'short_description' => "نه تنها در کشور ما بلکه در تمامی کشورهای دنیا ، افرادی  که اگاهی و دانش در مسائل مالی دارند از درآمد بالایی برخوردارند و  مجموعه آموزشی رز مفتخر است به صورت کامل و جامع …",
-            'sale_price' => 9498000,
-            'content' => "",
-            'status' => 'draft',
-            'comment_status' => 1,
-            'image' => "",
-            'slug' => "dore-jame",
-            'duration' => '+۴۰ ساعت',
-            'spot_player_key' => null
-        ]);
-
-        $product7 = Product::factory()->create([
-            'title' => "مدیریت زندگی مالی (FLM)",
-            'user_id' => 1,
-            'price' => 8000000,
-            'short_description' => "در دنیای پرشتاب و پیچیده بازارهای مالی، معامله‌گری صرفاً به دانش و علم مالی محدود نمی‌شود، قدرت ذهن و هوش روانشناختی نقشی اساسی در کسب سود و پرهیز از ضرر و همچنین موفقیت …",
-            'sale_price' => 2990000,
-            'content' => "",
-            'status' => 'public',
-            'comment_status' => 1,
-            'image' => "",
-            'slug' => "flm-course",
-            'duration' => '+۴۰ ساعت',
-            'spot_player_key' => '65e56b64f0db10220b5b8758'
-        ]);
-
+        foreach ($products as $product) {
+            switch ($product['post_status']) {
+                case 'publish':
+                    $product['post_status'] = 'public';
+                    break;
+                case 'private':
+                    $product['post_status'] = 'hidden';
+            }
+            Product::factory()->create([
+                'id' => $product['ID'],
+                'user_id' => 1,
+                'title' => $product['post_title'],
+                'short_description' => $product['post_excerpt'],
+                'price' => 0,
+                'slug' => $product['ID'],
+                'status' => $product['post_status'],
+                'comment_status' => $product['comment_status'] == 'open' ? 1 : 0,
+                'created_at' => $product['post_date'],
+                'updated_at' => $product['post_modified'],
+            ]);
+        }
     }
 
     private function seedPosts()
@@ -346,42 +270,34 @@ class DatabaseSeeder extends Seeder
 
     private function seedOrders()
     {
-        $order1 = Order::factory()->create([
-            'user_id' => 1,
-            'price' => 2000000,
-            'status' => "completed",
-            'payment_method' => 'shaparak'
-        ]);
-        $order1->products()->attach([1, 2, 3]);
+        $file = \File::get(database_path() . '/orders.json');
+        $orders = json_decode($file, true, flags: JSON_UNESCAPED_UNICODE);
+        foreach ($orders as $order) {
 
-        $order2 = Order::factory()->create([
-            'user_id' => 1,
-            'price' => 1000000,
-            'status' => "completed",
-            'payment_method' => 'shaparak',
-            'spot_player_licence' => 'SADFasfsfgaergaer',
-            'spot_player_id' => '234dfgrth',
-            'spot_player_log' => 'لایسنس با موفقیت ساخته شد',
-            'spot_player_watermark' => '09125342039',
-        ]);
-        $order2->products()->attach([1]);
+            if ($order['user_id'] == 0) continue;
 
-        $order3 = Order::factory()->create([
-            'user_id' => 1,
-            'price' => 2000000,
-            'status' => "pending",
-            'payment_method' => 'card'
-        ]);
-        $order3->products()->attach([3]);
+            $spotdata = unserialize($order['spot_player']);
+            switch ($order['order_status']) {
+                case 'wc-completed':
+                    $order['order_status'] = 'completed';
+                    break;
 
-        $order4 = Order::factory()->create([
-            'user_id' => 1,
-            'price' => 2000000,
-            'status' => "returned",
-            'payment_method' => 'shaparak'
-        ]);
-        $order4->products()->attach([1]);
-
+                case 'wc-pending' || 'wc-processing':
+                    $order['order_status'] = 'pending';
+                    break;
+                case 'wc-cancelled' || 'wc-failed':
+                    $order['order_status'] = 'cancelled';
+                    break;
+            }
+            Order::factory()->create([
+                'id' => $order['order_id'],
+                'user_id' => $order['user_id'],
+                'price' => $order['order_total'],
+                'status' => $order['order_status'],
+                'spot_player_licence' => $spotdata['key'] ?? null,
+                'spot_player_watermark' => $spotdata['watermark']['texts'][0]['text'] ?? null,
+            ]);
+        }
     }
 
     private function seedPayments()
