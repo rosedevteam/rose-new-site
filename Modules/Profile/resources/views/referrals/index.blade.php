@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="ham-masir">
-        @if(!auth()->user()->orders()->where('price' , '<>' , 0)->count())
+        @if(!auth()->user()->referral)
             <div class="alert alert-danger rose-danger mb-5" role="alert">
                 <p class="m-0">
                     <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -42,7 +42,7 @@
                     <div class="right">
                         <p class="m-0 fw-bold">تعداد افراد دعوت شده</p>
                         <p class="subtitle m-0">
-                            @if(auth()->user()->referral && auth()->user()->orders()->where('price' , '<>' , 0)->count())
+                            @if(auth()->user()->referral)
                                 {{10 - auth()->user()->referral->usages->count()}}
                             @else
                                 0
@@ -53,7 +53,7 @@
                         </p>
                     </div>
                     <p>
-                        @if(auth()->user()->referral && auth()->user()->orders()->where('price' , '<>' , 0)->count())
+                        @if(auth()->user()->referral)
                             {{auth()->user()->referral->usages->count()}}
                         @else
                             0
@@ -67,7 +67,7 @@
 
 
         </div>
-        <div @if(!auth()->user()->orders()->where('price' , '<>' , 0)->count()) style="filter: grayscale(1)" @endif>
+        <div @if(!auth()->user()->referral) style="filter: grayscale(1)" @endif>
             <div class="row row-eq-height align-items-center">
                 <div class="col-md-8">
                     <div class=" flex-lg-row d-flex align-items-center card text-white"
@@ -244,7 +244,7 @@
         <div class="col-md-7">
             <div class="flex-wrap flex-column flex-lg-row d-flex align-items-center gap-3">
 
-                <div class="score-exchange-wrapper card" @if(!auth()->user()->orders()->where('price' , '<>' , 0)->count()) style="filter: grayscale(1)" @endif>
+                <div class="score-exchange-wrapper card" @if(!auth()->user()->scores()->count() ) style="filter: grayscale(1)" @endif>
                     <div class="score-wrapper-box header">
                         <h3 class="mb-0 text-muted">امتیاز من</h3>
                         <div class="my-score-wrapper d-flex">
@@ -316,7 +316,7 @@ $score = $credits - $debits;
                           stroke-linejoin="round"/>
                 </svg>
 
-                <div class="score-exchange-wrapper card" @if(!auth()->user()->orders()->where('price' , '<>' , 0)->count()) style="filter: grayscale(1)" @endif>
+                <div class="score-exchange-wrapper card" @if(!auth()->user()->scores()->count()) style="filter: grayscale(1)" @endif>
                     <div class="score-wrapper-box header" id="rose-wallet">
                         <h3 class="mb-0 text-muted">موجودی کیف پول</h3>
                         <div class="my-score-wrapper d-flex">

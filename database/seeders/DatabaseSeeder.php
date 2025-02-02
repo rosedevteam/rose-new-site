@@ -187,55 +187,36 @@ class DatabaseSeeder extends Seeder
             'avatar' => null,
         ]);
 
-        $user1->assignRole($admin);
-
         $user2 = User::factory()->create([
-            'first_name' => 'writer',
-            'password' => bcrypt('writer'),
-            'phone' => '09122222222',
-            'last_name' => 'writer',
-            'email' => null,
-            'birthday' => null,
-            'avatar' => null,
-        ]);
-
-        $user2->assignRole($writer);
-
-        $user3 = User::factory()->create([
-            'first_name' => 'support',
-            'password' => bcrypt('support'),
-            'phone' => '09123333333',
-            'last_name' => 'support',
-            'email' => null,
-            'birthday' => null,
-            'avatar' => null,
-        ]);
-
-        $user3->assignRole($support);
-
-        $user4 = User::factory()->create([
-            'first_name' => 'customer',
-            'password' => bcrypt('customer'),
-            'phone' => '09124444444',
-            'last_name' => 'customer',
-            'email' => null,
-            'birthday' => null,
-            'avatar' => null,
-        ]);
-
-        $user4->assignRole($customer);
-
-        $user5 = User::factory()->create([
             'first_name' => 'ارشیا',
+            'password' => bcrypt('admin'),
+            'phone' => '09399080252',
             'last_name' => 'رحیمی',
             'email' => null,
             'birthday' => null,
             'avatar' => null,
-            'phone' => '09399080252',
-            'password' => null,
         ]);
 
-        $user5->assignRole($superAdmin);
+        $user2->assignRole($superAdmin);
+
+
+        $json = \File::get(database_path() . '/users.json');
+        $users = json_decode($json, true, flags: JSON_UNESCAPED_UNICODE);
+
+        foreach ($users as $user) {
+            if(!User::where('phone' , $user['user_login'])->exists()){
+                $cust = User::factory()->create([
+                    'id' => $user['user_id'],
+                    'first_name' => $user['first_name'],
+                    'last_name' => $user['last_name'] == "" ? null : $user['last_name'],
+                    'phone' => $user['user_login'],
+                    'email' => $user['user_email'] == "" ? null : $user['user_email'],
+                    'created_at' => $user['user_registered'],
+                ]);
+                $cust->assignRole($customer);
+            }
+
+        }
     }
 
     private function seedProducts()
@@ -251,7 +232,7 @@ class DatabaseSeeder extends Seeder
             'comment_status' => 1,
             'image' => "",
             'slug' => "dore-fis",
-            'duration'=> '+۴۰ ساعت',
+            'duration' => '+۴۰ ساعت',
             'spot_player_key' => '619636a27ff03979c37fc360'
         ]);
         $product2 = Product::factory()->create([
@@ -265,7 +246,7 @@ class DatabaseSeeder extends Seeder
             'comment_status' => 0,
             'image' => "",
             'slug' => "masir-servat-saz",
-            'duration'=> '+۴۰ ساعت',
+            'duration' => '+۴۰ ساعت',
             'spot_player_key' => '6210b0b5637d0950ee5ea2bb'
         ]);
         $product3 = Product::factory()->create([
@@ -279,7 +260,7 @@ class DatabaseSeeder extends Seeder
             'comment_status' => 1,
             'image' => "asdijbnag",
             'slug' => "modirat-mali",
-            'duration'=> '+۴۰ ساعت',
+            'duration' => '+۴۰ ساعت',
             'spot_player_key' => null
         ]);
         $product4 = Product::factory()->create([
@@ -293,7 +274,7 @@ class DatabaseSeeder extends Seeder
             'comment_status' => 1,
             'image' => "",
             'slug' => "hesabdar-nokhbe",
-            'duration'=> '+۴۰ ساعت',
+            'duration' => '+۴۰ ساعت',
             'spot_player_key' => '635faca3dc6fbb9779bf0164'
         ]);
 
@@ -308,7 +289,7 @@ class DatabaseSeeder extends Seeder
             'comment_status' => 1,
             'image' => "",
             'slug' => "fac-course",
-            'duration'=> '+۴۰ ساعت',
+            'duration' => '+۴۰ ساعت',
             'spot_player_key' => null
         ]);
 
@@ -323,7 +304,7 @@ class DatabaseSeeder extends Seeder
             'comment_status' => 1,
             'image' => "",
             'slug' => "dore-jame",
-            'duration'=> '+۴۰ ساعت',
+            'duration' => '+۴۰ ساعت',
             'spot_player_key' => null
         ]);
 
@@ -338,7 +319,7 @@ class DatabaseSeeder extends Seeder
             'comment_status' => 1,
             'image' => "",
             'slug' => "flm-course",
-            'duration'=> '+۴۰ ساعت',
+            'duration' => '+۴۰ ساعت',
             'spot_player_key' => '65e56b64f0db10220b5b8758'
         ]);
 
@@ -415,7 +396,7 @@ class DatabaseSeeder extends Seeder
     private function seedComments()
     {
         $comment1 = Comment::factory()->create([
-            'user_id' => 2,
+            'user_id' => 1,
             'commentable_id' => 1,
             'commentable_type' => 'Modules\\Product\\Models\\Product',
             'status' => 'approved',
@@ -430,7 +411,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $comment3 = Comment::factory()->create([
-            'user_id' => 3,
+            'user_id' => 1,
             'commentable_id' => 2,
             'commentable_type' => 'Modules\\Product\\Models\\Product',
             'status' => 'rejected',
@@ -640,12 +621,12 @@ class DatabaseSeeder extends Seeder
             'discount_id' => 1
         ]);
         $discount->discountRecords()->create([
-            'user_id' => 2,
+            'user_id' => 1,
             'order_id' => 1,
             'discount_id' => 1
         ]);
         $discount->discountRecords()->create([
-            'user_id' => 3,
+            'user_id' => 1,
             'order_id' => 1,
             'discount_id' => 1
         ]);
@@ -685,23 +666,23 @@ class DatabaseSeeder extends Seeder
     {
         $referral = Referral::factory()->create([
             'user_id' => 1,
-            'code' => rand(1000 , 9999),
+            'code' => rand(1000, 9999),
             'limit' => 10
         ]);
         $referral1 = Referral::factory()->create([
-            'user_id' => 2,
-            'code' => rand(1000 , 9999),
+            'user_id' => 1,
+            'code' => rand(1000, 9999),
             'limit' => 10
         ]);
         $referral2 = Referral::factory()->create([
-            'user_id' => 3,
-            'code' => rand(1000 , 9999),
+            'user_id' => 1,
+            'code' => rand(1000, 9999),
             'limit' => 10
         ]);
 
         $referral->usages()->create([
             'referral_id' => 1,
-            'used_by' => 4,
+            'used_by' => 1,
             'signed_up' => 1,
             'has_bought' => 0
         ]);

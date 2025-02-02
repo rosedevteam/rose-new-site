@@ -164,6 +164,11 @@ class RegisterController extends Controller
                 }
             }
 
+            //create referral code fore user
+            $user->referral()->create([
+                'code' => substr($user->phone , 8).substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ'),1,6)
+            ]);
+
             auth()->login($user);
 
             $cart = Cart::instance(config('services.cart.cookie-name'));

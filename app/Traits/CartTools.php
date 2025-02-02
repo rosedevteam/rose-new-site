@@ -1,6 +1,6 @@
 <?php
 
-namespace App\traits;
+namespace App\Traits;
 
 use Modules\Cart\Classes\Helpers\Cart;
 
