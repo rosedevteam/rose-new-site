@@ -2,8 +2,6 @@
 
 namespace App\Traits;
 
-use Modules\Cart\Classes\Helpers\Cart;
-
 trait CartTools
 {
     public static function addCartToDatabase($cart , $totalPrice)
