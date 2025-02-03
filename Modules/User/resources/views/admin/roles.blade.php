@@ -35,7 +35,6 @@
                                 <th aria-controls="DataTables_Table_0" rowspan="1"
                                     colspan="1" style="width: 10%" aria-sort="ascending">عنوان
                                 </th>
-                                {{//todo}}
 {{--                                <th aria-controls="DataTables_Table_0" rowspan="1"--}}
 {{--                                    colspan="1" style="width: 5%" aria-sort="ascending">تعداد کاربران--}}
 {{--                                </th>--}}
