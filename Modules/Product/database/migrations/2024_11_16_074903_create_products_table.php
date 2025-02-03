@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('content')->nullable();
             $table->enum('status', ['public', 'draft', 'hidden' , 'outofstock'])->default('draft');
             $table->boolean('comment_status')->default(true);
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->string('slug')->unique();
             $table->string('spot_player_key')->nullable();
             $table->string('duration')->nullable();

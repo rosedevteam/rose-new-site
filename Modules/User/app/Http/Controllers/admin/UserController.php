@@ -39,7 +39,7 @@ class UserController extends Controller
             $roles = Role::all()->select('name', 'id');
 
             $users = User::with('roles');
-
+//            dd($users);
             if ($role_id) {
                 $users = $users->whereHas('roles', function ($query) use ($role_id) {
                     return $query->where('role_id', $role_id);
@@ -83,6 +83,7 @@ class UserController extends Controller
                         break;
                 }
             }
+
             if ($exact) {
                 $users = $users->whereHas('orders', function ($query) use ($productQuery) {
                     return $query->whereHas('products', function ($query) use ($productQuery) {
@@ -91,14 +92,23 @@ class UserController extends Controller
                 });
             } else {
                 if ($except_products) {
-                    $users = $users->whereDoesntHave('orders.products', function ($query) use ($except_products) {
-                        $query->whereIn('products.id', $except_products);
-                    });
+                    //todo
+//                    $users = $users->join('orders', 'orders.user_id', '=', 'users.id')
+//                        ->join('order_product', 'order_product.order_id', '=', 'orders.id')
+//                        ->join('products', 'products.id', '=', 'order_product.product_id')
+//                        ->whereNotIn('products.id', $except_products)
+////                        ->orWhereNull('products.id') // اگر کاربر هیچ محصولی خریداری نکرده باشد
+//                        ->select('users.*')
+//                        ->distinct();
                 }
                 if ($productQuery) {
-                    $users = $users->whereHas('orders.products', function ($query) use ($productQuery) {
-                        return $query->whereIn('products.id', $productQuery);
-                    });
+                    //todo
+                    $users = $users->join('orders', 'orders.user_id', '=', 'users.id')
+                        ->join('order_product', 'order_product.order_id', '=', 'orders.id')
+                        ->join('products', 'products.id', '=', 'order_product.product_id')
+                        ->whereIn('products.id', $productQuery)
+                        ->select('users.*')
+                        ->distinct();
                 }
             }
             if ($search) {
@@ -131,6 +141,7 @@ class UserController extends Controller
                 'orderStatus'
             ));
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             alert()->error("خطا", $th->getMessage());
             return back();
         }

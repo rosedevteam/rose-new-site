@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('price');
             $table->string('notes')->nullable()->default(null);
             $table->enum('status', ['pending', 'completed', 'cancelled', 'returned'])->default('pending');
-            $table->enum('payment_method', ['shaparak', 'card'])->default('shaparak');
+            $table->enum('payment_method', ['shaparak', 'card'])->nullable();
             $table->foreignId('wallet_transaction_id')->nullable()->default(null)->constrained('wallet_transactions')->nullOnDelete();
             $table->longText('spot_player_log')->nullable();
             $table->longText('spot_player_id')->nullable();
@@ -26,7 +26,6 @@ return new class extends Migration {
         });
 
         Schema::create('order_product', function (Blueprint $table) {
-            $table->id();
             $table->foreignId('order_id')->constrained('orders')->cascadeOnDelete();
             $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
         });

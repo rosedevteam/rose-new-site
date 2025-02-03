@@ -100,10 +100,20 @@
                                                    placeholder="مثلا: +۹۸۹۱۲۱۲۳۰۳۷۴"
                                                    value="{{$order->spot_player_watermark ?? old('watermark')}}">
                                         </div>
+                                        @can('create-licence')
                                             @if(!$order->spot_player_id)
-                                                <input type="submit" class="my-3 btn btn-success btn-sm w-100" value="ساخت لایسنس">
+                                                <input type="submit" class="my-3 btn btn-success btn-sm w-100"
+                                                       value="ساخت لایسنس">
+                                            @else
+                                                @can('view-licence')
+                                                    <label for="licence_key" class="form-label my-3">کد لایسنس</label>
 
+                                                    <textarea class="form-control"
+                                                              id="licence_key">{{$order->spot_player_licence}}</textarea>
+                                                @endcan
                                             @endif
+                                        @endcan
+
                                     </div>
 
 
