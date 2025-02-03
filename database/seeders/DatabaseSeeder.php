@@ -139,6 +139,8 @@ class DatabaseSeeder extends Seeder
         //
         Permission::create(['name' => 'view-logs']);
         //
+        Permission::create(['name' => 'create-licence']);
+        Permission::create(['name' => 'view-licence']);
 
         $customer = Role::create(['name' => 'مشتری']);
         $admin = Role::create(['name' => 'ادمین']);
@@ -182,12 +184,14 @@ class DatabaseSeeder extends Seeder
         $user1 = User::factory()->create([
             'first_name' => 'فرشاد',
             'password' => bcrypt('admin'),
-            'phone' => '09125342039',
+            'phone' => '09121230374',
             'last_name' => 'رجب زاده',
             'email' => null,
             'birthday' => null,
             'avatar' => null,
         ]);
+
+        $user1->assignRole($superAdmin);
 
         $user2 = User::factory()->create([
             'first_name' => 'ارشیا',
@@ -225,7 +229,76 @@ class DatabaseSeeder extends Seeder
     {
         $file = \File::get(database_path() . '/products.json');
         $products = json_decode($file, true, JSON_UNESCAPED_UNICODE);
-
+        Product::factory()->create([
+            'id' => '15361',
+            'user_id' => 1,
+            'title' => 'تست',
+            'short_description' => 'تست',
+            'price' => 0,
+            'slug' => '15361',
+            'status' => 'draft',
+            'comment_status' => 0
+        ]);
+        Product::factory()->create([
+            'id' => '15375',
+            'user_id' => 1,
+            'title' => 'تست',
+            'short_description' => 'تست',
+            'price' => 0,
+            'slug' => '15375',
+            'status' => 'draft',
+            'comment_status' => 0
+        ]);
+        Product::factory()->create([
+            'id' => '14553',
+            'user_id' => 1,
+            'title' => 'مصاحبه استخدامی رشته حسابداری',
+            'short_description' => 'تست',
+            'price' => 0,
+            'slug' => '14553',
+            'status' => 'draft',
+            'comment_status' => 0
+        ]);
+        Product::factory()->create([
+            'id' => '15405',
+            'user_id' => 1,
+            'title' => 'مصاحبه استخدامی رشته حسابداری',
+            'short_description' => 'تست',
+            'price' => 0,
+            'slug' => '15405',
+            'status' => 'draft',
+            'comment_status' => 0
+        ]);
+        Product::factory()->create([
+            'id' => '15852',
+            'user_id' => 1,
+            'title' => 'تست',
+            'short_description' => 'تست',
+            'price' => 0,
+            'slug' => '15852',
+            'status' => 'draft',
+            'comment_status' => 0
+        ]);
+        Product::factory()->create([
+            'id' => '23042',
+            'user_id' => 1,
+            'title' => 'تست',
+            'short_description' => 'تست',
+            'price' => 0,
+            'slug' => '23042',
+            'status' => 'draft',
+            'comment_status' => 0
+        ]);
+        Product::factory()->create([
+            'id' => '26625',
+            'user_id' => 1,
+            'title' => 'تست',
+            'short_description' => 'تست',
+            'price' => 0,
+            'slug' => '26625',
+            'status' => 'draft',
+            'comment_status' => 0
+        ]);
         foreach ($products as $product) {
             switch ($product['post_status']) {
                 case 'publish':
@@ -275,7 +348,6 @@ class DatabaseSeeder extends Seeder
         foreach ($orders as $order) {
 
             if ($order['user_id'] == 0) continue;
-
             $spotdata = unserialize($order['spot_player']);
             switch ($order['order_status']) {
                 case 'wc-completed':
@@ -289,14 +361,17 @@ class DatabaseSeeder extends Seeder
                     $order['order_status'] = 'cancelled';
                     break;
             }
-            Order::factory()->create([
+            $item = Order::factory()->create([
                 'id' => $order['order_id'],
                 'user_id' => $order['user_id'],
                 'price' => $order['order_total'],
                 'status' => $order['order_status'],
+                'spot_player_id' => $spotdata['_id'] ?? null,
                 'spot_player_licence' => $spotdata['key'] ?? null,
                 'spot_player_watermark' => $spotdata['watermark']['texts'][0]['text'] ?? null,
             ]);
+
+            $item->products()->attach(explode(',' , $order['product_ids']));
         }
     }
 
