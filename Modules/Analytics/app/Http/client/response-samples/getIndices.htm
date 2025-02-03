@@ -1,0 +1,1258 @@
+<!-- saved from url=(0036)http://localhost:8000/api/getIndices -->
+<html class="sf-js-enabled">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script> Sfdump = window.Sfdump || (function (doc) {
+        doc.documentElement.classList.add('sf-js-enabled');
+        var rxEsc = /([.*+?^${}()|\[\]\/\\])/g, idRx = /\bsf-dump-\d+-ref[012]\w+\b/,
+            keyHint = 0 <= navigator.platform.toUpperCase().indexOf('MAC') ? 'Cmd' : 'Ctrl',
+            addEventListener = function (e, n, cb) {
+                e.addEventListener(n, cb, false);
+            };
+        if (!doc.addEventListener) {
+            addEventListener = function (element, eventName, callback) {
+                element.attachEvent('on' + eventName, function (e) {
+                    e.preventDefault = function () {
+                        e.returnValue = false;
+                    };
+                    e.target = e.srcElement;
+                    callback(e);
+                });
+            };
+        }
+
+        function toggle(a, recursive) {
+            var s = a.nextSibling || {}, oldClass = s.className, arrow, newClass;
+            if (/\bsf-dump-compact\b/.test(oldClass)) {
+                arrow = '&#9660;';
+                newClass = 'sf-dump-expanded';
+            } else if (/\bsf-dump-expanded\b/.test(oldClass)) {
+                arrow = '&#9654;';
+                newClass = 'sf-dump-compact';
+            } else {
+                return false;
+            }
+            if (doc.createEvent && s.dispatchEvent) {
+                var event = doc.createEvent('Event');
+                event.initEvent('sf-dump-expanded' === newClass ? 'sfbeforedumpexpand' : 'sfbeforedumpcollapse', true, false);
+                s.dispatchEvent(event);
+            }
+            a.lastChild.innerHTML = arrow;
+            s.className = s.className.replace(/\bsf-dump-(compact|expanded)\b/, newClass);
+            if (recursive) {
+                try {
+                    a = s.querySelectorAll('.' + oldClass);
+                    for (s = 0; s < a.length; ++s) {
+                        if (-1 == a[s].className.indexOf(newClass)) {
+                            a[s].className = newClass;
+                            a[s].previousSibling.lastChild.innerHTML = arrow;
+                        }
+                    }
+                } catch (e) {
+                }
+            }
+            return true;
+        };
+
+        function collapse(a, recursive) {
+            var s = a.nextSibling || {}, oldClass = s.className;
+            if (/\bsf-dump-expanded\b/.test(oldClass)) {
+                toggle(a, recursive);
+                return true;
+            }
+            return false;
+        };
+
+        function expand(a, recursive) {
+            var s = a.nextSibling || {}, oldClass = s.className;
+            if (/\bsf-dump-compact\b/.test(oldClass)) {
+                toggle(a, recursive);
+                return true;
+            }
+            return false;
+        };
+
+        function collapseAll(root) {
+            var a = root.querySelector('a.sf-dump-toggle');
+            if (a) {
+                collapse(a, true);
+                expand(a);
+                return true;
+            }
+            return false;
+        }
+
+        function reveal(node) {
+            var previous, parents = [];
+            while ((node = node.parentNode || {}) && (previous = node.previousSibling) && 'A' === previous.tagName) {
+                parents.push(previous);
+            }
+            if (0 !== parents.length) {
+                parents.forEach(function (parent) {
+                    expand(parent);
+                });
+                return true;
+            }
+            return false;
+        }
+
+        function highlight(root, activeNode, nodes) {
+            resetHighlightedNodes(root);
+            Array.from(nodes || []).forEach(function (node) {
+                if (!/\bsf-dump-highlight\b/.test(node.className)) {
+                    node.className = node.className + ' sf-dump-highlight';
+                }
+            });
+            if (!/\bsf-dump-highlight-active\b/.test(activeNode.className)) {
+                activeNode.className = activeNode.className + ' sf-dump-highlight-active';
+            }
+        }
+
+        function resetHighlightedNodes(root) {
+            Array.from(root.querySelectorAll('.sf-dump-str, .sf-dump-key, .sf-dump-public, .sf-dump-protected, .sf-dump-private')).forEach(function (strNode) {
+                strNode.className = strNode.className.replace(/\bsf-dump-highlight\b/, '');
+                strNode.className = strNode.className.replace(/\bsf-dump-highlight-active\b/, '');
+            });
+        }
+
+        return function (root, x) {
+            root = doc.getElementById(root);
+            var indentRx = new RegExp('^(' + (root.getAttribute('data-indent-pad') || ' ').replace(rxEsc, '\\$1') + ')+', 'm'),
+                options = {"maxDepth": 1, "maxStringLength": 160, "fileLinkFormat": false},
+                elt = root.getElementsByTagName('A'), len = elt.length, i = 0, s, h, t = [];
+            while (i < len) t.push(elt[i++]);
+            for (i in x) {
+                options[i] = x[i];
+            }
+
+            function a(e, f) {
+                addEventListener(root, e, function (e, n) {
+                    if ('A' == e.target.tagName) {
+                        f(e.target, e);
+                    } else if ('A' == e.target.parentNode.tagName) {
+                        f(e.target.parentNode, e);
+                    } else {
+                        n = /\bsf-dump-ellipsis\b/.test(e.target.className) ? e.target.parentNode : e.target;
+                        if ((n = n.nextElementSibling) && 'A' == n.tagName) {
+                            if (!/\bsf-dump-toggle\b/.test(n.className)) {
+                                n = n.nextElementSibling || n;
+                            }
+                            f(n, e, true);
+                        }
+                    }
+                });
+            };
+
+            function isCtrlKey(e) {
+                return e.ctrlKey || e.metaKey;
+            }
+
+            function xpathString(str) {
+                var parts = str.match(/[^'"]+|['"]/g).map(function (part) {
+                    if ("'" == part) {
+                        return '"\'"';
+                    }
+                    if ('"' == part) {
+                        return "'\"'";
+                    }
+                    return "'" + part + "'";
+                });
+                return "concat(" + parts.join(",") + ", '')";
+            }
+
+            function xpathHasClass(className) {
+                return "contains(concat(' ', normalize-space(@class), ' '), ' " + className + " ')";
+            }
+
+            a('mouseover', function (a, e, c) {
+                if (c) {
+                    e.target.style.cursor = "pointer";
+                }
+            });
+            a('click', function (a, e, c) {
+                if (/\bsf-dump-toggle\b/.test(a.className)) {
+                    e.preventDefault();
+                    if (!toggle(a, isCtrlKey(e))) {
+                        var r = doc.getElementById(a.getAttribute('href').slice(1)), s = r.previousSibling,
+                            f = r.parentNode, t = a.parentNode;
+                        t.replaceChild(r, a);
+                        f.replaceChild(a, s);
+                        t.insertBefore(s, r);
+                        f = f.firstChild.nodeValue.match(indentRx);
+                        t = t.firstChild.nodeValue.match(indentRx);
+                        if (f && t && f[0] !== t[0]) {
+                            r.innerHTML = r.innerHTML.replace(new RegExp('^' + f[0].replace(rxEsc, '\\$1'), 'mg'), t[0]);
+                        }
+                        if (/\bsf-dump-compact\b/.test(r.className)) {
+                            toggle(s, isCtrlKey(e));
+                        }
+                    }
+                    if (c) {
+                    } else if (doc.getSelection) {
+                        try {
+                            doc.getSelection().removeAllRanges();
+                        } catch (e) {
+                            doc.getSelection().empty();
+                        }
+                    } else {
+                        doc.selection.empty();
+                    }
+                } else if (/\bsf-dump-str-toggle\b/.test(a.className)) {
+                    e.preventDefault();
+                    e = a.parentNode.parentNode;
+                    e.className = e.className.replace(/\bsf-dump-str-(expand|collapse)\b/, a.parentNode.className);
+                }
+            });
+            elt = root.getElementsByTagName('SAMP');
+            len = elt.length;
+            i = 0;
+            while (i < len) t.push(elt[i++]);
+            len = t.length;
+            for (i = 0; i < len; ++i) {
+                elt = t[i];
+                if ('SAMP' == elt.tagName) {
+                    a = elt.previousSibling || {};
+                    if ('A' != a.tagName) {
+                        a = doc.createElement('A');
+                        a.className = 'sf-dump-ref';
+                        elt.parentNode.insertBefore(a, elt);
+                    } else {
+                        a.innerHTML += ' ';
+                    }
+                    a.title = (a.title ? a.title + '\n[' : '[') + keyHint + '+click] Expand all children';
+                    a.innerHTML += elt.className == 'sf-dump-compact' ? '<span>&#9654;</span>' : '<span>&#9660;</span>';
+                    a.className += ' sf-dump-toggle';
+                    x = 1;
+                    if ('sf-dump' != elt.parentNode.className) {
+                        x += elt.parentNode.getAttribute('data-depth') / 1;
+                    }
+                } else if (/\bsf-dump-ref\b/.test(elt.className) && (a = elt.getAttribute('href'))) {
+                    a = a.slice(1);
+                    elt.className += ' sf-dump-hover';
+                    elt.className += ' ' + a;
+                    if (/[\[{]$/.test(elt.previousSibling.nodeValue)) {
+                        a = a != elt.nextSibling.id && doc.getElementById(a);
+                        try {
+                            s = a.nextSibling;
+                            elt.appendChild(a);
+                            s.parentNode.insertBefore(a, s);
+                            if (/^[@#]/.test(elt.innerHTML)) {
+                                elt.innerHTML += ' <span>&#9654;</span>';
+                            } else {
+                                elt.innerHTML = '<span>&#9654;</span>';
+                                elt.className = 'sf-dump-ref';
+                            }
+                            elt.className += ' sf-dump-toggle';
+                        } catch (e) {
+                            if ('&' == elt.innerHTML.charAt(0)) {
+                                elt.innerHTML = '&#8230;';
+                                elt.className = 'sf-dump-ref';
+                            }
+                        }
+                    }
+                }
+            }
+            if (doc.evaluate && Array.from && root.children.length > 1) {
+                root.setAttribute('tabindex', 0);
+                SearchState = function () {
+                    this.nodes = [];
+                    this.idx = 0;
+                };
+                SearchState.prototype = {
+                    next: function () {
+                        if (this.isEmpty()) {
+                            return this.current();
+                        }
+                        this.idx = this.idx < (this.nodes.length - 1) ? this.idx + 1 : 0;
+                        return this.current();
+                    }, previous: function () {
+                        if (this.isEmpty()) {
+                            return this.current();
+                        }
+                        this.idx = this.idx > 0 ? this.idx - 1 : (this.nodes.length - 1);
+                        return this.current();
+                    }, isEmpty: function () {
+                        return 0 === this.count();
+                    }, current: function () {
+                        if (this.isEmpty()) {
+                            return null;
+                        }
+                        return this.nodes[this.idx];
+                    }, reset: function () {
+                        this.nodes = [];
+                        this.idx = 0;
+                    }, count: function () {
+                        return this.nodes.length;
+                    },
+                };
+
+                function showCurrent(state) {
+                    var currentNode = state.current(), currentRect, searchRect;
+                    if (currentNode) {
+                        reveal(currentNode);
+                        highlight(root, currentNode, state.nodes);
+                        if ('scrollIntoView' in currentNode) {
+                            currentNode.scrollIntoView(true);
+                            currentRect = currentNode.getBoundingClientRect();
+                            searchRect = search.getBoundingClientRect();
+                            if (currentRect.top < (searchRect.top + searchRect.height)) {
+                                window.scrollBy(0, -(searchRect.top + searchRect.height + 5));
+                            }
+                        }
+                    }
+                    counter.textContent = (state.isEmpty() ? 0 : state.idx + 1) + ' of ' + state.count();
+                }
+
+                var search = doc.createElement('div');
+                search.className = 'sf-dump-search-wrapper sf-dump-search-hidden';
+                search.innerHTML = ' <input type="text" class="sf-dump-search-input"> <span class="sf-dump-search-count">0 of 0<\/span> <button type="button" class="sf-dump-search-input-previous" tabindex="-1"> <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1683 1331l-166 165q-19 19-45 19t-45-19L896 965l-531 531q-19 19-45 19t-45-19l-166-165q-19-19-19-45.5t19-45.5l742-741q19-19 45-19t45 19l742 741q19 19 19 45.5t-19 45.5z"\/><\/svg> <\/button> <button type="button" class="sf-dump-search-input-next" tabindex="-1"> <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1683 808l-742 741q-19 19-45 19t-45-19L109 808q-19-19-19-45.5t19-45.5l166-165q19-19 45-19t45 19l531 531 531-531q19-19 45-19t45 19l166 165q19 19 19 45.5t-19 45.5z"\/><\/svg> <\/button> ';
+                root.insertBefore(search, root.firstChild);
+                var state = new SearchState();
+                var searchInput = search.querySelector('.sf-dump-search-input');
+                var counter = search.querySelector('.sf-dump-search-count');
+                var searchInputTimer = 0;
+                var previousSearchQuery = '';
+                addEventListener(searchInput, 'keyup', function (e) {
+                    var searchQuery = e.target.value; /* Don't perform anything if the pressed key didn't change the query */
+                    if (searchQuery === previousSearchQuery) {
+                        return;
+                    }
+                    previousSearchQuery = searchQuery;
+                    clearTimeout(searchInputTimer);
+                    searchInputTimer = setTimeout(function () {
+                        state.reset();
+                        collapseAll(root);
+                        resetHighlightedNodes(root);
+                        if ('' === searchQuery) {
+                            counter.textContent = '0 of 0';
+                            return;
+                        }
+                        var classMatches = ["sf-dump-str", "sf-dump-key", "sf-dump-public", "sf-dump-protected", "sf-dump-private",].map(xpathHasClass).join(' or ');
+                        var xpathResult = doc.evaluate('.//span[' + classMatches + '][contains(translate(child::text(), ' + xpathString(searchQuery.toUpperCase()) + ', ' + xpathString(searchQuery.toLowerCase()) + '), ' + xpathString(searchQuery.toLowerCase()) + ')]', root, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+                        while (node = xpathResult.iterateNext()) state.nodes.push(node);
+                        showCurrent(state);
+                    }, 400);
+                });
+                Array.from(search.querySelectorAll('.sf-dump-search-input-next, .sf-dump-search-input-previous')).forEach(function (btn) {
+                    addEventListener(btn, 'click', function (e) {
+                        e.preventDefault();
+                        -1 !== e.target.className.indexOf('next') ? state.next() : state.previous();
+                        searchInput.focus();
+                        collapseAll(root);
+                        showCurrent(state);
+                    })
+                });
+                addEventListener(root, 'keydown', function (e) {
+                    var isSearchActive = !/\bsf-dump-search-hidden\b/.test(search.className);
+                    if ((114 === e.keyCode && !isSearchActive) || (isCtrlKey(e) && 70 === e.keyCode)) { /* F3 or CMD/CTRL + F */
+                        if (70 === e.keyCode && document.activeElement === searchInput) { /* * If CMD/CTRL + F is hit while having focus on search input, * the user probably meant to trigger browser search instead. * Let the browser execute its behavior: */
+                            return;
+                        }
+                        e.preventDefault();
+                        search.className = search.className.replace(/\bsf-dump-search-hidden\b/, '');
+                        searchInput.focus();
+                    } else if (isSearchActive) {
+                        if (27 === e.keyCode) { /* ESC key */
+                            search.className += ' sf-dump-search-hidden';
+                            e.preventDefault();
+                            resetHighlightedNodes(root);
+                            searchInput.value = '';
+                        } else if ((isCtrlKey(e) && 71 === e.keyCode) /* CMD/CTRL + G */ || 13 === e.keyCode /* Enter */ || 114 === e.keyCode /* F3 */) {
+                            e.preventDefault();
+                            e.shiftKey ? state.previous() : state.next();
+                            collapseAll(root);
+                            showCurrent(state);
+                        }
+                    }
+                });
+            }
+            if (0 >= options.maxStringLength) {
+                return;
+            }
+            try {
+                elt = root.querySelectorAll('.sf-dump-str');
+                len = elt.length;
+                i = 0;
+                t = [];
+                while (i < len) t.push(elt[i++]);
+                len = t.length;
+                for (i = 0; i < len; ++i) {
+                    elt = t[i];
+                    s = elt.innerText || elt.textContent;
+                    x = s.length - options.maxStringLength;
+                    if (0 < x) {
+                        h = elt.innerHTML;
+                        elt[elt.innerText ? 'innerText' : 'textContent'] = s.substring(0, options.maxStringLength);
+                        elt.className += ' sf-dump-str-collapse';
+                        elt.innerHTML = '<span class=sf-dump-str-collapse>' + h + '<a class="sf-dump-ref sf-dump-str-toggle" title="Collapse"> &#9664;</a></span>' + '<span class=sf-dump-str-expand>' + elt.innerHTML + '<a class="sf-dump-ref sf-dump-str-toggle" title="' + x + ' remaining characters"> &#9654;</a></span>';
+                    }
+                }
+            } catch (e) {
+            }
+        };
+    })(document); </script>
+    <style> .sf-js-enabled pre.sf-dump .sf-dump-compact, .sf-js-enabled .sf-dump-str-collapse .sf-dump-str-collapse, .sf-js-enabled .sf-dump-str-expand .sf-dump-str-expand {
+        display: none;
+    }
+
+    .sf-dump-hover:hover {
+        background-color: #B729D9;
+        color: #FFF !important;
+        border-radius: 2px;
+    }
+
+    pre.sf-dump {
+        display: block;
+        white-space: pre;
+        padding: 5px;
+        overflow: initial !important;
+    }
+
+    pre.sf-dump:after {
+        content: "";
+        visibility: hidden;
+        display: block;
+        height: 0;
+        clear: both;
+    }
+
+    pre.sf-dump span {
+        display: inline-flex;
+    }
+
+    pre.sf-dump a {
+        text-decoration: none;
+        cursor: pointer;
+        border: 0;
+        outline: none;
+        color: inherit;
+    }
+
+    pre.sf-dump img {
+        max-width: 50em;
+        max-height: 50em;
+        margin: .5em 0 0 0;
+        padding: 0;
+        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAAAAAA6mKC9AAAAHUlEQVQY02O8zAABilCaiQEN0EeA8QuUcX9g3QEAAjcC5piyhyEAAAAASUVORK5CYII=) #D3D3D3;
+    }
+
+    pre.sf-dump .sf-dump-ellipsis {
+        display: inline-block;
+        overflow: visible;
+        text-overflow: ellipsis;
+        max-width: 5em;
+        white-space: nowrap;
+        overflow: hidden;
+        vertical-align: top;
+    }
+
+    pre.sf-dump .sf-dump-ellipsis + .sf-dump-ellipsis {
+        max-width: none;
+    }
+
+    pre.sf-dump code {
+        display: inline;
+        padding: 0;
+        background: none;
+    }
+
+    .sf-dump-public.sf-dump-highlight, .sf-dump-protected.sf-dump-highlight, .sf-dump-private.sf-dump-highlight, .sf-dump-str.sf-dump-highlight, .sf-dump-key.sf-dump-highlight {
+        background: rgba(111, 172, 204, 0.3);
+        border: 1px solid #7DA0B1;
+        border-radius: 3px;
+    }
+
+    .sf-dump-public.sf-dump-highlight-active, .sf-dump-protected.sf-dump-highlight-active, .sf-dump-private.sf-dump-highlight-active, .sf-dump-str.sf-dump-highlight-active, .sf-dump-key.sf-dump-highlight-active {
+        background: rgba(253, 175, 0, 0.4);
+        border: 1px solid #ffa500;
+        border-radius: 3px;
+    }
+
+    pre.sf-dump .sf-dump-search-hidden {
+        display: none !important;
+    }
+
+    pre.sf-dump .sf-dump-search-wrapper {
+        font-size: 0;
+        white-space: nowrap;
+        margin-bottom: 5px;
+        display: flex;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 5px;
+    }
+
+    pre.sf-dump .sf-dump-search-wrapper > * {
+        vertical-align: top;
+        box-sizing: border-box;
+        height: 21px;
+        font-weight: normal;
+        border-radius: 0;
+        background: #FFF;
+        color: #757575;
+        border: 1px solid #BBB;
+    }
+
+    pre.sf-dump .sf-dump-search-wrapper > input.sf-dump-search-input {
+        padding: 3px;
+        height: 21px;
+        font-size: 12px;
+        border-right: none;
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+        color: #000;
+        min-width: 15px;
+        width: 100%;
+    }
+
+    pre.sf-dump .sf-dump-search-wrapper > .sf-dump-search-input-next, pre.sf-dump .sf-dump-search-wrapper > .sf-dump-search-input-previous {
+        background: #F2F2F2;
+        outline: none;
+        border-left: none;
+        font-size: 0;
+        line-height: 0;
+    }
+
+    pre.sf-dump .sf-dump-search-wrapper > .sf-dump-search-input-next {
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+
+    pre.sf-dump .sf-dump-search-wrapper > .sf-dump-search-input-next > svg, pre.sf-dump .sf-dump-search-wrapper > .sf-dump-search-input-previous > svg {
+        pointer-events: none;
+        width: 12px;
+        height: 12px;
+    }
+
+    pre.sf-dump .sf-dump-search-wrapper > .sf-dump-search-count {
+        display: inline-block;
+        padding: 0 5px;
+        margin: 0;
+        border-left: none;
+        line-height: 21px;
+        font-size: 12px;
+    }
+
+    pre.sf-dump, pre.sf-dump .sf-dump-default {
+        background-color: #18171B;
+        color: #FF8400;
+        line-height: 1.2em;
+        font: 12px Menlo, Monaco, Consolas, monospace;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        position: relative;
+        z-index: 99999;
+        word-break: break-all
+    }
+
+    pre.sf-dump .sf-dump-num {
+        font-weight: bold;
+        color: #1299DA
+    }
+
+    pre.sf-dump .sf-dump-const {
+        font-weight: bold
+    }
+
+    pre.sf-dump .sf-dump-virtual {
+        font-style: italic
+    }
+
+    pre.sf-dump .sf-dump-str {
+        font-weight: bold;
+        color: #56DB3A
+    }
+
+    pre.sf-dump .sf-dump-note {
+        color: #1299DA
+    }
+
+    pre.sf-dump .sf-dump-ref {
+        color: #A0A0A0
+    }
+
+    pre.sf-dump .sf-dump-public {
+        color: #FFFFFF
+    }
+
+    pre.sf-dump .sf-dump-protected {
+        color: #FFFFFF
+    }
+
+    pre.sf-dump .sf-dump-private {
+        color: #FFFFFF
+    }
+
+    pre.sf-dump .sf-dump-meta {
+        color: #B729D9
+    }
+
+    pre.sf-dump .sf-dump-key {
+        color: #56DB3A
+    }
+
+    pre.sf-dump .sf-dump-index {
+        color: #1299DA
+    }
+
+    pre.sf-dump .sf-dump-ellipsis {
+        color: #FF8400
+    }
+
+    pre.sf-dump .sf-dump-ns {
+        user-select: none;
+    }
+
+    pre.sf-dump .sf-dump-ellipsis-note {
+        color: #1299DA
+    }</style>
+</head>
+<body>
+<pre class="sf-dump" id="sf-dump-257802583" data-indent-pad="  " tabindex="0"><div
+    class="sf-dump-search-wrapper sf-dump-search-hidden"> <input type="text" class="sf-dump-search-input"> <span
+    class="sf-dump-search-count">0 of 0</span> <button type="button" class="sf-dump-search-input-previous"
+                                                       tabindex="-1"> <svg viewBox="0 0 1792 1792"
+                                                                           xmlns="http://www.w3.org/2000/svg"><path
+    d="M1683 1331l-166 165q-19 19-45 19t-45-19L896 965l-531 531q-19 19-45 19t-45-19l-166-165q-19-19-19-45.5t19-45.5l742-741q19-19 45-19t45 19l742 741q19 19 19 45.5t-19 45.5z"></path></svg> </button> <button
+    type="button" class="sf-dump-search-input-next" tabindex="-1"> <svg viewBox="0 0 1792 1792"
+                                                                        xmlns="http://www.w3.org/2000/svg"><path
+    d="M1683 808l-742 741q-19 19-45 19t-45-19L109 808q-19-19-19-45.5t19-45.5l166-165q19-19 45-19t45 19l531 531 531-531q19-19 45-19t45 19l166 165q19 19 19 45.5t-19 45.5z"></path></svg> </button> </div><span
+    class="sf-dump-note">array:55</span> [<a class="sf-dump-ref sf-dump-toggle"
+                                             title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+    data-depth="1" class="sf-dump-expanded"><span style="color: #A0A0A0;"> // Modules\Analytics\app\Http\client\ApiClient.php:32</span>
+  <span class="sf-dump-index">0</span> =&gt; <span class="sf-dump-note">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">01</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="5 characters">زراعت</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="9 characters">379466.97</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="5 characters">44.39</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.01</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="9 characters">379561.31</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="9 characters">379466.21</span>"
+  </samp>]
+  <span class="sf-dump-index">1</span> =&gt; <span class="sf-dump-note">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">10</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="8 characters">ذغال سنگ</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="8 characters">52256.06</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="6 characters">-10.35</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="5 characters">-0.02</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="8 characters">52268.45</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="8 characters">52252.52</span>"
+  </samp>]
+  <span class="sf-dump-index">2</span> =&gt; <span class="sf-dump-note">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">13</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="9 characters">كانه فلزي</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="9 characters">538514.37</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="7 characters">-505.06</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="5 characters">-0.09</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="9 characters">539116.17</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="9 characters">538587.15</span>"
+  </samp>]
+  <span class="sf-dump-index">3</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">14</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="10 characters">ساير معادن</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="9 characters">358009.97</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="6 characters">340.50</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.10</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="9 characters">358203.14</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="9 characters">357809.94</span>"
+  </samp>]
+  <span class="sf-dump-index">4</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">17</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="7 characters">منسوجات</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="8 characters">23833.63</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="6 characters">224.08</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.95</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="8 characters">23781.67</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="8 characters">23645.22</span>"
+  </samp>]
+  <span class="sf-dump-index">5</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">19</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="12 characters">محصولات چرمي</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="8 characters">46753.55</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="7 characters">1301.78</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">2.86</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="8 characters">46751.04</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="8 characters">45529.68</span>"
+  </samp>]
+  <span class="sf-dump-index">6</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">20</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="12 characters">محصولات چوبي</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="9 characters">710781.88</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="7 characters">-361.26</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="5 characters">-0.05</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="9 characters">710996.90</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="9 characters">710781.88</span>"
+  </samp>]
+  <span class="sf-dump-index">7</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">21</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="12 characters">محصولات كاغذ</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="8 characters">53364.51</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="7 characters">-555.16</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="5 characters">-1.03</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="8 characters">53932.74</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="8 characters">53611.62</span>"
+  </samp>]
+  <span class="sf-dump-index">8</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">22</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="12 characters">انتشار و چاپ</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="10 characters">2041316.72</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="6 characters">255.13</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.01</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="10 characters">2041352.95</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="10 characters">2041096.70</span>"
+  </samp>]
+  <span class="sf-dump-index">9</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">23</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="12 characters">فراورده نفتي</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="11 characters">11248977.70</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="8 characters">54918.06</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.49</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="11 characters">11254747.30</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="11 characters">11213040.40</span>"
+  </samp>]
+  <span class="sf-dump-index">10</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">25</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="6 characters">لاستيك</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="9 characters">767393.93</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="7 characters">2492.05</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.33</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="9 characters">767318.98</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="9 characters">766583.73</span>"
+  </samp>]
+  <span class="sf-dump-index">11</span> =&gt; <span class="sf-dump-note">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">27</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="11 characters">فلزات اساسي</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="10 characters">2032268.57</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="6 characters">568.88</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.03</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="10 characters">2037665.73</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="10 characters">2033049.21</span>"
+  </samp>]
+  <span class="sf-dump-index">12</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">28</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="12 characters">محصولات فلزي</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="9 characters">264574.08</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="8 characters">-2199.28</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="5 characters">-0.82</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="9 characters">266816.44</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="9 characters">264822.34</span>"
+  </samp>]
+  <span class="sf-dump-index">13</span> =&gt; <span class="sf-dump-note">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">29</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="10 characters">ماشين آلات</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="9 characters">518228.26</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="7 characters">2135.08</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.41</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="9 characters">517972.80</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="9 characters">516440.26</span>"
+  </samp>]
+  <span class="sf-dump-index">14</span> =&gt; <span class="sf-dump-note">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">31</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="14 characters">دستگاههاي برقي</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="10 characters">7789418.20</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="9 characters">-13491.23</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="5 characters">-0.17</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="10 characters">7802313.61</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="10 characters">7792782.42</span>"
+  </samp>]
+  <span class="sf-dump-index">15</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">32</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="13 characters">وسايل ارتباطي</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="8 characters">42609.56</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="6 characters">681.21</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">1.62</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="8 characters">42607.55</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="8 characters">41969.49</span>"
+  </samp>]
+  <span class="sf-dump-index">16</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">33</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="11 characters">ابزار پزشكي</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="8 characters">10244.34</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; <span class="sf-dump-num">0</span>
+    "<span class="sf-dump-key">percent</span>" =&gt; <span class="sf-dump-num">0</span>
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str">0</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str">0</span>"
+  </samp>]
+  <span class="sf-dump-index">17</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">34</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="5 characters">خودرو</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="9 characters">334874.27</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="7 characters">-986.76</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="5 characters">-0.29</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="9 characters">336528.31</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="9 characters">334938.80</span>"
+  </samp>]
+  <span class="sf-dump-index">18</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">36</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="6 characters">مبلمان</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="6 characters">272.70</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; <span class="sf-dump-num">0</span>
+    "<span class="sf-dump-key">percent</span>" =&gt; <span class="sf-dump-num">0</span>
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str">0</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str">0</span>"
+  </samp>]
+  <span class="sf-dump-index">19</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">38</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="9 characters">قند و شكر</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="9 characters">233659.08</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="7 characters">-987.86</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="5 characters">-0.42</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="9 characters">234083.10</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="9 characters">233621.43</span>"
+  </samp>]
+  <span class="sf-dump-index">20</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">39</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="13 characters">چند رشته اي ص</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="9 characters">415015.98</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="7 characters">-990.51</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="5 characters">-0.24</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="9 characters">416087.96</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="9 characters">414992.33</span>"
+  </samp>]
+  <span class="sf-dump-index">21</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">40</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str"
+                                                         title="18 characters">تامين آب، برق، گاز</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="7 characters">6196.08</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="5 characters">-7.04</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="5 characters">-0.11</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="7 characters">6203.10</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="7 characters">6196.29</span>"
+  </samp>]
+  <span class="sf-dump-index">22</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">42</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="13 characters">غذايي بجز قند</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="8 characters">70647.55</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="7 characters">-242.59</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="5 characters">-0.34</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="8 characters">70718.21</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="5 characters">70637</span>"
+  </samp>]
+  <span class="sf-dump-index">23</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">43</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="11 characters">مواد دارويي</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="9 characters">209303.27</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="7 characters">-124.82</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="5 characters">-0.06</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="9 characters">209470.26</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="9 characters">209360.44</span>"
+  </samp>]
+  <span class="sf-dump-index">24</span> =&gt; <span class="sf-dump-note">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">44</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="7 characters">شيميايي</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="9 characters">265304.56</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="6 characters">940.61</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.36</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="9 characters">265805.34</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="9 characters">265295.94</span>"
+  </samp>]
+  <span class="sf-dump-index">25</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">45</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="9 characters">پيمانكاري</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="6 characters">919.70</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; <span class="sf-dump-num">0</span>
+    "<span class="sf-dump-key">percent</span>" =&gt; <span class="sf-dump-num">0</span>
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str">0</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str">0</span>"
+  </samp>]
+  <span class="sf-dump-index">26</span> =&gt; <span class="sf-dump-note">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str"
+                                                         title="17 characters">65986638607018835</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="30 characters">47خرده فروشي به جز وسايل نقليه</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="7 characters">4243.43</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="4 characters">5.46</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.13</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="7 characters">4242.69</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="7 characters">4238.49</span>"
+  </samp>]
+  <span class="sf-dump-index">27</span> =&gt; <span class="sf-dump-note">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">49</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="13 characters">كاشي و سراميك</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="8 characters">85459.23</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="6 characters">123.48</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.14</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="8 characters">85430.98</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="8 characters">85380.11</span>"
+  </samp>]
+  <span class="sf-dump-index">28</span> =&gt; <span class="sf-dump-note">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">53</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="5 characters">سيمان</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="8 characters">42902.18</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="5 characters">59.12</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.14</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="8 characters">42904.06</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="8 characters">42883.94</span>"
+  </samp>]
+  <span class="sf-dump-index">29</span> =&gt; <span class="sf-dump-note">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">54</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="12 characters">كاني غيرفلزي</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="8 characters">70806.91</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="7 characters">-553.69</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="5 characters">-0.78</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="8 characters">71312.04</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="8 characters">70861.95</span>"
+  </samp>]
+  <span class="sf-dump-index">30</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">55</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="13 characters">هتل و رستوران</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="7 characters">1338.86</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="5 characters">38.43</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">2.96</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="7 characters">1338.85</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="7 characters">1321.84</span>"
+  </samp>]
+  <span class="sf-dump-index">31</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">56</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="14 characters">سرمايه گذاريها</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="8 characters">30772.30</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="5 characters">-3.60</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="5 characters">-0.01</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="8 characters">30771.65</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="8 characters">30766.97</span>"
+  </samp>]
+  <span class="sf-dump-index">32</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">57</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="6 characters">بانكها</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="8 characters">12134.16</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="5 characters">-5.88</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="5 characters">-0.05</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="8 characters">12163.43</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="8 characters">12135.72</span>"
+  </samp>]
+  <span class="sf-dump-index">33</span> =&gt; <span class="sf-dump-note">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">58</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="8 characters">سايرمالي</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="8 characters">16401.14</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="5 characters">61.10</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.37</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="8 characters">16437.96</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="8 characters">16348.84</span>"
+  </samp>]
+  <span class="sf-dump-index">34</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">60</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="9 characters">حمل و نقل</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="9 characters">102916.16</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="5 characters">30.87</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.03</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="9 characters">102941.83</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="9 characters">102891.82</span>"
+  </samp>]
+  <span class="sf-dump-index">35</span> =&gt; <span class="sf-dump-note">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">64</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="7 characters">راديويي</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="7 characters">6301.78</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="5 characters">76.29</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">1.23</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="7 characters">6265.43</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="7 characters">6228.41</span>"
+  </samp>]
+  <span class="sf-dump-index">36</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">65</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="4 characters">مالي</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="10 characters">2335348.32</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="8 characters">-1208.00</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="5 characters">-0.05</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="10 characters">2338512.13</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="10 characters">2335719.18</span>"
+  </samp>]
+  <span class="sf-dump-index">37</span> =&gt; <span class="sf-dump-note">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">67</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str"
+                                                         title="19 characters">اداره بازارهاي مالي</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="7 characters">1364.27</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="5 characters">-7.09</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="5 characters">-0.52</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="7 characters">1371.27</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="7 characters">1364.45</span>"
+  </samp>]
+  <span class="sf-dump-index">38</span> =&gt; <span class="sf-dump-note">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">70</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="10 characters">انبوه سازي</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="8 characters">16927.79</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="5 characters">20.73</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.12</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="8 characters">16923.14</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="8 characters">16837.48</span>"
+  </samp>]
+  <span class="sf-dump-index">39</span> =&gt; <span class="sf-dump-note">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">72</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="6 characters">رايانه</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="9 characters">103856.80</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="7 characters">-246.31</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="5 characters">-0.24</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="9 characters">104142.07</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="9 characters">103895.77</span>"
+  </samp>]
+  <span class="sf-dump-index">40</span> =&gt; <span class="sf-dump-note">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">73</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str"
+                                                         title="18 characters">اطلاعات و ارتباطات</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="6 characters">693.36</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.12</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.02</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="6 characters">693.68</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="6 characters">693.42</span>"
+  </samp>]
+  <span class="sf-dump-index">41</span> =&gt; <span class="sf-dump-note">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str" title="2 characters">74</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="10 characters">فني مهندسي</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="7 characters">8800.13</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="6 characters">-13.12</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="5 characters">-0.15</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="7 characters">8818.73</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="7 characters">8804.52</span>"
+  </samp>]
+  <span class="sf-dump-index">42</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str"
+                                                         title="17 characters">65675836323214668</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str"
+                                                         title="19 characters">استخراج نفت جزكشف11</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="7 characters">8182.82</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="5 characters">38.63</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.47</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="7 characters">8187.04</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="7 characters">8165.98</span>"
+  </samp>]
+  <span class="sf-dump-index">43</span> =&gt; <span class="sf-dump-note">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str"
+                                                         title="17 characters">59105676994811497</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str"
+                                                         title="17 characters">بيمه و بازنشسته66</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="9 characters">133483.41</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="6 characters">-22.30</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="5 characters">-0.02</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="9 characters">133773.25</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="9 characters">133480.84</span>"
+  </samp>]
+  <span class="sf-dump-index">44</span> =&gt; <span class="sf-dump-note">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str"
+                                                         title="17 characters">10523825119011581</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str"
+                                                         title="17 characters">شاخص 30 شركت بزرگ</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="9 characters">170779.76</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="5 characters">51.39</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.03</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="9 characters">171201.18</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="6 characters">170762</span>"
+  </samp>]
+  <span class="sf-dump-index">45</span> =&gt; <span class="sf-dump-note">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str"
+                                                         title="17 characters">49579049405614711</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str"
+                                                         title="15 characters">شاخص آزاد شناور</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="10 characters">3455040.39</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="6 characters">134.74</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.00</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="10 characters">3461066.34</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="10 characters">3455278.31</span>"
+  </samp>]
+  <span class="sf-dump-index">46</span> =&gt; <span class="sf-dump-note">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str"
+                                                         title="17 characters">62752761908615603</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="14 characters">شاخص بازار اول</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="10 characters">2109642.54</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="6 characters">710.71</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.03</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="10 characters">2113673.25</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="10 characters">2109690.11</span>"
+  </samp>]
+  <span class="sf-dump-index">47</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str"
+                                                         title="17 characters">71704845530629737</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="14 characters">شاخص بازار دوم</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="10 characters">5371053.82</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="7 characters">8376.50</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.16</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="10 characters">5379099.06</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="10 characters">5365816.51</span>"
+  </samp>]
+  <span class="sf-dump-index">48</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str"
+                                                         title="17 characters">43754960038275285</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="9 characters">شاخص صنعت</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="10 characters">2661683.66</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="7 characters">3296.40</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.12</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="10 characters">2665483.38</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="10 characters">2661890.19</span>"
+  </samp>]
+  <span class="sf-dump-index">49</span> =&gt; <span class="sf-dump-note">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str"
+                                                         title="16 characters">8384385859414435</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str"
+                                                         title="18 characters">شاخص قيمت (هم وزن)</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="9 characters">460362.69</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="7 characters">-210.48</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="5 characters">-0.05</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="9 characters">460981.55</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="9 characters">460370.64</span>"
+  </samp>]
+  <span class="sf-dump-index">50</span> =&gt; <span class="sf-dump-note">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str"
+                                                         title="17 characters">69932667409721265</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str"
+                                                         title="17 characters">شاخص قيمت 50 شركت</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="10 characters">7895534.34</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="7 characters">1270.98</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.02</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="10 characters">7900693.76</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="10 characters">7895272.34</span>"
+  </samp>]
+  <span class="sf-dump-index">51</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str"
+                                                         title="16 characters">5798407779416661</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str"
+                                                         title="21 characters">شاخص قيمت(وزني-ارزشي)</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="9 characters">528608.03</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="6 characters">452.63</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.09</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="9 characters">529518.48</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="9 characters">528400.90</span>"
+  </samp>]
+  <span class="sf-dump-index">52</span> =&gt; <span class="sf-dump-note">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str"
+                                                         title="17 characters">32097828799138957</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str" title="7 characters">شاخص كل</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="10 characters">2779207.45</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="7 characters">2379.74</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.09</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="10 characters">2783994.21</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="10 characters">2778118.42</span>"
+  </samp>]
+  <span class="sf-dump-index">53</span> =&gt; <span class="sf-dump-note">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str"
+                                                         title="17 characters">67130298613737946</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str"
+                                                         title="16 characters">شاخص كل (هم وزن)</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="9 characters">869981.65</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="7 characters">-397.76</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="5 characters">-0.05</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="9 characters">871151.16</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="9 characters">869996.68</span>"
+  </samp>]
+  <span class="sf-dump-index">54</span> =&gt; <span class="sf-dump-note" style="cursor: pointer;">array:7</span> [<a
+        class="sf-dump-ref sf-dump-toggle" title="[Ctrl+click] Expand all children"><span>▼</span></a><samp
+        data-depth="2" class="sf-dump-expanded">
+    "<span class="sf-dump-key">code</span>" =&gt; "<span class="sf-dump-str"
+                                                         title="17 characters">46342955726788357</span>"
+    "<span class="sf-dump-key">name</span>" =&gt; "<span class="sf-dump-str"
+                                                         title="17 characters">شاخص50شركت فعالتر</span>"
+    "<span class="sf-dump-key">value</span>" =&gt; "<span class="sf-dump-str" title="6 characters">110875</span>"
+    "<span class="sf-dump-key">change</span>" =&gt; "<span class="sf-dump-str" title="6 characters">167.72</span>"
+    "<span class="sf-dump-key">percent</span>" =&gt; "<span class="sf-dump-str" title="4 characters">0.15</span>"
+    "<span class="sf-dump-key">max</span>" =&gt; "<span class="sf-dump-str" title="9 characters">111054.49</span>"
+    "<span class="sf-dump-key">min</span>" =&gt; "<span class="sf-dump-str" title="9 characters">110882.63</span>"
+  </samp>]
+</samp>]
+</pre>
+<script>Sfdump("sf-dump-257802583")</script>
+</body>
+</html>
