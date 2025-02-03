@@ -16,6 +16,8 @@ use Modules\Post\Models\Post;
 use Modules\Product\Models\Product;
 use Modules\Referral\Models\Referral;
 use Modules\User\Models\User;
+use Modules\Wallet\Models\Wallet;
+use Modules\Wallet\Models\WalletTransaction;
 use phpDocumentor\Reflection\File;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -30,6 +32,7 @@ class DatabaseSeeder extends Seeder
         $this->seedPosts();
         $this->seedProducts();
         $this->seedOrders();
+        $this->seedWallet();
 //        $this->seedPayments();
         $this->seedComments();
         $this->seedMenu();
@@ -375,6 +378,22 @@ class DatabaseSeeder extends Seeder
         }
     }
 
+    private function seedWallet()
+    {
+        $file = \File::get(database_path() . '/wallet.json');
+        $wallets = json_decode($file, true, flags: JSON_UNESCAPED_UNICODE);
+        foreach ($wallets as $wallet) {
+            $user = User::where('id' , $wallet['user_id'])->first();
+            if (!$user) continue;
+            $user->wallet->transactions()->create([
+                'user_id' => 1,
+                'description' => $wallet['details'],
+                'type' => $wallet['type'],
+                'amount' => round($wallet['amount']),
+                'created_at' => $wallet['date'],
+            ]);
+        }
+    }
     private function seedPayments()
     {
         $payment1 = Payment::factory()->create([
