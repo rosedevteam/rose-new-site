@@ -94,6 +94,7 @@ class OrderController extends Controller
                 'notes' => $validData['notes'],
                 'price' => $total,
             ]);
+
             $order->products()->attach($validData['products']);
             $after = Order::with('products:id,title')->find($order->id)->toArray();
 
