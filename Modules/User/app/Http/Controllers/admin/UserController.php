@@ -17,6 +17,7 @@ class UserController extends Controller
 {
     public function index()
     {
+        //todo fix queries
         Gate::authorize('view-users');
         $this->seo()->setTitle('کاربران');
         try {
@@ -39,7 +40,6 @@ class UserController extends Controller
             $roles = Role::all()->select('name', 'id');
 
             $users = User::with('roles');
-//            dd($users);
             if ($role_id) {
                 $users = $users->whereHas('roles', function ($query) use ($role_id) {
                     return $query->where('role_id', $role_id);
@@ -54,14 +54,16 @@ class UserController extends Controller
                 $users = $users->where('created_at', '>=', $from2);
             }
             if ($wallet_balance) {
-                $users = $users->whereHas('wallet', function ($query) use ($wallet_balance, $wallet_search_type) {
-                    return $query->where('balance', $wallet_search_type, $wallet_balance);
-                });
+                $users = $users->join('wallets', 'users.id', '=', 'wallets.user_id')
+                    ->where('wallets.balance', $wallet_search_type, $wallet_balance)
+                    ->select('users.*')
+                    ->distinct();
             }
             if ($orderStatus) {
-                $users = $users->whereHas('orders', function ($query) use ($orderStatus) {
-                    return $query->where('status', $orderStatus);
-                });
+                $users = $users->join('orders', 'users.id', '=', 'orders.user_id')
+                    ->where('orders.status', $orderStatus)
+                    ->select('users.*')
+                    ->distinct();
             }
             if ($orderType) {
                 switch ($orderType) {
@@ -69,14 +71,16 @@ class UserController extends Controller
                         $users = $users->whereHas('orders');
                         break;
                     case 'just_free_orders':
-                        $users = $users->whereHas('orders', function ($query) {
-                            $query->where('price', 0);
-                        });
+                        $users = $users->join('orders', 'users.id', '=', 'orders.user_id')
+                            ->where('orders.price' , 0)
+                            ->select('users.*')
+                            ->distinct();
                         break;
                     case 'just_non_free_orders':
-                        $users = $users->whereHas('orders', function ($query) {
-                            $query->where('price', '>', 0);
-                        });
+                        $users = $users->join('orders', 'users.id', '=', 'orders.user_id')
+                            ->where('orders.price' , '>', 0)
+                            ->select('users.*')
+                            ->distinct();
                         break;
                     case 'without_orders':
                         $users = $users->whereDoesntHave('orders');

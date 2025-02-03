@@ -220,6 +220,7 @@ class DatabaseSeeder extends Seeder
                     'last_name' => $user['last_name'] == "" ? null : $user['last_name'],
                     'phone' => $user['user_login'],
                     'email' => $user['user_email'] == "" ? null : $user['user_email'],
+                    'birthday' => null,
                     'created_at' => $user['user_registered'],
                 ]);
                 $cust->assignRole($customer);
