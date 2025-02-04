@@ -12,7 +12,6 @@ use Modules\Comment\Models\Comment;
 use Modules\DailyReport\Models\DailyReport;
 use Modules\Discount\Models\Discount;
 use Modules\Discount\Models\DiscountRecord;
-use Modules\Discount\Models\DiscountUse;
 use Modules\Menu\Models\Menu;
 use Modules\Order\Models\Order;
 use Modules\Podcast\Models\Podcast;

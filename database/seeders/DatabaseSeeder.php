@@ -39,11 +39,9 @@ class DatabaseSeeder extends Seeder
         $this->seedComments();
         $this->seedMenu();
         $this->seedCategories();
+        $this->seedDiscounts();
         $this->seedDailyReports();
         $this->seedStudentReports();
-//        $this->seedDiscounts();
-//        $this->seedIndices();
-//        $this->seedCompanies();
     }
 
     private function seedUsersAndPermissions()
@@ -379,7 +377,7 @@ class DatabaseSeeder extends Seeder
                 'spot_player_watermark' => $spotdata['watermark']['texts'][0]['text'] ?? null,
             ]);
 
-            $item->products()->attach(explode(',', $order['product_ids']));
+            $item->products()->attach(explode(',' , $order['product_ids']));
         }
     }
 

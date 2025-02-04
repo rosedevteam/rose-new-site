@@ -111,7 +111,7 @@
                                     @can('edit-users')
                                         <td>
                                             <div class="d-flex gap-3 text-nowrap">
-                                                <a href="{{ route('admin.users.edit', $user) }}"
+                                                <a href="{{ route('admin.users.edit', $user->id) }}"
                                                    class="btn btn-sm btn-info">
                                                     ویرایش
                                                 </a>
@@ -251,30 +251,6 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label for="orderStatus" class="form-label">نوع سفارش ها:</label>
-                                        <div class="">
-                                            <select id="orderType" class="form-select" name="orderType">
-                                                <option value="" selected>همه</option>
-                                                <option
-                                                    value="has_orders" {{ $orderType == 'has_orders' ? 'selected' : '' }}>
-                                                    دارای سفارش (رایگان و پولی)
-                                                </option>
-                                                <option
-                                                    value="just_free_orders"{{ $orderType == 'just_free_orders' ? 'selected' : '' }} >
-                                                    دارای سفارش رایگان
-                                                </option>
-                                                <option
-                                                    value="just_non_free_orders"{{ $orderType == 'just_non_free_orders' ? 'selected' : '' }} >
-                                                    دارای سفارش پرداخت شده
-                                                </option>
-                                                <option
-                                                    value="without_orders"{{ $orderType == 'without_orders' ? 'selected' : '' }} >
-                                                    بدون سفارش
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
                                         <label for="orderStatus" class="form-label">وضعیت سفارش ها:</label>
                                         <div class="">
                                             <select id="orderStatus" class="form-select" name="orderStatus">
@@ -299,14 +275,35 @@
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <label for="orderStatus" class="form-label">نوع سفارش ها:</label>
+                                        <div class="">
+                                            <select id="orderType" class="form-select" name="orderType">
+                                                <option value="" selected>همه</option>
+                                                <option
+                                                    value="has_orders" {{ $orderType == 'has_orders' ? 'selected' : '' }}>
+                                                    دارای سفارش (رایگان و پولی)
+                                                </option>
+                                                <option
+                                                    value="just_free_orders"{{ $orderType == 'just_free_orders' ? 'selected' : '' }} >
+                                                    دارای سفارش رایگان
+                                                </option>
+                                                <option
+                                                    value="just_non_free_orders"{{ $orderType == 'just_non_free_orders' ? 'selected' : '' }} >
+                                                    دارای سفارش پرداخت شده
+                                                </option>
+                                                <option
+                                                    value="without_orders"{{ $orderType == 'without_orders' ? 'selected' : '' }} >
+                                                    بدون سفارش
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col">
                                             <label for="role" class="form-label">نقش: </label>
                                             <select id="role" name="role" class="form-select text-capitalize">
                                                 <option value="" selected>همه نقش ها</option>
                                                 @foreach($roles as $role)
-                                                    @if($role['name'] == 'super-admin')
-                                                        @continue
-                                                    @endif
                                                     <option
                                                         value="{{ $role['id'] }}" {{ $role_id == $role['id'] ? 'selected' : ''}}>{{ $role['name'] }}</option>
                                                 @endforeach

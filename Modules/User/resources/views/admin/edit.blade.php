@@ -167,7 +167,7 @@
                                                         @case('shaparak') درگاه بانکی@break
                                                         @case('card')کارت به کارت@break
                                                     @endswitch</td>
-                                                <td>{{ $order->price }}</td>
+                                                <td>{{ number_format($order->price) }}</td>
                                                 <td>{{ verta($order->created_at)->formatJalaliDatetime() }}</td>
                                                 <td>
                                                     <div class="d-flex gap-3 text-nowrap">
