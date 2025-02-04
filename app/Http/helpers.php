@@ -179,3 +179,13 @@ if (!function_exists('createSpotPlayerLicence')) {
 
     }
 }
+
+if (!function_exists('userHasCourse')) {
+    function userHasCourse($course_id) {
+
+        $userProducts = auth()->user()->orders()
+            ->where('status' , 'completed')->with('products')->get()
+            ->pluck('products.*.id')->flatten()->unique()->toArray();
+        return in_array($course_id, $userProducts);
+    }
+}

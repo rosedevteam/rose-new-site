@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\traits\CartTools;
 use Artesaos\SEOTools\Traits\SEOTools;
 use Illuminate\Http\Request;
+use Modules\Cart\Classes\Helpers\AutoDiscount;
 use Modules\Cart\Classes\Helpers\Cart;
 use Modules\Product\Models\Product;
 
@@ -32,6 +33,8 @@ class CartController extends Controller
                 $cookieCart->delete($item['id']);
                 $message = 'محصولاتی که قبلا در آن ثبت نام کردید از سبد شما حذف شدند';
             }
+            dd(AutoDiscount::masterFIS());
+            AutoDiscount::masterFIS(); //check if master fis discount conditions
         }
         return view('cart::front.cart', compact('cookieCart'))->with('message' , $message);
     }

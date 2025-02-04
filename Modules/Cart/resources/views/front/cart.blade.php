@@ -9,9 +9,7 @@
                             {{$message}}
                         </div>
                     @endif
-
                     <div class="col-md-8">
-
                         <div class="bg-white br-default p-4">
                             <div class="cart">
                                 <h3 class="color-default mb-3 ">جزئیات سفارش</h3>
