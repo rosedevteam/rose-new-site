@@ -39,7 +39,7 @@ class UserController extends Controller
             $roles = Role::all()->select('name', 'id');
 
             $users = User::with('roles');
-//            dd($users);
+
             if ($role_id) {
                 $users = $users->whereHas('roles', function ($query) use ($role_id) {
                     return $query->where('role_id', $role_id);
@@ -84,28 +84,34 @@ class UserController extends Controller
                 }
             }
 
+            $users = $users->leftJoin('orders', 'users.id', '=', 'orders.user_id')
+                ->leftJoin('order_product', 'orders.id', '=', 'order_product.order_id')
+                ->when($orderStatus, function ($query) use ($orderStatus) {
+                    return $query->where('orders.status', $orderStatus);
+                })
+                ->groupBy('users.id')
+                ->select('users.*')
+                ->distinct();
+
             if ($exact) {
-                // todo
-                $users = $users->whereHas('orders', function ($query) use ($productQuery) {
-                    return $query->whereHas('products', function ($query) use ($productQuery) {
-                        return $query->where($productQuery);
-                    });
-                });
+                // todo check the queries
+                $users = $users->whereIn('order_product.product_id', $productQuery)
+                    ->groupBy('users.id')
+                    ->havingRaw('COUNT(DISTINCT order_product.product_id) = ?', [count($productQuery)]);
+
             } else {
-                $users = $users->join('orders', 'users.id', '=', 'orders.user_id')
-                    ->join('order_product', 'orders.id', '=', 'order_product.order_id')
-                    ->join('products', 'products.id', '=', 'order_product.product_id')
-                    ->when($orderStatus, function ($query) use ($orderStatus) {
-                        return $query->where('orders.status', $orderStatus);
-                    })
-                    ->when($except_products, function ($query) use ($except_products) {
-                        $query->whereNotIn('products.id', $except_products);
+
+                $users = $users->when($except_products, function ($query) use ($except_products) {
+                        $query->whereNotIn('order_product.product_id', $except_products);
                     })
                     ->when($productQuery, function ($query) use ($productQuery) {
-                        $query->whereIn('products.id', $productQuery);
+                        $query->whereIn('order_product.product_id', $productQuery);
                     })
-                    ->select('users.*');
+                    ->groupBy('users.id')
+                    ->select('users.*')
+                    ->distinct();
             }
+
             if ($search) {
                 $users = $users->where('first_name', 'like', '%' . $search . '%')
                     ->orWhere('last_name', 'like', '%' . $search . '%')

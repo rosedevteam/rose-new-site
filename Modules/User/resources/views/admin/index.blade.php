@@ -304,9 +304,6 @@
                                             <select id="role" name="role" class="form-select text-capitalize">
                                                 <option value="" selected>همه نقش ها</option>
                                                 @foreach($roles as $role)
-                                                    @if($role['name'] == 'super-admin')
-                                                        @continue
-                                                    @endif
                                                     <option
                                                         value="{{ $role['id'] }}" {{ $role_id == $role['id'] ? 'selected' : ''}}>{{ $role['name'] }}</option>
                                                 @endforeach
