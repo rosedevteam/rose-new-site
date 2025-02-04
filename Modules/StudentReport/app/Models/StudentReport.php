@@ -4,6 +4,7 @@ namespace Modules\StudentReport\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\StudentReport\Database\Factories\StudentReportFactory;
 use Modules\User\Models\User;
 
 class StudentReport extends Model
@@ -22,6 +23,11 @@ class StudentReport extends Model
     public function student()
     {
         return $this->belongsTo(User::class, 'student_id');
+    }
+
+    private static function newFactory(): StudentReportFactory
+    {
+        return StudentReportFactory::new();
     }
 
 }

@@ -8,6 +8,7 @@ use Modules\Analytics\Models\company;
 use Modules\Analytics\Models\index;
 use Modules\Category\Models\Category;
 use Modules\Comment\Models\Comment;
+use Modules\DailyReport\Models\DailyReport;
 use Modules\Discount\Models\Discount;
 use Modules\Menu\Models\Menu;
 use Modules\Order\Models\Order;
@@ -15,6 +16,7 @@ use Modules\Payment\Models\Payment;
 use Modules\Post\Models\Post;
 use Modules\Product\Models\Product;
 use Modules\Referral\Models\Referral;
+use Modules\StudentReport\Models\StudentReport;
 use Modules\User\Models\User;
 use Modules\Wallet\Models\Wallet;
 use Modules\Wallet\Models\WalletTransaction;
@@ -37,6 +39,8 @@ class DatabaseSeeder extends Seeder
         $this->seedComments();
         $this->seedMenu();
         $this->seedCategories();
+        $this->seedDailyReports();
+        $this->seedStudentReports();
 //        $this->seedDiscounts();
 //        $this->seedIndices();
 //        $this->seedCompanies();
@@ -213,7 +217,7 @@ class DatabaseSeeder extends Seeder
         $users = json_decode($json, true, flags: JSON_UNESCAPED_UNICODE);
 
         foreach ($users as $user) {
-            if(!User::where('phone' , $user['user_login'])->exists()){
+            if (!User::where('phone', $user['user_login'])->exists()) {
                 $cust = User::factory()->create([
                     'id' => $user['user_id'],
                     'first_name' => $user['first_name'],
@@ -375,7 +379,7 @@ class DatabaseSeeder extends Seeder
                 'spot_player_watermark' => $spotdata['watermark']['texts'][0]['text'] ?? null,
             ]);
 
-            $item->products()->attach(explode(',' , $order['product_ids']));
+            $item->products()->attach(explode(',', $order['product_ids']));
         }
     }
 
@@ -384,7 +388,7 @@ class DatabaseSeeder extends Seeder
         $file = \File::get(database_path() . '/wallet.json');
         $wallets = json_decode($file, true, flags: JSON_UNESCAPED_UNICODE);
         foreach ($wallets as $wallet) {
-            $user = User::where('id' , $wallet['user_id'])->first();
+            $user = User::where('id', $wallet['user_id'])->first();
             if (!$user) continue;
             $user->wallet->transactions()->create([
                 'user_id' => 1,
@@ -395,6 +399,7 @@ class DatabaseSeeder extends Seeder
             ]);
         }
     }
+
     private function seedPayments()
     {
         $payment1 = Payment::factory()->create([
@@ -703,5 +708,36 @@ class DatabaseSeeder extends Seeder
             'signed_up' => 1,
             'has_bought' => 0
         ]);
+    }
+
+    private function seedDailyReports()
+    {
+        $file = file_get_contents(database_path() . '/gozaresh-bazar.json');
+        $data = json_decode($file, false, JSON_UNESCAPED_UNICODE);
+
+        foreach ($data as $item) {
+            DailyReport::factory()->create([
+                'user_id' => 1,
+                'title' => $item->title,
+                'file' => 'تست'
+            ]);
+        }
+    }
+
+    private function seedStudentReports()
+    {
+        $file = file_get_contents(database_path() . '/tahlil.json');
+        $data = json_decode($file, false, JSON_UNESCAPED_UNICODE);
+        foreach ($data as $item) {
+            StudentReport::factory()->create([
+                'user_id' => 1,
+                'student_id' => $item->an_name,
+                'analysis' => $item->report_dl_link,
+                'date' => $item->an_date,
+                'company' => $item->title,
+                'status' => 'approved',
+                'created_at' => $item->an_date,
+            ]);
+        }
     }
 }
