@@ -85,31 +85,26 @@ class UserController extends Controller
             }
 
             if ($exact) {
+                // todo
                 $users = $users->whereHas('orders', function ($query) use ($productQuery) {
                     return $query->whereHas('products', function ($query) use ($productQuery) {
                         return $query->where($productQuery);
                     });
                 });
             } else {
-                if ($except_products) {
-                    //todo
-//                    $users = $users->join('orders', 'orders.user_id', '=', 'users.id')
-//                        ->join('order_product', 'order_product.order_id', '=', 'orders.id')
-//                        ->join('products', 'products.id', '=', 'order_product.product_id')
-//                        ->whereNotIn('products.id', $except_products)
-////                        ->orWhereNull('products.id') // اگر کاربر هیچ محصولی خریداری نکرده باشد
-//                        ->select('users.*')
-//                        ->distinct();
-                }
-                if ($productQuery) {
-                    //todo
-                    $users = $users->join('orders', 'orders.user_id', '=', 'users.id')
-                        ->join('order_product', 'order_product.order_id', '=', 'orders.id')
-                        ->join('products', 'products.id', '=', 'order_product.product_id')
-                        ->whereIn('products.id', $productQuery)
-                        ->select('users.*')
-                        ->distinct();
-                }
+                $users = $users->join('orders', 'users.id', '=', 'orders.user_id')
+                    ->join('order_product', 'orders.id', '=', 'order_product.order_id')
+                    ->join('products', 'products.id', '=', 'order_product.product_id')
+                    ->when($orderStatus, function ($query) use ($orderStatus) {
+                        return $query->where('orders.status', $orderStatus);
+                    })
+                    ->when($except_products, function ($query) use ($except_products) {
+                        $query->whereNotIn('products.id', $except_products);
+                    })
+                    ->when($productQuery, function ($query) use ($productQuery) {
+                        $query->whereIn('products.id', $productQuery);
+                    })
+                    ->select('users.*');
             }
             if ($search) {
                 $users = $users->where('first_name', 'like', '%' . $search . '%')
