@@ -42,10 +42,5 @@ class AppServiceProvider extends ServiceProvider
             );
         });
         Paginator::defaultView('vendor.pagination.rose-pagination');
-
-        $menus = Menu::with('children')
-            ->whereNull('parent_id')
-            ->get();
-        View::share('menus', $menus);
     }
 }

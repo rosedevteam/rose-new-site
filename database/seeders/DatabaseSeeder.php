@@ -30,13 +30,11 @@ class DatabaseSeeder extends Seeder
         $this->seedPosts();
         $this->seedProducts();
         $this->seedOrders();
-//        $this->seedPayments();
+        $this->seedPayments();
         $this->seedComments();
         $this->seedMenu();
         $this->seedCategories();
-//        $this->seedDiscounts();
-//        $this->seedIndices();
-//        $this->seedCompanies();
+        $this->seedDiscounts();
     }
 
     private function seedUsersAndPermissions()
@@ -605,32 +603,6 @@ class DatabaseSeeder extends Seeder
             'expires_at' => now()->addDays(3),
         ]);
         $discount->products()->attach(Product::all());
-
-        $discount->discountRecords()->create([
-            'user_id' => 1,
-            'order_id' => 1,
-            'discount_id' => 1
-        ]);
-        $discount->discountRecords()->create([
-            'user_id' => 1,
-            'order_id' => 1,
-            'discount_id' => 1
-        ]);
-        $discount->discountRecords()->create([
-            'user_id' => 1,
-            'order_id' => 1,
-            'discount_id' => 1
-        ]);
-        $discount->discountRecords()->create([
-            'user_id' => 1,
-            'order_id' => 1,
-            'discount_id' => 1
-        ]);
-        $discount->discountRecords()->create([
-            'user_id' => 1,
-            'order_id' => 1,
-            'discount_id' => 1
-        ]);
     }
 
     private function seedCompanies()

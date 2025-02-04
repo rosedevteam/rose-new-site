@@ -251,30 +251,6 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label for="orderStatus" class="form-label">نوع سفارش ها:</label>
-                                        <div class="">
-                                            <select id="orderType" class="form-select" name="orderType">
-                                                <option value="" selected>همه</option>
-                                                <option
-                                                    value="has_orders" {{ $orderType == 'has_orders' ? 'selected' : '' }}>
-                                                    دارای سفارش (رایگان و پولی)
-                                                </option>
-                                                <option
-                                                    value="just_free_orders"{{ $orderType == 'just_free_orders' ? 'selected' : '' }} >
-                                                    دارای سفارش رایگان
-                                                </option>
-                                                <option
-                                                    value="just_non_free_orders"{{ $orderType == 'just_non_free_orders' ? 'selected' : '' }} >
-                                                    دارای سفارش پرداخت شده
-                                                </option>
-                                                <option
-                                                    value="without_orders"{{ $orderType == 'without_orders' ? 'selected' : '' }} >
-                                                    بدون سفارش
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
                                         <label for="orderStatus" class="form-label">وضعیت سفارش ها:</label>
                                         <div class="">
                                             <select id="orderStatus" class="form-select" name="orderStatus">
@@ -294,6 +270,30 @@
                                                 <option
                                                     value="returned"{{ $orderStatus == 'returned' ? 'selected' : '' }} >
                                                     عودت داده شده
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label for="orderStatus" class="form-label">نوع سفارش ها:</label>
+                                        <div class="">
+                                            <select id="orderType" class="form-select" name="orderType">
+                                                <option value="" selected>همه</option>
+                                                <option
+                                                    value="has_orders" {{ $orderType == 'has_orders' ? 'selected' : '' }}>
+                                                    دارای سفارش (رایگان و پولی)
+                                                </option>
+                                                <option
+                                                    value="just_free_orders"{{ $orderType == 'just_free_orders' ? 'selected' : '' }} >
+                                                    دارای سفارش رایگان
+                                                </option>
+                                                <option
+                                                    value="just_non_free_orders"{{ $orderType == 'just_non_free_orders' ? 'selected' : '' }} >
+                                                    دارای سفارش پرداخت شده
+                                                </option>
+                                                <option
+                                                    value="without_orders"{{ $orderType == 'without_orders' ? 'selected' : '' }} >
+                                                    بدون سفارش
                                                 </option>
                                             </select>
                                         </div>

@@ -28,6 +28,11 @@
                     </div>
                     <div class="menu">
                         <ul class="rose-menu p-0">
+                            @php
+                                $menus = \Modules\Menu\Models\Menu::with('children')
+                                    ->whereNull('parent_id')
+                                    ->get();
+                            @endphp
                             @foreach($menus as $menu)
                                 @if(!$menu->children->count())
                                     <!--Simple menu-->
