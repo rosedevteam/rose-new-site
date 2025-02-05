@@ -70,6 +70,41 @@ class DailyReportController extends Controller
         }
     }
 
+
+    public function update(DailyReport $dailyreport)
+    {
+        Gate::authorize('edit-daily-reports');
+        $data = request()->validate([
+            'editDate' => 'bail|required|string',
+            'editFile' => [
+                'sometimes',
+                File::types(['pdf'])
+            ],
+        ]);
+        try {
+
+            $before = $dailyreport->toArray();
+            if($data['editFile'] ?? false) {
+                $data['editFile'] = 'daily-report-' . now()->timestamp . '.pdf';
+                request()->file('editFile')->storeAs('daily-reports', $data['editFile']);
+            }
+
+            $dailyreport->update([
+                'title' => self::convertNums($data['editDate']),
+                'file' => $data['editFile'] ?? $dailyreport->file,
+            ]);
+            $after = $dailyreport->toArray();
+
+            self::log($dailyreport, compact('before', 'after'), 'ویرایش گزارش روزانه');
+            alert()->success("موفق", "با موفقیت انجام شد");
+
+            return redirect(route('admin.dailyreports.index'));
+        } catch (\Throwable $th) {
+            alert()->error("خطا", $th->getMessage());
+            return back();
+        }
+    }
+
     public function destroy(DailyReport $dailyreport)
     {
         Gate::authorize('delete-daily-reports');
@@ -87,11 +122,11 @@ class DailyReportController extends Controller
         }
     }
 
-    public function file(DailyReport $dailyReport)
+    public function file(DailyReport $dailyreport)
     {
         Gate::authorize('view-daily-reports');
         try {
-            $filePath = storage_path('app/private/daily-reports/' . $dailyReport->file);
+            $filePath = storage_path('app/private/daily-reports/' . $dailyreport->file);
             if (file_exists($filePath)) {
                 return response()->download($filePath);
             }

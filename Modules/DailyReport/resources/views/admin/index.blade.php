@@ -9,9 +9,9 @@
         @if($errors->any())
             <div class="alert alert-danger" style="padding-right: 80px">{{ $errors->first() }}</div>
         @endif
-            <div class="flex-grow-1 p-3y">
+        <div class="flex-grow-1 p-3y">
             <!-- Users List Table -->
-                <div class="card mx-4">
+            <div class="card mx-4">
                 <div class="card-header border-bottom">
                     <h5 class="card-title">فیلتر جستجو</h5>
                     <form action="{{ route('admin.dailyreports.index') }}" method="GET">
@@ -103,6 +103,14 @@
                                     @can('edit-daily-reports')
                                         <td>
                                             <div class="d-flex gap-3 text-nowrap">
+                                                <a id="editButton"
+                                                   data-bs-toggle="offcanvas"
+                                                   data-bs-target="#offcanvasEditDailyReport"
+                                                   data-title="{{ $dailyReport->title }}"
+                                                   data-route="{{ route('admin.dailyreports.update', $dailyReport) }}"
+                                                   class="btn btn-sm btn-info">
+                                                    ویرایش
+                                                </a>
                                                 @can('delete-daily-reports')
                                                     <x-admin::deletebutton data-id="{{ $dailyReport->id }}"/>
                                                 @endcan
@@ -147,6 +155,36 @@
                         </div>
                     </div>
                 @endcan
+                @can('edit-daily-reports')
+                    <div class="offcanvas offcanvas-end" id="offcanvasEditDailyReport"
+                         aria-labelledby="offcanvasAddUserLabel">
+                        <div class="offcanvas-header border-bottom">
+                            <h6 id="offcanvasAddUserLabel" class="offcanvas-title">ویرایش گزارش روزانه</h6>
+                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body mx-0 flex-grow-0">
+                            <form class="add-new-user pt-0" id="editForm"
+                                  method="POST" enctype="multipart/form-data">
+                                @csrf
+                                @method('PATCH')
+                                <div class="mb-3">
+                                    <label for="editDate" class="form-label">روز</label>
+                                    <input type="text" class="form-control date-picker" id="editDate" name="editDate"
+                                           value="" autocomplete="off" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="editFile">فایل</label>
+                                    <input id="editFile" type="file" name="editFile" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">ثبت</button>
+                                <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">
+                                    انصراف
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                @endcan
             </div>
             <x-admin::deletemodal/>
         </div>
@@ -177,6 +215,12 @@
                 autoClose: true,
                 maxDate: new persianDate(),
             });
+            document.body.addEventListener('click', (event) => {
+                if (event.target.matches('#editButton')) {
+                    document.getElementById('editDate').value = event.target.getAttribute('data-title')
+                    document.getElementById('editForm').action = event.target.getAttribute('data-route')
+                }
+            })
         });
     </script>
 @endpush
