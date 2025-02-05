@@ -135,8 +135,18 @@
                             {{-- todo better format to view properties --}}
                             <div class="row">
                                 <div class="col">
-                                    <label for="properties">جزییات: </label>
-                                    <span id="properties"></span>
+                                    <div class="mt-2" id="beforeDiv" hidden>
+                                        <label for="before">قبل: </label>
+                                        <span id="before"></span>
+                                    </div>
+                                    <div class="mt-2" id="afterDiv" hidden>
+                                        <label for="after">بعد: </label>
+                                        <span id="after"></span>
+                                    </div>
+                                    <div class="mt-2">
+                                        <label for="logId">آیدی: </label>
+                                        <span id="logId"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -196,16 +206,28 @@
                     const route = event.target.getAttribute('data-route');
                     const subjectName = event.target.getAttribute('data-subject-name');
                     const causerRoute = event.target.getAttribute('data-causer-route')
-                    let properties = event.target.getAttribute('data-properties');
-                    properties = properties.replace(/&quot;/g, '"');
+                    const properties = JSON.parse(JSON.parse(event.target.getAttribute('data-properties').replace(/&quot;/g, '"'))[0]);
                     document.getElementById('title').textContent = logId + " : " + description;
                     document.getElementById('causer').textContent = causerName;
                     document.getElementById('causer-ref').href = causerRoute;
                     document.getElementById('created_at').textContent = createdAt;
-                    document.getElementById('properties').textContent = JSON.stringify(JSON.parse(properties), null, 4);
                     document.getElementById('route-ref').href = route;
                     document.getElementById('route').textContent = subjectName;
                     document.getElementById('route-div').hidden = route === "";
+
+                    if('before' in properties) {
+                        document.getElementById('before').textContent = JSON.stringify(properties.before)
+                        document.getElementById('beforeDiv').hidden = false
+                    } else {
+                        document.getElementById('beforeDiv').hidden = true
+                    }
+                    if("after" in properties) {
+                        document.getElementById('after').textContent = JSON.stringify(properties.after)
+                        $('#afterDiv').removeAttr('hidden')
+                    } else {
+                        document.getElementById('beforeDiv').hidden = true
+                    }
+                    document.getElementById('logId').textContent = JSON.stringify(properties.id)
                 }
             });
         });
