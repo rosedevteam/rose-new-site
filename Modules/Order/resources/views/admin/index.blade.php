@@ -146,7 +146,7 @@
                                                     <span class="badge bg-success">کامل شده</span>
                                                     @break
                                                 @case('pending')
-                                                    <span class="badge bg-secondary">در حال انجام</span>
+                                                    <span class="badge bg-vimeo">در حال انجام</span>
                                                     @break
                                                 @case('returned')
                                                     <span class="badge bg-warning">عودت داده شده</span>
