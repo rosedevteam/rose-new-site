@@ -142,10 +142,10 @@ class DatabaseSeeder extends Seeder
         //
         Permission::create(['name' => 'view-statistics']);
         //
-        Permission::create(['name' => 'view-logs']);
-        //
         Permission::create(['name' => 'create-licence']);
         Permission::create(['name' => 'view-licence']);
+        //
+        Permission::create(['name' => 'view-logs']);
 
         $customer = Role::create(['name' => 'مشتری']);
         $admin = Role::create(['name' => 'ادمین']);
@@ -188,7 +188,7 @@ class DatabaseSeeder extends Seeder
 
         $user1 = User::factory()->create([
             'first_name' => 'فرشاد',
-            'password' => bcrypt('admin'),
+            'password' => null,
             'phone' => '09121230374',
             'last_name' => 'رجب زاده',
             'email' => null,
@@ -200,7 +200,7 @@ class DatabaseSeeder extends Seeder
 
         $user2 = User::factory()->create([
             'first_name' => 'ارشیا',
-            'password' => bcrypt('admin'),
+            'password' => null,
             'phone' => '09399080252',
             'last_name' => 'رحیمی',
             'email' => null,

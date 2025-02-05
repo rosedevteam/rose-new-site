@@ -13,7 +13,7 @@ class RoleController extends Controller
     {
         Gate::authorize('manage-roles');
         try {
-            $roles = Role::with('permissions')->orderByDesc('created_at')->paginate(50);
+            $roles = Role::with('permissions')->withCount('users')->orderByDesc('created_at')->paginate(50);
             $permissions = Permission::all()->groupBy(function ($item) {
                 return explode('-', $item->name, 2)[1];
             })->map(function ($item) {

@@ -35,10 +35,9 @@
                                 <th aria-controls="DataTables_Table_0" rowspan="1"
                                     colspan="1" style="width: 10%" aria-sort="ascending">عنوان
                                 </th>
-{{--                                <th aria-controls="DataTables_Table_0" rowspan="1"--}}
-{{--                                    colspan="1" style="width: 5%" aria-sort="ascending">تعداد کاربران--}}
-{{--                                </th>--}}
-{{--                                todo --}}
+                                <th aria-controls="DataTables_Table_0" rowspan="1"
+                                    colspan="1" style="width: 5%" aria-sort="ascending">تعداد کاربران
+                                </th>
                                 <th aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                                     style="width: 2%;">جزییات
                                 </th>
@@ -55,7 +54,7 @@
                                             </div>
                                         </div>
                                     </td>
-{{--                                    <td>{{ $role->users->count() }}</td>--}}
+                                    <td>{{ $role->users_count }}</td>
                                     <td>
                                         @if($role->name != 'super-admin')
                                             <div class="d-flex gap-3 text-nowrap">
@@ -304,6 +303,7 @@
             case 'subscriptions': $permission = 'اشتراک ها'; break;
             case 'reserves': $permission = 'رزرو ها'; break;
             case 'statistics': $permission = 'آمار'; break;
+            case 'licence': $permission = 'لایسنس';
         }
         return $permission;
     }

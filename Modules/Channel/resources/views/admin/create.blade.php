@@ -73,7 +73,7 @@
                                                 <option value="all">همه کاربران عضو کانال شوند</option>
                                                 @foreach($products as $product)
                                                     <option value="{{$product->id}}">{{$product->title}}
-                                                        | {{$product->orders->where('status' , 'completed')->count()}}
+                                                        | {{$product->orders_count}}
                                                         سفارش موفق
                                                     </option>
                                                 @endforeach

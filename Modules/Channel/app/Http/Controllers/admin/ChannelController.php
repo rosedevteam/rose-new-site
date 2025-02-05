@@ -8,6 +8,7 @@ use Artesaos\SEOTools\Traits\SEOTools;
 use Hekmatinasser\Verta\Verta;
 use Illuminate\Http\Request;
 use Modules\Channel\Models\Channel;
+use Modules\Order\Models\Order;
 use Modules\Product\Models\Product;
 use Modules\User\Models\User;
 
@@ -25,7 +26,9 @@ class ChannelController extends Controller
 
     public function create()
     {
-        $products = Product::all();
+        $products = Product::query()->withCount(['orders' => function ($query) {
+            return $query->where('status', 'completed');
+        }])->get();
         return view('channel::admin.create', compact('products'));
     }
 
