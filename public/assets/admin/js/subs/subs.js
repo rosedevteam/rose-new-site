@@ -43,7 +43,7 @@ if (createNewItem) {
     });
 }
 
-$("#expire_date").pDatepicker({
+$("#expire_date").persianDatepicker({
     "inline": false,
     "format": "YYYY/MM/DD",
     "viewMode": "day",

@@ -101,7 +101,8 @@
                                             </div>
                                             <div class="row g-2">
                                                 <label for="expire_dateEdit" class=" my-2"> تاریخ انقضا </label>
-                                                <input type="text" name="expire_dateEdit" class="form-control mb-2"
+                                                <input type="text" name="expire_dateEdit"
+                                                       class="form-control date-picker mb-2"
                                                        id="expire_dateEdit" autocomplete="off"
                                                        placeholder="تاریخ انقضا" required>
                                             </div>
@@ -185,12 +186,15 @@
             </div>
         </div>
     </div>
-@stop
+@endsection
 
-@section('scripts')
-    {{--    todo fix datepicker--}}
+@push('vendor')
+    <script src="/assets/admin/vendor/libs/formvalidation/dist/js/FormValidation.min.js"></script>
+    <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js"></script>
+    <script src="/assets/admin/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
+    <script src="/assets/admin/js/axios.js"></script>
     <script src="/assets/admin/js/datepicker/persian-date.min.js"></script>
     <script src="/assets/admin/js/datepicker/persian-datepicker.min.js"></script>
-    <script src="/admin/assets/js/axios.js"></script>
-    <script src="/admin/assets/js/subs/subs.js"></script>
-@stop
+    <script src="/assets/admin/js/subs/subs.js"></script>
+@endpush
+

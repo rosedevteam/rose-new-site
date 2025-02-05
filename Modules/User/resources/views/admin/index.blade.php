@@ -390,15 +390,6 @@
                 initialValue: false,
                 format: 'YYYY/MM/DD',
                 autoClose: true,
-                timePicker: {
-                    enabled: true,
-                    meridian: {
-                        enabled: false,
-                    },
-                    second: {
-                        enabled: false,
-                    },
-                },
             });
             const products = $('#products')
             products.select2({

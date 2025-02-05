@@ -257,7 +257,6 @@
                     $('input[name="edit-permissions[]"]').prop('checked', false);
 
                     Object.entries(permissions).forEach((i) => {
-                        console.log(i)
                         $(`input[name="edit-permissions[]"][value="${i[1]}"]`).prop('checked', true);
                     })
                 }
