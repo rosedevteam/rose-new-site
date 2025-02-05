@@ -14,6 +14,7 @@
                             <div class="cart">
                                 <h3 class="color-default mb-3 ">جزئیات سفارش</h3>
                                 <div class="cart-page-inner">
+
                                     @if($cookieCart->all()->count() > 0)
                                         @foreach($cookieCart->all() as $item)
                                             @if(isset($item['product']))
@@ -127,9 +128,9 @@
                             @php
                                 $totalPrice = $cookieCart->all()->sum(function($item) {
                                     if (!is_null($item['product']->sale_price)) {
-                                            return ($item['product']->sale_price);
+                                            return ($item['price']);
                                         } else {
-                                            return  ($item['product']->price);
+                                            return  ($item['price']);
                                         }
                                 });
                                 if ($cookieCart->isCartDiscountable()) {

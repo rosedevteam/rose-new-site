@@ -81,7 +81,7 @@ class LoginController extends Controller
 
             //get user from database with "auth" session
             $user = User::where('id' , $request->session()->get('auth.user_id'))->first();
-//            dd($user);
+
             //check code expire date
             $status = OtpCode::verifyCode($validData['otp'], $user);
             //check auth session exists

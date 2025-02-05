@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('total');
             $table->boolean('is_notified')->default(0);
+            $table->string('discount_code')->nullable();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

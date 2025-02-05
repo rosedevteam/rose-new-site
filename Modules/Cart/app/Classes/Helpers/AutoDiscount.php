@@ -10,27 +10,33 @@ class AutoDiscount
     protected static $afzayesh_sarmaye_id = 2013;
     protected static $master_fis_id = 23423;
 
-    public static function masterFIS()
+    const DISCOUNT_FIS_AND_AFZAYESH = 75;
+    const DISCOUNT_FIS = 50;
+    const DISCOUNT_AFZAYESH = 40;
+
+    public static function masterFis($item)
     {
-        $cart = Cart::instance(config('services.cart.cookie-name'));
-        if ($cart->all()->count() == 0) {
-            return false;
+        $hasFisCourse = userHasCourse(self::$fis_Id);
+        $hasAfzayeshSarmayeCourse = userHasCourse(self::$afzayesh_sarmaye_id);
+
+        //if master was in cart
+        if ($item['product']->id == self::$master_fis_id) {
+            //check if user has courses in orders
+            if ($hasFisCourse && $hasAfzayeshSarmayeCourse) {
+                $item['auto_discount'] = self::DISCOUNT_FIS_AND_AFZAYESH;
+                $item['price'] = $item['price'] - ($item['price'] * self::DISCOUNT_FIS_AND_AFZAYESH / 100);
+
+            } elseif ($hasFisCourse) {
+                $item['auto_discount'] = self::DISCOUNT_FIS;
+//                dd($item['price']);
+                $item['price'] = $item['price'] - ($item['price'] * self::DISCOUNT_FIS / 100);
+
+            } elseif ($hasAfzayeshSarmayeCourse) {
+                $item['auto_discount'] = self::DISCOUNT_AFZAYESH;
+                $item['price'] = $item['price'] - ($item['price'] * self::DISCOUNT_AFZAYESH / 100);
+            }
         }
-        $cartProductIds = $cart->all()->pluck('product.id')->toArray();
-        //check if user has master in cart
-        if (!in_array(self::$master_fis_id, $cartProductIds)) {
-            return false;
-        }
 
-        //check if user has courses in orders
-        if (userHasCourse(self::$fis_Id) && userHasCourse(self::$afzayesh_sarmaye_id)) {
-            //todo
-        } elseif (userHasCourse(self::$fis_Id)) {
-
-        } elseif (userHasCourse(self::$afzayesh_sarmaye_id)) {
-
-        }
-
-        return false;
+        return $item;
     }
 }

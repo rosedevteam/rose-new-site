@@ -12,6 +12,7 @@ use Modules\Product\Models\Product;
 
 class CartController extends Controller
 {
+    //todo add cart to database after login and change cart system from cookie to database
     //todo add trait for create new cart in database
 
     use SEOTools,CartTools;
@@ -21,7 +22,6 @@ class CartController extends Controller
         $this->seo()->setTitle('سبد خرید');
 
         $cookieCart = Cart::instance(config('services.cart.cookie-name'));
-
         $message = null;
 
         if(auth()->check()) {
@@ -33,9 +33,8 @@ class CartController extends Controller
                 $cookieCart->delete($item['id']);
                 $message = 'محصولاتی که قبلا در آن ثبت نام کردید از سبد شما حذف شدند';
             }
-            dd(AutoDiscount::masterFIS());
-            AutoDiscount::masterFIS(); //check if master fis discount conditions
         }
+
         return view('cart::front.cart', compact('cookieCart'))->with('message' , $message);
     }
 

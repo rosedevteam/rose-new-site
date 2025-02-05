@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('cart_product', function (Blueprint $table) {
             $table->foreignId('cart_id')->constrained()->cascadeOnDelete();
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
+            $table->string('auto_discount')->nullable()->default(null);
         });
     }
 
