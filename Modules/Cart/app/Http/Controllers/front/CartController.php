@@ -12,10 +12,8 @@ use Modules\Product\Models\Product;
 
 class CartController extends Controller
 {
-    //todo add cart to database after login and change cart system from cookie to database
-    //todo add trait for create new cart in database
 
-    use SEOTools,CartTools;
+    use SEOTools, CartTools;
 
     public function cart()
     {
@@ -24,30 +22,41 @@ class CartController extends Controller
         $cookieCart = Cart::instance(config('services.cart.cookie-name'));
         $message = null;
 
-        if(auth()->check()) {
-            $userProducts = auth()->user()->orders()->where('status' , 'completed')->with('products')->get()->pluck('products.*.id')->flatten()->unique()->toArray();
-            $productsThatUserHaveAlready = array_intersect($userProducts , $cookieCart->all()->pluck('product.id' , 'id')->toArray());
+        if (auth()->check()) {
+            $userProducts = auth()->user()->orders()->where('status', 'completed')->with('products')->get()->pluck('products.*.id')->flatten()->unique()->toArray();
+            $productsThatUserHaveAlready = array_intersect($userProducts, auth()->user()->cart->products()->pluck('id')->toArray());
 
-            foreach ($productsThatUserHaveAlready as $product) {
-                $item = $cookieCart->all()->where('product.id' , $product)->first();
-                $cookieCart->delete($item['id']);
+            foreach ($productsThatUserHaveAlready as $productId) {
+
+                //cookie cart
+                $cookieItem = $cookieCart->all()->where('product.id', $productId)->first();
+                $cookieCart->delete($cookieItem['id']);
+
+                //database cart
+                auth()->user()->cart->products()->detach($productId);
+
                 $message = 'محصولاتی که قبلا در آن ثبت نام کردید از سبد شما حذف شدند';
+            }
+
+            if (AutoDiscount::masterFis()){
+                //todo
+                alert()->success(auth()->user()->name() . ' عزیز' , 'شما شامل تخفیف شده اید');
             }
         }
 
-        return view('cart::front.cart', compact('cookieCart'))->with('message' , $message);
+        return view('cart::front.cart', compact('cookieCart'))->with('message', $message);
     }
 
 
     public function addToCart(Product $product, Request $request)
     {
-
         try {
             $validData = $request->validate([
                 'quantity' => 'required|integer'
             ]);
 
             $cart = Cart::instance(config('services.cart.cookie-name'));
+
             if ($cart->has($product)) {
                 throw new \Exception('محصول مورد از قبل در سبد خرید وجود دارد');
             } else {
@@ -57,7 +66,6 @@ class CartController extends Controller
                     ],
                     $product
                 );
-
                 $totalPrice = Cart::all()->sum(function ($cart) {
                     if (!is_null($cart['product']->sale_price)) {
                         return $cart['product']->sale_price * $cart['quantity'];
@@ -69,9 +77,9 @@ class CartController extends Controller
                 if (auth()->check()) {
                     $userCart = auth()->user()->cart;
                     if (is_null($userCart)) {
-                        self::addCartToDatabase($cart , $totalPrice);
+                        self::addCartToDatabase($cart, $totalPrice);
                     } else {
-                       self::editCartToDatabase($cart , $totalPrice , $userCart);
+                        self::editCartToDatabase($cart, $totalPrice, $userCart);
                     }
                 }
 
@@ -219,38 +227,44 @@ class CartController extends Controller
     public function deleteFromCart($id)
     {
         try {
-            $cart = Cart::instance(config('services.cart.cookie-name'));
-            $cart->delete($id);
-            $totalPrice = Cart::all()->sum(function ($cart) {
-                if (!is_null($cart['product']->sale_price)) {
-                    return $cart['product']->sale_price * $cart['quantity'];
+            $cart = auth()->user()->cart;
+            $cookieCart = Cart::instance(config('services.cart.cookie-name'));
+
+            //delete from database
+            $cart->products()->detach($id);
+
+            //delete from cookie
+            if (!is_null($cookieCart->all()->where('product.id' , $id)->first())) {
+                $cookieCart->delete($cookieCart->all()->where('product.id' , $id)->first()['id']);
+            }
+
+            $totalPrice = $cart->products->sum(function ($product) {
+                if (!is_null($product->sale_price)) {
+                    return $product->sale_price;
                 } else {
-                    return $cart['product']->price * $cart['quantity'];
+                    return $product->price;
                 }
             });
 
-
-            if (auth()->check()) {
-                $userCart = auth()->user()->cart;
-                if (!is_null($userCart)) {
-                    if ($cart->all()->count()) {
-                        self::editCartToDatabase($cart , $totalPrice, $userCart);
-                    }else {
-                        $userCart->delete();
-                    }
-
+            if (!is_null($cart)) {
+                if ($cart->products->count()) {
+                    auth()->user()->cart()->update([
+                        'total' => $totalPrice
+                    ]);
+                    $cart->products()->sync($cart->products()->pluck('id')->toArray());
+                } else {
+                    $cart->delete();
                 }
-            }
 
+            }
 
             return response()->json([
                 'success' => true,
                 'total' => $totalPrice,
-                'count' => $cart->all()->count(),
-                'discount' => (bool)$cart->getDiscount(),
-                'is_cart_discountable' => $cart->isCartDiscountable(),
+                'count' => $cart->products->count(),
                 'message' => 'محصول با موفقیت از سبد خرید حذف شد'
             ], 200);
+
         } catch (\Exception $exception) {
             return response()->json([
                 'success' => false,
@@ -258,4 +272,5 @@ class CartController extends Controller
             ], 400);
         }
     }
+
 }

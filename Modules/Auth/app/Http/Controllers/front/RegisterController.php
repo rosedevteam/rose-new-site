@@ -184,6 +184,7 @@ class RegisterController extends Controller
             //check if user has cart
             if (auth()->check()) {
                 $userCart = auth()->user()->cart;
+//                dd($userCart);
                 if (is_null($userCart)) {
                     self::addCartToDatabase($cart , $totalPrice);
                 } else {

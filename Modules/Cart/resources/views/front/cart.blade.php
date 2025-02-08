@@ -14,108 +14,109 @@
                             <div class="cart">
                                 <h3 class="color-default mb-3 ">جزئیات سفارش</h3>
                                 <div class="cart-page-inner">
+                                    @auth
+                                        @if(auth()->user()->cart->products->count() > 0)
+                                            @foreach(auth()->user()->cart->products as $product)
+                                                    <div class="d-flex flex-column course-holder parent-cart-item">
 
-                                    @if($cookieCart->all()->count() > 0)
-                                        @foreach($cookieCart->all() as $item)
-                                            @if(isset($item['product']))
-                                                @php
-                                                    $product = $item['product'];
-                                                @endphp
-                                                <div class="d-flex flex-column course-holder parent-cart-item">
-
-                                                    <div class="d-flex flex-column flex-lg-row">
-                                                        <div class="course-thumb">
-                                                            <img src="{{$product->image}}" alt="">
-                                                        </div>
-                                                        <div
-                                                            class="details d-flex flex-grow-1 justify-content-around flex-column flex-lg-row">
-                                                            <div class="d-flex flex-column w-100 flex-grow-1">
-                                                                <h3 class="course-title-th">عنوان سفارش</h3>
-                                                                <p class="desc">
-                                                                    {{$product->title}}
-                                                                </p>
+                                                        <div class="d-flex flex-column flex-lg-row">
+                                                            <div class="course-thumb">
+                                                                <img src="{{$product->image}}" alt="">
                                                             </div>
-                                                            <div class="d-flex flex-column w-100 flex-grow-1">
-                                                                <h3 class="course-title-th">مبلغ</h3>
-                                                                @if(!$product->is_free)
-                                                                    @if(!$product->isOnSale())
-                                                                        <span
-                                                                            class="d-flex ps-3 pe-3 desc gap-3 justify-content-center">
+                                                            <div
+                                                                class="details d-flex flex-grow-1 justify-content-around flex-column flex-lg-row">
+                                                                <div class="d-flex flex-column w-100 flex-grow-1">
+                                                                    <h3 class="course-title-th">عنوان سفارش</h3>
+                                                                    <p class="desc">
+                                                                        {{$product->title}}
+                                                                    </p>
+                                                                </div>
+                                                                <div class="d-flex flex-column w-100 flex-grow-1">
+                                                                    <h3 class="course-title-th">مبلغ</h3>
+                                                                    @if(!$product->is_free)
+                                                                        @if(!$product->isOnSale())
+                                                                            <span
+                                                                                class="d-flex ps-3 pe-3 desc gap-3 justify-content-center">
                                                                      {{ number_format($product->price) }}
                                                                         تومان
                                                                 </span>
 
-                                                                    @else
-                                                                        <div
-                                                                            class="d-flex flex-column justify-content-center align-items-center my-3">
+                                                                        @else
+                                                                            <div
+                                                                                class="d-flex flex-column justify-content-center align-items-center my-3">
 
                                                                     <span
                                                                         class="d-flex ps-3 pe-3 desc gap-3 justify-content-center">
                                                                 {{ number_format($product->sale_price) }}
                                                                         تومان
                                                                 </span>
-                                                                        </div>
-                                                                    @endif
-                                                                @else
-                                                                    <span
-                                                                        class="d-flex ps-3 pe-3 desc gap-3 justify-content-center">
+                                                                            </div>
+                                                                        @endif
+                                                                    @else
+                                                                        <span
+                                                                            class="d-flex ps-3 pe-3 desc gap-3 justify-content-center">
                                                                         رایگان
                                                                 </span>
-                                                                @endif
+                                                                    @endif
 
-                                                            </div>
-                                                            <div class="d-flex flex-column w-100 flex-grow-1">
-                                                                <h3 class="course-title-th">عملیات</h3>
-                                                                <p class="d-flex ps-3 pe-3 desc gap-3 justify-content-center">
-                                                                    <a role="button" class="remove-from-cart"
-                                                                       data-cart="{{$item['id']}}">
-                                                                        <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                             fill="none"
-                                                                             xmlns="http://www.w3.org/2000/svg">
-                                                                            <path fill-rule="evenodd"
-                                                                                  clip-rule="evenodd"
-                                                                                  d="M15.5457 21.0038H8.45991C7.28371 21.0038 6.30581 20.0982 6.2156 18.9255L5.25 6.37268H18.7556L17.79 18.9255C17.6998 20.0982 16.7219 21.0038 15.5457 21.0038V21.0038Z"
-                                                                                  stroke="#E06983" stroke-width="1.5"
-                                                                                  stroke-linecap="round"
-                                                                                  stroke-linejoin="round"/>
-                                                                            <path d="M20.0028 6.37264H3.99609"
-                                                                                  stroke="#E06983"
-                                                                                  stroke-width="1.5"
-                                                                                  stroke-linecap="round"
-                                                                                  stroke-linejoin="round"/>
-                                                                            <path fill-rule="evenodd"
-                                                                                  clip-rule="evenodd"
-                                                                                  d="M9.18797 2.99622H14.8153C15.4369 2.99622 15.9408 3.50011 15.9408 4.12168V6.37262H8.0625V4.12168C8.0625 3.50011 8.56639 2.99622 9.18797 2.99622Z"
-                                                                                  stroke="#E06983" stroke-width="1.5"
-                                                                                  stroke-linecap="round"
-                                                                                  stroke-linejoin="round"/>
-                                                                            <path d="M13.969 10.8745V16.5019"
-                                                                                  stroke="#E06983"
-                                                                                  stroke-width="1.5"
-                                                                                  stroke-linecap="round"
-                                                                                  stroke-linejoin="round"/>
-                                                                            <path d="M10.0315 10.8745V16.5019"
-                                                                                  stroke="#E06983"
-                                                                                  stroke-width="1.5"
-                                                                                  stroke-linecap="round"
-                                                                                  stroke-linejoin="round"/>
-                                                                        </svg>
-                                                                        حذف
-                                                                    </a>
+                                                                </div>
+                                                                <div class="d-flex flex-column w-100 flex-grow-1">
+                                                                    <h3 class="course-title-th">عملیات</h3>
+                                                                    <p class="d-flex ps-3 pe-3 desc gap-3 justify-content-center">
+                                                                        <a role="button" class="remove-from-cart"
+                                                                           data-cart="{{$product['id']}}">
+                                                                            <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                                 fill="none"
+                                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                                <path fill-rule="evenodd"
+                                                                                      clip-rule="evenodd"
+                                                                                      d="M15.5457 21.0038H8.45991C7.28371 21.0038 6.30581 20.0982 6.2156 18.9255L5.25 6.37268H18.7556L17.79 18.9255C17.6998 20.0982 16.7219 21.0038 15.5457 21.0038V21.0038Z"
+                                                                                      stroke="#E06983" stroke-width="1.5"
+                                                                                      stroke-linecap="round"
+                                                                                      stroke-linejoin="round"/>
+                                                                                <path d="M20.0028 6.37264H3.99609"
+                                                                                      stroke="#E06983"
+                                                                                      stroke-width="1.5"
+                                                                                      stroke-linecap="round"
+                                                                                      stroke-linejoin="round"/>
+                                                                                <path fill-rule="evenodd"
+                                                                                      clip-rule="evenodd"
+                                                                                      d="M9.18797 2.99622H14.8153C15.4369 2.99622 15.9408 3.50011 15.9408 4.12168V6.37262H8.0625V4.12168C8.0625 3.50011 8.56639 2.99622 9.18797 2.99622Z"
+                                                                                      stroke="#E06983" stroke-width="1.5"
+                                                                                      stroke-linecap="round"
+                                                                                      stroke-linejoin="round"/>
+                                                                                <path d="M13.969 10.8745V16.5019"
+                                                                                      stroke="#E06983"
+                                                                                      stroke-width="1.5"
+                                                                                      stroke-linecap="round"
+                                                                                      stroke-linejoin="round"/>
+                                                                                <path d="M10.0315 10.8745V16.5019"
+                                                                                      stroke="#E06983"
+                                                                                      stroke-width="1.5"
+                                                                                      stroke-linecap="round"
+                                                                                      stroke-linejoin="round"/>
+                                                                            </svg>
+                                                                            حذف
+                                                                        </a>
 
-                                                                </p>
+                                                                    </p>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
 
-                                                </div>
-                                            @endif
-                                        @endforeach
+                                                    </div>
+                                            @endforeach
+                                        @else
+                                            <div class="alert alert-info m-4" role="alert" dir="rtl">
+                                                هیچ محصولی در سبد خرید شما نیست
+                                            </div>
+                                        @endif
                                     @else
                                         <div class="alert alert-info m-4" role="alert" dir="rtl">
-                                            هیچ محصولی در سبد خرید شما نیست
+                                            لطفا وارد حساب کاربری خود شوید
                                         </div>
-                                    @endif
+                                    @endauth
+
                                 </div>
 
                             </div>
@@ -126,20 +127,33 @@
                         <div class="bg-white br-default p-4">
                             <h3 class="color-default mb-3 ">اطلاعات پرداخت</h3>
                             @php
-                                $totalPrice = $cookieCart->all()->sum(function($item) {
-                                    if (!is_null($item['product']->sale_price)) {
-                                            return ($item['price']);
-                                        } else {
-                                            return  ($item['price']);
-                                        }
-                                });
-                                if ($cookieCart->isCartDiscountable()) {
-                                    $discount = $cookieCart->getDiscount();
-                                    $totalPrice = $totalPrice - $discount->amount;
-                                }
+                            if (auth()->check()){
+                                $totalPrice = auth()->user()->cart?->products->sum(function($item) {
+                                      if (!is_null($item->sale_price)) {
+                                              return ($item->sale_price);
+                                          } else {
+                                              return  ($item->price);
+                                          }
+                                  });
+                                if (auth()->user()->cart->discount_code) {
+                                      $discount = \Modules\Discount\Models\Discount::where('code' , auth()->user()->cart->discount_code)->first();
+                                      $totalPrice = $totalPrice - $discount->amount;
+                                  }
+                            }else {
+                                 $totalPrice = \Modules\Cart\Classes\Helpers\Cart::all()->sum(function($item) {
+                                      if (!is_null($item['product']->sale_price)) {
+                                              return ($item['product']->sale_price);
+                                          } else {
+                                              return  ($item['product']->price);
+                                          }
+                                  });
+                            }
+
+
+
                             @endphp
                             <div class="discount-form-wrapper">
-                                @if($discount = $cookieCart->getDiscount())
+                                @if($discount = \Modules\Discount\Models\Discount::where('code' , auth()->user()->cart->discount_code)->first())
                                     <div class="discount-info">
                                         <div
                                             class="d-flex align-items-center justify-content-between mb-3 title fw-bold">
@@ -171,9 +185,9 @@
                             </ul>
 
                             {{--todo : make this feature after data import--}}
-                            @if($cookieCart->all()->pluck('product.title')->contains('دوره تخصصی FIS'))
-                                @include('cart::front.components.channel')
-                            @endif
+{{--                            @if($cookieCart->all()->pluck('product.title')->contains('دوره تخصصی FIS'))--}}
+{{--                                @include('cart::front.components.channel')--}}
+{{--                            @endif--}}
 
                             <hr>
                             <h3 class="color-default mb-3 ">درگاه پرداخت</h3>

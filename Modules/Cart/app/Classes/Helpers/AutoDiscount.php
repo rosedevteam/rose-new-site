@@ -14,29 +14,33 @@ class AutoDiscount
     const DISCOUNT_FIS = 50;
     const DISCOUNT_AFZAYESH = 40;
 
-    public static function masterFis($item)
+    public static function masterFis()
     {
+        $cart = auth()->user()->cart;
         $hasFisCourse = userHasCourse(self::$fis_Id);
         $hasAfzayeshSarmayeCourse = userHasCourse(self::$afzayesh_sarmaye_id);
 
         //if master was in cart
-        if ($item['product']->id == self::$master_fis_id) {
+        if (in_array(self::$master_fis_id , $cart->products()->pluck('id')->toArray())) {
             //check if user has courses in orders
             if ($hasFisCourse && $hasAfzayeshSarmayeCourse) {
-                $item['auto_discount'] = self::DISCOUNT_FIS_AND_AFZAYESH;
-                $item['price'] = $item['price'] - ($item['price'] * self::DISCOUNT_FIS_AND_AFZAYESH / 100);
+                $cart->products()->updateExistingPivot(self::$master_fis_id, [
+                    'auto_discount' => self::DISCOUNT_FIS_AND_AFZAYESH
+                ]);
 
             } elseif ($hasFisCourse) {
-                $item['auto_discount'] = self::DISCOUNT_FIS;
-//                dd($item['price']);
-                $item['price'] = $item['price'] - ($item['price'] * self::DISCOUNT_FIS / 100);
+                $cart->products()->updateExistingPivot(self::$master_fis_id, [
+                    'auto_discount' => self::DISCOUNT_FIS
+                ]);
 
             } elseif ($hasAfzayeshSarmayeCourse) {
-                $item['auto_discount'] = self::DISCOUNT_AFZAYESH;
-                $item['price'] = $item['price'] - ($item['price'] * self::DISCOUNT_AFZAYESH / 100);
+                $cart->products()->updateExistingPivot(self::$master_fis_id, [
+                    'auto_discount' => self::DISCOUNT_AFZAYESH
+                ]);
             }
+            return true;
         }
 
-        return $item;
+        return false;
     }
 }

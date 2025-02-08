@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
         $this->seedComments();
         $this->seedMenu();
         $this->seedCategories();
-        $this->seedDiscounts();
+//        $this->seedDiscounts();
         $this->seedDailyReports();
         $this->seedStudentReports();
     }

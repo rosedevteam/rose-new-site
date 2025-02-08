@@ -147,10 +147,10 @@ class CartService
         return $this;
     }
 
-    public function isCartDiscountable()
-    {
-        return $this->all()->pluck('discountable')->contains(true);
-    }
+//    public function isCartDiscountable()
+//    {
+//        return $this->all()->pluck('discountable')->contains(true);
+//    }
 
     protected function withRelationshipIfExist($item)
     {
