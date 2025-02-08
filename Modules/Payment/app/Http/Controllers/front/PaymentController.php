@@ -152,6 +152,8 @@ class PaymentController extends Controller
 
             }
 
+            auth()->user()->cart->delete();
+
 
             toast()->success('تبریک! پرداخت شما با موفقیت انجام شد');
             return redirect(route('profile.courses'));

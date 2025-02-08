@@ -18,6 +18,8 @@ trait CartTools
         auth()->user()->cart()->update([
             'total' => $totalPrice
         ]);
-        $userCart->products()->sync($cart->all()->pluck('product.id')->toArray());
+        $userCart->products()->syncWithoutDetaching($cart->all()->pluck('product.id')->toArray());
     }
+
+
 }

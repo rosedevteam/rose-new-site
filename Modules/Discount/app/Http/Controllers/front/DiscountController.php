@@ -18,7 +18,7 @@ class DiscountController extends Controller
                 'cart' => 'required'
             ]);
 
-            $cart = Cart::instance($validated['cart']);
+            $cart = auth()->user()->cart;
 
             if( ! auth()->check() ) {
                 throw new \Exception('برای اعمال کد تخفیف لطفا ابتدا وارد سایت شوید');
@@ -26,7 +26,7 @@ class DiscountController extends Controller
 
             $discount = Discount::where('code' , $validated['discount'])->where('is_active' , 1)->first();
 
-            if ($cart->getDiscount()) {
+            if ($cart->discount_code) {
                 throw new \Exception('کد تخفیف در حال حاضر روی سبد اعمال شده است');
             }
             if ($discount->discountRecords->count() >= $discount->limit) {
@@ -38,23 +38,24 @@ class DiscountController extends Controller
             }
 
 
-            if ($cart->all()->count() == 0) {
+            if ($cart->products->count() == 0) {
                 throw new \Exception('هیچ محصولی در سبد خرید نیست');
             }
 
-
-            $cart->addDiscount($discount->code);
-
-            if (!$cart->all()->pluck('discountable')->contains(true)) {
-                $cart->addDiscount(null);
+            if(!$cart->products->pluck('id')->intersect($discount->products->pluck('id'))->count()){
                 throw new \Exception('کد تخفیف روی این محصولات قابل استفاده نیست');
             }
 
-            $totalPrice = Cart::all()->sum(function ($cart) {
-                if (!is_null($cart['product']->sale_price)) {
-                    return $cart['product']->sale_price * $cart['quantity'];
+            $cart->update([
+                'discount_code' => $discount->code,
+            ]);
+
+
+            $totalPrice = $cart->products->sum(function ($product) {
+                if (!is_null($product->sale_price)) {
+                    return $product->sale_price;
                 } else {
-                    return $cart['product']->price * $cart['quantity'];
+                    return $product->price;
                 }
             });
 
@@ -77,17 +78,17 @@ class DiscountController extends Controller
     public function destroy(Request $request)
     {
         try {
-            $validData = $request->validate([
-                'cart' => 'required'
+            $cart = auth()->user()->cart;
+
+            $cart->update([
+                'discount_code' => null,
             ]);
 
-            $cart = Cart::instance($validData['cart']);
-            $cart->addDiscount(null);
-            $totalPrice = Cart::all()->sum(function ($cart) {
-                if (!is_null($cart['product']->sale_price)) {
-                    return $cart['product']->sale_price * $cart['quantity'];
+            $totalPrice = $cart->products->sum(function ($product) {
+                if (!is_null($product->sale_price)) {
+                    return $product->sale_price;
                 } else {
-                    return $cart['product']->price * $cart['quantity'];
+                    return $product->price;
                 }
             });
             return response()->json([

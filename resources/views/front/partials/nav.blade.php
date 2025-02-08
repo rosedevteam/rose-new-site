@@ -62,9 +62,14 @@
                     <div class="left d-flex align-items-center justify-content-between gap-3">
                         <div class="header-cart" id="cart-icon">
                             <span class="rose-cart-counter"
-                                  data-counter="0">{{\Modules\Cart\Classes\Helpers\Cart::instance(config('services.cart.cookie-name'))->all()->count()}}</span>
-                            <a href="#" type="button" data-bs-toggle="offcanvas" data-bs-target="#side-cart-modal"
-                               aria-controls="offcanvasWithBothOptions">
+                                  data-counter="0">
+                                @auth
+                                    {{auth()->user()->cart?->products->count() ?? 0}}
+                                @else
+                                    {{\Modules\Cart\Classes\Helpers\Cart::instance(config('services.cart.cookie-name'))->all()->count()}}
+                                @endauth
+                            </span>
+                            <a href="{{route('cart.show')}}" type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"
                                      fill="none">
                                     <path

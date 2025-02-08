@@ -127,7 +127,10 @@ class CartService
         $cart = $this->cart;
         $cart = collect($this->cart['items'])->map(function ($item) use ($cart) {
             $item = $this->withRelationshipIfExist($item);
-            $item = $this->checkDiscountValidate($item, $cart['discount']);
+//            $item = $this->checkDiscountValidate($item, $cart['discount']);
+//            if (auth()->check()) {
+//                $item = AutoDiscount::masterFis($item);
+//            }
             return $item;
         });
         return $cart;
@@ -144,10 +147,10 @@ class CartService
         return $this;
     }
 
-    public function isCartDiscountable()
-    {
-        return $this->all()->pluck('discountable')->contains(true);
-    }
+//    public function isCartDiscountable()
+//    {
+//        return $this->all()->pluck('discountable')->contains(true);
+//    }
 
     protected function withRelationshipIfExist($item)
     {
@@ -202,7 +205,7 @@ class CartService
                 ($discount->products->count()) &&
                 in_array($item['product']->id, $discount->products->pluck('id')->toArray())) {
                 $item['discountable'] = true;
-            }else {
+            } else {
                 $item['discountable'] = false;
             }
 
@@ -210,4 +213,5 @@ class CartService
 
         return $item;
     }
+
 }

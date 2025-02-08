@@ -94,7 +94,7 @@ class Product extends Model
 
     public function cart()
     {
-        return $this->belongsToMany(Cart::class);
+        return $this->belongsToMany(Cart::class)->withPivot('auto_discount');
     }
     public function reserves()
     {

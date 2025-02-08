@@ -152,7 +152,6 @@ removeBtn.on('click' , function (e) {
                 `)
                 // deleteDiscount();
             }
-            console.log(res.data.discount)
             if (res.data.discount == true) {
                 if (res.data.is_cart_discountable == false) {
                     deleteDiscount();

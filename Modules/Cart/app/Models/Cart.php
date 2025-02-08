@@ -5,6 +5,7 @@ namespace Modules\Cart\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Cart\Database\Factories\CartFactory;
+use Modules\Discount\Models\Discount;
 use Modules\Product\Models\Product;
 use Modules\User\Models\User;
 
@@ -17,6 +18,7 @@ class Cart extends Model
     /**
      * The attributes that are mass assignable.
      */
+    protected $guarded;
 
     public function user()
     {
@@ -25,12 +27,11 @@ class Cart extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class)->withPivot('auto_discount');
     }
-    protected $guarded;
 
-     protected static function newFactory(): CartFactory
-     {
-          return CartFactory::new();
-     }
+    protected static function newFactory(): CartFactory
+    {
+        return CartFactory::new();
+    }
 }
