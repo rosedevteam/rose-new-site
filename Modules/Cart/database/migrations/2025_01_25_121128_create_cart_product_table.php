@@ -15,6 +15,7 @@ return new class extends Migration
             $table->foreignId('cart_id')->constrained()->cascadeOnDelete();
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
             $table->string('auto_discount')->nullable();
+            $table->longText('desc')->nullable();
         });
     }
 

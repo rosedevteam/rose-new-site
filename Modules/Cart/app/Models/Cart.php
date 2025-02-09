@@ -30,6 +30,32 @@ class Cart extends Model
         return $this->belongsToMany(Product::class)->withPivot('auto_discount');
     }
 
+    public function getTotalAutoDiscounts()
+    {
+        return $this->products->sum(function ($product){
+            return $product->getAutoDiscount();
+        });
+    }
+
+    public function getTotal($autoDiscount = false)
+    {
+        if ($autoDiscount) {
+            return $this->products->sum(function ($product){
+                return $product->getPriceWithAutoDiscount();
+            });
+        }else {
+            return $this->products->sum(function ($product){
+                return $product->getPrice();
+            });
+        }
+
+    }
+
+    public function hasDiscount()
+    {
+        return !!$this->discount_code;
+    }
+
     protected static function newFactory(): CartFactory
     {
         return CartFactory::new();

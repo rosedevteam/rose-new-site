@@ -16,5 +16,5 @@ use Modules\Discount\Http\Controllers\DiscountController;
 
 Route::prefix('discount')->group(function() {
     Route::post('check', [\Modules\Discount\Http\Controllers\front\DiscountController::class , 'check'])->name('cart.discount.check');
-    Route::delete('delete' , [\Modules\Discount\Http\Controllers\front\DiscountController::class , 'destroy']);
+    Route::post('delete' , [\Modules\Discount\Http\Controllers\front\DiscountController::class , 'destroy']);
 });

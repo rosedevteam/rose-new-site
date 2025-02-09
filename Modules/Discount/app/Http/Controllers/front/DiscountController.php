@@ -4,6 +4,7 @@ namespace Modules\Discount\Http\Controllers\front;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Modules\Cart\Classes\Helpers\AutoDiscount;
 use Modules\Cart\Classes\Helpers\Cart;
 use Modules\Discount\Models\Discount;
 
@@ -51,21 +52,9 @@ class DiscountController extends Controller
             ]);
 
 
-            $totalPrice = $cart->products->sum(function ($product) {
-                if (!is_null($product->sale_price)) {
-                    return $product->sale_price;
-                } else {
-                    return $product->price;
-                }
-            });
+            toast()->success('موفق' , 'کد تخفیف با موفقیت اعمال شد');
+            return back();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'کد تخفیف با موفقیت اعمال شد',
-                'discount_code' => $discount->code,
-                'discount_amount' => $discount->amount,
-                'cart_total'=> $totalPrice
-            ]);
         }catch (\Exception $exception){
             return response()->json([
                 'success' => false,
@@ -84,18 +73,9 @@ class DiscountController extends Controller
                 'discount_code' => null,
             ]);
 
-            $totalPrice = $cart->products->sum(function ($product) {
-                if (!is_null($product->sale_price)) {
-                    return $product->sale_price;
-                } else {
-                    return $product->price;
-                }
-            });
-            return response()->json([
-                'success' => true,
-                'message' => 'کد تخفیف با موفقیت حذف شد',
-                'cart_total'=> $totalPrice
-            ]);
+            toast()->success('موفق' , 'کد تخفیف با موفقیت حذف شد');
+            return back();
+
         }catch (\Exception $exception) {
             return response()->json([
                 'success' => false,

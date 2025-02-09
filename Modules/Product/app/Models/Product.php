@@ -54,7 +54,7 @@ class Product extends Model
 
     public function categories()
     {
-        return $this->morphToMany(Category::class,  'categoryable');
+        return $this->morphToMany(Category::class, 'categoryable');
     }
 
     public function attributes()
@@ -87,6 +87,52 @@ class Product extends Model
         return false;
     }
 
+    public function hasAutoDiscount()
+    {
+        return !!$this->pivot->auto_discount;
+    }
+
+    public function getAutoDiscount()
+    {
+        if ($this->isOnSale()) {
+            if ($this->hasAutoDiscount()) {
+                return json_decode($this->pivot->auto_discount, true)['productRegularPrice'] - json_decode($this->pivot->auto_discount, true)['amount'];
+            }
+
+        } else {
+            if ($this->hasAutoDiscount()) {
+                return json_decode($this->pivot->auto_discount, true)['productRegularPrice'] - json_decode($this->pivot->auto_discount, true)['amount'];
+            }
+        }
+    }
+
+    public function getPriceWithAutoDiscount()
+    {
+        if ($this->isOnSale()) {
+            if ($this->hasAutoDiscount()) {
+                return json_decode($this->pivot->auto_discount, true)['productRegularPrice'] - json_decode($this->pivot->auto_discount, true)['amount'];
+            } else {
+                return $this->sale_price;
+            }
+
+        } else {
+            if ($this->hasAutoDiscount()) {
+                return json_decode($this->pivot->auto_discount, true)['productRegularPrice'] - json_decode($this->pivot->auto_discount, true)['amount'];
+            } else {
+                return $this->price;
+            }
+        }
+    }
+
+    public function getPrice()
+    {
+        if ($this->isOnSale()) {
+            return $this->sale_price;
+        } else {
+            return $this->price;
+        }
+    }
+
     public function channels()
     {
         return $this->belongsToMany(Channel::class);
@@ -96,6 +142,7 @@ class Product extends Model
     {
         return $this->belongsToMany(Cart::class)->withPivot('auto_discount');
     }
+
     public function reserves()
     {
         return $this->hasMany(Reserve::class);

@@ -15,96 +15,96 @@
                                 <h3 class="color-default mb-3 ">جزئیات سفارش</h3>
                                 <div class="cart-page-inner">
                                     @auth
-                                        @if(auth()->user()->cart->products->count() > 0)
-                                            @foreach(auth()->user()->cart->products as $product)
-                                                    <div class="d-flex flex-column course-holder parent-cart-item">
+                                        @if(auth()->user()->cart?->products->count() > 0)
+                                            @foreach(auth()->user()->cart?->products as $product)
+                                                <div class="d-flex flex-column course-holder parent-cart-item">
 
-                                                        <div class="d-flex flex-column flex-lg-row">
-                                                            <div class="course-thumb">
-                                                                <img src="{{$product->image}}" alt="">
+                                                    <div class="d-flex flex-column flex-lg-row">
+                                                        <div class="course-thumb">
+                                                            <img src="{{$product->image}}" alt="">
+                                                        </div>
+                                                        <div
+                                                            class="details d-flex flex-grow-1 justify-content-around flex-column flex-lg-row">
+                                                            <div class="d-flex flex-column w-100 flex-grow-1">
+                                                                <h3 class="course-title-th">عنوان سفارش</h3>
+                                                                <p class="desc">
+                                                                    {{$product->title}}
+                                                                </p>
                                                             </div>
-                                                            <div
-                                                                class="details d-flex flex-grow-1 justify-content-around flex-column flex-lg-row">
-                                                                <div class="d-flex flex-column w-100 flex-grow-1">
-                                                                    <h3 class="course-title-th">عنوان سفارش</h3>
-                                                                    <p class="desc">
-                                                                        {{$product->title}}
-                                                                    </p>
-                                                                </div>
-                                                                <div class="d-flex flex-column w-100 flex-grow-1">
-                                                                    <h3 class="course-title-th">مبلغ</h3>
-                                                                    @if(!$product->is_free)
-                                                                        @if(!$product->isOnSale())
-                                                                            <span
-                                                                                class="d-flex ps-3 pe-3 desc gap-3 justify-content-center">
+                                                            <div class="d-flex flex-column w-100 flex-grow-1">
+                                                                <h3 class="course-title-th">مبلغ</h3>
+                                                                @if(!$product->is_free)
+                                                                    @if(!$product->isOnSale())
+                                                                        <span
+                                                                            class="d-flex ps-3 pe-3 desc gap-3 justify-content-center">
                                                                      {{ number_format($product->price) }}
                                                                         تومان
                                                                 </span>
 
-                                                                        @else
-                                                                            <div
-                                                                                class="d-flex flex-column justify-content-center align-items-center my-3">
+                                                                    @else
+                                                                        <div
+                                                                            class="d-flex flex-column justify-content-center align-items-center my-3">
 
                                                                     <span
                                                                         class="d-flex ps-3 pe-3 desc gap-3 justify-content-center">
                                                                 {{ number_format($product->sale_price) }}
                                                                         تومان
                                                                 </span>
-                                                                            </div>
-                                                                        @endif
-                                                                    @else
-                                                                        <span
-                                                                            class="d-flex ps-3 pe-3 desc gap-3 justify-content-center">
+                                                                        </div>
+                                                                    @endif
+                                                                @else
+                                                                    <span
+                                                                        class="d-flex ps-3 pe-3 desc gap-3 justify-content-center">
                                                                         رایگان
                                                                 </span>
-                                                                    @endif
+                                                                @endif
 
-                                                                </div>
-                                                                <div class="d-flex flex-column w-100 flex-grow-1">
-                                                                    <h3 class="course-title-th">عملیات</h3>
-                                                                    <p class="d-flex ps-3 pe-3 desc gap-3 justify-content-center">
-                                                                        <a role="button" class="remove-from-cart"
-                                                                           data-cart="{{$product['id']}}">
-                                                                            <svg width="24" height="24" viewBox="0 0 24 24"
-                                                                                 fill="none"
-                                                                                 xmlns="http://www.w3.org/2000/svg">
-                                                                                <path fill-rule="evenodd"
-                                                                                      clip-rule="evenodd"
-                                                                                      d="M15.5457 21.0038H8.45991C7.28371 21.0038 6.30581 20.0982 6.2156 18.9255L5.25 6.37268H18.7556L17.79 18.9255C17.6998 20.0982 16.7219 21.0038 15.5457 21.0038V21.0038Z"
-                                                                                      stroke="#E06983" stroke-width="1.5"
-                                                                                      stroke-linecap="round"
-                                                                                      stroke-linejoin="round"/>
-                                                                                <path d="M20.0028 6.37264H3.99609"
-                                                                                      stroke="#E06983"
-                                                                                      stroke-width="1.5"
-                                                                                      stroke-linecap="round"
-                                                                                      stroke-linejoin="round"/>
-                                                                                <path fill-rule="evenodd"
-                                                                                      clip-rule="evenodd"
-                                                                                      d="M9.18797 2.99622H14.8153C15.4369 2.99622 15.9408 3.50011 15.9408 4.12168V6.37262H8.0625V4.12168C8.0625 3.50011 8.56639 2.99622 9.18797 2.99622Z"
-                                                                                      stroke="#E06983" stroke-width="1.5"
-                                                                                      stroke-linecap="round"
-                                                                                      stroke-linejoin="round"/>
-                                                                                <path d="M13.969 10.8745V16.5019"
-                                                                                      stroke="#E06983"
-                                                                                      stroke-width="1.5"
-                                                                                      stroke-linecap="round"
-                                                                                      stroke-linejoin="round"/>
-                                                                                <path d="M10.0315 10.8745V16.5019"
-                                                                                      stroke="#E06983"
-                                                                                      stroke-width="1.5"
-                                                                                      stroke-linecap="round"
-                                                                                      stroke-linejoin="round"/>
-                                                                            </svg>
-                                                                            حذف
-                                                                        </a>
+                                                            </div>
+                                                            <div class="d-flex flex-column w-100 flex-grow-1">
+                                                                <h3 class="course-title-th">عملیات</h3>
+                                                                <p class="d-flex ps-3 pe-3 desc gap-3 justify-content-center">
+                                                                    <a role="button" class="remove-from-cart"
+                                                                       data-cart="{{$product['id']}}">
+                                                                        <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                             fill="none"
+                                                                             xmlns="http://www.w3.org/2000/svg">
+                                                                            <path fill-rule="evenodd"
+                                                                                  clip-rule="evenodd"
+                                                                                  d="M15.5457 21.0038H8.45991C7.28371 21.0038 6.30581 20.0982 6.2156 18.9255L5.25 6.37268H18.7556L17.79 18.9255C17.6998 20.0982 16.7219 21.0038 15.5457 21.0038V21.0038Z"
+                                                                                  stroke="#E06983" stroke-width="1.5"
+                                                                                  stroke-linecap="round"
+                                                                                  stroke-linejoin="round"/>
+                                                                            <path d="M20.0028 6.37264H3.99609"
+                                                                                  stroke="#E06983"
+                                                                                  stroke-width="1.5"
+                                                                                  stroke-linecap="round"
+                                                                                  stroke-linejoin="round"/>
+                                                                            <path fill-rule="evenodd"
+                                                                                  clip-rule="evenodd"
+                                                                                  d="M9.18797 2.99622H14.8153C15.4369 2.99622 15.9408 3.50011 15.9408 4.12168V6.37262H8.0625V4.12168C8.0625 3.50011 8.56639 2.99622 9.18797 2.99622Z"
+                                                                                  stroke="#E06983" stroke-width="1.5"
+                                                                                  stroke-linecap="round"
+                                                                                  stroke-linejoin="round"/>
+                                                                            <path d="M13.969 10.8745V16.5019"
+                                                                                  stroke="#E06983"
+                                                                                  stroke-width="1.5"
+                                                                                  stroke-linecap="round"
+                                                                                  stroke-linejoin="round"/>
+                                                                            <path d="M10.0315 10.8745V16.5019"
+                                                                                  stroke="#E06983"
+                                                                                  stroke-width="1.5"
+                                                                                  stroke-linecap="round"
+                                                                                  stroke-linejoin="round"/>
+                                                                        </svg>
+                                                                        حذف
+                                                                    </a>
 
-                                                                    </p>
-                                                                </div>
+                                                                </p>
                                                             </div>
                                                         </div>
-
                                                     </div>
+
+                                                </div>
                                             @endforeach
                                         @else
                                             <div class="alert alert-info m-4" role="alert" dir="rtl">
@@ -127,57 +127,81 @@
                         <div class="bg-white br-default p-4">
                             <h3 class="color-default mb-3 ">اطلاعات پرداخت</h3>
                             @php
-                            if (auth()->check()){
-                                $totalPrice = auth()->user()->cart?->products->sum(function($item) {
-                                      if (!is_null($item->sale_price)) {
-                                              return ($item->sale_price);
-                                          } else {
-                                              return  ($item->price);
-                                          }
-                                  });
-                                if (auth()->user()->cart->discount_code) {
-                                      $discount = \Modules\Discount\Models\Discount::where('code' , auth()->user()->cart->discount_code)->first();
-                                      $totalPrice = $totalPrice - $discount->amount;
-                                  }
-                            }else {
-                                 $totalPrice = \Modules\Cart\Classes\Helpers\Cart::all()->sum(function($item) {
-                                      if (!is_null($item['product']->sale_price)) {
-                                              return ($item['product']->sale_price);
-                                          } else {
-                                              return  ($item['product']->price);
-                                          }
-                                  });
-                            }
+                                if (auth()->check() && auth()->user()->cart){
+                                    $totalPrice = auth()->user()->cart->getTotal();
+
+                                    if (auth()->user()->cart->discount_code) {
+                                          $discount = \Modules\Discount\Models\Discount::where('code' , auth()->user()->cart->discount_code)->first();
+                                          $totalPrice = $totalPrice - $discount->amount;
+                                      }
+                                }else {
+                                     $totalPrice = \Modules\Cart\Classes\Helpers\Cart::all()->sum(function($item) {
+                                          if (!is_null($item['product']->sale_price)) {
+                                                  return ($item['product']->sale_price);
+                                              } else {
+                                                  return  ($item['product']->price);
+                                              }
+                                      });
+                                }
 
 
 
                             @endphp
                             <div class="discount-form-wrapper">
-                                @if($discount = \Modules\Discount\Models\Discount::where('code' , auth()->user()->cart->discount_code)->first())
-                                    <div class="discount-info">
-                                        <div
-                                            class="d-flex align-items-center justify-content-between mb-3 title fw-bold">
-                                            کد تخفیف فعال : <span class="text-success">{{ $discount->code }}</span> <a
-                                                class="btn btn-sm btn-danger" onclick="deleteDiscount()">حذف</a></div>
-                                        <div class="d-flex align-items-center justify-content-between title fw-bold">
-                                            مبلغ تخفیف : <span class="text-success">{{ number_format($discount->amount) }} تومان </span>
+                                @auth
+                                    @if($discount = \Modules\Discount\Models\Discount::where('code' , optional(auth()->user()->cart)->discount_code)->first())
+                                        <div class="discount-info">
+                                            <div
+                                                class="d-flex align-items-center justify-content-between mb-3 title fw-bold">
+                                                کد تخفیف فعال : <span class="text-success">{{ $discount->code }}</span>
+                                                <a
+                                                    class="btn btn-sm btn-danger" onclick="deleteDiscount()">حذف</a>
+                                            </div>
+                                            <div
+                                                class="d-flex align-items-center justify-content-between title fw-bold">
+                                                مبلغ تخفیف : <span class="text-success">{{ number_format($discount->amount) }}- تومان </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                @else
-                                    <form class="discount-code-wrapper">
-                                        <input type="text" class="form-control b-none" placeholder="کد تخفیف"
-                                               name="discount-code" id="discount-code">
-                                        <button class="btn btn-sm btn-default" onclick="addDiscount()">اعمال</button>
-                                    </form>
-                                @endif
+                                    @else
+                                        <form class="discount-code-wrapper">
+                                            <input type="text" class="form-control b-none" placeholder="کد تخفیف"
+                                                   name="discount-code" id="discount-code">
+                                            <button class="btn btn-sm btn-default" onclick="addDiscount()">اعمال
+                                            </button>
+                                        </form>
+                                    @endif
+                                @endauth
+
                             </div>
 
                             <ul class="p-0 payment-details">
 
+                                @auth
+                                    @if(auth()->user()->cart?->products->count())
+                                        @foreach(auth()->user()->cart?->products as $product)
+                                            @if($product->hasAutoDiscount())
+                                                <li class="d-flex align-items-center justify-content-between py-3">
+                                                    <p class="title fw-bold">
+                                                        {{json_decode($product->pivot->auto_discount , true)['percent']}}
+                                                        %
+                                                        تخفیف
+                                                    </p>
+
+                                                    <p class="subtitle cart-total">
+                                                        {{number_format(json_decode($product->pivot->auto_discount , true)['amount'])}}
+                                                        -
+                                                        تومان
+                                                    </p>
+                                                </li>
+                                            @endif
+
+                                        @endforeach
+                                    @endif
+                                @endauth
                                 <li class="d-flex align-items-center justify-content-between py-3">
                                     <p class="title fw-bold">جمع کل:</p>
                                     <p class="subtitle cart-total">
-                                        {{ number_format($totalPrice) }}
+                                        {{ number_format($totalPrice - auth()->user()->cart->getTotalAutoDiscounts())}}
                                         تومان
                                     </p>
                                 </li>
@@ -185,9 +209,9 @@
                             </ul>
 
                             {{--todo : make this feature after data import--}}
-{{--                            @if($cookieCart->all()->pluck('product.title')->contains('دوره تخصصی FIS'))--}}
-{{--                                @include('cart::front.components.channel')--}}
-{{--                            @endif--}}
+                            {{--                            @if($cookieCart->all()->pluck('product.title')->contains('دوره تخصصی FIS'))--}}
+                            {{--                                @include('cart::front.components.channel')--}}
+                            {{--                            @endif--}}
 
                             <hr>
                             <h3 class="color-default mb-3 ">درگاه پرداخت</h3>
@@ -200,7 +224,8 @@
     border-radius: 10px;">
                                             <label class="form-check-label custom-option-content" for="use_wallet">
                                                 <span class="d-flex">
-                                                       <input class="form-check-input" name="use_wallet" type="checkbox" value="true" id="use_wallet" form="payment">
+                                                       <input class="form-check-input" name="use_wallet" type="checkbox"
+                                                              value="true" id="use_wallet" form="payment">
                                                 <span class="custom-option-header">
                                                     <span class="h4 mb-0 me-2 d-flex flex-column gap-3">استفاده از کیف پول
                                                        <small class="option-text h5">
