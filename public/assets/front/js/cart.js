@@ -121,43 +121,43 @@ removeBtn.on('click' , function (e) {
     let item =  $(this).closest('.parent-cart-item')
     axios.delete(`/cart/delete/${$(this).attr('data-cart')}`)
         .then(function (res) {
-            item.remove()
-            $('.cart-total').html(`
-            ${res.data.total.toLocaleString()}
-            تومان
-            `);
+            // item.remove()
+            // $('.cart-total').html(`
+            // ${res.data.total.toLocaleString()}
+            // تومان
+            // `);
 
-            $('.rose-cart-counter').html(res.data.count)
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                icon: "success",
-                title: "موفق",
-                text: res.data.message
-            });
-            if (res.data.count == 0) {
-                $('.cart-page-inner').html(`
-                    <div class="alert alert-info m-4" role="alert" dir="rtl">
-                                             هیچ محصولی در سبد خرید شما نیست
-                                         </div>
-                `)
-                // deleteDiscount();
-            }
-            if (res.data.discount == true) {
-                if (res.data.is_cart_discountable == false) {
-                    deleteDiscount();
-                }
-            }
-
+            // $('.rose-cart-counter').html(res.data.count)
+            // const Toast = Swal.mixin({
+            //     toast: true,
+            //     position: "top-end",
+            //     showConfirmButton: false,
+            //     timer: 3000,
+            //     timerProgressBar: true,
+            //     didOpen: (toast) => {
+            //         toast.onmouseenter = Swal.stopTimer;
+            //         toast.onmouseleave = Swal.resumeTimer;
+            //     }
+            // });
+            // Toast.fire({
+            //     icon: "success",
+            //     title: "موفق",
+            //     text: res.data.message
+            // });
+            // if (res.data.count == 0) {
+            //     $('.cart-page-inner').html(`
+            //         <div class="alert alert-info m-4" role="alert" dir="rtl">
+            //                                  هیچ محصولی در سبد خرید شما نیست
+            //                              </div>
+            //     `)
+            //     // deleteDiscount();
+            // }
+            // if (res.data.discount == true) {
+            //     if (res.data.is_cart_discountable == false) {
+            //         deleteDiscount();
+            //     }
+            // }
+            window.location.reload()
             $.unblockUI();
         })
         .catch(function (err) {

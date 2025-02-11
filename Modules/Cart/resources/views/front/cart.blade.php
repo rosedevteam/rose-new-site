@@ -201,7 +201,7 @@
                                 <li class="d-flex align-items-center justify-content-between py-3">
                                     <p class="title fw-bold">جمع کل:</p>
                                     <p class="subtitle cart-total">
-                                        {{ number_format($totalPrice - auth()->user()->cart->getTotalAutoDiscounts())}}
+                                        {{ number_format($totalPrice - auth()->user()?->cart?->getTotalAutoDiscounts())}}
                                         تومان
                                     </p>
                                 </li>

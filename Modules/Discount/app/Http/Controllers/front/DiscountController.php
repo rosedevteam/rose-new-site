@@ -27,7 +27,7 @@ class DiscountController extends Controller
 
             $discount = Discount::where('code' , $validated['discount'])->where('is_active' , 1)->first();
 
-            if ($cart->discount_code) {
+            if ($cart?->discount_code) {
                 throw new \Exception('کد تخفیف در حال حاضر روی سبد اعمال شده است');
             }
             if ($discount->discountRecords->count() >= $discount->limit) {
@@ -39,7 +39,7 @@ class DiscountController extends Controller
             }
 
 
-            if ($cart->products->count() == 0) {
+            if ($cart?->products->count() == 0) {
                 throw new \Exception('هیچ محصولی در سبد خرید نیست');
             }
 
@@ -48,7 +48,7 @@ class DiscountController extends Controller
             }
 
             $cart->update([
-                'discount_code' => $discount->code,
+                'discount_code' => $discount->code
             ]);
 
 

@@ -8,6 +8,7 @@ use Artesaos\SEOTools\Traits\SEOTools;
 use Illuminate\Http\Request;
 use Modules\Cart\Classes\Helpers\AutoDiscount;
 use Modules\Cart\Classes\Helpers\Cart;
+use Modules\Discount\Models\Discount;
 use Modules\Product\Models\Product;
 
 class CartController extends Controller
@@ -36,6 +37,14 @@ class CartController extends Controller
                 auth()->user()->cart->products()->detach($productId);
 
                 $message = 'محصولاتی که قبلا در آن ثبت نام کردید از سبد شما حذف شدند';
+            }
+
+
+
+            if(!self::isCartDiscountable(auth()->user()->cart)){
+                auth()->user()->cart->update([
+                    'discount_code' => null
+                ]);
             }
 
             if ($autoDiscount = AutoDiscount::masterFis()){
@@ -146,4 +155,17 @@ class CartController extends Controller
         }
     }
 
+    protected static function isCartDiscountable($cart)
+    {
+        if (!$cart->discount_code) return false;
+
+        $discount = Discount::where('code' , $cart->discount_code)->first();
+
+        $cartProductIds = $cart->products->pluck('id');
+        $discountProductIds = $discount->products->pluck('id');
+
+        return $cartProductIds->intersect($discountProductIds)->isNotEmpty();
+    }
 }
+
+
