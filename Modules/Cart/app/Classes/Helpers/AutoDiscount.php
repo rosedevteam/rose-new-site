@@ -5,6 +5,7 @@ namespace Modules\Cart\Classes\Helpers;
 use Modules\Cart\Classes\Helpers\Cart;
 use Modules\Discount\Models\Discount;
 use Modules\Product\Models\Product;
+use function Laravel\Prompts\select;
 
 class AutoDiscount
 {
@@ -13,10 +14,14 @@ class AutoDiscount
     protected static $master_fis_id = 23423;
     protected static $jame_bonyadi_boors = 14216;
 
+    protected static $old_masir = 3098;
+    protected static $new_masir = 27989;
+
     const DISCOUNT_FIS_AND_AFZAYESH = 75;
     const DISCOUNT_JAME_BONYADI_BOORS = 75;
     const DISCOUNT_FIS = 50;
     const DISCOUNT_AFZAYESH = 40;
+    const DISCOUNT_MASIR = 30;
 
 
     public static function masterFis()
@@ -51,7 +56,7 @@ class AutoDiscount
                     'productRegularPrice' => $masterFisPrice,
                     'amount' => ($masterFisPrice * self::DISCOUNT_JAME_BONYADI_BOORS) / 100,
                     'percent' => self::DISCOUNT_JAME_BONYADI_BOORS,
-                    'desc' => 'هدیه فوق جهت شرکت در دوره جامع بنیادی بورس لحاظ شده است'
+                    'desc' => 'تخفیف شرکت در دوره جامع بنیادی بورس'
                 ];
 
                 $cart->products()->updateExistingPivot(self::$master_fis_id, [
@@ -66,7 +71,7 @@ class AutoDiscount
                     'productRegularPrice' => $masterFisPrice,
                     'amount' => ($masterFisPrice * self::DISCOUNT_FIS_AND_AFZAYESH) / 100,
                     'percent' => self::DISCOUNT_FIS_AND_AFZAYESH,
-                    'desc' => 'هدیه فوق جهت شرکت در دوره های FIS و افزایش سرمایه لحاظ شده است'
+                    'desc' => 'تخفیف شرکت در دوره های FIS و افزایش سرمایه'
                 ];
 
                 $cart->products()->updateExistingPivot(self::$master_fis_id, [
@@ -81,7 +86,7 @@ class AutoDiscount
                     'productRegularPrice' => $masterFisPrice,
                     'amount' => ($masterFisPrice * self::DISCOUNT_FIS) / 100,
                     'percent' => self::DISCOUNT_FIS,
-                    'desc' => 'هدیه فوق جهت شرکت در دوره FIS لحاظ شده است'
+                    'desc' => 'تخفیف شرکت در دوره FIS'
                 ];
 
                 $cart->products()->updateExistingPivot(self::$master_fis_id, [
@@ -96,7 +101,7 @@ class AutoDiscount
                     'productRegularPrice' => $masterFisPrice,
                     'amount' => ($masterFisPrice * self::DISCOUNT_AFZAYESH) / 100,
                     'percent' => self::DISCOUNT_AFZAYESH,
-                    'desc' => 'هدیه فوق جهت شرکت در دوره افزایش سرمایه لحاظ شده است'
+                    'desc' => 'تخفیف شرکت در دوره افزایش سرمایه '
                 ];
                 $cart->products()->updateExistingPivot(self::$master_fis_id, [
                     'auto_discount' => json_encode($data)
@@ -109,4 +114,39 @@ class AutoDiscount
 
         return false;
     }
+
+    public static function masirServatSaz()
+    {
+        $cart = auth()->user()->cart;
+
+        $hasMasirCourse = userHasCourse(self::$old_masir);
+
+        $newMasir = Product::where('id' , self::$new_masir)->first();
+
+        $newMasirPrice = $newMasir->getPrice();
+
+        //if new masir was in cart
+        if (in_array(self::$new_masir, $cart->products()->pluck('id')->toArray())) {
+            if ($hasMasirCourse) {
+                $data = [
+                    'productRegularPrice' => $newMasirPrice,
+                    'amount' => ($newMasirPrice * self::DISCOUNT_MASIR) / 100,
+                    'percent' => self::DISCOUNT_MASIR,
+                    'desc' => 'تخفیف شرکت در دوره مسیر ثروت ساز '
+                ];
+
+                $cart->products()->updateExistingPivot(self::$new_masir, [
+                    'auto_discount' => json_encode($data)
+                ]);
+
+                return $data;
+            }
+        }
+        return false;
+    }
+
+    public static function referralDiscount() {
+        //todo
+    }
+
 }

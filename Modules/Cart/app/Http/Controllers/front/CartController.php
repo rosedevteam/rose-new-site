@@ -50,6 +50,10 @@ class CartController extends Controller
             if ($autoDiscount = AutoDiscount::masterFis()){
                 toast()->success(number_format($autoDiscount['amount']) . ' تخفیف' , $autoDiscount['desc']);
             }
+
+            if ($autoDiscount = AutoDiscount::masirServatSaz()){
+                toast()->success(number_format($autoDiscount['amount']) . ' تخفیف' , $autoDiscount['desc']);
+            }
         }
 
         return view('cart::front.cart', compact('cookieCart'))->with('message', $message);

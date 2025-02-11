@@ -79,7 +79,10 @@
                                             <label class="form-label" for="sale_price">قیمت فروش ویژه</label>
                                             <input type="text" id="sale_price" name="sale_price" class="form-control">
                                         </div>
-
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="referral_discount">تخفیف کمپین ریفرال (درصد)</label>
+                                            <input type="text" id="referral_discount" name="referral_discount" class="form-control">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="form-tabs-seo" role="tabpanel">

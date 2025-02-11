@@ -37,18 +37,11 @@ class Cart extends Model
         });
     }
 
-    public function getTotal($autoDiscount = false)
+    public function getTotal()
     {
-        if ($autoDiscount) {
-            return $this->products->sum(function ($product){
-                return $product->getPriceWithAutoDiscount();
-            });
-        }else {
-            return $this->products->sum(function ($product){
-                return $product->getPrice();
-            });
-        }
-
+        return $this->products->sum(function ($product){
+            return $product->getPrice();
+        });
     }
 
     public function hasDiscount()

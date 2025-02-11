@@ -94,33 +94,8 @@ class Product extends Model
 
     public function getAutoDiscount()
     {
-        if ($this->isOnSale()) {
-            if ($this->hasAutoDiscount()) {
-                return json_decode($this->pivot->auto_discount, true)['productRegularPrice'] - json_decode($this->pivot->auto_discount, true)['amount'];
-            }
-
-        } else {
-            if ($this->hasAutoDiscount()) {
-                return json_decode($this->pivot->auto_discount, true)['productRegularPrice'] - json_decode($this->pivot->auto_discount, true)['amount'];
-            }
-        }
-    }
-
-    public function getPriceWithAutoDiscount()
-    {
-        if ($this->isOnSale()) {
-            if ($this->hasAutoDiscount()) {
-                return json_decode($this->pivot->auto_discount, true)['productRegularPrice'] - json_decode($this->pivot->auto_discount, true)['amount'];
-            } else {
-                return $this->sale_price;
-            }
-
-        } else {
-            if ($this->hasAutoDiscount()) {
-                return json_decode($this->pivot->auto_discount, true)['productRegularPrice'] - json_decode($this->pivot->auto_discount, true)['amount'];
-            } else {
-                return $this->price;
-            }
+        if ($this->hasAutoDiscount()) {
+            return json_decode($this->pivot->auto_discount, true)['amount'];
         }
     }
 
