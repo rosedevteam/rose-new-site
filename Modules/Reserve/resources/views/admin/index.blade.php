@@ -171,15 +171,14 @@
                             <tr>
                                 <td>{{$index + 1}}</td>
                                 <td class="d-flex flex-column">
-                                    {{$reserve->name . ' ' . $reserve->lastname}}
+                                    <a href="{{ route('admin.users.edit', $reserve->user) }}" class="text-body">
+                                        {{$reserve->user->name()}}</a>
                                     <small class="emp_post text-truncate text-muted">{{$reserve->phone}}</small>
                                 </td>
                                 <td>
-                                    @foreach($reserve->products as $product)
                                         <span class="badge bg-secondary">
-                                        {{$product->title}}
+                                        {{$reserve->product->title}}
                                     </span>
-                                    @endforeach
                                 </td>
                                 <td>
                                     @switch($reserve->is_notified)

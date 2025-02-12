@@ -39,6 +39,9 @@
                 </div>
                 <!--top nav product wns-->
 
+                @php
+                    $isOutOfStock = $product->status == "outofstock"
+                @endphp
 
                 @if(!$product->is_free)
                     <div class="bg-white br-default p-5">
@@ -61,14 +64,30 @@
                                                 $userProducts = auth()->user()->orders()->where('status' , 'completed')->with('products')->get()->pluck('products.*.id')->flatten()->unique()->toArray();
                                             @endphp
                                             @if(!in_array($product->id , $userProducts))
+                                                @if($isOutOfStock)
+                                                    @if(in_array($product->id, auth()->user()->reserves()->where('is_notified_after_availability', false)->pluck('product_id')->toArray()))
+                                                        <a role="button" class="btn btn-default">رزرو شده</a>
+                                                    @else
+                                                        <a role="button" class="btn btn-default" id="reserve"
+                                                           data-product="{{$product->id}}">رزرو</a>
+                                                    @endif
+                                                @else
                                                 <a role="button" class="btn btn-default" id="add-to-cart"
                                                    data-product="{{$product->id}}">ثبت نام در دوره</a>
+                                                @endif
                                             @else
                                                 <a role="button" class="btn btn-default">شما دانشجوی این دوره هستید</a>
                                             @endif
                                         @else
+                                            @if($isOutOfStock)
+                                                <a class="btn btn-default" type="button" data-bs-toggle="modal"
+                                                   data-bs-target="#loginModal">
+                                                    برای رزرو وارد شوید
+                                                </a>
+                                            @else
                                             <a role="button" class="btn btn-default" id="add-to-cart"
                                                data-product="{{$product->id}}">ثبت نام در دوره</a>
+                                            @endif
                                         @endauth
 
                                         <!--Add To Cart Button End-->
@@ -269,6 +288,9 @@
     @endsection
     @section('footer')
         <script src="{{asset('assets/front/js/rose-video-player.js')}}"></script>
+        @if($isOutOfStock)
+            <script src="{{ asset('assets/front/js/products/reserve.js') }}"></script>
+        @endif
     @stop
 
 @endcomponent

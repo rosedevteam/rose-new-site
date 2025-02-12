@@ -121,7 +121,7 @@
                                                 @case('draft')<span class="badge bg-warning">پیشنویس</span>@break
                                                 @case('hidden')<span class="badge bg-vimeo">پنهان</span>@break
                                                 @case('outofstock')<span
-                                                    class="badge bg-danger">پنهان</span>@break
+                                                    class="badge bg-dribbble">ناموجود</span>@break
                                             @endswitch
                                         </span>
                                     </td>

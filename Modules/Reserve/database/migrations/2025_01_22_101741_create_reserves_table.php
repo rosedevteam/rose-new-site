@@ -15,8 +15,9 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
-            $table->string('know');
+            $table->string('know')->nullable()->default(null);
             $table->boolean('is_notified')->default(false);
+            $table->boolean('is_notified_after_availability')->default(false);
             $table->timestamps();
         });
     }
