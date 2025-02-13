@@ -72,6 +72,7 @@
                                         </div>
                                    @endif
                                @endif
+
                                 @php
                                     $isOutOfStock = $product->status == "outofstock"
                                 @endphp
