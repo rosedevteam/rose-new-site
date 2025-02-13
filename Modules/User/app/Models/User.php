@@ -19,6 +19,7 @@ use Modules\Post\Models\Post;
 use Modules\Product\Models\Product;
 use Modules\Referral\Models\Referral;
 use Modules\Referral\Models\ReferralUser;
+use Modules\Reserve\Models\Reserve;
 use Modules\Score\Models\Score;
 use Modules\StudentReport\Models\StudentReport;
 use Modules\User\Database\Factories\UserFactory;
@@ -167,6 +168,11 @@ class User extends \Illuminate\Foundation\Auth\User
     public function cart()
     {
         return $this->hasOne(Cart::class);
+    }
+
+    public function reserves()
+    {
+        return $this->hasMany(Reserve::class);
     }
 
     protected static function newFactory()

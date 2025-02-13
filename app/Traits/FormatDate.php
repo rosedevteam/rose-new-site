@@ -22,7 +22,7 @@ trait FormatDate
         $d = self::convertNums($d);
         $date = explode('/', $d);
         $verta = Verta::jalaliToGregorian($date[0], $date[1], $date[2]);
-        return $verta[0] . '/' . $verta[1] . '/';
+        return $verta[0] . '/' . $verta[1] . '/' . $verta[2];
     }
 
 }

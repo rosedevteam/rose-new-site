@@ -375,6 +375,7 @@ class DatabaseSeeder extends Seeder
                 'spot_player_id' => $spotdata['_id'] ?? null,
                 'spot_player_licence' => $spotdata['key'] ?? null,
                 'spot_player_watermark' => $spotdata['watermark']['texts'][0]['text'] ?? null,
+                'created_at' => $order['order_date'],
             ]);
 
             $item->products()->attach(explode(',' , $order['product_ids']));

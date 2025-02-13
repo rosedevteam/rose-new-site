@@ -46,6 +46,11 @@ class LogController extends Controller
     {
         if (auth()->user()->hasRole('super-admin')) {
             Activity::query()->delete();
+
+            activity()
+                ->causedBy(auth()->user())
+                ->log('log cleared');
+
             return back();
         } else {
             abort(403);
