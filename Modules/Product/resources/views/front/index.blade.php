@@ -72,12 +72,14 @@
                                         </div>
                                    @endif
                                @endif
-
+                                @php
+                                    $isOutOfStock = $product->status == "outofstock"
+                                @endphp
                                 @if($product->status == 'public')
                                     <a href="{{route('products.show' , $product)}}" class="btn btn-default"> جزئیات و ثبت نام</a>
                                 @else
-                                    <a href="#" class="btn btn-warning">رزرو دوره</a>
-
+                                    <a role="button" class="btn btn-default" id="reserve"
+                                       data-product="{{$product->id}}">رزرو</a>
                                 @endif
                             </div>
                         </div>
@@ -87,4 +89,8 @@
             </section>
         </div>
     @endsection
+
+    @section('footer')
+            <script src="{{ asset('assets/front/js/products/reserve.js') }}"></script>
+    @stop
 @endcomponent
