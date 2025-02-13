@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //todo
         Schema::create('cart_product', function (Blueprint $table) {
             $table->foreignId('cart_id')->constrained()->cascadeOnDelete();
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
             $table->string('auto_discount')->nullable();
+            $table->string('telegram_subscription')->nullable();
             $table->longText('desc')->nullable();
         });
     }

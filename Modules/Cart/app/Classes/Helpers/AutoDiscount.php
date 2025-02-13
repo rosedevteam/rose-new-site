@@ -125,6 +125,14 @@ class AutoDiscount
 
         $newMasirPrice = $newMasir->getPrice();
 
+        if ($cart->hasDiscount()) {
+            $discount = Discount::where('code' , $cart->discount_code)->first();
+
+            if (in_array($newMasir->id , $discount->products->pluck('id')->toArray())) {
+                $newMasirPrice = $newMasirPrice - $discount->amount;
+            }
+        }
+
         //if new masir was in cart
         if (in_array(self::$new_masir, $cart->products()->pluck('id')->toArray())) {
             if ($hasMasirCourse) {
@@ -142,11 +150,8 @@ class AutoDiscount
                 return $data;
             }
         }
-        return false;
-    }
 
-    public static function referralDiscount() {
-        //todo
+        return false;
     }
 
 }

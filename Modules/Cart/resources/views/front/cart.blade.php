@@ -190,7 +190,7 @@
                                 </p>
 
                                 <p class="subtitle cart-total">
-                                    {{number_format($totalPrice)}}
+                                    {{number_format(auth()->user()?->cart?->getTotal())}}
                                     تومان
                                 </p>
                             </div>
@@ -252,10 +252,9 @@
 
                             </ul>
 
-                            {{--todo : make this feature after data import--}}
-                            @if(auth()->user()?->cart?->products->pluck('id')->contains(23423))
+                            @auth
                                 @include('cart::front.components.channel')
-                            @endif
+                            @endauth
 
 
                             <hr>

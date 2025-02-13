@@ -17,6 +17,7 @@ use Modules\Order\Models\Order;
 use Modules\PageBuilder\Models\PageBuilder;
 use Modules\Product\Database\Factories\ProductFactory;
 use Modules\Reserve\Models\Reserve;
+use Modules\Subscription\Models\TelegramSubscription;
 use Modules\User\Models\User;
 
 class Product extends Model
@@ -121,6 +122,11 @@ class Product extends Model
     public function reserves()
     {
         return $this->hasMany(Reserve::class);
+    }
+
+    public function telegramSubscriptions()
+    {
+        return $this->hasMany(TelegramSubscription::class);
     }
 
     protected static function newFactory(): ProductFactory

@@ -165,7 +165,6 @@ class OrderController extends Controller
         ]);
 
         try {
-            //todo
             $validData['created_at'] = self::formatDateTime($validData['created_at']);
 
             $total = 0;
