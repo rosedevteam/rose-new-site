@@ -47,7 +47,6 @@ CMD ["php-fpm"]
 
 
 #php artisan serve
-
 #this is for seeder
 
 #php artisan migrate:fresh --seed
