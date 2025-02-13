@@ -41,3 +41,17 @@ RUN composer install --optimize-autoloader --no-dev
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
 CMD ["php-fpm"]
+
+
+#php artisan commands:
+
+
+#php artisan serve
+
+#this is for seeder
+
+#php artisan migrate:fresh --seed
+
+#migrate all without seeder
+
+#php artisan migrate
