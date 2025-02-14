@@ -46,11 +46,11 @@ CMD ["php-fpm"]
 #php artisan commands:
 
 
-#php artisan serve
+php artisan serve
 #this is for seeder
 
-#php artisan migrate:fresh --seed
+php artisan migrate:fresh --seed
 
 #migrate all without seeder
 
-#php artisan migrate
+php artisan migrate
