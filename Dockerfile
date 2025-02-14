@@ -38,7 +38,7 @@ COPY . .
 # Install PHP dependencies
 RUN composer install --optimize-autoloader --no-dev
 
-RUN php artisan migrate:refresh --seed
+RUN php artisan migrate:refresh --seed --force
 RUN php artisan serve
 
 EXPOSE 9000
