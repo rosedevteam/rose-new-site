@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 use Modules\Analytics\Models\company;
 use Modules\Analytics\Models\index;
 use Modules\Category\Models\Category;
@@ -18,9 +17,6 @@ use Modules\Product\Models\Product;
 use Modules\Referral\Models\Referral;
 use Modules\StudentReport\Models\StudentReport;
 use Modules\User\Models\User;
-use Modules\Wallet\Models\Wallet;
-use Modules\Wallet\Models\WalletTransaction;
-use phpDocumentor\Reflection\File;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
@@ -130,6 +126,7 @@ class DatabaseSeeder extends Seeder
         //
         Permission::create(['name' => 'manage-channels']);
         Permission::create(['name' => 'create-channels']);
+        //
         Permission::create(['name' => 'view-channel-members-count']);
         Permission::create(['name' => 'edit-channel-subscriptions']);
         //
@@ -138,12 +135,14 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'view-reserves']);
         Permission::create(['name' => 'sendSMS-reserves']);
         //
+        Permission::create(['name' => 'create-licence']);
+        Permission::create(['name' => 'view-licence']);
+        //
         Permission::create(['name' => 'view-carts']);
         //
         Permission::create(['name' => 'view-statistics']);
         //
-        Permission::create(['name' => 'create-licence']);
-        Permission::create(['name' => 'view-licence']);
+        Permission::create(['name' => 'view-scores']);
         //
         Permission::create(['name' => 'view-logs']);
 

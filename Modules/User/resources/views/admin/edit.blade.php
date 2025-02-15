@@ -105,88 +105,90 @@
                 <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
 
                     {{-- orders --}}
-                    <div class="card mb-4">
-                        <div class="card-header border-bottom">
-                            <h5 class="card-title">سفارش ها</h5>
-                        </div>
-                        <div class="table-responsive mb-3">
-                            <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                                <table class="table datatable-invoice border-top dataTable no-footer dtr-column"
-                                       id="DataTables_Table_1" aria-describedby="DataTables_Table_1_info"
-                                       style="width: 100%;">
-                                    <thead>
-                                    <tr>
-                                        <th tabindex="0"
-                                            aria-controls="DataTables_Table_1" rowspan="1" colspan="1"
-                                            style="width: 15%;">دوره ها
-                                        </th>
-                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_1"
-                                            rowspan="1"
-                                            colspan="1" style="width: 15%;">وضعیت
-                                        </th>
-                                        <th class="sorting sorting_desc" tabindex="0"
-                                            aria-controls="DataTables_Table_1"
-                                            rowspan="1" colspan="1" style="width: 15%;">روش
-                                            پرداخت
-                                        </th>
-                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_1"
-                                            rowspan="1"
-                                            colspan="1" style="width: 15%;">قیمت خرید
-                                        </th>
-                                        <th class="control sorting dtr-hidden" tabindex="0"
-                                            aria-controls="DataTables_Table_1" rowspan="1" colspan="1"
-                                            style="width: 15%;">تاریخ سفارش
-                                        </th>
-                                        <th class="control sorting dtr-hidden" tabindex="0"
-                                            aria-controls="DataTables_Table_1" rowspan="1" colspan="1"
-                                            style="width: 15%;">ویرایش
-                                        </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($orders as $order)
+                    @can('view-orders')
+                        <div class="card mb-4">
+                            <div class="card-header border-bottom">
+                                <h5 class="card-title">سفارش ها</h5>
+                            </div>
+                            <div class="table-responsive mb-3">
+                                <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                                    <table class="table datatable-invoice border-top dataTable no-footer dtr-column"
+                                           id="DataTables_Table_1" aria-describedby="DataTables_Table_1_info"
+                                           style="width: 100%;">
+                                        <thead>
                                         <tr>
-                                            <td>
-                                                @php
-                                                    $len = count($order->products()->get())-1;
-                                                    $i = 0
-                                                @endphp
-                                                @foreach($order->products()->get() as $product)
-                                                    <a href="{{ route('admin.products.edit', $product) }}"
-                                                       class="text-body text-truncate"><span
-                                                            class="fw-semibold">{{ $product->title . ($i != $len ? "، " : "") }}</span></a>
-                                                    @php $i++ @endphp
-                                                @endforeach
-                                            </td>
-                                            <td>
-                                                @switch($order->status)
-                                                    @case('completed')کامل شده@break
-                                                    @case('pending')در حال انجام@break
-                                                    @case('returned')پس گرفته@break
-                                                    @case('cancelled')لغو شده@break
-                                                @endswitch
-                                            </td>
-                                            <td>@switch($order->payment_method)
-                                                    @case('shaparak') درگاه بانکی@break
-                                                    @case('card')کارت به کارت@break
-                                                @endswitch</td>
-                                            <td>{{ number_format($order->price) }}</td>
-                                            <td>{{ verta($order->created_at)->formatJalaliDatetime() }}</td>
-                                            <td>
-                                                <div class="d-flex gap-3 text-nowrap">
-                                                    <a href="{{ route('admin.orders.edit', $order) }}"
-                                                       class="btn btn-sm btn-info">
-                                                        ویرایش
-                                                    </a>
-                                                </div>
-                                            </td>
+                                            <th tabindex="0"
+                                                aria-controls="DataTables_Table_1" rowspan="1" colspan="1"
+                                                style="width: 15%;">دوره ها
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_1"
+                                                rowspan="1"
+                                                colspan="1" style="width: 15%;">وضعیت
+                                            </th>
+                                            <th class="sorting sorting_desc" tabindex="0"
+                                                aria-controls="DataTables_Table_1"
+                                                rowspan="1" colspan="1" style="width: 15%;">روش
+                                                پرداخت
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_1"
+                                                rowspan="1"
+                                                colspan="1" style="width: 15%;">قیمت خرید
+                                            </th>
+                                            <th class="control sorting dtr-hidden" tabindex="0"
+                                                aria-controls="DataTables_Table_1" rowspan="1" colspan="1"
+                                                style="width: 15%;">تاریخ سفارش
+                                            </th>
+                                            <th class="control sorting dtr-hidden" tabindex="0"
+                                                aria-controls="DataTables_Table_1" rowspan="1" colspan="1"
+                                                style="width: 15%;">ویرایش
+                                            </th>
                                         </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($orders as $order)
+                                            <tr>
+                                                <td>
+                                                    @php
+                                                        $len = count($order->products()->get())-1;
+                                                        $i = 0
+                                                    @endphp
+                                                    @foreach($order->products()->get() as $product)
+                                                        <a href="{{ route('admin.products.edit', $product) }}"
+                                                           class="text-body text-truncate"><span
+                                                                class="fw-semibold">{{ $product->title . ($i != $len ? "، " : "") }}</span></a>
+                                                        @php $i++ @endphp
+                                                    @endforeach
+                                                </td>
+                                                <td>
+                                                    @switch($order->status)
+                                                        @case('completed')کامل شده@break
+                                                        @case('pending')در حال انجام@break
+                                                        @case('returned')پس گرفته@break
+                                                        @case('cancelled')لغو شده@break
+                                                    @endswitch
+                                                </td>
+                                                <td>@switch($order->payment_method)
+                                                        @case('shaparak') درگاه بانکی@break
+                                                        @case('card')کارت به کارت@break
+                                                    @endswitch</td>
+                                                <td>{{ number_format($order->price) }}</td>
+                                                <td>{{ verta($order->created_at)->formatJalaliDatetime() }}</td>
+                                                <td>
+                                                    <div class="d-flex gap-3 text-nowrap">
+                                                        <a href="{{ route('admin.orders.edit', $order) }}"
+                                                           class="btn btn-sm btn-info">
+                                                            ویرایش
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endcan
 
                     {{-- wallet --}}
                     @can('view-wallet-transactions')
@@ -276,56 +278,58 @@
                     @endcan
 
                     {{-- scores --}}
-                    <div class="card mb-4">
-                        <div class="card-header border-bottom">
-                            <h5 class="card-title">امتیاز ها</h5>
-                        </div>
-                        <div class="table-responsive mb-3">
-                            <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                                <table class="table datatable-invoice border-top dataTable no-footer dtr-column"
-                                       id="DataTables_Table_1" aria-describedby="DataTables_Table_1_info"
-                                       style="width: 100%;">
-                                    <thead>
-                                    <tr>
-                                        <th tabindex="0"
-                                            aria-controls="DataTables_Table_1" rowspan="1" colspan="1"
-                                            style="width: 15%;">امتیاز
-                                        </th>
-                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_1"
-                                            rowspan="1"
-                                            colspan="1" style="width: 15%;">نوع
-                                        </th>
-                                        <th class="sorting sorting_desc" tabindex="0"
-                                            aria-controls="DataTables_Table_1"
-                                            rowspan="1" colspan="1" style="width: 15%;">توضیحات
-                                        </th>
-                                        <th class="control sorting dtr-hidden" tabindex="0"
-                                            aria-controls="DataTables_Table_1" rowspan="1" colspan="1"
-                                            style="width: 15%;">تاریخ
-                                        </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($user->scores as $score)
+                    @can('view-scores')
+                        <div class="card mb-4">
+                            <div class="card-header border-bottom">
+                                <h5 class="card-title">امتیاز ها</h5>
+                            </div>
+                            <div class="table-responsive mb-3">
+                                <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                                    <table class="table datatable-invoice border-top dataTable no-footer dtr-column"
+                                           id="DataTables_Table_1" aria-describedby="DataTables_Table_1_info"
+                                           style="width: 100%;">
+                                        <thead>
                                         <tr>
-                                            <td>
-                                                {{ $score->score }}
-                                            </td>
-                                            <td>
-                                                @switch($score->type)
-                                                    @case('credit')افزایش امتیاز@break
-                                                    @case('debit')کسر امتیاز@break
-                                                @endswitch
-                                            </td>
-                                            <td>{{ $score->log }}</td>
-                                            <td>{{ verta($order->created_at)->formatJalaliDatetime() }}</td>
+                                            <th tabindex="0"
+                                                aria-controls="DataTables_Table_1" rowspan="1" colspan="1"
+                                                style="width: 15%;">امتیاز
+                                            </th>
+                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_1"
+                                                rowspan="1"
+                                                colspan="1" style="width: 15%;">نوع
+                                            </th>
+                                            <th class="sorting sorting_desc" tabindex="0"
+                                                aria-controls="DataTables_Table_1"
+                                                rowspan="1" colspan="1" style="width: 15%;">توضیحات
+                                            </th>
+                                            <th class="control sorting dtr-hidden" tabindex="0"
+                                                aria-controls="DataTables_Table_1" rowspan="1" colspan="1"
+                                                style="width: 15%;">تاریخ
+                                            </th>
                                         </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($user->scores as $score)
+                                            <tr>
+                                                <td>
+                                                    {{ $score->score }}
+                                                </td>
+                                                <td>
+                                                    @switch($score->type)
+                                                        @case('credit')افزایش امتیاز@break
+                                                        @case('debit')کسر امتیاز@break
+                                                    @endswitch
+                                                </td>
+                                                <td>{{ $score->log }}</td>
+                                                <td>{{ verta($order->created_at)->formatJalaliDatetime() }}</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endcan
                 </div>
             </div>
 
