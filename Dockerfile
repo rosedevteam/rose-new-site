@@ -37,7 +37,7 @@ COPY . .
 
 
 # Install PHP dependencies
-RUN composer install --optimize-autoloader --no-dev
+RUN composer install --no-dev --optimize-autoloader
 
 #RUN php artisan migrate:refresh --seed --force
 #RUN php artisan serve

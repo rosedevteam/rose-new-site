@@ -13,8 +13,7 @@ deploy_stage:
     - cd /home/roseoj-website
     - git pull origin stage
     - cp .env_stage .env
-    - docker build -t roseoj:stage .
-    - docker run -d -p 9000:9000 roseoj:stage
+    - docker compose down && docker compose up -d
   tags:
     - gitlab-runner
 
