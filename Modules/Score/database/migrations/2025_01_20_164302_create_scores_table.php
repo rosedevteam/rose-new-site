@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('score');
+            $table->integer('score');
             $table->text('log');
             $table->enum('type' , ['credit' , 'debit']);
             $table->timestamps();

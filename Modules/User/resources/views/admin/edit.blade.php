@@ -41,6 +41,10 @@
                                                                              href="{{ route('admin.wallets.edit', $user->wallet) }}"><i
                                                     class="bx bx-wallet"></i></a></span>
                                     </li>
+                                    <li class="mb-3">
+                                        <span class="fw-bold me-2">امتیاز: </span>
+                                        <span>{{ $user->countScores() }}</span>
+                                    </li>
                                     @can('view-billings')
                                         @if(!is_null($billing))
                                             <li class="mb-3">
@@ -101,7 +105,6 @@
                 </div>
 
                 <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
-                    @if(!is_null($orders) && !$orders->isEmpty())
                         <div class="card mb-4">
                             <div class="card-header border-bottom">
                                 <h5 class="card-title">سفارش ها</h5>
@@ -185,7 +188,56 @@
                             </div>
                         </div>
 
-                    @endif
+                    <div class="card mb-4">
+                        <div class="card-header border-bottom">
+                            <h5 class="card-title">امتیاز ها</h5>
+                        </div>
+                        <div class="table-responsive mb-3">
+                            <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                                <table class="table datatable-invoice border-top dataTable no-footer dtr-column"
+                                       id="DataTables_Table_1" aria-describedby="DataTables_Table_1_info"
+                                       style="width: 100%;">
+                                    <thead>
+                                    <tr>
+                                        <th tabindex="0"
+                                            aria-controls="DataTables_Table_1" rowspan="1" colspan="1"
+                                            style="width: 15%;">امتیاز
+                                        </th>
+                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_1"
+                                            rowspan="1"
+                                            colspan="1" style="width: 15%;">نوع
+                                        </th>
+                                        <th class="sorting sorting_desc" tabindex="0"
+                                            aria-controls="DataTables_Table_1"
+                                            rowspan="1" colspan="1" style="width: 15%;">توضیحات
+                                        </th>
+                                        <th class="control sorting dtr-hidden" tabindex="0"
+                                            aria-controls="DataTables_Table_1" rowspan="1" colspan="1"
+                                            style="width: 15%;">تاریخ
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($user->scores as $score)
+                                        <tr>
+                                            <td>
+                                                {{ $score->score }}
+                                            </td>
+                                            <td>
+                                                @switch($score->type)
+                                                    @case('credit')افزایش امتیاز@break
+                                                    @case('debit')کسر امتیاز@break
+                                                @endswitch
+                                            </td>
+                                            <td>{{ $score->log }}</td>
+                                            <td>{{ verta($order->created_at)->formatJalaliDatetime() }}</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

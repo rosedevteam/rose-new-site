@@ -2,12 +2,13 @@
 
 namespace Modules\Score\Providers;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
     protected string $name = 'Score';
+    protected string $moduleNamespace = 'Modules\Score\Http\Controllers';
 
     /**
      * Called before routes are registered.
@@ -26,6 +27,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->mapApiRoutes();
         $this->mapWebRoutes();
+        $this->mapAdminRoutes();
     }
 
     /**
@@ -35,7 +37,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes(): void
     {
-        Route::middleware('web')->group(module_path($this->name, '/routes/web.php'));
+        Route::middleware('web')
+            ->namespace($this->moduleNamespace)
+            ->group(module_path('Score', 'routes/web.php'));
     }
 
     /**
@@ -46,5 +50,14 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapApiRoutes(): void
     {
         Route::middleware('api')->prefix('api')->name('api.')->group(module_path($this->name, '/routes/api.php'));
+    }
+
+    protected function mapAdminRoutes(): void
+    {
+        Route::middleware(['web', 'admin'])
+            ->namespace($this->moduleNamespace . '\admin')
+            ->prefix(config('services.admin.prefix'))
+            ->name('admin.')
+            ->group(module_path('Score', 'routes/admin.php'));
     }
 }

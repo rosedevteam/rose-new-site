@@ -3,11 +3,13 @@
 namespace Modules\Auth\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Traits\AwardScore;
 use Modules\Auth\Models\Otp;
 use Modules\User\Models\User;
 
 class AuthController extends Controller
 {
+    use AwardScore;
     public function up()
     {
         // todo
@@ -138,6 +140,7 @@ class AuthController extends Controller
                 'first_name' => $validData['first_name'],
                 'last_name' => $validData['last_name'],
             ]);
+            $this->awardScore(500, 'ثبت نام');
 
             auth()->login($user);
 

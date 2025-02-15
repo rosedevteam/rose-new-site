@@ -3,8 +3,8 @@
 namespace Modules\Auth\Http\Controllers\front;
 
 use App\Http\Controllers\Controller;
+use App\Traits\AwardScore;
 use App\traits\CartTools;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use Modules\Auth\Models\RegisterOtp;
@@ -15,7 +15,7 @@ use Modules\User\Models\User;
 
 class RegisterController extends Controller
 {
-    use CartTools;
+    use CartTools, AwardScore;
     public function auth(Request $request)
     {
         try {
@@ -170,6 +170,8 @@ class RegisterController extends Controller
             ]);
 
             auth()->login($user);
+
+            $this->awardScore(500, 'ثبت نام');
 
             $cart = Cart::instance(config('services.cart.cookie-name'));
 
