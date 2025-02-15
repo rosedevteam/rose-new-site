@@ -17,10 +17,12 @@ return new class extends Migration
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('phone')->unique();
-            $table->string('email')->unique()->nullable();
+            $table->string('email')->unique()->nullable()->default(null);
             $table->string('password')->nullable()->default(null);
             $table->string('birthday')->nullable()->default(null);
-            $table->string('avatar')->nullable();
+            $table->string('avatar')->nullable()->default(null);
+            $table->string('city')->nullable()->default(null);
+            $table->boolean('is_married')->nullable()->default(null);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
