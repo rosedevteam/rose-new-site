@@ -10,6 +10,7 @@ use Modules\Cart\Classes\Helpers\AutoDiscount;
 use Modules\Cart\Classes\Helpers\Cart;
 use Modules\Discount\Models\Discount;
 use Modules\Product\Models\Product;
+use Modules\Subscription\Models\TelegramSubscription;
 
 class CartController extends Controller
 {
@@ -169,6 +170,58 @@ class CartController extends Controller
         $discountProductIds = $discount->products->pluck('id');
 
         return $cartProductIds->intersect($discountProductIds)->isNotEmpty();
+    }
+
+    public function updateTelegramSubscription(\Modules\Cart\Models\Cart $cart , Request $request)
+    {
+        try {
+            $validData = $request->validate([
+                'telegram_subscription' => 'required'
+            ]);
+
+            [$telegramSubscriptionId, $productId] = explode(',', $validData['telegram_subscription']);
+
+            $telegramSub = TelegramSubscription::where('id' , $telegramSubscriptionId)->first();
+
+            $totalPrice = $cart->getTotalProducts();
+
+            if ($telegramSub) {
+                $productInCart = $cart->products()
+                    ->wherePivot('product_id', $productId)
+                    ->first();
+                if (!$productInCart) {
+                    throw new \Exception('محصول در سبد خرید وجود ندارد');
+                }
+                $cart->products()->updateExistingPivot($productInCart->id, [
+                    'telegram_subscription' => $telegramSubscriptionId
+                ]);
+
+
+                $totalPrice = $totalPrice + $telegramSub->price;
+
+            }else {
+                $cart->products()->updateExistingPivot($productId, [
+                    'telegram_subscription' => null
+                ]);
+
+                $cart->update([
+                    'total' => $totalPrice
+                ]);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'به روز رسانی با موفقیت انجام شد',
+                'cart_total_price' => $totalPrice,
+                'telegram_subscription_name' => $telegramSub->name ?? null,
+                'telegram_subscription_price' => $telegramSub->price ?? null,
+            ], 200);
+        }catch (\Exception $exception){
+            return response()->json([
+                'success' => false,
+                'message' => $exception->getMessage()
+            ], 400);
+        }
     }
 }
 

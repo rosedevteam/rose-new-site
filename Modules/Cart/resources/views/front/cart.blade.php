@@ -3,6 +3,7 @@
         <div class="main-sec top-bg">
             <div class="container">
                 <input type="hidden" name="cart-name" value="{{config('services.cart.cookie-name')}}" id="cart-name">
+                <input type="hidden" name="cart-id" value="{{auth()->user()?->cart?->id}}" id="cart-id">
                 <div class="row rose-py-7">
                     @if($message)
                         <div class="alert alert-warning" role="alert" dir="rtl">
@@ -18,7 +19,6 @@
                                         @if(auth()->user()->cart?->products->count() > 0)
                                             @foreach(auth()->user()->cart?->products as $product)
                                                 <div class="d-flex flex-column course-holder parent-cart-item">
-
                                                     <div class="d-flex flex-column flex-lg-row">
                                                         <div class="course-thumb">
                                                             <img src="{{$product->image}}" alt="">
@@ -128,12 +128,13 @@
                             <h3 class="color-default mb-3 ">اطلاعات پرداخت</h3>
                             @php
                                 if (auth()->check() && auth()->user()->cart){
-                                    $totalPrice = auth()->user()->cart->getTotal();
 
-                                    if (auth()->user()->cart->discount_code) {
+                                    $totalPrice = auth()->user()->cart->getTotalProducts();
+
+                                    if (auth()->user()->cart->hasDiscount()) {
                                           $discount = \Modules\Discount\Models\Discount::where('code' , auth()->user()->cart->discount_code)->first();
                                           $totalPrice = $totalPrice - $discount->amount;
-                                      }
+                                    }
                                 }else {
                                      $totalPrice = \Modules\Cart\Classes\Helpers\Cart::all()->sum(function($item) {
                                           if (!is_null($item['product']->sale_price)) {
@@ -190,9 +191,10 @@
                                 </p>
 
                                 <p class="subtitle cart-total">
-                                    {{number_format(auth()->user()?->cart?->getTotal())}}
+                                    {{number_format(auth()->user()?->cart?->getTotalProducts())}}
                                     تومان
                                 </p>
+
                             </div>
                             <hr class="m-2" style="color: #c9c9c9">
 
@@ -241,11 +243,28 @@
 
                                         @endforeach
                                     @endif
+
+                                    @if(auth()->user()->cart->getTelegramSubscription())
+                                        <li class=" py-2 telegram-channel-details">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <p class="title telegram-channel-name">
+                                                    {{auth()->user()->cart->getTelegramSubscription()->name}}
+                                                </p>
+
+                                                <p class="subtitle telegram-channel-price">
+                                                    {{ number_format(auth()->user()->cart->getTelegramSubscription()->price)}}
+                                                    تومان
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <hr class="m-2" style="color: #c9c9c9">
+                                    @endif
+
                                 @endauth
                                 <li class="d-flex align-items-center justify-content-between py-3">
                                     <p class="title fw-bold text-black">مجموع پرداختی شما:</p>
                                     <p class="subtitle cart-total text-black fw-bold">
-                                        {{ number_format($totalPrice - auth()->user()?->cart?->getTotalAutoDiscounts())}}
+                                        {{ number_format(auth()->user()?->cart?->getCartTotalPayment())}}
                                         تومان
                                     </p>
                                 </li>
@@ -331,6 +350,7 @@
                 }
             </script>
         @endguest
+        <script src="/assets/front/js/cart-channel.js"></script>
     @stop
 
 @endcomponent

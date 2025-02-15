@@ -19,7 +19,7 @@ class TelegramSubscription extends Model
 
     public function product(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class , 'product_id');
     }
 
     // protected static function newFactory(): TelegramSubscriptionFactory

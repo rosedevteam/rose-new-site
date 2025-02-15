@@ -52,6 +52,7 @@ class AutoDiscount
             //check if user has courses in orders
 
             if ($hasDoreJame) {
+
                 $data = [
                     'productRegularPrice' => $masterFisPrice,
                     'amount' => ($masterFisPrice * self::DISCOUNT_JAME_BONYADI_BOORS) / 100,

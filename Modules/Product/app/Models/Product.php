@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Modules\Cart\Models\Cart;
+use Modules\Cart\Models\CartProductPivot;
 use Modules\Category\Models\Category;
 use Modules\Channel\Models\Channel;
 use Modules\Comment\Models\Comment;
@@ -116,7 +117,9 @@ class Product extends Model
 
     public function cart()
     {
-        return $this->belongsToMany(Cart::class)->withPivot('auto_discount');
+        return $this->belongsToMany(Cart::class)
+            ->using(CartProductPivot::class)
+            ->withPivot('auto_discount' , 'telegram_subscription');
     }
 
     public function reserves()

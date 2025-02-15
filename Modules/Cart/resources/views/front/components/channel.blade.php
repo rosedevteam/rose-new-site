@@ -1,7 +1,12 @@
 @foreach(auth()->user()?->cart?->products ?? [] as $product)
+
+    @php
+    //hard code
+    @endphp
+
     @if($product->telegramSubscriptions->count())
         <hr>
-        <h4 class="color-default mb-3 ">اشتراک کانال تلگرام دوره {{$product->title}}</h4>
+        <h4 class="color-default mb-3 ">اشتراک کانال تلگرام دوره{{$product->title}}</h4>
 
         @if($product->id == 23423)
             @if(userHasCourse(2580) || userHasCourse(2013) ||userHasCourse(14216))
@@ -15,9 +20,9 @@
                 </div>
 
                 <select name="telegram" id="telegram" class="form-select">
-                    <option value="0" selected>احتیاجی ندارم</option>
+                    <option value="null,{{$product->id}}" selected>احتیاجی ندارم</option>
                     @foreach($product->telegramSubscriptions as $sub)
-                        <option value="{{$sub->price}}">{{$sub->name}} - {{number_format($sub->price)}} تومان</option>
+                        <option value="{{$sub->id}},{{$product->id}}" @if(auth()->user()?->cart?->getTelegramSubscription()?->id == $sub->id) selected @endif>{{$sub->name}} - {{number_format($sub->price)}} تومان</option>
                     @endforeach
 
                 </select>
@@ -30,9 +35,9 @@
                         کانال جامع تحلیل و بررسی سهام را انتخاب کنید</p>
                 </div>
                 <select name="telegram" id="telegram" class="form-select">
-                    <option value="0" selected>احتیاجی ندارم</option>
+                    <option value="null,{{$product->id}}" selected>احتیاجی ندارم</option>
                     @foreach($product->telegramSubscriptions->where('duration' , 6) as $sub)
-                        <option value="{{$sub->price}}">{{$sub->name}} - {{number_format($sub->price)}} تومان</option>
+                        <option value="{{$sub->id}},{{$product->id}}" @if(auth()->user()?->cart?->getTelegramSubscription()?->id == $sub->id) selected @endif>{{$sub->name}} - {{number_format($sub->price)}} تومان</option>
                     @endforeach
 
                 </select>
@@ -40,9 +45,9 @@
             @endif
         @else
             <select name="telegram" id="telegram" class="form-select">
-                <option value="0" selected>احتیاجی ندارم</option>
+                <option value="null,{{$product->id}}" selected>احتیاجی ندارم</option>
                 @foreach($product->telegramSubscriptions as $sub)
-                    <option value="{{$sub->price}}">{{$sub->name}} - {{number_format($sub->price)}} تومان</option>
+                    <option value="{{$sub->id}},{{$product->id}}" @if(auth()->user()?->cart?->getTelegramSubscription()?->id == $sub->id) selected @endif>{{$sub->name}} - {{number_format($sub->price)}} تومان</option>
                 @endforeach
 
             </select>
