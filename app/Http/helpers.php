@@ -19,8 +19,8 @@ if (!function_exists('getEditRouteByType')) {
             return "";
         }
         if ($type == "WalletTransaction") {
-            $type = "Wallet";
-            $id = \Modules\Wallet\Models\WalletTransaction::find($id)->wallet->id;
+            $type = "User";
+            $id = \Modules\Wallet\Models\WalletTransaction::find($id)->wallet->user;
         }
 
         return route('admin.' . strtolower($type) . 's.edit', $id, false);
