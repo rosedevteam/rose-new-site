@@ -252,6 +252,7 @@
 
                             </ul>
 
+
                             @auth
                                 @include('cart::front.components.channel')
                             @endauth
