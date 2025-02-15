@@ -78,4 +78,10 @@ class ProfileController extends Controller
         }
     }
 
+    public function settings()
+    {
+        $this->seo()->setTitle('تنظیمات');
+        return view('profile::settings');
+    }
+
 }

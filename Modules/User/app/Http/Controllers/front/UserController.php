@@ -3,12 +3,11 @@
 namespace Modules\User\Http\Controllers\front;
 
 use App\Http\Controllers\Controller;
-use App\Traits\AwardScore;
 use App\Traits\ConvertNums;
 
 class UserController extends Controller
 {
-    use ConvertNums, AwardScore;
+    use ConvertNums;
 
     public function update()
     {
@@ -19,12 +18,48 @@ class UserController extends Controller
             'email' => 'nullable|email',
         ]);
         try {
-            $scores = auth()->user()->scores();
+            $points = 0;
 
-            $this->checkAndAwardScore($scores, 'set-birthday');
-            $this->checkAndAwardScore($scores, 'set-city');
-            $this->checkAndAwardScore($scores, 'set-is_married');
-            $this->checkAndAwardScore($scores, 'set-email');
+            if (!is_null($validData['birthday'])) {
+                if (auth()->user()->scores()->where('log', 'set-birthday')->get()->isEmpty()) {
+                    auth()->user()->scores()->create([
+                        'log' => 'set-birthday',
+                        'score' => 50,
+                        'type' => 'credit'
+                    ]);
+                    $points += 50;
+                }
+            }
+            if (!is_null($validData['city'])) {
+                if (auth()->user()->scores()->where('log', 'set-city')->get()->isEmpty()) {
+                    auth()->user()->scores()->create([
+                        'log' => 'set-city',
+                        'score' => 50,
+                        'type' => 'credit'
+                    ]);
+                    $points += 50;
+                }
+            }
+            if (!is_null($validData['is_married'])) {
+                if (auth()->user()->scores()->where('log', 'set-is_married')->get()->isEmpty()) {
+                    auth()->user()->scores()->create([
+                        'log' => 'set-is_married',
+                        'score' => 50,
+                        'type' => 'credit'
+                    ]);
+                    $points += 50;
+                }
+            }
+            if (!is_null($validData['email'])) {
+                if (auth()->user()->scores()->where('log', 'set-email')->get()->isEmpty()) {
+                    auth()->user()->scores()->create([
+                        'log' => 'set-email',
+                        'score' => 50,
+                        'type' => 'credit'
+                    ]);
+                    $points += 50;
+                }
+            }
 
             $validData['birthday'] = self::convertNums($validData['birthday']);
 
@@ -34,19 +69,17 @@ class UserController extends Controller
 
             $this->log(auth()->user(), compact('before', 'after'), 'ویرایش پروفایل توسط کاربر');
 
-            alert()->success('موفق', 'اطلاعات شما با موفقیت ویرایش شد');
+            if ($points != 0) {
+                $score = $points;
+                $message = 'اطلاعات شما با موفقیت ویرایش شد شما ' . $score . ' امتیاز گرفتید';
+                toast($message, 'success', 'top-right');
+            } else {
+                toast('اطلاعات شما با موفقیت ویرایش شد', 'success', 'top-right');
+            }
             return back();
         } catch (\Throwable $th) {
             alert()->error($th->getMessage());
             return back();
         }
     }
-
-    private function checkAndAwardScore($scores, $description)
-    {
-        if (!$scores->where('log', 'set-birthday')->exists()) {
-            $this->awardScore(50, 'set-birthday');
-        }
-    }
-
 }

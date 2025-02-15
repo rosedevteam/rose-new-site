@@ -33,7 +33,20 @@
                                     </li>
                                     <li class="mb-3">
                                         <span class="fw-bold me-2">تاریخ تولد:</span>
-                                        <span>{{ $user?->birthday }}</span>
+                                        <span>{{ $user->birthday }}</span>
+                                    </li>
+                                    <li class="mb-3">
+                                        <span class="fw-bold me-2"> شهر:</span>
+                                        <span>{{ $user->city }}</span>
+                                    </li>
+                                    <li class="mb-3">
+                                        <span class="fw-bold me-2">وضعیت تاهل: </span>
+                                        <span>@if(is_null($user->is_married))
+
+                                            @else
+                                                {{ $user->is_married ? 'متاهل' : 'مجرد' }}
+                                            @endif
+                                        </span>
                                     </li>
                                     <li class="mb-3">
                                         <span class="fw-bold me-2">موجودی کیف پول:</span>
@@ -321,7 +334,7 @@
                                                     @endswitch
                                                 </td>
                                                 <td>{{ $score->log }}</td>
-                                                <td>{{ verta($order->created_at)->formatJalaliDatetime() }}</td>
+                                                <td>{{ verta($score->created_at)->formatJalaliDatetime() }}</td>
                                             </tr>
                                         @endforeach
                                         </tbody>
