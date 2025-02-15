@@ -303,6 +303,7 @@
             case 'reserves': $permission = 'رزرو ها'; break;
             case 'statistics': $permission = 'آمار'; break;
             case 'licence': $permission = 'لایسنس';
+            case 'scores': $permission = 'امتیاز ها';
         }
         return $permission;
     }

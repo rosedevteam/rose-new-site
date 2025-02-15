@@ -12,15 +12,20 @@
                                 </div>
                                 <div class="col">
                                     <p class="fw-bold">گزارش روزانه {{ $dailyReport->title }}</p>
-                                    <a href="{{ urldecode(route('dailyreports.show', $dailyReport)) }}"
+                                    <button
+                                        onclick="downloadReport('{{ urldecode(route('dailyreports.show', $dailyReport)) }}')"
                                        class="btn btn-default-outline">
                                         <i class="bx bx-download"></i>دانلود
-                                    </a></div>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 @endforeach
             </div>
         </div>
+    @endsection
+    @section('footer')
+        <script src="/assets/front/js/dailyreports/download.js"></script>
     @endsection
 @endcomponent

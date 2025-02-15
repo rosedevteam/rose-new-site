@@ -175,6 +175,14 @@ class User extends \Illuminate\Foundation\Auth\User
         return $this->hasMany(Reserve::class);
     }
 
+    public function countScores()
+    {
+        $scores = $this->scores()->get();
+        $credit = $scores->where('type', 'credit')->sum('score');
+        $debit = $scores->where('type', 'debit')->sum('score');
+        return $credit - $debit;
+    }
+
     protected static function newFactory()
     {
         return UserFactory::new();

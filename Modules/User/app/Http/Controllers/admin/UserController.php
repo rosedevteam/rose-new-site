@@ -146,7 +146,6 @@ class UserController extends Controller
                 'orderStatus'
             ));
         } catch (\Throwable $th) {
-            dd($th->getMessage());
             alert()->error("خطا", $th->getMessage());
             return back();
         }
