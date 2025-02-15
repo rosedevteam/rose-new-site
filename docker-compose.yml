@@ -22,7 +22,7 @@ services:
       - DB_HOST=db
       - DB_DATABASE=laravel
       - DB_USERNAME=root
-      - DB_PASSWORD=root
+      - DB_PASSWORD=h0k842KbJ7bZ
 
   # MySQL Database
   db:
@@ -31,7 +31,7 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: laravel
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: h0k842KbJ7bZ
       MYSQL_USER: laravel_user
       MYSQL_PASSWORD: laravel_pass
     volumes:

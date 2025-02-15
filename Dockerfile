@@ -39,6 +39,9 @@ COPY . .
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
+RUN chmod -R 777 storage bootstrap/cache
+RUN chown -R www-data:www-data storage bootstrap/cache
+
 #RUN php artisan migrate:refresh --seed --force
 #RUN php artisan serve
 
