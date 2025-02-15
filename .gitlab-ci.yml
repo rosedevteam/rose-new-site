@@ -1,0 +1,30 @@
+stages:
+  - deploy-stage
+  - deploy-main
+
+
+deploy_stage:
+  stage: deploy-stage
+  only:
+    - stage
+  before_script:
+    - export APP_ENV=stage
+  script:
+    - cd /home/roseoj-website
+    - git pull origin stage
+    - cp .env_stage .env
+    - docker build -t roseoj:stage .
+    - docker run -d -p 9000:9000 roseoj:stage
+  tags:
+    - gitlab-runner
+
+deploy_main:
+  stage: deploy-main
+  only:
+    - main
+  before_script:
+    - export APP_ENV=main
+  script:
+    - ssh user@cpanel-server 'cd /home/user/public_html && git pull origin main && composer install --no-dev --prefer-dist && php artisan migrate --force && php artisan config:cache'
+  tags:
+    - gitlab-runner
