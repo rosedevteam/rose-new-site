@@ -11,5 +11,8 @@ trait AwardScore
             'log' => $log,
             'type' => 'credit',
         ]);
+
+        $message = 'شما ' . $score . ' امتیاز گرفتید';
+        toast($message, 'success', 'top-right');
     }
 }

@@ -22,12 +22,27 @@ class DailyReportController extends Controller
     {
         $filePath = storage_path('app/private/daily-reports/' . $dailyReport->file);
         if (file_exists($filePath)) {
+            $message = null;
             if (!auth()->user()->scores()->where('log', 'daily-report-' . $dailyReport->id)->exists()) {
                 $this->awardScore(10, 'daily-report-' . $dailyReport->id);
+                $message = 'شما 10 امتیاز گرفتید';
             }
+
+            return response()->json([
+                'message' => $message,
+                'url' => route('dailyreports.download', $dailyReport)
+            ]);
+        }
+        abort(404);
+
+    }
+
+    public function download(DailyReport $dailyReport)
+    {
+        $filePath = storage_path('app/private/daily-reports/' . $dailyReport->file);
+        if (file_exists($filePath)) {
             return response()->download($filePath);
         }
-
         abort(404);
     }
 }
