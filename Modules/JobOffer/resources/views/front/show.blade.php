@@ -63,33 +63,60 @@
                               action="{{ route('jobapplications.store') }}"
                               method="POST" enctype="multipart/form-data">
                             @csrf
-                            <div class="row d-flex mt-3">
+                            <div class="row mt-3">
+                                <div class="col-12">
                                 <label class="form-label" for="full_name">نام و نام خانوادگی</label>
                                 <input type="text" id="full_name" name="full_name" value="{{ old('full_name') }}"
-                                       class="form-control" required>
+                                       class="form-control {{ $errors->has('full_name') ? 'is-invalid' : ($errors->any() ? 'is-valid' : '') }}"
+                                       required>
+                                    @if($errors->has('full_name'))
+                                        <div class="invalid-feedback">
+                                            لطفا نام و نام خانوادگی خود را وارد کنید.@endif
+                                        </div>
                             </div>
-                            <div class="row d-flex mt-3 justify-content-between">
+                                <div class="row mt-3">
                                 <div class="col-md-6">
                                     <label class="form-label" for="email">ایمیل</label>
                                     <input type="text" id="email" name="email" value="{{ old('email') }}"
-                                           class="form-control text-start" required>
+                                           class="form-control text-start {{ $errors->has('email') ? 'is-invalid' : ($errors->any() ? 'is-valid' : '') }}"
+                                           required>
+                                    @if($errors->has('email'))
+                                        <div class="invalid-feedback">
+                                            لطفا یک ایمیل معتبر وارد کنید.
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label" for="phone">موبایل</label>
                                     <input type="text" id="phone" name="phone" value="{{ old('phone') }}"
-                                           class="form-control text-start" required>
+                                           class="form-control text-start {{ $errors->has('phone') ? 'is-invalid' : ($errors->any() ? 'is-valid' : '') }}"
+                                           required>
+                                    @if($errors->has('phone'))
+                                        <div class="invalid-feedback">
+                                            لطفا شماره موبایل خود را وارد کنید.
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
-                            <div class="row d-flex mt-3">
+                                <div class="row mt-3">
+                                    <div class="col-12">
                                 <label class="form-label" for="resume">رزومه (pdf)</label>
                                 <input id="resume" type="file" name="resume" value="{{ old('resume') }}"
-                                       class="form-control" required>
+                                       class="form-control {{ $errors->has('resume') ? 'is-invalid' : '' }}" required>
+                                        @if($errors->has('resume'))
+                                            <div class="invalid-feedback">
+                                                لطفا فایل رزومه (فقط pdf) را بارگذاری کنید.
+                                            </div>
+                                        @endif
+                                    </div>
                             </div>
                             <div class="row mt-3">
+                                <div class="col-12">
                                 <label for="description" class="form-label">توضیحات</label>
                                 <textarea id="description" name="description"
                                           class="form-control d-flex">{{ old('description') }}</textarea>
                                 <input type="hidden" name="job_offer_id" value="{{ $jobOffer->id }}">
+                                </div>
                             </div>
                             <div class="col-12 text-center mt-4">
                                 <button type="submit" class="btn btn-default btn-hero me-sm-3 me-1">ثبت</button>
@@ -100,5 +127,16 @@
             </div>
         </div>
         @include('sweetalert::alert')
+    @endsection
+    @section('footer')
+        @if($errors->any())
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    var modalElement = document.getElementById('post-modal');
+                    var myModal = new bootstrap.Modal(modalElement);
+                    myModal.show();
+                });
+            </script>
+        @endif
     @endsection
 @endcomponent

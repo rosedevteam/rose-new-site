@@ -24,7 +24,6 @@ class JobApplicationController extends Controller
             'description' => 'nullable|string',
             'job_offer_id' => 'required|exists:job_offers,id',
         ]);
-        // todo validate with jquery
 
         $path = $this->uploadFile($validData['resume'], '/job-applications', 'local');
         $validData['resume'] = $path;

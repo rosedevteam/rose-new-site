@@ -376,7 +376,7 @@ $score = $credits - $debits;
 
                     <div class="transaction-item @if($score->type == 'credit') credit @else debit @endif">
                         <div class="right">
-                            <h3 class="title">{{$score->log}}</h3>
+                            <h3 class="title">{{$score->label}}</h3>
                         </div>
                         <div class="left d-flex align-items-center justify-content-between gap-2">
                             <h3 class="amount">

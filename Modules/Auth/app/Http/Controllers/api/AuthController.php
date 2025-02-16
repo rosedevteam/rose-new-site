@@ -140,7 +140,7 @@ class AuthController extends Controller
                 'first_name' => $validData['first_name'],
                 'last_name' => $validData['last_name'],
             ]);
-            $this->awardScore(500, 'ثبت نام');
+            $this->awardScore(500, 'signup', 'ثبت نام');
 
             auth()->login($user);
 

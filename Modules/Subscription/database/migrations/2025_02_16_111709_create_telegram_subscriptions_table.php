@@ -34,6 +34,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('telegram_subscriptions');
-        Schema::dropIfExists('order_telegram_subscription');
     }
 };

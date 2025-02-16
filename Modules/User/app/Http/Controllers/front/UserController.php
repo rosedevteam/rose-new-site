@@ -24,6 +24,7 @@ class UserController extends Controller
                 if (auth()->user()->scores()->where('log', 'set-birthday')->get()->isEmpty()) {
                     auth()->user()->scores()->create([
                         'log' => 'set-birthday',
+                        'label' => 'وارد کردن تاریخ تولد',
                         'score' => 50,
                         'type' => 'credit'
                     ]);
@@ -34,6 +35,7 @@ class UserController extends Controller
                 if (auth()->user()->scores()->where('log', 'set-city')->get()->isEmpty()) {
                     auth()->user()->scores()->create([
                         'log' => 'set-city',
+                        'label' => 'وارد کردن شهر',
                         'score' => 50,
                         'type' => 'credit'
                     ]);
@@ -44,6 +46,7 @@ class UserController extends Controller
                 if (auth()->user()->scores()->where('log', 'set-is_married')->get()->isEmpty()) {
                     auth()->user()->scores()->create([
                         'log' => 'set-is_married',
+                        'label' => 'وارد کردن وضعیت تاهل',
                         'score' => 50,
                         'type' => 'credit'
                     ]);
@@ -54,6 +57,7 @@ class UserController extends Controller
                 if (auth()->user()->scores()->where('log', 'set-email')->get()->isEmpty()) {
                     auth()->user()->scores()->create([
                         'log' => 'set-email',
+                        'label' => 'وارد کردن ایمیل',
                         'score' => 50,
                         'type' => 'credit'
                     ]);
@@ -62,6 +66,8 @@ class UserController extends Controller
             }
 
             $validData['birthday'] = self::convertNums($validData['birthday']);
+
+            $validData = array_filter($validData, fn($value) => !is_null($value));
 
             $before = auth()->user()->toArray();
             auth()->user()->update($validData);

@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('otp')->nullable();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->timestamp('expired_at')->nullable();
             $table->timestamps();
         });
     }
