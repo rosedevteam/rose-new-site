@@ -24,7 +24,22 @@ class ProfileController extends Controller
     {
         //todo map orders to send licence with products
         $this->seo()->setTitle('حساب کاربری');
-        $products = auth()->user()->orders()->where('status' , 'completed')->with('products')->get()->pluck('products')->flatten()->unique('id');
+        $products = auth()->user()
+            ->orders()
+            ->where('status', 'completed')
+            ->with(['products' => function ($query) {
+                $query->select('products.*', 'spot_player_licence'); // Include spot_player_licence from orders
+            }])
+            ->get()
+            ->flatMap(function ($order) {
+                // Attach spot_player_licence to each product
+                return $order->products->map(function ($product) use ($order) {
+                    $product->spot_player_licence = $order->spot_player_licence;
+                    return $product;
+                });
+            })
+            ->unique('id');
+//        dd($products);
         return view('profile::orders.my-courses' , compact('products'));
     }
 

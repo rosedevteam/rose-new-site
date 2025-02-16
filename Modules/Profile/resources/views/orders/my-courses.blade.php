@@ -93,7 +93,8 @@
                 <div class="col-md-6 col-lg-3 mb-3">
                     <div class="card h-100">
                         <div class="card-body">
-                            <img src="{{$product->image}}" alt="" class="w-100 mb-3" style="border-radius: 5px !important;">
+                            <img src="{{$product->image}}" alt="" class="w-100 mb-3"
+                                 style="border-radius: 5px !important;">
                             <h5 class="card-title">{{$product->title}}</h5>
                             @if($product->is_free)
                                 <div class="d-flex desc gap-3 justify-content-center">
@@ -106,11 +107,18 @@
                             @else
                                 <div class="d-flex desc gap-3 justify-content-center">
                                     <input type="hidden" id="clipboard-{{$product->id}}"
-                                           value="{{$product->spot_player_key}}">
-                                    <button class="btn btn-success w-100"
-                                            onclick="copyToClipboard($('#clipboard-{{$product->id}}'))">
-                                        کپی لایسنس
-                                    </button>
+                                           value="{{$product->spot_player_licence ?? null}}">
+                                    @if($product->spot_player_licence)
+                                        <button class="btn btn-success w-100"
+                                                onclick="copyToClipboard($('#clipboard-{{$product->id}}'))">
+                                            کپی لایسنس
+                                        </button>
+                                    @else
+                                        <button class="btn btn-warning w-100">
+                                            لایسنس ساخته نشده
+                                        </button>
+                                    @endif
+
                                 </div>
 
                             @endif
