@@ -47,7 +47,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-2 mt-4 d-flex justify-content-between">
-                                    <button type="submit" class="btn btn-primary">تغییر</button>
+                                    <button type="submit" class="btn btn-primary me-3">ویرایش</button>
                                     @can('delete-job-applications')
                                         <x-admin::deletebutton/>
                                     @endcan
