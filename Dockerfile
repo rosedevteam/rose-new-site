@@ -35,22 +35,15 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Copy existing application directory contents
 COPY . .
 
-# Install PHP dependencies
-RUN composer install --optimize-autoloader --no-dev
 
-# Expose port 9000 and start php-fpm server
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader
+
+RUN chmod -R 777 storage bootstrap/cache
+RUN chown -R www-data:www-data storage bootstrap/cache
+
+#RUN php artisan migrate:refresh --seed --force
+#RUN php artisan serve
+
 EXPOSE 9000
 CMD ["php-fpm"]
-
-
-#php artisan commands:
-
-
-#php artisan serve
-#this is for seeder
-
-#php artisan migrate:fresh --seed
-
-#migrate all without seeder
-
-#php artisan migrate
