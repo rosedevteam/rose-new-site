@@ -22,31 +22,25 @@ class PaymentController extends Controller
             ]);
 
             $cookieCart = Cart::instance(config('services.cart.cookie-name'));
+            $cart = auth()->user()->cart;
             $cartItems = $cookieCart->all();
 
-            if ($cartItems->count()) {
-                $totalPrice = $cookieCart->all()->sum(function ($item) {
-                    if (!is_null($item['product']->sale_price)) {
-                        return ($item['product']->sale_price);
-                    } else {
-                        return ($item['product']->price);
-                    }
-                });
+            if (!$cart) {
+                throw new \Exception('سبد خرید وجود ندارد');
+            }
+
+            if ($cart->count()) {
+
+                $totalPrice = $cart->getCartTotalPayment();
 
 
-                if (\Modules\Cart\Classes\Helpers\Cart::isCartDiscountable()) {
-                    $discount = \Modules\Cart\Classes\Helpers\Cart::getDiscount();
-                    $totalPrice = $totalPrice - $discount->amount;
-                }
-
-
-                $orderItems = $cartItems->map(function ($cart) {
-                    return $cart['product']->id;
+                $orderItems = $cart->products->map(function ($product) {
+                    return $product->id;
                 });
 
 
                 if (isset($validData['use_wallet'])) {
-                    if (auth()->user()->wallet->balance >= 30000) {
+                    if (auth()->user()->wallet->canUse()) {
                         if (auth()->user()->wallet->balance < $totalPrice) {
 
                             $wallet_transaction = auth()->user()->wallet->transactions()->create([
@@ -60,6 +54,7 @@ class PaymentController extends Controller
                                 'price' => $totalPrice,
                                 'status' => 'pending',
                                 'wallet_transaction_id' => $wallet_transaction->id,
+                                'payment_method' => 'shaparak'
                             ]);
 
                             $order->products()->attach($orderItems);
@@ -74,7 +69,8 @@ class PaymentController extends Controller
 
                     $order = auth()->user()->orders()->create([
                         'price' => $totalPrice,
-                        'status' => 'pending'
+                        'status' => 'pending',
+                        'payment_method' => 'shaparak'
                     ]);
 
                     $order->products()->attach($orderItems);
@@ -83,7 +79,7 @@ class PaymentController extends Controller
 
                 $invoice = (new Invoice())->amount($totalPrice);
 
-                return Payment::callbackUrl(route('payment.callback'))->purchase($invoice, function ($driver, $transactionId) use ($order, $cookieCart, $invoice) {
+                return Payment::callbackUrl(route('payment.callback'))->purchase($invoice, function ($driver, $transactionId) use ($order, $cookieCart, $invoice , $cart) {
 
                     $order->payments()->create([
                         'resnumber' => $invoice->getTransactionId(),
@@ -91,6 +87,8 @@ class PaymentController extends Controller
                     ]);
 
                     $cookieCart->flush();
+
+                    $cart->delete();
 
                 })->pay()->render();
 
@@ -151,9 +149,6 @@ class PaymentController extends Controller
                     ]);
 
             }
-
-            auth()->user()->cart->delete();
-
 
             toast()->success('تبریک! پرداخت شما با موفقیت انجام شد');
             return redirect(route('profile.courses'));

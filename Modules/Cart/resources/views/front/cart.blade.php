@@ -126,28 +126,6 @@
                     <div class="col-md-4">
                         <div class="bg-white br-default p-4">
                             <h3 class="color-default mb-3 ">اطلاعات پرداخت</h3>
-                            @php
-                                if (auth()->check() && auth()->user()->cart){
-
-                                    $totalPrice = auth()->user()->cart->getTotalProducts();
-
-                                    if (auth()->user()->cart->hasDiscount()) {
-                                          $discount = \Modules\Discount\Models\Discount::where('code' , auth()->user()->cart->discount_code)->first();
-                                          $totalPrice = $totalPrice - $discount->amount;
-                                    }
-                                }else {
-                                     $totalPrice = \Modules\Cart\Classes\Helpers\Cart::all()->sum(function($item) {
-                                          if (!is_null($item['product']->sale_price)) {
-                                                  return ($item['product']->sale_price);
-                                              } else {
-                                                  return  ($item['product']->price);
-                                              }
-                                      });
-                                }
-
-
-
-                            @endphp
 
                             <div class="discount-form-wrapper pb-3">
                                 @auth
@@ -244,7 +222,7 @@
                                         @endforeach
                                     @endif
 
-                                    @if(auth()->user()->cart->getTelegramSubscription())
+                                    @if(auth()->user()?->cart?->getTelegramSubscription())
                                         <li class=" py-2 telegram-channel-details">
                                             <div class="d-flex align-items-center justify-content-between">
                                                 <p class="title telegram-channel-name">
