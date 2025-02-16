@@ -24,7 +24,7 @@ class DailyReportController extends Controller
         if (file_exists($filePath)) {
             $message = null;
             if (!auth()->user()->scores()->where('log', 'daily-report-' . $dailyReport->id)->exists()) {
-                $this->awardScore(10, 'daily-report-' . $dailyReport->id);
+                $this->awardScore(10, 'daily-report-' . $dailyReport->id, 'دانلود گزارش روزانه');
                 $message = 'شما 10 امتیاز گرفتید';
             }
 
