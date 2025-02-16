@@ -91,14 +91,14 @@
                         @auth
                             <div class="menu">
                                 <ul class="rose-menu m-0 p-0">
-                                    <li class="item-with-submenu">
+                                    <li class="item-with-submenu position-relative">
                                         <a href="#">
                                             {{auth()->user()->name()}}
                                             <i class="bi bi-chevron-down"></i>
                                         </a>
 
                                         <!--Submenu menu-->
-                                        <ul class="submenu p-0 m-0" style="width: 220px">
+                                        <ul class="submenu p-0 m-0" style="width: 220px; right: -5rem;">
                                             <li class="d-flex align-items-center justify-content-between">
                                                 <p>کیف پول:</p>
                                                 <strong>

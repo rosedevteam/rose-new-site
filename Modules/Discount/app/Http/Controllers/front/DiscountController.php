@@ -4,6 +4,7 @@ namespace Modules\Discount\Http\Controllers\front;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Modules\Cart\Classes\Helpers\AutoDiscount;
 use Modules\Cart\Classes\Helpers\Cart;
 use Modules\Discount\Models\Discount;
 
@@ -26,7 +27,7 @@ class DiscountController extends Controller
 
             $discount = Discount::where('code' , $validated['discount'])->where('is_active' , 1)->first();
 
-            if ($cart->discount_code) {
+            if ($cart?->discount_code) {
                 throw new \Exception('کد تخفیف در حال حاضر روی سبد اعمال شده است');
             }
             if ($discount->discountRecords->count() >= $discount->limit) {
@@ -38,7 +39,7 @@ class DiscountController extends Controller
             }
 
 
-            if ($cart->products->count() == 0) {
+            if ($cart?->products->count() == 0) {
                 throw new \Exception('هیچ محصولی در سبد خرید نیست');
             }
 
@@ -47,25 +48,13 @@ class DiscountController extends Controller
             }
 
             $cart->update([
-                'discount_code' => $discount->code,
+                'discount_code' => $discount->code
             ]);
 
 
-            $totalPrice = $cart->products->sum(function ($product) {
-                if (!is_null($product->sale_price)) {
-                    return $product->sale_price;
-                } else {
-                    return $product->price;
-                }
-            });
+            toast()->success('موفق' , 'کد تخفیف با موفقیت اعمال شد');
+            return back();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'کد تخفیف با موفقیت اعمال شد',
-                'discount_code' => $discount->code,
-                'discount_amount' => $discount->amount,
-                'cart_total'=> $totalPrice
-            ]);
         }catch (\Exception $exception){
             return response()->json([
                 'success' => false,
@@ -84,18 +73,9 @@ class DiscountController extends Controller
                 'discount_code' => null,
             ]);
 
-            $totalPrice = $cart->products->sum(function ($product) {
-                if (!is_null($product->sale_price)) {
-                    return $product->sale_price;
-                } else {
-                    return $product->price;
-                }
-            });
-            return response()->json([
-                'success' => true,
-                'message' => 'کد تخفیف با موفقیت حذف شد',
-                'cart_total'=> $totalPrice
-            ]);
+            toast()->success('موفق' , 'کد تخفیف با موفقیت حذف شد');
+            return back();
+
         }catch (\Exception $exception) {
             return response()->json([
                 'success' => false,

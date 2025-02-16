@@ -92,7 +92,12 @@
                                             <input type="text" id="sale_price" name="sale_price" class="form-control"
                                                    value="{{$product->sale_price}}">
                                         </div>
-
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="referral_discount">تخفیف کمپین ریفرال (درصد)</label>
+                                            <input type="text"
+                                                   value="{{$product->referral_discount}}"
+                                                   id="referral_discount" name="referral_discount" class="form-control">
+                                        </div>
                                     </div>
                                 </div>
 

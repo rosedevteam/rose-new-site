@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Modules\Cart\Models\Cart;
+use Modules\Cart\Models\CartProductPivot;
 use Modules\Category\Models\Category;
 use Modules\Channel\Models\Channel;
 use Modules\Comment\Models\Comment;
@@ -17,6 +18,7 @@ use Modules\Order\Models\Order;
 use Modules\PageBuilder\Models\PageBuilder;
 use Modules\Product\Database\Factories\ProductFactory;
 use Modules\Reserve\Models\Reserve;
+use Modules\Subscription\Models\TelegramSubscription;
 use Modules\User\Models\User;
 
 class Product extends Model
@@ -54,7 +56,7 @@ class Product extends Model
 
     public function categories()
     {
-        return $this->morphToMany(Category::class,  'categoryable');
+        return $this->morphToMany(Category::class, 'categoryable');
     }
 
     public function attributes()
@@ -87,6 +89,27 @@ class Product extends Model
         return false;
     }
 
+    public function hasAutoDiscount()
+    {
+        return !!$this->pivot->auto_discount;
+    }
+
+    public function getAutoDiscount()
+    {
+        if ($this->hasAutoDiscount()) {
+            return json_decode($this->pivot->auto_discount, true)['amount'];
+        }
+    }
+
+    public function getPrice()
+    {
+        if ($this->isOnSale()) {
+            return $this->sale_price;
+        } else {
+            return $this->price;
+        }
+    }
+
     public function channels()
     {
         return $this->belongsToMany(Channel::class);
@@ -94,11 +117,19 @@ class Product extends Model
 
     public function cart()
     {
-        return $this->belongsToMany(Cart::class)->withPivot('auto_discount');
+        return $this->belongsToMany(Cart::class)
+            ->using(CartProductPivot::class)
+            ->withPivot('auto_discount' , 'telegram_subscription');
     }
+
     public function reserves()
     {
         return $this->hasMany(Reserve::class);
+    }
+
+    public function telegramSubscriptions()
+    {
+        return $this->hasMany(TelegramSubscription::class);
     }
 
     protected static function newFactory(): ProductFactory

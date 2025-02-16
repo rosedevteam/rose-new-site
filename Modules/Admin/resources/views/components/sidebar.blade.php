@@ -168,14 +168,19 @@
                         <div>اشتراک ها</div>
                     </a>
                     <ul class="menu-sub">
-                        <li @class(["menu-item", 'active' => $route == 'subscriptions'])>
-                            <a href="{{route('admin.subscriptions.index')}}" class="menu-link">
-                                <div>اشتراک ها</div>
+{{--                        <li @class(["menu-item", 'active' => $route == 'subscriptions'])>--}}
+{{--                            <a href="{{route('admin.telegramSubscriptions.index')}}" class="menu-link">--}}
+{{--                                <div>اشتراک ها</div>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+                        <li @class(["menu-item", 'active' => $route == 'telegramSubscriptions'])>
+                            <a href="{{route('admin.telegramSubscriptions.index')}}" class="menu-link">
+                                <div>افزودن اشتراک </div>
                             </a>
                         </li>
                         <li @class(["menu-item", 'active' => $route == 'telegrams'])>
                             <a href="{{route('admin.telegrams.index')}}" class="menu-link">
-                                <div>کانال تلگرام</div>
+                                <div>لیست اعضای کانال جامع</div>
                             </a>
                         </li>
 

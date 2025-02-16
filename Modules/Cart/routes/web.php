@@ -19,4 +19,5 @@ Route::prefix('cart')->controller(CartController::class)->group(function () {
     Route::post('/add/{product}', 'addToCart')->name('cart.add');
     Route::patch('/quantity/change', 'quantityChange')->name('cart.quantity.change');
     Route::delete('/delete/{cart}', 'deleteFromCart')->name('cart.destroy');
+    Route::post('/updateTelegramSub/{cart}', 'updateTelegramSubscription');
 });

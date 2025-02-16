@@ -13,7 +13,7 @@
 
                 @can('manage-subscriptions')
                     <div class="d-flex align-items-center justify-content-between">
-                        @can('edit-subscriptions')
+                        @can('manage-subscriptions')
                             <button data-bs-toggle="modal"
                                     data-bs-target="#modalCenter"
                                     class="btn btn-secondary create-new btn-primary ms-2"

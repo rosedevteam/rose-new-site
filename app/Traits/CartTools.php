@@ -13,12 +13,19 @@ trait CartTools
         $userCart->products()->attach($cart->all()->pluck('product.id')->toArray());
     }
 
-    public static function editCartToDatabase($cart , $totalPrice , $userCart)
+    public static function editCartToDatabase($cart)
     {
-        auth()->user()->cart()->update([
-            'total' => $totalPrice
-        ]);
+        $userCart = auth()->user()->cart;
         $userCart->products()->syncWithoutDetaching($cart->all()->pluck('product.id')->toArray());
+        $userCart->update([
+            'total' => $userCart?->products->sum(function ($product) {
+                if (!is_null($product->sale_price)) {
+                    return ($product->sale_price);
+                } else {
+                    return  ($product->price);
+                }
+            })
+        ]);
     }
 
 

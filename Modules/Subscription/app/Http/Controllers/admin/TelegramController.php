@@ -12,43 +12,9 @@ use Modules\Subscription\Models\Telegram;
 class TelegramController extends Controller
 {
 
+    //todo
     public function index()
     {
-
-//        foreach (Telegram::all() as $tele) {
-//            $end_date = date($tele->end_date);
-//
-//            if (\Carbon\Carbon::create($end_date)->is()) {
-//
-//                if ($tele->is_notified == 0) {
-//                    $firstname = explode(' ' , $tele->fullname)[0];
-//                    $teles[] = $tele->phone;
-////                    $tele->notify(new NotifyUserForTelegramExpireDate($tele->phone , $firstname , Verta::instance($end_date)->formatJalaliDate()));
-////
-////                    $tele->update([
-////                        'is_notified' => 1
-////                    ]);
-//                }
-//            }
-//        }
-//        dd($teles);
-////
-
-//        foreach (Telegram::where('is_deleted' , 1)->get() as $telegram) {
-//            if ($user = User::where('phone' , 'like', "%$telegram->phone%")->first() ) {
-//              $userName = $user->name ? $user->name : $user->lastname;
-//            }
-//            $telegrams[] = [
-//              'fullname' => $userName ? $userName : $telegram->fullname,
-//              'phone' => $telegram->phone,
-//              'telegram_id' => $telegram->telegram_id,
-//              'duration' => $telegram->duration,
-//              'start_date' => Verta::instance($telegram->start_date)->formatJalaliDate(),
-//              'end_date' => Verta::instance($telegram->end_date)->formatJalaliDate(),
-//              'deleted_date' => Verta::instance($telegram->deleted_date)->formatJalaliDate(),
-//            ];
-//        }
-//        return json_encode($telegrams , JSON_UNESCAPED_UNICODE );
         $telegrams = Telegram::query();
 
 
@@ -58,8 +24,6 @@ class TelegramController extends Controller
                 ->orWhere('fullname' , 'like' , "%$key%");
         }
 
-//        $deleted = Telegram::where('is_deleted' , 1)->count();
-//        $all = Telegram::where('is_deleted' , 0)->count();
         if (\request('filter')) {
             if (!is_null(\request('is_deleted'))) {
                 $telegrams = $telegrams->where('is_deleted', \request('is_deleted'));

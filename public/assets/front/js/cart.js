@@ -121,43 +121,43 @@ removeBtn.on('click' , function (e) {
     let item =  $(this).closest('.parent-cart-item')
     axios.delete(`/cart/delete/${$(this).attr('data-cart')}`)
         .then(function (res) {
-            item.remove()
-            $('.cart-total').html(`
-            ${res.data.total.toLocaleString()}
-            تومان
-            `);
+            // item.remove()
+            // $('.cart-total').html(`
+            // ${res.data.total.toLocaleString()}
+            // تومان
+            // `);
 
-            $('.rose-cart-counter').html(res.data.count)
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                icon: "success",
-                title: "موفق",
-                text: res.data.message
-            });
-            if (res.data.count == 0) {
-                $('.cart-page-inner').html(`
-                    <div class="alert alert-info m-4" role="alert" dir="rtl">
-                                             هیچ محصولی در سبد خرید شما نیست
-                                         </div>
-                `)
-                // deleteDiscount();
-            }
-            if (res.data.discount == true) {
-                if (res.data.is_cart_discountable == false) {
-                    deleteDiscount();
-                }
-            }
-
+            // $('.rose-cart-counter').html(res.data.count)
+            // const Toast = Swal.mixin({
+            //     toast: true,
+            //     position: "top-end",
+            //     showConfirmButton: false,
+            //     timer: 3000,
+            //     timerProgressBar: true,
+            //     didOpen: (toast) => {
+            //         toast.onmouseenter = Swal.stopTimer;
+            //         toast.onmouseleave = Swal.resumeTimer;
+            //     }
+            // });
+            // Toast.fire({
+            //     icon: "success",
+            //     title: "موفق",
+            //     text: res.data.message
+            // });
+            // if (res.data.count == 0) {
+            //     $('.cart-page-inner').html(`
+            //         <div class="alert alert-info m-4" role="alert" dir="rtl">
+            //                                  هیچ محصولی در سبد خرید شما نیست
+            //                              </div>
+            //     `)
+            //     // deleteDiscount();
+            // }
+            // if (res.data.discount == true) {
+            //     if (res.data.is_cart_discountable == false) {
+            //         deleteDiscount();
+            //     }
+            // }
+            window.location.reload()
             $.unblockUI();
         })
         .catch(function (err) {
@@ -189,37 +189,7 @@ function addDiscount() {
         discount: $('#discount-code').val()
     })
         .then(res => {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                customClass: {
-                    confirmButton: "btn btn-sm btn-default w-100"
-                },
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                icon: "success",
-                title: "موفق",
-                text: res.data.message,
-            })
-
-            $('.discount-code-wrapper').remove();
-            $('.discount-form-wrapper').html(`
-            <div class="d-flex align-items-center justify-content-between mb-3 title fw-bold">کد تخفیف فعال : <span class="text-success">${res.data.discount_code}</span> <a
-                                            class="btn btn-sm btn-danger" onclick="deleteDiscount()">حذف</a></div>
-                                    <div class="d-flex align-items-center justify-content-between title fw-bold">مبلغ تخفیف : <span class="text-success">${res.data.discount_amount.toLocaleString()} تومان </span></div>
-            `);
-            let total = res.data.cart_total - res.data.discount_amount
-            $('.cart-total').html(`
-            ${total.toLocaleString()}
-            تومان
-            `)
+            window.location.reload()
             $.unblockUI();
 
         })
@@ -247,46 +217,14 @@ function addDiscount() {
 function deleteDiscount() {
     event.preventDefault();
 
-    axios.delete('/discount/delete' , {
+    axios.post('/discount/delete' , {
         data: {
             cart: $('#cart-name').val()
         }
     })
         .then(res => {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                customClass: {
-                    confirmButton: "btn btn-sm btn-default w-100"
-                },
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                icon: "success",
-                title: "موفق",
-                text: res.data.message,
-            });
-
-            $('.discount-info').remove();
-            $('.discount-form-wrapper').html(`
-            <form class="discount-code-wrapper">
-                                        <input type="text" class="form-control b-none" placeholder="کد تخفیف"
-                                               name="discount-code" id="discount-code">
-                                        <button class="btn btn-sm btn-default" onclick="addDiscount()">اعمال</button>
-                                    </form>
-            `)
-            $('.cart-total').html(`
-            ${res.data.cart_total.toLocaleString()}
-            تومان
-            `)
+            window.location.reload()
             $.unblockUI();
-
         })
         .catch(err => {
             const Toast = Swal.mixin({
