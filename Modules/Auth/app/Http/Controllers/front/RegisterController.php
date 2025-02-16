@@ -171,7 +171,7 @@ class RegisterController extends Controller
 
             auth()->login($user);
 
-            $this->awardScore(500, 'ثبت نام');
+            $this->awardScore(500, 'signup', 'ثبت نام');
 
             $cart = Cart::instance(config('services.cart.cookie-name'));
 
